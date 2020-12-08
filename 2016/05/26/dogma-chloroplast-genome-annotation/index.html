@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank</h1><div class="post-meta">2016-05-26<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><h2 id="DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。"><a href="#DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。" class="headerlink" title="DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。"></a>DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。</h2><h2 id="DOGMA-Help"><a href="#DOGMA-Help" class="headerlink" title="DOGMA Help"></a>DOGMA Help</h2><ol>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#assumptions">Platforms/Browsers</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#userids">Userids/Passwords</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#unique">Unique IDs</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#retrieving">Retrieving or removing an existing annotation</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#input_file">Input file format</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#input_file_problems">Input file problems</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#gapped">Gapped alignment</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#rna_per">Percent identity cutoffs</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#gcode">Genetic code</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#evalue">E-values</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#reorient">Reorienting genomes</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#cutoff">COVE threshold</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#dogbase">Databases</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#numberline">Numberline panel</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#extract">Extracting sequences</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#summaries">Displaying summaries</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#annotation_panel">Annotation panel</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#sequin_input">Sequin input window</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#delete_gene">Deleting a gene</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#sequin_files">Using Sequin to submit files to GenBank</a></p>
+</li>
+<li><p> <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#misc">Misc. data files</a></p>
+</li>
+<li><p><strong>Platforms/Browsers</strong></p>
+<ul>
+<li>  DOGMA was developed using Safari (Mac’s <a target="_blank" rel="noopener" href="http://www.apple.com/safari">browser</a> for OS X) under Panther (10.3.2) so these are the conditions under which DOGMA works best. It seems to run fine under Tiger, however there are some issues with the middle panel refreshing. When you originally retrieve an annotation you have been working on, you must hit the refresh button in the lower right-hand corner. DOGMA may be functional with Internet Explorer for the Mac running OS X, but Microsoft is no longer supporting IE on the Mac and there are no gaurantees with DOGMA under IE.</li>
+<li>  You should set your font to size 14 (or smaller) in the browser Preferences (having a larger size may cause DOGMA windows to display incorrectly) .</li>
+<li>  You should also set your monitor resolution to at least 1152 x 768.</li>
+<li>  For Safari, make sure you don’t have pop-up windows blocked (under the Safari menu).</li>
+</ul>
+</li>
+<li><p> <strong>Userids</strong> Your userid gives you access to the your own data files. Your userid will give you access only to your own data. Because this site is not encrypted, the passwords are not secure and you should use a password that is not used for secure purposes. Userid and passwords are <em>case sensitive</em>. Userids should be alpha-numeric (no spaces!). If you are having trouble logging in, make sure you are typing with proper capitalization. If you forget your userid or password, send email to <a href="mailto:&#115;&#116;&#x61;&#99;&#105;&#97;&#107;&#x77;&#x79;&#109;&#97;&#x6e;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#115;&#116;&#x61;&#99;&#105;&#97;&#107;&#x77;&#x79;&#109;&#97;&#x6e;&#64;&#103;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a></p>
+</li>
+<li><p><strong>Unique IDs</strong> Unique IDs are how you identify and distinguish between your different annotations. When you are retrieving an existing ID, your will be given a list of annotations by unique ID. It is best to name the annotation with the genome name and perhaps the DOGMA settings that the annotation is created with. Unique IDs should be alpha-numeric (no spaces!). It’s a good idea to identify them by taxon and their settings. For example, if you had several nicotiana annotations, you might name them this way:</p>
+<ul>
+<li>  nicotianaGap50</li>
+<li>  nicotianaUngap60</li>
+<li>  etc…</li>
+</ul>
+</li>
+<li><p> <strong>Retrieving or removing an existing annotation</strong> When you enter your userid and then hit submit in the retrieve section, you will be presented with a list of the annotations that exist in your data directory and the date that it was last edited. You may remove obsolete annotations here, or view and edit unfinished annotations. If you remove an annotation, it <em>can</em> be retrieved, but not quickly or easily and perhaps not the most recent copy, so be sure you want to delete it.</p>
+</li>
+<li><p><strong>Input file format</strong> The input file should be in FASTA format. The first line should begin with a “&gt;” followed immediately by the SeqID and then the nucleotide sequence beginning on the next line. In order for a feature table to be imported into Sequin, the SeqId of the FASTA file (the first word immediately after &gt; ), must match the SeqId of the feature table. So be aware that the first word (after the &gt;) on the first line of the FASTA file will be used as the SeqId in Sequin.For example, in the following file, the SeqId is Sc_16:</p>
+<p> &gt;Sc_16 [organism=Saccharomyces cerevisiae] [strain=S288C]<br> CGACCACAATGGTACGATTGTTCATAAATCAGGAGATGTTCCTATTCATATAAAGATACC<br> AAACAGATCTCTAATACATGACCAGGATATCAACTTCTATAATGGTTCCGAAAACGAAAG<br> AAAACCAAATCTAGAGCGTAGAGACGTCGACCGTGTTGGTGATCCAATGAGGATGGATAG<br> [etc.]</p>
+<p> And the first line of the feature table file would look like:</p>
+<p> &gt;Features Sc_16</p>
+<p> More information is available at <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/Sequin/table.html">the NCBI site.</a> Sequence data may contain any of the characters from the IUPAC code:</p>
+<p> <strong>A</strong></p>
+<p> adenosine</p>
+<p> <strong>M</strong></p>
+<p> A or C (amino)</p>
+<p> <strong>C</strong></p>
+<p> cytidine</p>
+<p> <strong>S</strong></p>
+<p> G or C (strong)</p>
+<p> <strong>G</strong></p>
+<p> guanine</p>
+<p> <strong>W</strong></p>
+<p> A or T (weak)</p>
+<p> <strong>T</strong></p>
+<p> thymidine</p>
+<p> <strong>B</strong></p>
+<p> G or T or C</p>
+<p> <strong>U</strong></p>
+<p> uridine</p>
+<p> <strong>D</strong></p>
+<p> G or A or T</p>
+<p> <strong>R</strong></p>
+<p> G or A (purine)</p>
+<p> <strong>H</strong></p>
+<p> A or C or T</p>
+<p> <strong>Y</strong></p>
+<p> T or C (pyrimidine)</p>
+<p> <strong>V</strong></p>
+<p> G or C or A</p>
+<p> <strong>K</strong></p>
+<p> G or T (keto)</p>
+<p> <strong>N</strong></p>
+<p> A G C T (any)</p>
+</li>
+<li><p>Problems? Read below <strong>IF YOU GET OUTPUT WITH NO GENES:</strong> This usually means your input file had the wrong kind of line breaks. Follow the directions below and try uploading your file again. If you have a situation not covered in the instructions below, send <a href="mailto:&#x73;&#x74;&#x61;&#x63;&#x69;&#x61;&#107;&#x77;&#x79;&#x6d;&#x61;&#x6e;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x73;&#x74;&#x61;&#x63;&#x69;&#x61;&#107;&#x77;&#x79;&#x6d;&#x61;&#x6e;&#64;&#x67;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a> email.<strong>Creating an input file:</strong> To prepare your file for uploading to DOGMA, several steps may be required depending on which program (Sequencher, MacVector, Consed, Word, etc.) you used to save your data. Different programs save files with different kinds of line breaks, and it must be a specific kind for uploading to DOGMA. In the instructions below, I am assuming you are using a Mac running OS X.</p>
+<ul>
+<li><strong>To save from Sequencer or MacVector:</strong> If you have a Sequencher (or MacVector) file, you’ll need to execute several steps to get it ready to input to DOGMA. Save the file as Pearson/FASTA format from the export menu (FASTA text in MacVector).Then you have two options to convert it to a file which may be uploaded through the browser to DOGMA (if you are you Mac OS X):<ol>
+<li>Using a terminal window.<ul>
+<li>  Open a terminal window (the terminal application is in the Utilities folder under Applications).</li>
+<li>  cd to the directory with the file in it (if the file is on the Desktop, open the terminal window and then type “cd Desktop” at the prompt).</li>
+<li>  At the prompt, type: native2ascii filename filename</li>
+<li>  Then try uploading the file to DOGMA</li>
+</ul>
+</li>
+<li>Using MS Word.<ul>
+<li>  Open the file in MS Word, then save as MS-DOS Text. NOT TEXT ONLY.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>  <strong>To save from MS Word</strong> Save the file as MS-DOS text. NOT TEXT ONLY.</li>
+<li><strong>Other:</strong><ul>
+<li>  If you aren’t sure what program the file came from and it isn’t uploading correctly to DOGMA, try running native2ascii on it (as in the directions for saving from Sequencher above. Doing this to a file will do no harm if it’s already in ASCII format). The symptom of not uploading correctly is that DOGMA finds no genes in input sequence.</li>
+<li>  Files saved from Consed should be OK for uploading to DOGMA.</li>
+<li>  Files downloaded through the browser from GenBank (as in the tutorial) should be OK for uploading.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p> <strong>To gap or not to gap</strong> <strong>MT Genomes</strong> For mitchondrial genomes, we have not found any genomes for which ungapped BLAST finds something that gapped BLAST misses, so gapped BLAST should be used for mt genomes. You could also run both and compare the results.<strong>CP Genomes</strong> The option for gapped and ungapped alignment may give slightly different results for chloroplast genomes. The ungapped option will generally generate shorter BLASTX matches with higher percent identity scores. This will result in some genes appearing as multiple, contiguous pieces in the annotation window. The gapped alignment will generate longer BLASTX matches but for genomes with some protein coding genes that are quite divergent from the ones in the database, these genes may be missed. The more divergent genes can be found by either running an ungapped alignment or by running a gapped alignment with a lower percent identity cutoff than the 60% default value. The best thing to do is run it both gapped (with and without lowering the percent identity cutoff) and ungapped alignment and compare the results. We also recommend that users examine the BLASTX results before deciding if a gene is present when there are differences between gapped and ungapped annotations (BLAST results for a gene can be viewed by clicking on the gene name in the top panel). We have evaluated the differences between these two options for several genomes but we would be interested in hearing about any differences you detect. I suggest that when you are annotating a complete cp genome, keep one of the runs as the “master” copy to which you can add genes which are found with difference settings.</p>
+</li>
+<li><p> <strong>Percent identity cutoffs</strong> <strong>Protein coding gene cutoffs</strong> In the first run, try the default values for the percent identity cutoff and if you are missing genes, lower the value and run it again. If your genome is only distantly related to the other genomes in the database (see <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/cp_taxa">cp taxa</a> or <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/mt_taxa">mt taxa</a> for a list of genomes in the database).<strong>Chloroplast tRNA cutoffs</strong> Chloroplast tRNAs are identified by BLASTN searches against a data base of 15 chloroplast genomes. The high level of nucleotide sequence conservation among the same tRNAs in different genomes enables accurate identification of chloroplast tRNAs by this method. When selecting the percent identity cutoff for RNAs in cp genomes, we recommend using a high cutoff (85-90%) to avoid spurious trna matches. The optimum percent identity may vary some depending on how divergent the genome you are annotating is relative to the sequences in the database. Thus, it may be necessary to do multiple runs with different percent identity settings. Furthermore, putatively identified tRNAs could be confirmed with other available programs for identifying tRNAs.</p>
+</li>
+<li><p> <strong>Which genetic code do I use?</strong> For chloroplast annotations, use number 11 (Bacterial and Plant Plastid), which is identical to the standard genetic code, but has more start codons. The standard genetic code has just ATG, TTG, CTG, number 11 also has ATT, ATC, ATA and GTG. Using Genetic Code 11 instead of the Standard Genetic Code for chloroplast genomes only has the effect of highlighting more potential start codons, but should have no other effect.</p>
+</li>
+<li><p> <strong>BLAST E-values</strong> Blast e-values tell you approximately how many sequences with that score you would expect to find in the database by chance. Therefore, a higher number (i.e. 1e-5) indicates that the sequence is more likely to appear by chance, and is therefore a <em>less</em> stringent cutoff. A lower number (i.e. 1e-30) indicates the sequence is less likely to appear by chance, and is therefore a more stringent cutoff. Note, however, that these scores are based on the length of the match and the length of the database and can be misleading at times.</p>
+</li>
+<li><p> <strong>Reorienting mitochondrial genomes</strong> If you want your fasta file to be reoriented so that the cox1 gene turns up as the first gene in the annotation, select Yes here. This is to provide consistency in finished genomes. Cox1 was chosen as a reliable starting place because it tends to be the most conserved gene for mitochondrial genomes.</p>
+</li>
+<li><p> <strong>COVE threshold</strong> Only tRNAs scoring above this value are reported. This cuts down on the number of spurius tRNAs that are found. If many tRNAs are found which overlap with protein coding genes, set this value higher to screen out some of the lower-scoring tRNAs.</p>
+</li>
+<li><p> <strong>Database taxa</strong> Click <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/cp_taxa">here</a> for a list of taxa in the chloroplast database. Click <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/mt_taxa">here</a> for a list of taxa in the mitochondrial database.</p>
+</li>
+<li><p> <strong>Numberline panel</strong> This panel displays all the genes graphically on a numberline. When the colored block representing the gene is clicked, that gene is displayed in the top panel. When you mouse over the gene block and hold the mouse still, information about that gene will appear in a yellow box. It gives the gene name, gene start, gene end, and strand of the gene. Protein coding genes are light purple on the forward strand, and dark striped purple on the reverse. Transfer RNAs are light blue on the forward strand, and dark striped blue on the reverse. Ribosomal RNAs are light green on the forward strand, and dark striped green on the reverse. After a gene has been annotated, it shows up in the middle panel with a black border. For genes with introns, the black border connects the exons.</p>
+</li>
+<li><p><strong>Extracting sequences</strong> There are several kinds of sequences which can be extracted from the annotation. All of the sequences are generated from the text summary file, so if genes are not yet annotated, the sequences generated may not be correct.</p>
+<ul>
+<li>  <strong>Intergenic sequences</strong> This will return the set of nucleotide sequences between all the genes in the input.</li>
+<li>  <strong>Introns</strong> This will return the nucleotide sequences of all the introns for annotated genes with more than one exon.</li>
+<li>  <strong>Protein coding aa sequences</strong> This will return the set of sequences for all the genes in the text summary, translated to amino acids. For genes with introns, the intron sequences are not returned and the translated exons are each given on a separate line.</li>
+<li>  <strong>Protein coding nt sequences</strong> This will return the set of nucleotide sequences for all the genes in the text summary. For genes with introns, the intron sequences are not returned and the exons are each given on a separate line.</li>
+<li>  <strong>tRNAs</strong>The nucleotide sequence for the tRNA is returned.</li>
+<li>  <strong>rRNAs</strong>The nucleotide sequence for the rRNA is returned.</li>
+</ul>
+</li>
+<li><p> <strong>Displaying summaries</strong> Clicking on the Show Sequin Format button brings up the Sequin input file. If no genes have been annotated, it will be empty. Clicking on the Show Text Summary button brings up the list of genes produced by BLASTing against the database. This list is modified as the genes are annotated. It does not represent a correct list until all genes have been annotated. (For example, the BLAST hits don’t contain stop codons, so all the protein coding genes are initially 3 nucleotides short.) Once a gene has been annotated, it is shown labelled “Annotated” in the text summary. Exons are listed separately, one after another in the text summary.</p>
+</li>
+<li><p> <strong>Annotating genes</strong> <strong>Protein coding genes</strong> When you click on a gene in the numberline panel, information about that gene appears in the top panel. Both the forward and reverse strands of the DNA sequence containing that gene plus 60 basepairs up and down stream of the gene are shown. The amino acid sequence for the input genome is shown directly adjacent (above for genes on the forward strand, below for genes on the reverse strand) to the nucleotide sequence. The amino acid sequences for the closest BLAST hits (how many is a setting the user can change on the first form page) are show next. The user needs to pick a start and stop codon for the gene based on these BLAST hits.<strong>Protein coding genes with introns</strong> For a gene with an intron, it will likely show up as two adjacent genes on the number line. When annotating a gene with an intron, the start and stop codons of the first and last exons must first be annotated, and then the exons can be joined (using the button on the Sequin window) in the annotation.<strong>Example:</strong> When nicotiana is run through DOGMA, the gene atpF has an intron and shows up on the numberline in two pieces: from 12206 12673 and 13294 13452 on the reverse strand. Before the exons can be joined, the start codon must be chosen by clicking on the second exon (since it is on the reverse strand). Then the first exon can be selected and the stop codon picked and then the “Add an exon” button in the Sequin window can be selected. This will bring up a list of all the potential exons for that gene.</p>
+</li>
+<li><p> <strong>Sequin input window</strong> The Sequin Window appears when a gene block is clicked on in the numberline panel. It appears with all of the required information already filled in when the window appears, but the user needs to verify the beginning and end of the gene. When a link for a potential start and stop codon is click in the top panel of the Annotation Window, the values are automatically updated in the Sequin Window. Values in the Sequin Window may also be manually updated.</p>
+</li>
+<li><p> <strong>Deleting a gene</strong> There are two ways to remove a gene. One is to, select the “Delete Gene” button from the bottom panel in DOGMA and then type in the name of the gene exactly as it appears in the text summary. You will be asked to confirm the gene you want to remove. The other way to delete a gene is to click the delete button next to the gene you want to remove in the text summary for the annotation. Once a gene is deleted, it can’t be undone. You can, however, add a gene using the “Add Gene” button in the bottom panel.</p>
+</li>
+<li><p><strong>Preparing files to input to Sequin program</strong> In order for a feature table to be imported into Sequin, the SeqId of the FASTA file (the first word after &gt; ), must match the SeqId of the feature table. So be aware that the first word (after the &gt;) on the first line of the FASTA file will be used as the SeqId in Sequin.Example: In the following file, the SeqId is Sc_16:</p>
+<p>&gt;Sc_16 [organism=Saccharomyces cerevisiae] [strain=S288C]<br>CGACCACAATGGTACGATTGTTCATAAATCAGGAGATGTTCCTATTCATATAAAGATACC<br>AAACAGATCTCTAATACATGACCAGGATATCAACTTCTATAATGGTTCCGAAAACGAAAG<br>AAAACCAAATCTAGAGCGTAGAGACGTCGACCGTGTTGGTGATCCAATGAGGATGGATAG<br>[etc.]</p>
+<p>More information is available at <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/Sequin/table.html">the NCBI site.</a> When preparing a Sequin submission, you’ll need two files: the FASTA file containing the genome sequence, and the feature table file created by DOGMA. To prepare the feature table file after annotating all the genes:</p>
+<ol>
+<li> Click on the ``Show Sequin Format’’ button.</li>
+<li> Copy and paste the contents of the file as into Word.</li>
+<li> Save the Word file as ``Text only.’’</li>
+</ol>
+<p>The Sequin page at NCBI is <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/Sequin/">Sequin</a>. You can download the Sequin stand-alone application from this <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/Sequin/download/seq_mac_download.html">page</a>. Click on the sequin.Mac.hqx link on the page to download a file called Sequin Folder.sit. This should automagically uncompress and inside that folder, you should double-click on the SequinOSX application. You should read through the Sequin documentation on the NCBI site to familiarize yourself with it, but you can also pretty much ignore it.</p>
+<ol>
+<li> Choose Start New Submission</li>
+<li> Enter the information for the 4 tabs: Submission, Contact, Authors, and Affiliation. It won’t let you proceed until it has this information.</li>
+<li> You can save and re-use this information by going back to the Submission tab and selecting Export Submitter Info from the File menu (convention is to name it with a .sbt extension). Then, for your next submission, when you are on the Submission tab, select Import Submitter Info from the File menu and load the saved file.</li>
+<li> The next form you typically won’t need to change, just select Next Form.</li>
+<li> Now fill out the organism information under the Organism tab. For chloroplasts, you should change Location of Sequence to Chloroplast. Sequin will then fill in the genetic code for you.</li>
+<li> Under the Nucleotide tab, you should import your import your fasta file. For chloroplasts, change topology to circular.</li>
+<li> Click next page, do nothing on this tab, then click Next Form. When it says “You have not entered proteins. Is this correct?” say OK.</li>
+<li> Next you get a window with the GenBank format, and now you import your feature table file by choosing ``File&gt;Open’’ and selecting the feature table file. The GenBank format should then include all your annotations and the protein sequences for all your protein coding genes.</li>
+<li> You should then select “Search&gt;Validate” to see any errors that you might need to fix.</li>
+<li> When you save the Sequin file and quit, Sequin will tell you to email the file to <a href="mailto:&#103;&#x62;&#x2d;&#115;&#x75;&#98;&#x40;&#110;&#99;&#x62;&#x69;&#x2e;&#110;&#108;&#x6d;&#46;&#x6e;&#105;&#x68;&#46;&#x67;&#x6f;&#118;">&#103;&#x62;&#x2d;&#115;&#x75;&#98;&#x40;&#110;&#99;&#x62;&#x69;&#x2e;&#110;&#108;&#x6d;&#46;&#x6e;&#105;&#x68;&#46;&#x67;&#x6f;&#118;</a>. You can also save the GenBank flat file.</li>
+</ol>
+</li>
+<li><p><strong>Misc. data files</strong> For each annotation, there are many files which are stored with it. These can be accessed by giving the URL prefix for the annotation:<a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/data/USERID/UNIQUE/FILENAMESome">http://dogma.ccbb.utexas.edu/data/USERID/UNIQUE/FILENAMESome</a> files you might be interested in looking at are:</p>
+<ul>
+<li>  <strong>missed.txt</strong> If DOGMA missed any genes, they will be listed in this file.</li>
+<li>  <strong>cm_out</strong> (for mt data) This is the raw cove output. It gives the cove score and the coordinates of putative tRNAs.</li>
+<li>  <strong>cm_strings</strong> This is the sequences that COVE identified as potential tRNAs. It may have putative tRNAs which are not in DOGMA because the folding program wansn’t able to fold the string of nucleotides.</li>
+<li>  <strong>blast_output</strong> this is a directory containing the BLAST output for each of the genes.</li>
+</ul>
+<p><strong>Sorry, for security reasons, directory listing has been turned off for this server so some of the files are no longer available.</strong></p>
+</li>
+</ol>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2016/06/01/%E4%BD%BF%E7%94%A8fastq-dump%E4%BB%8Encbi%E7%9A%84sra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE/">使用fastq-dump从NCBI的SRA数据库下载数据</a><a class="next" href="/2016/04/19/pacbio%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E9%87%8A%E4%B9%89/">PacBio测序数据格式释义</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/1st_post/">My Fast HexoPages</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/06/%E5%AE%89%E8%A3%85hic-pro/">安装HiC-Pro （HiC数据预处理工具）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/%E4%B8%A4%E4%B8%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BA%92%E6%AF%94%E8%BE%83%EF%BC%9Amummer/">两个基因组序列相互比较：Mummer</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/shell%E8%84%9A%E6%9C%AC%E5%92%8Cperl%E8%84%9A%E6%9C%AC%E7%9A%84%E6%AE%B5%E6%B3%A8%E9%87%8A/">shell脚本和perl脚本的段注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9Acorrplot-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5-/">R：corrplot 相关系数矩阵</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9A%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0-/">R：经验分布函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/14/R%EF%BC%9A%E5%88%A0%E9%99%A4%E5%8C%85%E5%90%AB%E7%BC%BA%E5%A4%B1%E5%80%BCNA%E7%9A%84%E8%A1%8C-/">R：删除包含缺失值NA的行</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/28/%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E8%BF%90%E8%A1%8Cwindows%E7%A8%8B%E5%BA%8F%EF%BC%9Amono/">在Linux平台运行windows程序：mono</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/15/nas-%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">NAS 安装与使用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

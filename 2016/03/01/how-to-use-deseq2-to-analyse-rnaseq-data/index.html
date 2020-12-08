@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>How to use DESeq2 to analyse RNAseq data | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">How to use DESeq2 to analyse RNAseq data</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">How to use DESeq2 to analyse RNAseq data</h1><div class="post-meta">2016-03-01<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><h1 id="How-to-use-DESeq2-to-analyse-RNAseq-data"><a href="#How-to-use-DESeq2-to-analyse-RNAseq-data" class="headerlink" title="How to use DESeq2 to analyse RNAseq data"></a>How to use DESeq2 to analyse RNAseq data</h1><p>（<a target="_blank" rel="noopener" href="http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/%EF%BC%89">http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/）</a></p>
+<p>Posted on <a target="_blank" rel="noopener" href="http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/" title="8:29 pm">February 17, 2014</a></p>
+<p><strong>News:</strong> <em>My colleagues at NZGL have developed an open source R based GUI for generating plots using cuffdiff data. One for deseq2 will be available soon! Feel free to<a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff">check it out</a> and get back to us with any <a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff/issues">suggestions</a></em>. <em>Only requires <a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff">R-studio</a></em>. There is only one thing better than DESeq and thats DESeq2! The <a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/2.13/bioc/html/DESeq2.html">updated version</a> is out and I’m keen to give it a whirl. Like with my old <a target="_blank" rel="noopener" href="http://dwheelerau.com/2013/04/15/how-to-use-deseq-to-analyse-rnaseq-data/">DESeq post</a>, once again I am really just following the excellent <a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/2.13/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf">DESeq2 manual</a>, thanks again to the authors for the great documentation! Just a quick warning that I haven’t tested this workflow extensively, let me know if things don’t work. Also, DESeq2 is new so some of the function might have changed, so if you have problems makes sure you check what version you are using versus what I used (see sessionInfo below). The files I used for this are found <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/0B6eVTdUN1IlwdnNiMkpvV1FWMUk/edit?usp=sharing">here</a> if you want to give them a go or follow along. I’ve already got a <a target="_blank" rel="noopener" href="http://dwheelerau.com/2013/04/15/how-to-use-deseq-to-analyse-rnaseq-data/">blow by blow run through on how to do use DESeq</a> and much of that applies to the new package, so here I’ll just concentrate on some DESeq2 specific stuff as well as all the graphs. I’ve included some side by side comparisons between DESeq and DESeq2. Installing is easy:</p>
+<p>1</p>
+<p>2</p>
+<p><code>source``(``&#39;[http://bioconductor.org/biocLite.R](http://bioconductor.org/biocLite.R)&#39;``)</code></p>
+<p><code>biocLite``(``&#39;DESeq2&#39;``)</code></p>
+<p>One important change is that now you can directly create the count table using raw <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">HT-Seq-count</a> output, and I’ll show you how to do that below. Remember HT-Seq-count will create a single file for each replicate of a condition (based on an SAM alignment file), so in my case with two conditions (control and treatment) and 3 reps each, that makes a total of 6 files. I called these files treated1.txt, treated2.txt, treated3.txt, untreated1 untreated2, untreated3 so that i can use grep to import them (explained below). Previously i would use a script to merge them all together, now DESeq2 allows you to import these files directory. Below I set the directory where the files are located; use grep to catch all these files based on the string match “treated” that they all share (be carefully it doesn’t catch anything else), this is stored in sampleFiles. If you like you could just directly specify the files using “sampleFiles&lt;-c(“treated1.txt”,..etc..”untreated3.txt”). Importantly, we need to setup the sampleConditions, with the same order as that found for the file names in sampleFiles (so it knows what each files represents). Finally we make a dataframe that becomes a deseq table. Note my “#” lines are just nonfunctional comment lines that I am using to print out the output from the screen!</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p>34</p>
+<p>35</p>
+<p><code>library``(``&#39;DESeq2&#39;``)</code></p>
+<p><code>directory&lt;-``&#39;/home/dwheeler/Desktop/BLOG/Dec_post2&#39;</code></p>
+<p><code>#use grep to search for the &#39;treated&#39; part of filename to collect files</code></p>
+<p><code>sampleFiles&lt;-``grep``(``&#39;treated&#39;``,``list.files``(directory),value=``TRUE``)</code></p>
+<p><code># sampleFiles</code></p>
+<p><code>#[1] &#39;treated1.txt&#39;   &#39;treated2.txt&#39; &#39;treated3.txt&#39;  &#39;untreated1.txt&#39;</code></p>
+<p><code>#[5] &#39;untreated2.txt&#39; &#39;untreated3.txt&#39;</code></p>
+<p><code>sampleCondition&lt;-``c``(``&#39;treated&#39;``,``&#39;treated&#39;``,``&#39;treated&#39;``,``&#39;untreated&#39;``,``&#39;untreated&#39;``,``&#39;untreated&#39;``)</code></p>
+<p><code>sampleTable&lt;-``data.frame``(sampleName=sampleFiles, fileName=sampleFiles, condition=sampleCondition)</code></p>
+<p><code>####</code></p>
+<p><code>#sampleTable</code></p>
+<p><code>#     sampleName       fileName condition</code></p>
+<p><code>#1   treated1.txt   treated1.txt   treated</code></p>
+<p><code>#2   treated2.txt   treated2.txt   treated</code></p>
+<p><code>#3   treated3.txt   treated3.txt   treated</code></p>
+<p><code>#4 untreated1.txt untreated1.txt untreated</code></p>
+<p><code>#5 untreated2.txt untreated2.txt untreated</code></p>
+<p><code>#6 untreated3.txt untreated3.txt untreated</code></p>
+<p><code>######</code></p>
+<p><code>ddsHTSeq&lt;-``DESeqDataSetFromHTSeqCount``(sampleTable=sampleTable, directory=directory, design=~condition)</code></p>
+<p><code>#####</code></p>
+<p><code>#ddsHTSeq</code></p>
+<p><code>#class: DESeqDataSet</code></p>
+<p><code>#dim: 7921 6</code></p>
+<p><code>#exptData(0):</code></p>
+<p><code>#assays(1): counts</code></p>
+<p><code>#rownames(7921): seq_1 seq_2 ... seq_7920 seq_7921</code></p>
+<p><code>#rowData metadata column names(0):</code></p>
+<p><code>#colnames(6): treated1.txt treated2.txt ... untreated2.txt</code></p>
+<p><code>#  untreated3.txt</code></p>
+<p><code>#colData names(1): condition</code></p>
+<p><code>#######</code></p>
+<p><code>colData``(ddsHTSeq)$condition&lt;-``factor``(``colData``(ddsHTSeq)$condition, levels=``c``(``&#39;untreated&#39;``,``&#39;treated&#39;``))</code></p>
+<p>The levels in colData are important because they are used in the log calculations; it makes sense to set untreated or control first so that the direction of the logs fold changes doesn’t confuse everyone (typically we do comparisons to the control)! Now for the guts of the DEseq2 analysis.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p><code>dds&lt;-``DESeq``(ddsHTSeq)</code></p>
+<p><code>res&lt;-``results``(dds)</code></p>
+<p><code>res&lt;-res[``order``(res$padj),]</code></p>
+<p><code>head``(res)</code></p>
+<p><code>#DataFrame with 6 rows and 6 columns</code></p>
+<p><code>#          baseMean log2FoldChange      lfcSE      stat       pvalue</code></p>
+<p><code>#</code></p>
+<p><code>#seq_3146  997.5419      0.7894523 0.08297687  9.514125 1.832488e-21</code></p>
+<p><code>#seq_1802  746.3972      0.5685789 0.08533961  6.662544 2.691282e-11</code></p>
+<p><code>#seq_2146  406.1395      0.9424543 0.14108613  6.679993 2.389544e-11</code></p>
+<p><code>#seq_7548  466.5453      0.6036683 0.10178158  5.931017 3.010637e-09</code></p>
+<p><code>#seq_3240 1569.6556      0.6132326 0.11145966  5.501835 3.758596e-08</code></p>
+<p><code>#seq_958   149.6504      0.7398193 0.14154162  5.226868 1.724055e-07</code></p>
+<p><code>#                 padj</code></p>
+<p><code>#</code></p>
+<p><code>#seq_3146 1.299050e-17</code></p>
+<p><code>#seq_1802 6.359498e-08</code></p>
+<p><code>#seq_2146 6.359498e-08</code></p>
+<p><code>#seq_7548 5.335601e-06</code></p>
+<p><code>#seq_3240 5.328937e-05</code></p>
+<p><code>#seq_958  2.036971e-04</code></p>
+<p>Looking good, time for some plots. BTW I’m using the same dataset I used for the original DESeq blog post (links to data and that blog at top of page).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p><code>plotMA``(dds,ylim=``c``(-2,2),main=``&#39;DESeq2&#39;``)</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_MAplot.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq1_deseq2_maplot2.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq1_deseq2_maplot2.png?w=584&h=297" alt="MAPlot of DESeq1 (left) and DESeq2  (right) for the same data"></a> As expected for this dataset there are not many differentially expressed genes (red). There certainly is a difference in the level of scatter with this dataset using DESeq and DESeq2. Also note that there is good reduction in scatter for low count reads (left hand side of the graph) in DESeq2 versus the original version. DESeq tends to be a conservative approach, I like that, and with that in mind the update uses a test called cooks distance to remove outliers from the analysis. <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cook's_distance">Cooks distance</a> looks to see how much each sample contributes to a genes overall value fold change, with samples that cause extreme effects removed. To be specific, the gene will not be analysed for differential expression if one of its samples is considered an outlier. The idea being here that we want to see only DE genes that show a consistent pattern. The draw back of this approach is that there is a loss of power, as some genes that are truly DE will be removed before the statistical tests are performed. We can save the table, and also print out some information on what the columns mean.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p><code>mcols``(res,use.names=``TRUE``)</code></p>
+<p><code>#DataFrame with 6 rows and 2 columns</code></p>
+<p><code>#                       type</code></p>
+<p><code>#baseMean       intermediate</code></p>
+<p><code>#log2FoldChange      results</code></p>
+<p><code>#lfcSE               results</code></p>
+<p><code>#stat                results</code></p>
+<p><code>#pvalue              results</code></p>
+<p><code>#padj                results</code></p>
+<p> <code>#description</code></p>
+<p><code>#baseMean                        the base mean over all rows</code></p>
+<p><code>#log2FoldChange log2 fold change (MAP): condition treated vs untreated</code></p>
+<p><code>#lfcSE           standard error: condition treated vs untreated</code></p>
+<p><code>#stat            Wald statistic: condition treated vs untreated</code></p>
+<p><code>#pvalue          Wald test p-value: condition treated vs untreated</code></p>
+<p><code>#padj            BH adjusted p-values</code></p>
+<p><code>#write the table to a csv file</code></p>
+<p><code>write.csv``(``as.data.frame``(res),file=``&#39;sim_condition_treated_results_deseq2.csv&#39;``)</code></p>
+<p>BTW take this with a pinch of salt because its only a simple sample dataset, but the difference in gene counts is that deseq only found a single differentially expressed gene (at padj 0.1), whilst deseq2 called this same gene plus 23 others.  Also, reducing the cut-off multiple testing correction to 0.05 only removes 3 genes from the list with DESeq2. Now we want to transform the raw discretely distributed counts so that we can do clustering.</p>
+<p>1</p>
+<p>2</p>
+<p><code>rld&lt;-</code> <code>rlogTransformation``(dds, blind=``TRUE``)</code></p>
+<p><code>vsd&lt;-``varianceStabilizingTransformation``(dds, blind=``TRUE``)</code></p>
+<p>Here we choose blind so that the initial conditions setting does not influence the outcome, ie we want to see if the conditions cluster based purely on the individual datasets, in an unbiased way. According to the documentation, the rlogTransformation method that converts counts to log2 values is apparently better than the old varienceStabilisation method when the data size factors vary by large amounts. The code and plot below shows the [nice] effect of the transformation.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p><code>par``(mai=``ifelse``(1:4 &lt;= 2,</code> <code>par``(``&#39;mai&#39;``), 0))</code></p>
+<p><code>px     &lt;-</code> <code>counts``(dds)[,1] /</code> <code>sizeFactors``(dds)[1]</code></p>
+<p><code>ord    &lt;-</code> <code>order``(px)</code></p>
+<p><code>ord    &lt;- ord[px[ord]&lt;150]</code></p>
+<p><code>ord    &lt;- ord[``seq``(1,</code> <code>length``(ord), length=50)]</code></p>
+<p><code>last   &lt;- ord[``length``(ord)]</code></p>
+<p><code>vstcol &lt;-</code> <code>c``(``&#39;blue&#39;``,</code> <code>&#39;black&#39;``)</code></p>
+<p><code>matplot``(px[ord],</code> <code>cbind``(``assay``(vsd)[, 1],</code> <code>log2``(px))[ord, ], type=l, lty=1, col=vstcol, xlab=``&#39;n&#39;``, ylab=``&#39;f(n)&#39;``)</code></p>
+<p><code>legend``(``&#39;bottomright&#39;``, legend =</code> <code>c``(``expression``(``&#39;variance stabilizing transformation&#39;``),</code> <code>expression``(log[2](n/s[1]))), fill=vstcol)</code></p>
+<p><code>dev.copy``(png,``&#39;DESeq2_VST_and_log2.png&#39;``)</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_vst_and_log21.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_vst_and_log21.png?w=300&h=300" alt="Graph showing variance stabilizing transformation for sample 1 (blue) and of the transformation f (n) = log2 (n/s1 ) (black)"></a> The x axis is the square root of variance over the mean for all samples, so this will naturally included variance due to the treatment. The goal here is to flattern the curve so that there is consistent variance across the read counts, and that is what we got.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p><code>library``(``&#39;vsn&#39;``)</code></p>
+<p><code>par``(mfrow=``c``(1,3))</code></p>
+<p><code>notAllZero &lt;- (``rowSums``(``counts``(dds))&gt;0)</code></p>
+<p><code>meanSdPlot``(``log2``(``counts``(dds,normalized=``TRUE``)[notAllZero,] + 1), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><code>meanSdPlot``(``assay``(rld[notAllZero,]), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><code>meanSdPlot``(``assay``(vsd[notAllZero,]), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_stabilizing_comp1.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_stabilizing_comp1.png?w=584" alt="deseq2_stabilizing_comp"></a> This interesting plot shows the standard deviation across all samples against the mean counts using three different methods of transformation. With this data you can see that the shifted logarithm method (left) seems to do pretty badly at for low count genes, with both regularized log (center) and DESeqs variance stabilisation (right) doing a much better job across the entire dynamic range of counts. For some reason, everyone loves a good heat map!</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p><code>library``(``&#39;RColorBrewer&#39;``)</code></p>
+<p><code>library``(``&#39;gplots&#39;``)</code></p>
+<p><code>select &lt;-</code> <code>order``(``rowMeans``(``counts``(dds,normalized=``TRUE``)),decreasing=``TRUE``)[1:30]</code></p>
+<p><code>hmcol&lt;-</code> <code>colorRampPalette``(``brewer.pal``(9,</code> <code>&#39;GnBu&#39;``))(100)</code></p>
+<p><code>heatmap.2``(``counts``(dds,normalized=``TRUE``)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``&#39;none&#39;``,</code></p>
+<p><code>dendrogram=``&#39;none&#39;``, trace=``&#39;none&#39;``, margin=``c``(10,6))</code></p>
+<p><code>dev.copy``(png,``&#39;DESeq2_heatmap1&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>heatmap.2``(``assay``(rld)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``&#39;none&#39;``,</code></p>
+<p><code>dendrogram=``&#39;none&#39;``, trace=``&#39;none&#39;``, margin=``c``(10, 6))</code></p>
+<p><code>dev.copy``(png,``&#39;DESeq2_heatmap2&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>heatmap.2``(``assay``(vsd)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``&#39;none&#39;``,</code></p>
+<p><code>dendrogram=``&#39;none&#39;``, trace=``&#39;none&#39;``, margin=``c``(10, 6))</code></p>
+<p><code>dev.copy``(png,``&#39;DESeq2_heatmap3&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_heatmaps.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_heatmaps.png?w=584&h=261" alt="heatmaps"></a> The above shows heatmaps for 30 most highly expressed genes (not necessarily the biggest fold change). The data is of raw counts (left), regularized log transformation (center) and from variance stabilizing transformation (right) and you can clearly see the effect of the transformation has by shrinking the variance so that we don’t get the squish effect shown in the left hand graph. Now we calculate sample to sample distances so we can make a dendrogram to look at the clustering of samples.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p><code>distsRL &lt;-</code> <code>dist``(``t``(``assay``(rld)))</code></p>
+<p><code>mat&lt;-</code> <code>as.matrix``(distsRL)</code></p>
+<p><code>rownames``(mat) &lt;-</code> <code>colnames``(mat) &lt;-</code> <code>with``(``colData``(dds),</code></p>
+<p><code>paste``(condition,sampleFiles , sep=``&#39; : &#39;``))</code></p>
+<p><code>#updated in latest vignette (See comment by Michael Love)</code></p>
+<p><code>#this line was incorrect</code></p>
+<p><code>#heatmap.2(mat, trace=&#39;none&#39;, col = rev(hmcol), margin=c(16, 16))</code></p>
+<p><code>#From the Apr 2015 vignette</code></p>
+<p><code>hc &lt;-</code> <code>hclust``(distsRL)</code></p>
+<p><code>heatmap.2``(mat, Rowv=``as.dendrogram``(hc),</code></p>
+<p><code>symm=``TRUE``, trace=``&#39;none&#39;``,</code></p>
+<p><code>col =</code> <code>rev``(hmcol), margin=``c``(13, 13))</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_heatmaps_samplebysample.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="https://dwheelerau.files.wordpress.com/2014/02/dist_matrix.png"><img src="http://dwheelerau.files.wordpress.com/2014/02/dist_matrix.png?w=584" alt="dist_matrix"></a> Although this result looks terrible, as we would expect samples to cluster by treatment, in this case I’m actually happy by this result. Why? Well this was actually a control experiment to show that slightly different (and unavoidable) experimental setup for the different samples, wasn’t responsible for the observed expression differences, so seeing that there is little treatment effect makes me happy. Remember, always <em>try</em> and do what Fisher tells us to, <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Design_of_experiments">replicate, randomised, block</a>. Similarly the pca.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p><code>print``(``plotPCA``(rld, intgroup=``c``(``&#39;condition&#39;``)))</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_pca.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_pca.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_pca.png?w=300&h=247" alt="deseq2_pca"></a> I hope your’s looks better! Previously we talked about the cooks distance treatment of outliers, in that a gene is thrown away if one of its samples is deemed to be an outlier. You may not want this to happen so DESeq2 we can take a different approach by replacing the outlier value with one estimated value as predicted by the distribution using the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Truncated_mean">trimmed mean</a> approach. DESeq2 recomends you only do this if you have several replicates per treatment, and indeed it automatically uses this feature if you have 7 or more replicates in your datatable.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p><code>ddsClean &lt;-</code> <code>replaceOutliersWithTrimmedMean``(dds)</code></p>
+<p><code>ddsClean &lt;-</code> <code>DESeq``(ddsClean)</code></p>
+<p><code>tab &lt;-</code> <code>table``(initial =</code> <code>results``(dds)$padj &lt; .1,</code></p>
+<p><code>cleaned =</code> <code>results``(ddsClean)$padj &lt; .1)</code></p>
+<p><code>addmargins``(tab)</code></p>
+<p><code>write.csv``(``as.data.frame``(tab),file=``&#39;sim_condition_treated_results_cleaned_summary_deseq2.csv&#39;``)</code></p>
+<p><code>resClean &lt;-</code> <code>results``(ddsClean)</code></p>
+<p><code>write.csv``(``as.data.frame``(resClean),file=``&#39;sim_condition_treated_results_cleaned_deseq2.csv&#39;``)</code></p>
+<p>In my case it didn’t really make much difference. Dispersion plot shows how the estimates are shrunk from the gene wise values (black dots) toward the fitted estimates, with the final values used in testing being the blue dots.</p>
+<p>1</p>
+<p><code>plotDispEsts``(dds)</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_dispersion_plot.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_dispersion_plot.png?w=584" alt="Dispersion plots deseq and deseq2 (right)"></a> and compared DESeq1 and 2. <a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/dispersion_estimages.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/dispersion_estimages.png?w=584&h=437" alt="dispersion plots Deseq1 Left and right deseq2"></a> Now independent filtering to remove any tests that have little chance of pass to reduce the number of tests we have to perform, thus reducing the effects of multiple testing error. (false discovery). You can see how many genes are rejected based on different values of alpha (FDR)</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>#filtering threashold</code></p>
+<p><code>attr``(res,``&#39;filterThreshold&#39;``)</code></p>
+<p><code>#     10%</code></p>
+<p><code>#91.48005</code></p>
+<p><code>plot``(``attr``(res,``&#39;filterNumRej&#39;``),type=``&#39;b&#39;``, ylab=``&#39;number of rejections&#39;``)</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_filtering_treshold.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_filtering-threashold_ed.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_filtering-threashold_ed.png?w=584" alt="deseq2_filtering threashold_Ed"></a></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p><code>W &lt;- res$stat</code></p>
+<p><code>maxCooks &lt;-</code> <code>apply``(``assays``(dds)[[``&#39;cooks&#39;``]],1,max)</code></p>
+<p><code>idx &lt;- !``is.na``(W)</code></p>
+<p><code>plot``(``rank``(W[idx]), maxCooks[idx], xlab=``&#39;rank of Wald statistic&#39;``,</code></p>
+<p><code>ylab=``&#39;maximum Cook&#39;``s distance per gene&#39;,</code></p>
+<p><code>ylim=``c``(0,5), cex=.4, col=``rgb``(0,0,0,.3))</code></p>
+<p><code>m &lt;-</code> <code>ncol``(dds)</code></p>
+<p><code>p &lt;- 3</code></p>
+<p><code>abline``(h=``qf``(.99, p, m - p))</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_cooksdist.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/cooks-distance.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/cooks-distance.png?w=300&h=270" alt="cooks distance"></a> Plot of the maximum Cook’s distance per gene over the rank of the Wald statistics for the condition. Here more about independent filtering. What it shows in genes with very low counts are unlikely to have a significant p-value due to excessive dispersion at the left side of the dynamic range of counts. The y-axis here is -log10, so bigger numbers are smaller p-values (better).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>plot``(res$baseMean+1, -``log10``(res$pvalue),</code></p>
+<p><code>log=``&#39;x&#39;``, xlab=``&#39;mean of normalized counts&#39;``,</code></p>
+<p><code>ylab=``expression``(-log[10](pvalue)),</code></p>
+<p><code>ylim=``c``(0,30),</code></p>
+<p><code>cex=.4, col=``rgb``(0,0,0,.3))</code></p>
+<p><code>dev.copy``(png,``&#39;deseq2_indep_filt.png&#39;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_indep_filtering.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_indep_filtering.png?w=300&h=270" alt="deseq2_indep_filtering"></a> All those dots on the left hand side the graph represent failed tests due to very low count values, thus we can really just get rid of them to reduce our chance of making a type I error. And again, you can see that only a few small (or no) p-values are discarded by the filtering. NOTE: You might only see blue lines [I’ve broken something??]</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p><code>use &lt;- res$baseMean &gt;</code> <code>attr``(res,``&#39;filterThreshold&#39;``)</code></p>
+<p><code>table``(use)</code></p>
+<p><code>h1 &lt;-</code> <code>hist``(res$pvalue[!use], breaks=0:50/50, plot=``FALSE``)</code></p>
+<p><code>h2 &lt;-</code> <code>hist``(res$pvalue[use], breaks=0:50/50, plot=``FALSE``)</code></p>
+<p><code>colori &lt;-</code> <code>c``(``&#39;do not pass&#39;``=``&#39;khaki&#39;``,</code> <code>&#39;pass&#39;``=``&#39;powderblue&#39;``)</code></p>
+<p><code>barplot``(height =</code> <code>rbind``(h1$counts, h2$counts), beside =</code> <code>FALSE``,</code></p>
+<p><code>col = colori, space = 0, main =</code> <code>&#39;&#39;``, ylab=``&#39;frequency&#39;``)</code></p>
+<p><code>text``(x =</code> <code>c``(0,</code> <code>length``(h1$counts)), y = 0, label =</code> <code>paste``(``c``(0,1)),</code></p>
+<p><code>adj =</code> <code>c``(0.5,1.7), xpd=``NA``)</code></p>
+<p><code>legend``(``&#39;topright&#39;``, fill=``rev``(colori), legend=``rev``(``names``(colori)))</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2-pvals-and-mulittest.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2-pvals-and-mulittest.png?w=584&h=282" alt="deseq2 pvals and mulittest"></a> The graph on the left ranks the p-values from smallest to biggest (x-axis) and plots them. The black line is the actual p-value numbers (remember only about 23 genes had a p-value lower than 0.05). The red line has a slope that represents the number of tests divided by the false discovery rate (0.1). The idea here is the FDR is controlled at the 0.1% value for all tests that occur to the left of the right-most intersection of the black and red line. The code for the right hand plot above.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p><code>resFilt &lt;- res[use &amp; !``is.na``(res$pvalue),]</code></p>
+<p><code>orderInPlot &lt;-</code> <code>order``(resFilt$pvalue)</code></p>
+<p><code>showInPlot &lt;- (resFilt$pvalue[orderInPlot] &lt;= 0.08)</code></p>
+<p><code>alpha &lt;- 0.1</code></p>
+<p><code>plot``(``seq``(along=``which``(showInPlot)), resFilt$pvalue[orderInPlot][showInPlot],</code></p>
+<p><code>pch=``&#39;.&#39;``, xlab =</code> <code>expression``(``rank``(p[i])), ylab=``expression``(p[i]))</code></p>
+<p><code>abline``(a=0, b=alpha/``length``(resFilt$pvalue), col=``&#39;red3&#39;``, lwd=2)</code></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p><code>sessionInfo``()</code></p>
+<p><code>R version</code> <code>3.0.2</code> <code>(2013-09-25)</code></p>
+<p><code>Platform: x86_64-pc-linux-``gnu</code> <code>(64-bit)</code></p>
+<p><code>locale:</code></p>
+<p><code>[1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C</code></p>
+<p><code>[3] LC_TIME=en_US.UTF-8 LC_COLLATE=en_US.UTF-8</code></p>
+<p><code>[5] LC_MONETARY=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8</code></p>
+<p><code>[7] LC_PAPER=en_US.UTF-8 LC_NAME=C</code></p>
+<p><code>[9] LC_ADDRESS=C LC_TELEPHONE=C</code></p>
+<p><code>[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C</code></p>
+<p><code>attached base packages:</code></p>
+<p><code>[1] parallel stats graphics grDevices utils datasets methods</code></p>
+<p><code>[8] base</code></p>
+<p><code>other attached packages:</code></p>
+<p><code>[1] gplots_2.12.1 RColorBrewer_1.0-5 BiocInstaller_1.12.0</code></p>
+<p><code>[4] DESeq2_1.2.8 RcppArmadillo_0.3.920.3 Rcpp_0.10.6</code></p>
+<p><code>[7] GenomicRanges_1.14.3 XVector_0.2.0 IRanges_1.20.6</code></p>
+<p><code>[10] BiocGenerics_0.8.0</code></p>
+<p><code>loaded via a</code> <code>namespace</code> <code>(and not attached):</code></p>
+<p><code>[1] affy_1.40.0 affyio_1.30.0 annotate_1.40.0</code></p>
+<p><code>[4] AnnotationDbi_1.24.0 Biobase_2.22.0 bitops_1.0-6</code></p>
+<p><code>[7] caTools_1.16 DBI_0.2-7 DESeq_1.14.0</code></p>
+<p><code>[10] gdata_2.13.2 genefilter_1.44.0 geneplotter_1.40.0</code></p>
+<p><code>[13] grid_3.0.2 gtools_3.1.1 KernSmooth_2.23-10</code></p>
+<p><code>[16] lattice_0.20-24 limma_3.18.5 locfit_1.5-9.1</code></p>
+<p><code>[19] preprocessCore_1.24.0 RSQLite_0.11.4 splines_3.0.2</code></p>
+<p><code>[22] stats4_3.0.2 survival_2.37-4 tools_3.0.2</code></p>
+<p><code>[25] vsn_3.30.0 XML_3.98-1.1 xtable_1.7-1</code></p>
+<p><code>[28] zlibb</code></p>
+<p>[Updated July ’14: to fix errors with distance matrix plot, cooks distance, and the Benjamini-Hochberg multiple testing adjustment procedure (props to Stefan for pointing them out]</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2016/03/03/R%EF%BC%9A%E6%9D%A1%E5%BD%A2%E5%9B%BEbar-plot%E4%B8%8A%E7%9A%84%E8%AF%AF%E5%B7%AE%E7%BA%BFerror-barsd-se-or-ci-/">R：条形图(bar plot)上的误差线(Error Bar):SD, SE or CI?</a><a class="next" href="/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/">DESeq2: RNAseq pipeline – Alignment to DE analysis</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/1st_post/">My Fast HexoPages</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/06/%E5%AE%89%E8%A3%85hic-pro/">安装HiC-Pro （HiC数据预处理工具）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/%E4%B8%A4%E4%B8%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BA%92%E6%AF%94%E8%BE%83%EF%BC%9Amummer/">两个基因组序列相互比较：Mummer</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/shell%E8%84%9A%E6%9C%AC%E5%92%8Cperl%E8%84%9A%E6%9C%AC%E7%9A%84%E6%AE%B5%E6%B3%A8%E9%87%8A/">shell脚本和perl脚本的段注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9Acorrplot-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5-/">R：corrplot 相关系数矩阵</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9A%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0-/">R：经验分布函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/14/R%EF%BC%9A%E5%88%A0%E9%99%A4%E5%8C%85%E5%90%AB%E7%BC%BA%E5%A4%B1%E5%80%BCNA%E7%9A%84%E8%A1%8C-/">R：删除包含缺失值NA的行</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/28/%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E8%BF%90%E8%A1%8Cwindows%E7%A8%8B%E5%BA%8F%EF%BC%9Amono/">在Linux平台运行windows程序：mono</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/15/nas-%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">NAS 安装与使用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

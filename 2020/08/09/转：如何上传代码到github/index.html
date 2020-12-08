@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>转：如何上传代码到github | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">转：如何上传代码到github</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">转：如何上传代码到github</h1><div class="post-meta">2020-08-09<span> | </span><span class="category"><a href="/categories/Linux/">Linux</a><a href="/categories/Notes/">Notes</a></span></div><div class="post-content"><p>自从使用github以来，一直都是在<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://github.com/">github网站</a>在线上传文件到仓库中，但是有时因为网络或者电脑的原因上传失败。最重要的原因是我习惯本地编辑，完成以后再一起上传github。看过了几个教程，总结出最适合自己的比较简单的方法。</p>
+<p>两种方法上传本地文件到github</p>
+<h4 id="1-github在线上传文件夹"><a href="#1-github在线上传文件夹" class="headerlink" title="1. github在线上传文件夹"></a>1. github在线上传文件夹</h4><p>在线上传也可以上传完整的文件夹结构，直接拖拽到上传文件页面的框中即可。</p>
+<h5 id="1-1点击上传文件"><a href="#1-1点击上传文件" class="headerlink" title="1.1点击上传文件"></a>1.1点击上传文件</h5><p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150553.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150553.png?w=1024"></a></p>
+<p>点击上传</p>
+<h5 id="1-2-直接拖拽"><a href="#1-2-直接拖拽" class="headerlink" title="1.2 直接拖拽"></a>1.2 直接拖拽</h5><p>直接拖拽即可上传文件夹及文件夹里面的文件。如果点击* choose your files *就只能上传单个文件。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150605.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150605.png?w=1024"></a></p>
+<p>直接拖拽</p>
+<h4 id="2-通过git工具上传本地文件夹（本地项目）"><a href="#2-通过git工具上传本地文件夹（本地项目）" class="headerlink" title="2. 通过git工具上传本地文件夹（本地项目）"></a>2. 通过git工具上传本地文件夹（本地项目）</h4><h5 id="2-1-下载git工具"><a href="#2-1-下载git工具" class="headerlink" title="2.1 下载git工具"></a>2.1 下载<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://git-scm.com/downloads">git工具</a></h5><p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145151.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145151.png?w=465"></a></p>
+<p>选择对应版本下载</p>
+<h5 id="2-2-下载完成后安装完成，注意在安装过程中可以选择创建桌面快捷方式"><a href="#2-2-下载完成后安装完成，注意在安装过程中可以选择创建桌面快捷方式" class="headerlink" title="2.2 下载完成后安装完成，注意在安装过程中可以选择创建桌面快捷方式"></a>2.2 下载完成后安装完成，注意在安装过程中可以选择创建桌面快捷方式</h5><p><img src="//upload-images.jianshu.io/upload_images/3067059-fa7d131432a1232e.png?imageMogr2/auto-orient/stripimageView2/2/w/503/format/webp"></p>
+<p>桌面快捷方式</p>
+<h5 id="2-3-绑定用户"><a href="#2-3-绑定用户" class="headerlink" title="2.3 绑定用户"></a>2.3 绑定用户</h5><p>打开git-bash.exe（直接在桌面上点击右键，或者点击开始按钮找到Git Bash）</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207144957.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207144957.png?w=395"></a></p>
+<p>运行gitBash.gif</p>
+<p>在打开的GIt Bash中输入以下命令（用户和邮箱为你github注册的账号和邮箱）</p>
+<p>$ git config –global user.name “hanyuntao”<br>$ git config –global user.email “<a href="mailto:&#x68;&#x61;&#110;&#x79;&#x75;&#x6e;&#116;&#x61;&#x6f;&#99;&#x6e;&#x40;&#x31;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;">&#x68;&#x61;&#110;&#x79;&#x75;&#x6e;&#116;&#x61;&#x6f;&#99;&#x6e;&#x40;&#x31;&#x36;&#51;&#x2e;&#99;&#111;&#x6d;</a>“</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145430.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145430.png?w=763"></a></p>
+<p>Paste_Image.png</p>
+<h5 id="2-4-设置SSH-key（git中sshkey有何作用？）"><a href="#2-4-设置SSH-key（git中sshkey有何作用？）" class="headerlink" title="2.4 设置SSH key（git中sshkey有何作用？）"></a>2.4 设置SSH key（<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://segmentfault.com/q/1010000000118744">git中sshkey有何作用？</a>）</h5><h6 id="2-4-1-生成ssh-key"><a href="#2-4-1-生成ssh-key" class="headerlink" title="2.4.1 生成ssh key"></a>2.4.1 生成ssh key</h6><p>首先检查是否已生成密钥<code>cd ~/.ssh</code>，如果返回的<code>ls</code>有3个文件,则密钥已经生成。</p>
+<p>密钥生成</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145728.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207145728.png?w=874"></a></p>
+<p>如果没有密钥，则通过</p>
+<p>$ ssh-keygen -t rsa -C “<a href="mailto:&#x68;&#97;&#x6e;&#x79;&#117;&#110;&#x74;&#97;&#111;&#x63;&#x6e;&#64;&#49;&#54;&#51;&#46;&#99;&#x6f;&#x6d;">&#x68;&#97;&#x6e;&#x79;&#117;&#110;&#x74;&#97;&#111;&#x63;&#x6e;&#64;&#49;&#54;&#51;&#46;&#99;&#x6f;&#x6d;</a>“</p>
+<p>生成，生成过程中一路按3次回车键就好了。（默认路径，默认没有密码登录）<br>生成成功后，去对应目录C:\Users\hyt.ssh里（hyt为电脑用户名，每个人不同）用记事本打开id_rsa.pub，得到ssh key公钥。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150754.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150754.png?w=768"></a></p>
+<p>ssh key公钥</p>
+<h6 id="2-4-2-为github账号配置ssh-key"><a href="#2-4-2-为github账号配置ssh-key" class="headerlink" title="2.4.2 为github账号配置ssh key"></a>2.4.2 为github账号配置ssh key</h6><p>切换到github，展开个人头像的小三角，点击settings，然后打开SSH keys菜单， 点击Add SSH key新增密钥，填上标题（最好跟本地仓库保持一致）。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150300.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150300.png?w=1024"></a></p>
+<p>设置sshkey.gif</p>
+<p>接着将id_rsa.pub文件中key粘贴到此，最后Add key生成密钥吧。\</p>
+<h4 id="2-5-上传本地项目到github"><a href="#2-5-上传本地项目到github" class="headerlink" title="2.5 上传本地项目到github"></a>2.5 上传本地项目到github</h4><h5 id="2-5-1-创建一个本地项目"><a href="#2-5-1-创建一个本地项目" class="headerlink" title="2.5.1 创建一个本地项目"></a>2.5.1 创建一个本地项目</h5><p>这是我自己创建的几个文件夹及文件。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150936.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207150936.png?w=778"></a></p>
+<p>本地项目</p>
+<h5 id="2-5-2-建立本地仓库"><a href="#2-5-2-建立本地仓库" class="headerlink" title="2.5.2 建立本地仓库"></a>2.5.2 建立本地仓库</h5><p>1.首先进入text文件夹</p>
+<p>cd d:text</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151042.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151042.png?w=480"></a></p>
+<p>首先进入text文件夹</p>
+<p>2.执行指令：<code>git init</code></p>
+<p>执行git init</p>
+<p>初始化成功后你会发现项目里多了一个隐藏文件夹.git</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151137.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151137.png?w=799"></a></p>
+<p>隐藏的文件夹</p>
+<p>3.执行指令：<code>git add .</code><br>将所有文件添加到仓库</p>
+<p>执行git add .</p>
+<p>4.执行指令：<code>git commit -m &quot;submitted&quot;</code><br>双引号内是提交注释。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151233.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151233.png?w=1024"></a></p>
+<p>提交文件</p>
+<h5 id="2-5-3-关联github仓库"><a href="#2-5-3-关联github仓库" class="headerlink" title="2.5.3 关联github仓库"></a>2.5.3 关联github仓库</h5><p>1.到github text仓库复制仓库地址</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151406.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207151406.png?w=1024"></a></p>
+<p>复制仓库地址<br>2.执行指令：<code>git remote add origin https://github.com/hanyuntao/text.git</code></p>
+<p>执行指令</p>
+<h5 id="2-5-4-上传本地代码"><a href="#2-5-4-上传本地代码" class="headerlink" title="2.5.4 上传本地代码"></a>2.5.4 上传本地代码</h5><p>执行指令：<code>git push -u origin master</code></p>
+<p>执行指令</p>
+<blockquote>
+<p>备注：github对应的文件夹里面不能有相同的文件名或文件夹，否则出错。我之前在网页版本上传了几个文件，但是网页版本无法上传文件夹，所以使用windows桌面客户端，要清理掉网页版已经上传的几个文件，才能用上面的代码上传。</p>
+</blockquote>
+<h5 id="2-5-5完成了"><a href="#2-5-5完成了" class="headerlink" title="2.5.5完成了"></a>2.5.5完成了</h5><p>可以看到我们的本地项目已经上传到了github上了。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207152041.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207152041.png?w=1024"></a></p>
+<p>完成了</p>
+<p>** 注意：git是不能管理空的文件夹的，文件夹里必须有文件才能上传。 **</p>
+<p>参考资料：?  </p>
+<ul>
+<li>  如何<strong>更新代码？</strong></li>
+</ul>
+<p>第一步：查看当前的git仓库状态，可以使用git status，会列出当前目录下的文件与本地git仓库里面列出的文件的不同之处。</p>
+<p>git status</p>
+<p>第二步：更新本地git仓库</p>
+<p>git add *</p>
+<p>第三步：接着输入git commit -m “Updated”</p>
+<p>git commit -m “Updated”</p>
+<p>第四步：先git pull,拉取当前分支最新代码（也就是获取GitHub上的最新代码信息，更新本地代码）</p>
+<p>git pull</p>
+<p>第五步：push到远程master分支上（修改本地代码后，再更新GitHub上的代码）</p>
+<p>git push origin master</p>
+<p>不出意外，打开GitHub已经同步了。</p>
+<p>总之，先pull，再push。</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2020/09/04/%E4%BD%BF%E7%94%A8-enrichment-map-%E5%81%9A%E5%9F%BA%E5%9B%A0%E7%BD%91%E7%BB%9C/">使用 Enrichment Map或ClueGO 做基因富集分析+GO网络</a><a class="next" href="/2020/08/08/R%EF%BC%9A%E5%A6%82%E4%BD%95%E5%AF%B9%E5%9D%90%E6%A0%87%E8%BD%B4%E5%AF%B9%E5%BA%94%E5%85%83%E7%B4%A0%E7%9A%84%E9%A1%BA%E5%BA%8F%E8%BF%9B%E8%A1%8C%E8%B0%83%E6%95%B4-/">R：如何对坐标轴对应元素的顺序进行调整</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/1st_post/">My Fast HexoPages</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/06/%E5%AE%89%E8%A3%85hic-pro/">安装HiC-Pro （HiC数据预处理工具）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/%E4%B8%A4%E4%B8%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BA%92%E6%AF%94%E8%BE%83%EF%BC%9Amummer/">两个基因组序列相互比较：Mummer</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/05/shell%E8%84%9A%E6%9C%AC%E5%92%8Cperl%E8%84%9A%E6%9C%AC%E7%9A%84%E6%AE%B5%E6%B3%A8%E9%87%8A/">shell脚本和perl脚本的段注释</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9Acorrplot-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5-/">R：corrplot 相关系数矩阵</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/16/R%EF%BC%9A%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0-/">R：经验分布函数</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/14/R%EF%BC%9A%E5%88%A0%E9%99%A4%E5%8C%85%E5%90%AB%E7%BC%BA%E5%A4%B1%E5%80%BCNA%E7%9A%84%E8%A1%8C-/">R：删除包含缺失值NA的行</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/28/%E5%9C%A8linux%E5%B9%B3%E5%8F%B0%E8%BF%90%E8%A1%8Cwindows%E7%A8%8B%E5%BA%8F%EF%BC%9Amono/">在Linux平台运行windows程序：mono</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/15/nas-%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">NAS 安装与使用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

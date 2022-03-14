@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Bioinfo | CUT&amp;Tag sequencing and ChIP sequencing | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Bioinfo | CUT&amp;Tag sequencing and ChIP sequencing</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Bioinfo | CUT&amp;Tag sequencing and ChIP sequencing</h1><div class="post-meta">2021-10-20<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><p>CUT&amp;Tag 技术研究蛋白与染色质结合，相对于 ChIP Seq 技术具有显著优势，这个方法的原理是什么？先需要提到的是染色质免疫切割技术。CUT&amp;RUN 是一项对染色质免疫切割技术（ChIC）在全基因组范围的扩展方法，由 Laemmli 实验室开发（Schmid et al., 2004）。ChIC 使用蛋白 A-MNase 融合蛋白切割与靶蛋白相关并被特异性抗体识别的 DNA 区域。但是，ChIC 只能通过 southern blot 对特定位点进行分析。与此有关的一种方法是染色质内源性切割（ChEC），这种方法通过融合目标蛋白和 MNase 来分析目标蛋白在全基因组范围的结合位点（Schmid et al., 2004; Zentner et al ., 2015）。这种方法有一个明显的缺点，那就是需要为各目标蛋白生成特异性融合蛋白。CUT&amp;RUN 在这两种方法的基础上有了重大改进，它通过抗体将重组蛋白 A/G-MNase 固定在了目标蛋白处（Meers et al., 2019; Skene and Henikoff, 2017）。</p>
+<p>重要的是，该方法可以回收 MNase 消化的片段，因此可用于基于测序的蛋白占用和组蛋白修饰定位的全基因组分析。与基于 ChIP 的方法相比，CUT&amp;RUN 具有以下优势：使用磁珠固定细胞核，简化了操作步骤；适用于新鲜组织样本和冷冻组织样本；缩短了生成 DNA 测序文库制备材料的时间（1-2 天）。此外，由于对目标蛋白两侧的 DNA 进行了原位靶向切割，因此只有靶点 DNA 片段才会从细胞核中释放并被收集，从而留下脱靶序列。因此，CUT&amp;RUN 产生的背景信号比 ChIP 少得多。自开发以来，CUT&amp;RUN 已被调整用于多种实验设置，包括自动化高通量表观遗传学分析（AutoCUT&amp;RUN）（Janssens et al., 2018）、不溶性染色质分析（如使用 CUT &amp; RUN.Salt (Thakur and Henikoff, 2018) 和 CUT&amp;RUN.ChIP 对着丝粒区域进行分析），用于检查 CUT &amp; RUN 消化 (Brahma and Henikoff, 2019) 释放的复合物中的特定蛋白组分。最显著的是，CUT&amp;RUN 对 input 的要求极低且信噪比高，这意味着其可用于单细胞分析，例如，用于研究单个小鼠胚胎细胞中的转录因子占有率（Hainer and Fazzio, 2019）。</p>
+<p>CUT&amp;Tag 由 Henikoff 实验室（Kaya-Okur et al., 2019）于 2019 年发布，衍生自 CUT&amp;RUN 实验方案，可以加快文库制备并简化自动化操作。<font color=blue>CUT&amp;Tag 对天然或轻微固定的染色质进行抗体引导的标签化，并据此识别全基因组中目标蛋白占据的位置。CUT&amp;Tag 方法中用到了预装接头 DNA 并与蛋白 A 融合的超高活性 Tn5 转座酶。这种融合蛋白能与一抗结合，在抗体附近切割 DNA，并插入带有接头序列的短标签（标签化）。回收标签化的 DNA 片段后，使用引物识别添加的标签中的序列进行 PCR 扩增，以生成下一代测序（NGS）文库。特定区域的序列读取频率与靶蛋白占据的位置或组蛋白修饰的位置对应。</font></p>
+<p>CUT&amp;RUN 和 CUT&amp;Tag 是两种操作简单、用途广泛且功能强大的 DNA-蛋白质相互作用分析方法，应成为每位分子生物学家的必备工具。这两种方法都有助于在全基因组范围内识别特定基因，以及以组蛋白修饰标记或与目标蛋白结合的顺式调控因子，从而深入了解基于染色质的基因控制机制。由于所需的起始材料极少，所以 CUT&amp;RUN 和 CUT&amp;Tag 在稀有细胞类型研究方面具有独特的优势。最重要的是，这两种方法的实验方案都简单易用，省时省力，可以快速周转，因此研究人员能够进行多项平行分析，从而更加全面地了解基因组调控的复杂性。</p>
+<p>转录因子和组蛋白通过与DNA相互作用（DNA-Protein Interaction, DPI）发挥着调控基因复制、表达、重组和修复的重要作用，在实现细胞功能的过程中至关重要。其中转录因子组合决定了细胞的增值、分化以及死亡，是表观基因组学研究的重要组成部分。研究 DNA-蛋白质相互作用的实验方法主要有凝胶阻滞实验、DNase 1 足迹实验、甲基化干扰实验、体内足迹实验和 ChIP-seq 等。基于 NGS 研究手段的 ChIP-seq 技术可以真实反应靶蛋白在全基因组上的结合情况，是非常经典的 DNA 结合位点分析方法，至今仍然在广泛使用。</p>
+<p>ChIP-Seq 的基本实验流程过程包括（图1）：甲醛交联将 DNA 结合蛋白和 DNA 紧密固定；然后抽提染色质，超声破碎 DNA 断裂，片段范围在 200-500 bp 之间；抗体孵育结合靶转录因子，Protein A/G 磁珠拉取抗体-蛋白-DNA 复合物；蛋白消化后再通过 PCR、芯片或者二代测序对 DNA 序列进行鉴定。</p>
+<p><img src="https://i.imgur.com/l384XKj.jpeg" alt="图1 ChIP Seq 原理示意图"></p>
+<p>看似简单，实则有几个技术难题，如果实验条件摸索不成熟会消耗大量时间。首先，ChIP需要较多的细胞量，免疫共沉淀需要足够的靶标蛋白，而靶标蛋白有限的情况下就需要提供大量的细胞；<br>其次，信噪比低，很多转录因子和染色体的结合相对松散，需要甲醛强交联，以防止后续洗涤过程破坏这些结合，这样导致很多非特异性信号，需要更高的数据量得到真实peak值；此外，实验的打断条件、重复性差等都需要系统的摸索才能得到较好的结果。这些因素综合起来导致ChIP对新手非常不友好，需要采购特定的设备、很长时间的预实验才能得到满意的结果。</p>
+<p>为了克服这些难题，CUT&amp;Run 以及更加成熟 CUT&amp;Tag 被开发出来。2019 年，美国弗雷德哈钦森癌症研究中心的 Henikoff 博士在 Nature Communication 公开了 CUT&amp;Tag 技术的详细结果与实验方案。</p>
+<p><font color=blue>CUT&amp;Tag（Cleavage Under Targets and Tagmentation, CUT&amp;Tag）技术，它免去了甲醛交联、超声破碎和免疫共沉淀的过程，这样既节省了初始实验材料又提高了信噪比、提升了实验重复性。</font>基本技术流程包括（图2）：首先，特异性抗体和靶标蛋白孵育结合；加入Tn5转座酶—Protein A复合物，其中Tn5转座酶两端已装载好建库接头引物；特异性抗体和Protein A相结合，转座酶Tn5被“拉”到转录因子附近；转座酶Tn5一次性完成附近DNA打断并完成NGS加接头过程，可直接建库[2]。基于CUT&amp;Tag，单细胞转录因子结合位点的研究也成为可能[2]，这也展示了CUT-Tag的潜能。<br>转录组测序</p>
+<p><img src="https://i.imgur.com/mSTAtC1.jpeg" alt="图2 CUT&amp;Tag seq 原理示意图"></p>
+<p>为证明Cut&amp;Tag技术的有效性，Henikoff 博士在对组蛋白H3K27me3进行研究时对比使用了 ChIP-seq、Cut&amp;RUN、Cut&amp;Tag 三种方法。从不同角度对三组数据进行比较后，发现 Cut&amp;Tag 技术具有显著优势，具体结果如下：</p>
+<ol>
+<li>CUT&amp;Tag 具有更好的信噪比和更低的背景<br>研究者将三种方法的数据量都设置为8M Reads，结果显示三者得到的染色体pattern相似。但ChIP-seq的背景噪声非常高，增加数据量到50M Reads时，才能达到类似的峰图，因此ChIP-seq需要更大的测序深度才能达到去背景噪音的结果。相反，Cut＆RUN和Cut＆Tag均具有极低的背景噪声水平，其中Cut＆Tag的背景噪音最低。</li>
+</ol>
+<p><img src="https://i.imgur.com/dFuPanX.jpeg" alt="图3 ChIP-Seq 、CUT&amp;RUN、CUT&amp;Tag 实验结果对比"></p>
+<ol start="2">
+<li>CUT&amp;Tag 在识别染色质特征时最高效</li>
+</ol>
+<p><img src="https://i.imgur.com/4kiBShb.jpeg" alt="Fig 4"></p>
+<p>图 4 左图为 CUT&amp;Tag、CUT&amp;RUN、ChIP-Seq 三种方法分析 H3K4me1 组蛋白修饰，CUT&amp;Tag 在识别染色质特征时最有效，能够给出 ChIP-Seq 无法读出的信息；右图为 peak-calling 的对比，使用默认参数调用每种方法上的峰值，结果显示 CUT&amp;Tag 比 CUT&amp;RUN、ChIP-seq 或 ATAC-seq 有更高的信号。</p>
+<ol start="3">
+<li>重复性好，灵敏度高</li>
+</ol>
+<p>三种方法对H3K4me1数据分析，并对结果进行分层聚类相关矩阵分析，结果显示显示CUT&amp;Tag重复样本的数据有高度的相似性，说明了CUT&amp;Tag的可重复性高。</p>
+<p><img src="https://i.imgur.com/J9MfdEm.jpeg" alt="Fig 5"></p>
+<p>图5 a：CUT&amp;Tag、CUT&amp;RUN、ChIP-Seq三种方法分析H3K4me1组蛋白修饰：CUT&amp;Tag在识别染色质特征时最有效，能够给出ChIP-Seq无法读出的信息；b：peak-Calling的对比，使用默认参数调用每种方法上的峰值，结果显示CUT&amp;Tag比CUT&amp;RUN、ChIP-seq或ATAC-seq有更高的信号。</p>
+<ol start="4">
+<li>CUT&amp;Tag 能对极少量细胞甚至单细胞进行分析</li>
+</ol>
+<p>CUT&amp;Tag 能够对极少量细胞（60 个细胞）甚至单细胞进行分析。由于 PCR 之前的反应都在细胞内进行，Henikoff 博士通过分配单个细胞到 5184 纳米孔，再加入带随机标签的引物进行扩增的办法，实现单细胞测序。</p>
+<p><img src="https://i.imgur.com/pgHzjVI.jpeg" alt="图6 CUT&amp;Tag 单细胞测序流程"></p>
+<p>Cut&amp;Tag注意事项：一个好的抗体是CUT&amp;Tag成功的前提！这个抗体要能识别天然构象蛋白且特异性强，最好选用文献验证过的抗体，实验前并进行IP验证。如果实在没有合适的抗体，可以选择标签蛋白，如FLAG和HA等经过有效验证的单克隆抗体。</p>
+<p>参考文献：</p>
+<p>genewiz: <a target="_blank" rel="noopener" href="https://www.genewiz.com.cn/Public/Resources/zxzx/0038/">https://www.genewiz.com.cn/Public/Resources/zxzx/0038/</a><br>abcam: <a target="_blank" rel="noopener" href="https://www.abcam.cn/epigenetics/chromatin-profiling-guide-1">https://www.abcam.cn/epigenetics/chromatin-profiling-guide-1</a></p>
+<p>[1] Kaya-Okur HS, Wu SJ, Codomo CA, Pledger ES, Bryson TD, Henikoff JG,Ahmad K, Henikoff S. CUT&amp;Tag for efficient epigenomic profilingof small samples and single cells. Nat Commun. 2019 Apr29;10(1):1930. doi: 10.1038/s41467-019-09982-5. PMID: 31036827;PMCID: PMC6488672.<br>[2] Wang Q, Xiong H, Ai S, Yu X,Liu Y, Zhang J, He A. CoBATCH for High-Throughput Single-CellEpigenomic Profiling. Mol Cell. 2019 Oct 3;76(1):206-216.e7. doi:10.1016/j.molcel.2019.07.015. Epub 2019 Aug 27. PMID: 31471188.</p>
+<p>CUT&amp;RUN 实验方案概述</p>
+<p>运行 CUT&amp;RUN 过程中，需使用靶向目标蛋白（例如具有特定修饰的组蛋白或转录因子）的抗体将蛋白 A/G 标记的 MNase 引导至基因组中目标蛋白所在区域。</p>
+<p>然后，活化 MNase，切除那些接近目标蛋白的 DNA 序列，这时小片段会从细胞核中释放出来。收集这些 DNA 片段，并通过低 input DNA 文库制备试剂盒生成 NGS 文库。</p>
+<p><img src="https://i.imgur.com/Vwb1FCW.png"></p>
+<p>图 1. CUT&amp;RUN 实验方案示意图。细胞核附着在磁性伴刀豆球蛋白 A 磁珠上，以便进行细胞处理并在每次洗涤后安全除去液体。对细胞核进行通透处理，同时与靶向目标蛋白的抗体一起孵育。蛋白 A/G-MNase 融合蛋白与靶向目标蛋白的抗体结合。添加 Ca2+ 时，MNase 会切割所形成的复合物两侧的 DNA，并释放从细胞核中扩散出的 DNA 片段。提取 DNA 并在基于末端修复和接头连接制备 DNA 文库时使用。NGS 通过特定区域中序列的频率给出目标蛋白的结合信息。</p>
+<p>该实验方案可分为五个部分：<br>1.提取细胞核并与磁珠结合<br>CUT&amp;RUN 通常使用未固定的新鲜样本作为起始材料，但是对实验方案做出调整后，也可以使用在 10% DMSO 中冷冻保存的样本（Janssens et al ., 2018; Skene et al ., 2018）。</p>
+<p>进行该实验方案所需的材料很少，一般建议先使用不超过 500,000 个细胞（哺乳动物）。</p>
+<p>用 Henikoff 推荐的细胞核提取缓冲液释放细胞或细胞核，并与伴刀豆球蛋白 A 磁珠结合，这种磁珠具有独特的糖结合特性。也可以使用其他兼容的细胞核提取实验方案（使用含 Triton X-100 的缓冲液时，请查看下述建议）。执行剩余实验方案时，可以使用磁力架轻松洗涤样本。</p>
+<p>2.通透技术和抗体结合<br>对与伴刀豆球蛋白 A 磁珠结合的细胞核作通透处理，同时在含洋地黄皂苷和 EDTA 的缓冲液中与靶向目的蛋白的抗体（一抗）一起孵育。EDTA 可迅速中断细胞代谢，从而抑制内源性 DNAse 的活性，保留染色质并降低总体背景信号。用户可自行调整该步骤的持续时间；通常为 2 小时到过夜不等。建议首先按 1:100 或 0.5 µg - 1.0 µg 稀释抗体，但需优化抗体的用量。建议加入阳性（α-H3K27me3）和阴性对照（同型对照 IgG）样本。</p>
+<p>需要注意的是，抗体种属不同，蛋白 A 和蛋白 G 的结合效率也不同（点击查看）。虽然相较单独使用蛋白 A 而言，使用蛋白 A/G 可以增强抗体的兼容性，但在某些情况下可能需要使用二抗。二抗通过增加蛋白 A/G 结合区域的数量将 MNAse 引导至目标区域，从而帮助回收低丰度的目标序列。</p>
+<p>3.MNase 结合和靶序列切割<br>为了将蛋白 A/G-MNase 定位到抗体结合的基因组靶区域，需在含洋地黄皂苷的洗涤缓冲液中稀释融合蛋白并与细胞核一起孵育。然后洗去未结合的酶融合蛋白，于 0℃ 加入 Ca2+ 离子激活 MNase。虽然切割本身对温度不是特别敏感，但是切割后的 DNA 片段的后续扩散对温度很敏感，而且温度升高会导致更高的背景。如果最终物质中的高分子量片段过多或过少，可以调整消化时间。</p>
+<p>4.DNA 回收<br>添加含 EGTA 的终止缓冲液，终止 MNase 活性。该缓冲液可以选择性地包含异源 DNA 添加物，以便在数据处理过程中用于校准 CUT&amp;RUN 分析。通过提高孵育温度，促使细胞核释放 MNase 产生的片段，并用苯酚/氯仿/异戊醇提取这些片段，然后用乙醇进行沉淀。</p>
+<p>修改实验方案可以进一步限制 MNase 融合蛋白从其结合位点过早释放、扩散以及非特异性切割。</p>
+<p>该版本实验方案联合使用低盐缓冲液和高浓度 Ca2+ 溶液激活 MNase，非常适合主要在活性开放染色质中发现的靶点，但抗体显示高背景信号时，也可以使用。</p>
+<p>5.文库制备和测序<br>清除切割后的 DNA 片段后，根据制造商指南，使用标准末端修复和接头连接方法生成低 input DNA 文库。Henikoff 实验室最初建议使用 TRUseq 文库制备法，但是现在已有大量使用 NEBNext® Ultra™ II DNA 文库试剂盒的报告。与自动化 CUT&amp;RUN 实验方案（Jenssens et al. 2018）类似，您也可以省略苯酚/氯仿/异戊醇提取步骤，直接将释放的 DNA 片段用于基于末端修复和接头连接的实验方案。</p>
+<p>文库的大小分布和浓度可通过毛细管电泳（例如 Bioanalyzer 或 TapeStation）确定。可以将多个文库合并，每个文库获得约 800 万配对末端测序读段。由于 CUT&amp;RUN 文库的背景较低，因此 800 万配对末端读段足以分析组蛋白修饰，甚至转录因子。</p>
+<p>大部分常规 ChIP-seq 数据分析工具都可以分析 CUT&amp;RUN 数据。Henikoff 实验室也专门为 CUT&amp;RUN 数据设计了一些分析工具，例如 SEACR peak caller（Meers et al ., 2019b）。对于经校准的 CUT&amp;RUN，添加了终止缓冲液的异源 DNA 添加物可用于样本信号的归一化。此外，重组蛋白 A/G-MNase 残留的大肠杆菌 DNA 也可用作添加物。</p>
+<p>CUT&amp;Tag 实验方案概述<br>运行 CUT&amp;Tag 过程中，需使用抗体将蛋白 A 标记的 Tn5 转座酶引导至目标蛋白（例如具有特定修饰的组蛋白或转录因子）所在的基因组区域。Tn5 片段和标签靶向带有特定预定义核苷酸序列（接头）的 DNA。标签化的 DNA 可以轻松回收，并进行 PCR 扩增，从而生成 NGS 文库。整个实验方案仅需一天即可完成，具体取决于抗体孵育时间。</p>
+<p><img src="https://i.imgur.com/OC0ezUh.png"></p>
+<p>​​图 2. CUT&amp;Tag 实验方案示意图。细胞核附着在磁性伴刀豆球蛋白 A 磁珠上，以便进行细胞处理并在每次洗涤后安全除去液体。对细胞核进行通透处理，同时与靶向目标蛋白的一抗一起孵育，然后与识别一抗的二抗一起孵育。蛋白 A-Tn5 融合蛋白与目标蛋白上形成的抗体复合物结合。添加 Mg2+ 离子时，Tn5 会切割所形成的复合物两侧的 DNA，并释放从细胞核中扩散出的已切割 DNA 片段。提取 DNA 并在基于 PCR 扩增制备 DNA 文库时使用。NGS 通过特定区域中序列的频率给出目标蛋白的结合信息。</p>
+<p>该实验方案可分为五个部分：</p>
+<ol>
+<li>提取细胞核并与磁珠结合</li>
+</ol>
+<p>CUT&amp;Tag 通常使用未固定的新鲜样本作为起始材料，但对实验方案进行修改后，也可以使用冷冻样本，近期，还可使用提取细胞核后经福尔马林轻微固定的样本。固定步骤可以降低执行实验方案期间细胞核聚集在一起的可能性。使用由含 Triton X-100 的缓冲液产生的固定和冷冻保存样本时，可从所有缓冲液中除去洋地黄皂苷，这样可以进一步减少磁珠结块。但是，需要注意，在某些情况下，表位固定会干扰抗体的结合。通常建议先使用不超过 500,000 个细胞（哺乳动物）。使用新鲜或冷冻组织时，细胞核的制备与 CUT&amp;RUN 实验方案中的细胞核制备类似（Janssens et al ., 2018; Skene et al ., 2018）。对于 CUT&amp;RUN，细胞核与伴刀豆球蛋白 A 磁珠结合，可以使用磁力架轻松洗涤样本。但是，该步骤可以省略，并且整个实验方案可以按以下方式执行：每次洗涤后，温和离心，然后小心除去上清液，不干扰沉淀的细胞核。</p>
+<ol start="2">
+<li>通透技术和抗体结合</li>
+</ol>
+<p>对结合至伴刀豆球蛋白 A 磁珠的细胞核进行通透处理，同时在含洋地黄皂苷的缓冲液中与靶向目的蛋白的抗体（一抗）一起孵育。该步骤的持续时间可以调整，最短 2 小时，最长 5 天。抗体的推荐稀释度通常在 1:50 至 1:100（或 0.5 µg - 1.0 µg）之间，但需优化抗体的使用量。建议加入阳性（α-H3K27me3）和阴性对照（同型对照 IgG）样本。一抗孵育后，用含洋地黄皂苷的洗涤缓冲液快速洗涤，然后将细胞核与二抗一起孵育，这里使用的二抗需靶向一抗，充当桥接抗体并且可以增加蛋白 A 结合位点的数量。在 CUT&amp;RUN 实验方案中，这一步骤可以省略；但在 CUT&amp;Tag 实验方案中，必须执行这一步骤，以增强信号。需要注意的是，抗体类别不同，蛋白 A 的结合效率也不同，因此需要事先检查二抗与蛋白 A 的兼容性。</p>
+<ol start="3">
+<li>Tn5 结合和标签化</li>
+</ol>
+<p>为了将蛋白 A-Tn5 转座酶与目标抗体结合，需在含洋地黄皂苷的高盐缓冲液中稀释带接头的 Tn5 融合蛋白，并与细胞核一起孵育。在该步骤中增加盐浓度有助于减少脱靶标签化，主要是可接触的基因组区域的脱靶标签化，从而产生类似 ATAC 的峰。与 Tn5 融合蛋白一起孵育后，洗涤细胞核，以除去未结合的 Tn5，并在添加 Mg2+ 离子的高盐洋地黄皂苷缓冲液中于 37℃ 下孵育，从而激活标签化。</p>
+<ol start="4">
+<li>DNA 回收</li>
+</ol>
+<p>添加 EDTA 终止标签化，并用 SDS 和蛋白酶 K 裂解细胞核。然后可以通过多种方式清除 DNA 片段，原实验方案建议先用苯酚/氯仿/异戊醇提取这些片段，再用乙醇进行沉淀。您也可以使用 AMPure 磁珠来清除 DNA 片段。建议在沉淀步骤中避免使用任何载体，例如糖原，因为载体会降低后续 PCR 反应的效率。</p>
+<ol start="5">
+<li>通过 PCR 扩增和测序制备文库</li>
+</ol>
+<p>由于 Tn5 在标签化过程中会在 DNA 片段中引入兼容序列，所以使用通用 i5 引物和带条形码的 i7 引物进行的简单 PCR 反应就可以生成测序文库，让 DNA 文库的制备变得极为快速简便。该步骤与 ATAC-seq 类似，因此可以使用 ATAC 实验方案描述的引物序列（Buenrostro et al ., 2013）。但需要根据用户的机器调整循环程序。为了确保 PCR 有效，需要进行短时间的退火操作；如使用缓慢升温循环仪，则可以省略退火步骤，因为变性和延伸之间的冷却时间较长，足以退火。如使用快速升温机器，则必须增加退火步骤。通常，建议不超过 12 到 14 个扩增循环，否则，文库的复杂性将降低，而 PCR 的重复率升高。</p>
+<p>在 PCR 扩增后，可用毛细管凝胶电泳法（例如 Bioanalyzer 或 TapeStation）对 CUT&amp;Tag 文库进行评估。CUT&amp;Tag 实验的失败通常表现在阳性对照样本中不存在核小体片段。</p>
+<p>但是，如果只在转录因子 CUT&amp;Tag 文库中观察到非常弱的信号，实验仍然可以继续，这种情况很常见。通过凝胶电泳进行评估后，可以使用 SPRI 磁珠清理并浓缩文库。可以将多个文库合并，每个文库获得约 200 万配对末端测序读段。</p>
+<p>大部分常规 ChIP-seq 数据分析工具都可以分析 CUT&amp;Tag 数据。Henikoff 实验室也专门为 CUT&amp;RUN 和 CUT&amp;Tag 数据设计了一些分析工具，例如 SEACR peak caller（Meers et al ., 2019b）。要想校准 CUT&amp;Tag 数据，可以将重组蛋白 A-Tn5 残留的大肠杆菌 DNA 用作普通添加物。</p>
+<p>样本制备</p>
+<p>由于 CUT&amp;RUN 和 CUT&amp;Tag 都可以使用未固定的新鲜样本，所以，它们的样本制备非常简单。但是需要以适合所用细胞类型的方式制备单细胞悬液，包括使用解离试剂（如 Accutase™）、从细胞培养皿上刮下细胞或机械解离组织等。</p>
+<p>为了便于收集，可以在 10% DMSO 中冷冻保存样本，并在 Mr. Frosty 异丙醇冻存盒内冻存。两种方法均不需要固定样本，但是，如果磁珠在洗涤过程中结块，则应在孵育抗体前，于室温下使用 0.1% 福尔马林对样本进行轻固定，2 分钟即可。</p>
+<p>抗体选择</p>
+<p>至于 ChIP，并非所有抗体都可以用于 CUT&amp;RUN 和 CUT&amp;Tag。由于这两种方法较新，大多数抗体均未经过兼容性测试，因此终端用户需要对抗体进行测试和优化。ChIP 级抗体大都适用于 CUT&amp;RUN 和 CUT&amp;Tag，特别是适用于天然 ChIP 的 ChIP 级抗体。</p>
+<p>试用非 ChIP 级抗体时，假设特异性已进行充分表征，可以首先选择能够识别目标蛋白天然形式的抗体；例如，在免疫沉淀或免疫细胞化学中起作用的抗体。同理，在考虑 CUT&amp;RUN 或 CUT&amp;Tag 实验所用的抗体浓度时，可以将免疫荧光法的推荐浓度作为起始浓度。需测试抗体与蛋白 A 和蛋白 G 的兼容性，必要时，可使用合适的二抗。</p>
+<p>对照</p>
+<p>与其他实验类型一样，添加合适的对照是确保实验符合预期并能在实验失败时轻松确定问题区域的关键。</p>
+<p>与 ChIP 不同，该实验方案不需要 input 样本，因为非抗体引导的 MNase 处理或标签化仅可识别可接触的染色质。为了从样本中获取背景并为实验设置基线，应添加 IgG 对照。在抗体对照方面，Henikoff 实验室建议使用 H3K27me3 作为 CUT&amp;RUN 和 CUT&amp;Tag 实验的阳性对照。使用未修饰的总组蛋白对照，例如总组蛋白 H3，可以按比例显示组蛋白修饰。</p>
+<p>优化</p>
+<p>使用这些技术时，需要在多个阶段对 CUT&amp;RUN 和 CUT&amp;Tag 实验方案进行优化。</p>
+<p>透化</p>
+<p>初版实验方案要求对洗涤缓冲液中所用的洋地黄皂苷的浓度进行测定，以确保有效地对细胞核作通透处理。如果您对实验方案作了改进，具体来说就是在洗涤缓冲液中添加了 NP40，则有可能不需要进行上述测定。但是，在新材料上使用这两种技术时，应牢记细胞核的通透效率。</p>
+<p>抗体浓度</p>
+<p>采用滴定法测定每次反应使用的抗体量很重要，起始稀释度可以参考 ChIP 或免疫荧光检测法的推荐稀释度。</p>
+<p>抗体孵育时间</p>
+<p>室温下，一抗孵育 1 小时即可；但在冷藏室中，孵育时间可延长至 1 至 5 天。对于每项实验使用的抗体，可以对孵育时间进行优化；但应牢记，孵育时间过长可能会增加背景信号，最终导致总体信噪比不佳。</p>
+<p>使用二抗</p>
+<p>如果在只使用一抗的情况下，回收率较低，则强烈建议在 CUT&amp;Tag 中使用二抗，还可以考虑在 CUT&amp;RUN 中使用二抗。添加二抗的另一个原因是为了避免蛋白 A/G 与一抗的配对不符合预期，添加合适类别的二抗可以改善这一点。</p>
+<p>消化和标签化时间</p>
+<p>MNase 消化和 Tn5 标签化的时间可以根据目标蛋白进行调整。低丰度蛋白要想回收所有位点可能需要花费更多时间。要记住的是，消化或标签化时间过长可能会导致无针对性的切割，从而产生高背景信号。</p>
+<p>常见问题</p>
+<ul>
+<li><p>起始材料应该使用多少个细胞？<br>模式生物的基因组小于人/小鼠基因组时，是否需要增加细胞数量？建议每个样本不超过 500,000 个细胞。一般来说，起始量为 50,000 个细胞比较好。与 ChIP 不同，CUT &amp;RUN 和 CUT＆Tag 非常敏感，所以不需要上百万个细胞作为起始材料。细胞数量过多会降低收率，甚至降低文库的复杂性。</p>
+</li>
+<li><p>增加细胞用量时，是否应增加伴刀豆球蛋白 A 磁珠的用量？<br>每次实验使用的细胞数不应超过 500,000 个。由于实验方案已对使用 50,000 至 500,000 个细胞时的磁珠数量进行了优化，因此不需要在实验方案建议的磁珠用量基础上另行增加。</p>
+</li>
+<li><p>如何冷冻保存细胞确保其可用于 CUT＆RUN 或 CUT &amp;Tag？<br>建议在合适的缓冲液或培养基中添加 10％ DMSO，然后使用 Mr. Frosty 异丙醇冻存盒缓慢冻存。不建议快速冻存。</p>
+</li>
+<li><p>我有固定和冷冻 ChIP 细胞，可以将它们用于 CUT&amp;RUN 或 CUT＆Tag 吗？<br>可以，但具体要看 ChIP 样本的固定和冷冻保存条件。由于 ChIP 样本的细胞数可能会超过 CUT&amp;RUN 和 CUT&amp;Tag 的推荐用量，并且使用强固定条件（如双重固定和淬灭）会损害 MNase 或 Tn5 的活性，所以标准实验方案可能不太适合。您可以将样本分成多份，这样可以轻松避免 ChIP 样本中细胞数超过 CUT&amp;RUN 或 CUT&amp;Tag 推荐起始量的问题。但是，样本固定和冻存等问题仍然存在。ChIP 实验方案的固定条件比较严格，很难与 CUT&amp;RUN 或 CUT&amp;Tag 兼容，因为严格的固定条件很可能会损害 MNase 或 Tn5 片段化/标签化目标序列的能力，并且已有大量报道暗示了这种不兼容性。另外，固定还有可能导致抗原表位被掩盖。因此，不建议固定样本。冷冻保存用于 CUT&amp;RUN 或 CUT&amp;Tag 的细胞时，需要使用 10% DMSO 和 Mr. Frosty 异丙醇冻存盒缓慢冻存样本。不建议在大多数 ChIP 实验方案中增加快速冻存步骤。</p>
+</li>
+<li><p>为什么洗涤过程中磁珠会结块？<br>结块可能是因为细胞与磁珠的比例过高或含洋地黄皂苷的缓冲液中的细胞核/细胞发生裂解，从而释放 DNA 并导致结块。这种情况下，首先要检查细胞数量是否超过推荐数量。此外，在与抗体一起孵育前，建议先用福尔马林轻微固定样本（室温下使用 0.1% 福尔马林固定 2 分钟），以减少磁珠在含洋地黄皂苷的洗涤缓冲液中的结块。但需记住的是，固定可能会影响表位的可用性，因此需要对每种抗体进行测试。</p>
+</li>
+<li><p>为什么用于一抗孵育的缓冲液中含 EDTA？<br>建议在通透和抗体孵育缓冲液中添加 EDTA，因为它会螯合 Mg2+ 离子，从而终止所有依赖 ATP 的细胞过程（包括复制和染色质重塑），同时终止内源性 DNase。</p>
+</li>
+<li><p>哪里可以得到蛋白 A/G-MNase 或蛋白 A-Tn5？<br>这两种融合蛋白最初都由 Henikoff 实验室提供。现在已经有了制备融合蛋白的实验方案（Kaya-Okur et al ., 2019; Meers et al ., 2019a），而且质粒、蛋白 A-MNase、蛋白 A/G-MNase 和蛋白 A-Tn5 都可以从试剂供应商处购买。</p>
+</li>
+<li><p>在 CUT&amp;Tag 中，是否会得到非抗体引导的标签化，从而产生类似 ATAC 的峰？<br>按照标准实验方案的建议增加标签化缓冲液中的盐浓度即可解决这一问题。在某些情况下，依据目标蛋白的情况，可能会人为发现一些峰看起来像 Kaya-Okur et al 2019 的报道中所示的 ATAC 峰。</p>
+</li>
+</ul>
+<p>参考文献<br>Brahma, S ., Henikoff, S. RSC-associated subnucleosomes define MNase-sensitive promoters in yeast . Mol Cell 73, 238–249, e233 (2019).</p>
+<p>Buenrostro, J .D ., Giresi, P .G ., Zaba, L .C ., Chang, H .Y ., Greenleaf, W .J . Transposition of native chromatin for fast and sensitive epigenomic profiling of open chromatin, DNA-binding proteins and nucleosome position. Nat Methods 10, 1213–1218 (2013).</p>
+<p>Hainer, S .J ., Fazzio, T .G. High-resolution chromatin profiling using CUT&amp;RUN. Curr Protoc Mol Biol 126, e85 (2019).</p>
+<p>Janssens, D .H ., et al. Automated in situ chromatin profiling efficiently resolves cell types and gene regulatory programs. Epigenet Chromatin 11, 74 (2018).</p>
+<p>Kaya-Okur, H .S ., et al. CUT&amp;Tag for efficient epigenomic profiling of small samples and single cells. Nat Commun 10, 1930 (2019).</p>
+<p>Meers, M .P ., Bryson, T .D ., Henikoff, J .G ., Henikoff, S. Improved CUT&amp;RUN chromatin profiling tools. eLife 8: e46314 (2019).</p>
+<p>Meers, M .P ., Tenenbaum, D ., Henikoff, S . Peak calling by Sparse Enrichment Analysis for CUT&amp;RUN chromatin profiling . Epigenet Chromatin 12, 42 (2019).</p>
+<p>Schmid, M ., Durussel, T ., Laemmli, U .K. ChIC and ChEC; genomic mapping of chromatin proteins. Mol Cell 16, 147–157 (2004).</p>
+<p>Skene, P .J ., Henikoff, J .G ., Henikoff, S. Targeted in situ genome-wide profiling with high efficiency for low cell numbers. Nat Protoc 13, 1006–1019 (2018).</p>
+<p>Skene, P .J ., Henikoff, S. An efficient targeted nuclease strategy for high-resolution mapping of DNA binding sites. eLife 6: e21856 (2017).</p>
+<p>Thakur, J ., Henikoff, S. Unexpected conformational variations of the human centromeric chromatin complex. Genes Dev 32, 20–25 (2018).</p>
+<p>Zentner, G .E ., Kasinathan, S ., Xin, B ., Rohs, R ., Henikoff, S. ChEC-seq kinetics discriminates transcription factor binding sites by DNA sequence and shape in vivo. Nat Commun 6, 8733 (2015).</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/10/27/Linux-Meet-I-O-error-when-using-harddisk-in-Linux/">Linux | Meet I/O error when using harddisk in Linux</a><a class="next" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/03/09/Peoteomics-Using-MaxQuant-to-analyze-LC-MS-MS-data/">Peoteomics | Using MaxQuant to analyze LC-MS/MS data</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Plant-Rice-Oryza-sativa-subsp-japonica-and-indica/">Plant | Rice: Oryza sativa subsp. japonica and indica</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/Linux-Meet-I-O-error-when-using-harddisk-in-Linux/">Linux | Meet I/O error when using harddisk in Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>DESeq2: RNAseq pipeline – Alignment to DE analysis | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">DESeq2: RNAseq pipeline – Alignment to DE analysis</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">DESeq2: RNAseq pipeline – Alignment to DE analysis</h1><div class="post-meta">2016-02-29<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><h1 id="RNAseq-pipeline-–-alignment-to-DE-analysis"><a href="#RNAseq-pipeline-–-alignment-to-DE-analysis" class="headerlink" title="RNAseq pipeline – alignment to DE analysis"></a><a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/">RNAseq pipeline – alignment to DE analysis</a></h1><p><a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/#comments">1 Reply</a></p>
+<p>RNA sequencing has quickly surpassed microarrays for differential gene expression analysis in most labs.  I wanted to post a RNAseq pipelines from Raw sequencing reads to differential expression analysis and various other downstream analyses.  There are quite a few pipelines for RNAseq analysis and each has its pro/cons.  One of the most popular pipelines is alignment to the genome with <a target="_blank" rel="noopener" href="https://code.google.com/p/rna-star/">STAR aligner</a>, binning of sequencing reads to genes/exons with <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">HTseq-count</a>, and finally differential analysis with <a target="_blank" rel="noopener" href="http://bioconductor.org/packages/release/bioc/html/DESeq.html">DESeq</a>/<a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/release/bioc/html/DESeq2.html">DESeq2</a>.  I linked the online manuals for each tool here but I would highly suggest the initial publications for each as those will include benchmarking compared to other programs and the general theory behind of each algorithm (<a target="_blank" rel="noopener" href="http://bioinformatics.oxfordjournals.org/content/early/2012/10/25/bioinformatics.bts635">here</a>, <a target="_blank" rel="noopener" href="http://biorxiv.org/content/early/2014/08/19/002824">here</a> and <a target="_blank" rel="noopener" href="http://genomebiology.com/2010/11/10/r106">here</a> – the original Deseq paper now has over 1800 citations on google scholar!).  I’d suggest DESeq2. This example assumes that you starting with RNA sequencing reads in fastq format after quality control (FastQC, etc.) and demultiplexing (fastq_multx, etc.).  Those steps will be a future post.  Depending on who is doing your actual sequencing (in-house core, BGI, etc.), they will probably release the fastq reads to you after each of these steps have been done. <strong>1. Alignment to genome with STAR aligner v2.4.0.1.</strong> STAR is wonderfully fast and accurate alignment program written by Alexander Dobin.  Alignment speeds with STAR are advertised at  400 million pairs per hour for 100 bp paired end reads on 12-core server (compared to Tophat at 20 million reads per hour).   In our hands, on 50 bp paired end reads, we are aligning at about 600 million pairs per hour on average with <del>75-80% unique alignment rate.   The key with STAR is that it needs A LOT of memory, at least 30 GB.  Our cluster has dedicated job queues to allocate up to 64 GB memory for each STAR alignment job. <strong>1a) Alignment generate genome.</strong> Before alignment can be done, you must prepare the necessary genome index files.  The basic input for genome index files are 1) genome in fasta format and 2) annotation gtf file (needed in later steps).  You can download the genome files for human/mouse/etc from <a target="_blank" rel="noopener" href="http://support.illumina.com/sequencing/sequencing_software/igenome.html">igenome</a> from Illumina.  For the new version of STAR, there are pre-made <a target="_blank" rel="noopener" href="http://labshare.cshl.edu/shares/gingeraslab/www-data/dobin/STAR/STARgenomes/">index files</a>, depending on which reference you want to build.  They have various builds and model organisms.  We have been using the mouse mm10 reference from UCSC and have been happy with alignment rates.  I downloaded the mouse mm10 reference from igenome and renamed it “mm10_index/” .  You will also have to designate a directory for the genome index files STAR produces (“</del>/STAR_mm10/” or /path/to/STAR_mm10/”).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --runMode genomeGenerate \</code></p>
+<p><code>--genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--genomeFastaFiles ~``/mm10_index/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome``.fa \</code></p>
+<p><code>--runThreadN 16</code></p>
+<p>After STAR runs, you should have a few files in the /STAR_mm10/ directory:</p>
+<ol>
+<li> Genome</li>
+<li> genomeParameters.txt</li>
+<li> chrLength.txt, chrNameLength.txt, chrStart.txt</li>
+<li> SA, SAindex</li>
+<li> Log.out</li>
+</ol>
+<p>STAR will use these files for alignment in the next step. <strong>1b) Alignment to genome (or transcriptome).</strong>  The newer version (2.4.0). has the option to align specifically to the transcriptome and not the genome.  This option is for downstream analysis with RSEM ( another future post).  I’ll detail the basic STAR alignment job for now.  </p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--readFilesIn read_1.fq read_2.fq \</code></p>
+<p><code>--runThreadN 16 \</code></p>
+<p><code>--outSAMtype BAM SortedByCoordinate</code> </p>
+<p>STAR will generate a few files:</p>
+<ol>
+<li> Log.out</li>
+<li> Log.progress.out</li>
+<li> Log.final.out – summary mapping statistics – will give you an idea on qc</li>
+<li> Aligned.sortedByCoord.out.bam – your reads aligned in standard BAM format sorted by coordinate – similar to samtools sort command</li>
+<li> SJ.out.tab – high confidence splice junction in tab-delimited format</li>
+</ol>
+<p>To generate an alignment file to the transcriptome with STAR v2.4.0:</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--readFilesIn read_1.fq read_2.fq \</code></p>
+<p><code>--runThreadN 16 \</code></p>
+<p><code>--quantMode TranscriptomeSAM</code></p>
+<p>I haven’t had a chance to really run through this option yet (more for RSEM instead of DESeq2) but I am excited to try. <strong>Optional) Sorting, munging, etc.</strong>  The new version of STAR allows for generating alignment into a BAM file sorted by genomic coordinate.  Earlier versions didn’t and one would have to run the Aligned.out.sam files through various samtools munging steps to get alignment file into the correct format for downstream read counting.  For this example, it is necessary to have samtools-0.1.19.  First you convert the Aligned.out.sam to bam format with samtools view and pipe the output directly to samtools sort and sorting by genome position.  Finally converting back from bam to sam format.  If you have the python module pysam installed you can use a BAM file in the next steps.</p>
+<p>1</p>
+<p>2</p>
+<p><code>samtools view -uS Aligned.out.sam -b samtools</code> <code>sort</code> <code>-@ 8 -m 800000000 - Aligned.sorted</code></p>
+<p><code>samtools view Aligned.sorted.bam &gt; Aligned.sorted.sam</code></p>
+<p>**3) raw counts generation using HTSeq-count. ** htseq-count has a few options:</p>
+<ul>
+<li>  -m union: union is one of three options for htseq count for binning of reads to features (genes/exons).  it is the recommended option per <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">htseq count’s manual</a>.  It is the most stringent option as it will only count a read if it aligns to only 1 gene.</li>
+<li>  -r pos : meaning that the BAM/SAM file is sorted by genomic coordinate/position</li>
+<li>  -i gene_name : tells htseq-count to use the gene name in output file</li>
+<li>  -a 10 : tells htseq-count to skip reads with alignment score less than 10.</li>
+<li>  –stranded=no : the RNAseq reads are not strand specific</li>
+</ul>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>htseq-count -m union \</code></p>
+<p><code>-r pos \</code></p>
+<p><code>-i gene_name \</code></p>
+<p><code>-a 10 \</code></p>
+<p><code>--stranded=no \</code></p>
+<p><code>Aligned.sortedByCoord.out.bam \</code></p>
+<p><code>~``/mm10_index/Mus_musculus/UCSC/mm10/Annotation/Genes/genes``.gtf &gt; output_basename.counts</code></p>
+<p>Output of htseq count is a tab-delimited text file containing two columns: 1) gene id 2) number of read counts. Below is just an example of various cadherins with number of reads mapped to each.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p><code>Cdh1 731</code></p>
+<p><code>Cdh10 41</code></p>
+<p><code>Cdh11 129</code></p>
+<p><code>Cdh12 0</code></p>
+<p><code>Cdh13 50538</code></p>
+<p><code>Cdh15 0</code></p>
+<p><code>Cdh16 0</code></p>
+<p><code>Cdh17 648</code></p>
+<p><code>Cdh18 0</code></p>
+<p><code>Cdh19 0</code></p>
+<p><code>Cdh2 570</code></p>
+<p><code>Cdh20 0</code></p>
+<p><code>Cdh22 0</code></p>
+<p><code>Cdh23 11</code></p>
+<p><code>Cdh24 3</code></p>
+<p><code>Cdh26 140</code></p>
+<p><code>Cdh3 3</code></p>
+<p><code>Cdh4 0</code></p>
+<p><code>Cdh5 237</code></p>
+<p><code>Cdh6 496</code></p>
+<p><strong>4) differential gene expression analysis using DESeq2.</strong> </p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p>34</p>
+<p>35</p>
+<p>36</p>
+<p>37</p>
+<p>38</p>
+<p>39</p>
+<p>40</p>
+<p>41</p>
+<p>42</p>
+<p>43</p>
+<p>44</p>
+<p>45</p>
+<p>46</p>
+<p>47</p>
+<p>48</p>
+<p>49</p>
+<p>50</p>
+<p>51</p>
+<p>52</p>
+<p>53</p>
+<p>54</p>
+<p>55</p>
+<p>56</p>
+<p>57</p>
+<p>58</p>
+<p>59</p>
+<p>60</p>
+<p>61</p>
+<p>62</p>
+<p>63</p>
+<p>64</p>
+<p>65</p>
+<p>66</p>
+<p>67</p>
+<p>68</p>
+<p>69</p>
+<p>70</p>
+<p>71</p>
+<p>72</p>
+<p>73</p>
+<p>74</p>
+<p>75</p>
+<p>76</p>
+<p>77</p>
+<p>78</p>
+<p>79</p>
+<p>80</p>
+<p>81</p>
+<p>82</p>
+<p>83</p>
+<p>84</p>
+<p>85</p>
+<p>86</p>
+<p>87</p>
+<p>88</p>
+<p>89</p>
+<p>90</p>
+<p>91</p>
+<p>92</p>
+<p>93</p>
+<p>94</p>
+<p>95</p>
+<p>96</p>
+<p>97</p>
+<p>98</p>
+<p>99</p>
+<p>100</p>
+<p>101</p>
+<p>102</p>
+<p>103</p>
+<p>104</p>
+<p>105</p>
+<p>106</p>
+<p>107</p>
+<p>108</p>
+<p>109</p>
+<p>110</p>
+<p>111</p>
+<p>112</p>
+<p>113</p>
+<p>114</p>
+<p>115</p>
+<p>116</p>
+<p>117</p>
+<p>118</p>
+<p>119</p>
+<p>120</p>
+<p>121</p>
+<p>122</p>
+<p>123</p>
+<p>124</p>
+<p>125</p>
+<p>126</p>
+<p>127</p>
+<p>128</p>
+<p>129</p>
+<p>130</p>
+<p>131</p>
+<p>132</p>
+<p>133</p>
+<p>134</p>
+<p>135</p>
+<p>136</p>
+<p>137</p>
+<p>138</p>
+<p>139</p>
+<p>140</p>
+<p>141</p>
+<p>142</p>
+<p>143</p>
+<p>144</p>
+<p>145</p>
+<p>146</p>
+<p>147</p>
+<p>148</p>
+<p>149</p>
+<p>150</p>
+<p>151</p>
+<p>152</p>
+<p>153</p>
+<p>154</p>
+<p>155</p>
+<p>156</p>
+<p>157</p>
+<p>158</p>
+<p>159</p>
+<p>160</p>
+<p>161</p>
+<p>162</p>
+<p>163</p>
+<p>164</p>
+<p>165</p>
+<p>166</p>
+<p>167</p>
+<p>168</p>
+<p>169</p>
+<p>170</p>
+<p>171</p>
+<p>172</p>
+<p>173</p>
+<p>174</p>
+<p>175</p>
+<p>176</p>
+<p>177</p>
+<p>178</p>
+<p>179</p>
+<p>180</p>
+<p>181</p>
+<p>182</p>
+<p>183</p>
+<p>184</p>
+<p>185</p>
+<p>186</p>
+<p>187</p>
+<p>188</p>
+<p>189</p>
+<p>190</p>
+<p>191</p>
+<p>192</p>
+<p>193</p>
+<p>194</p>
+<p>195</p>
+<p>196</p>
+<p>197</p>
+<p>198</p>
+<p>199</p>
+<p>200</p>
+<p>201</p>
+<p>202</p>
+<p>203</p>
+<p>204</p>
+<p>205</p>
+<p>206</p>
+<p>207</p>
+<p>208</p>
+<p>209</p>
+<p>210</p>
+<p>211</p>
+<p>212</p>
+<p>213</p>
+<p>214</p>
+<p>215</p>
+<p>216</p>
+<p>217</p>
+<p>218</p>
+<p>219</p>
+<p>220</p>
+<p>221</p>
+<p>222</p>
+<p>223</p>
+<p>224</p>
+<p>225</p>
+<p>226</p>
+<p>227</p>
+<p>228</p>
+<p>229</p>
+<p>230</p>
+<p>231</p>
+<p>232</p>
+<p>233</p>
+<p>234</p>
+<p>235</p>
+<p>236</p>
+<p>237</p>
+<p>238</p>
+<p>239</p>
+<p>240</p>
+<p>241</p>
+<p>242</p>
+<p>243</p>
+<p>244</p>
+<p>245</p>
+<p>246</p>
+<p>247</p>
+<p>248</p>
+<p>249</p>
+<p>250</p>
+<p>251</p>
+<p>252</p>
+<p>253</p>
+<p>254</p>
+<p>255</p>
+<p>256</p>
+<p>257</p>
+<p>258</p>
+<p>259</p>
+<p>260</p>
+<p>261</p>
+<p>262</p>
+<p>263</p>
+<p>264</p>
+<p>265</p>
+<p>266</p>
+<p><code>&lt;pre&gt;``####################################################################################</code></p>
+<p><code># bioinformatic analysis of RNA-seq data using DESeq2</code></p>
+<p><code>#</code></p>
+<p><code># combined from DESeq2 manual and vignette</code></p>
+<p><code># [http://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf](http://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf)</code></p>
+<p><code># and from Dave Wheeler&#39;s blog at Massey University</code></p>
+<p><code># [http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/](http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/)</code></p>
+<p><code>#</code></p>
+<p><code># analysis per htseq count -intersections-nonempty</code></p>
+<p><code># controlling for batch (different RNAseq prep libraries)</code></p>
+<p><code>#</code></p>
+<p><code># notes:</code></p>
+<p><code>#</code></p>
+<p><code>####################################################################################</code></p>
+<p><code>library``(``&quot;DESeq2&quot;``)</code></p>
+<p><code>setwd``(``&quot;~/path/to/working/directory/&quot;``)</code></p>
+<p><code>directory &lt;-</code> <code>&quot;/path/to/counts/directory/&quot;</code></p>
+<p><code># can merge individual sample files (i.e. ctrl1.counts, ctrl2.counts, etc.)</code></p>
+<p><code>sampleFiles &lt;-</code> <code>grep``(``&quot;counts&quot;``list.files``(directory),value=T)</code></p>
+<p><code># view sampleFiles</code></p>
+<p><code>sampleFiles</code></p>
+<p><code># can designate different batches of samples (i.e. different sequencers,</code></p>
+<p><code># PE vs SE, different library preps (eg. BATCH1 vs BATCH2))</code></p>
+<p><code>sampleBatch &lt;-</code> <code>c``(``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,</code></p>
+<p> <code>&quot;Batch2&quot;``,``&quot;Batch2&quot;``,``&quot;Batch2&quot;``,``&quot;Batch2&quot;``)</code></p>
+<p><code># set sampleConditions and sampleTable for experimental conditions</code></p>
+<p><code>sampleCondition &lt;-</code> <code>c``(``&quot;Control, Experimental&quot;``)</code></p>
+<p><code>sampleTable &lt;-</code> <code>data.frame``(sampleName = sampleFiles,</code></p>
+<p> <code>fileName = sampleFiles,</code></p>
+<p> <code>condition = sampleCondition,</code></p>
+<p> <code>Batch = sampleBatch)</code></p>
+<p><code># view sampleTable</code></p>
+<p><code>sampleTable</code></p>
+<p><code>ddsHTseq &lt;-</code> <code>DESeqDataSetFromHTSeqCount``( sampleTable = sampleTable,</code></p>
+<p> <code>directory = directory,</code></p>
+<p> <code>design = ~condition)</code></p>
+<p><code>## view ddsHTseq - should give summary of class, data, etc.</code></p>
+<p><code>ddsHTseq</code></p>
+<p><code>colData``(ddsHTseq)$condition &lt;-</code> <code>factor``(``colData``(ddsHTseq)$condition,</code></p>
+<p> <code>levels =</code> <code>c``(``&#39;Control&#39;``,``&#39;Experimental&#39;``))</code></p>
+<p><code># gut of DESeq2 analysis</code></p>
+<p><code>dds &lt;-</code> <code>DESeq``(ddsHTseq)</code></p>
+<p><code>res &lt;-</code> <code>results``(dds)</code></p>
+<p><code># order results by padj value (most significant to least)</code></p>
+<p><code>res &lt;- res[``order``(res$padj),]</code></p>
+<p><code>head``(res)</code></p>
+<p><code># should see DataFrame of baseMean, log2Foldchange, stat, pval, padj</code></p>
+<p><code># save data results and normalized reads to csv!</code></p>
+<p><code>resdata &lt;-</code> <code>merge``(``as.data.frame``(res),</code> <code>as.data.frame``(``counts``(dds,normalized=T)), by=``&#39;row.names&#39;``,sort=F)</code></p>
+<p><code>names``(resdata)[1] &lt;-</code> <code>&#39;gene&#39;</code></p>
+<p><code>head``(resdata)</code></p>
+<p><code>write.csv``(resdata, file=``&quot;DATE-DESeq2-results-with-normalized.csv&quot;``)</code></p>
+<p><code># send normalized counts to tab delimited file for GSEA, etc.</code></p>
+<p><code>write.table``(``as.data.frame``(``counts``(dds),normalized=T), file =</code> <code>&#39;DATE_DESeq2_normalized_counts.txt&#39;``, sep =</code> <code>&#39;\t&#39;``)</code></p>
+<p><code># produce DataFrame of results of statistical tests</code></p>
+<p><code># could way to record experimental design</code></p>
+<p><code>mcols``(res, use.names = T)</code></p>
+<p><code>write.csv``(``as.data.frame``(``mcols``(res, use.name = T)),file =</code> <code>&quot;DATE-DESeq2-test-conditions.csv&quot;``)</code></p>
+<p><code># replacing outlier value with estimated value as predicted by distrubution using</code></p>
+<p><code># &quot;trimmed mean&quot; approach. recommended if you have several replicates per treatment</code></p>
+<p><code># DESeq2 will automatically do this if you have 7 or more replicates</code></p>
+<p><code>ddsClean &lt;-</code> <code>replaceOutliersWithTrimmedMean``(dds)</code></p>
+<p><code>ddsClean &lt;-</code> <code>DESeq``(ddsClean)</code></p>
+<p><code>tab &lt;-</code> <code>table``(initial =</code> <code>results``(dds)$padj &lt; 0.1,</code></p>
+<p> <code>cleaned =</code> <code>results``(ddsClean)$padj &lt; 0.1)</code></p>
+<p><code>addmargins``(tab)</code></p>
+<p><code>write.csv``(``as.data.frame``(tab),file =</code> <code>&#39;DATE-DESeq2-replaceoutliers.csv&#39;``)</code></p>
+<p><code>resClean &lt;-</code> <code>results``(ddsClean)</code></p>
+<p><code>resClean &lt;- resClean[``order``(resClean$padj),]</code></p>
+<p><code>head``(resClean)</code></p>
+<p><code>write.csv``(``as.data.frame``(resClean),file =</code> <code>&#39;DATE-DESeq2-replaceoutliers-results.csv&#39;``)</code></p>
+<p><code>####################################################################################</code></p>
+<p><code># Exploritory data analysis of RNAseq data with DESeq2</code></p>
+<p><code>#</code></p>
+<p><code># these next R scripts are for a variety of visualization, QC and other plots to</code></p>
+<p><code># get a sense of what the RNAseq data looks like based on DESEq2 analysis</code></p>
+<p><code>#</code></p>
+<p><code># 1) MA plot</code></p>
+<p><code># 2) rlog stabilization and variance stabiliazation</code></p>
+<p><code># 3) variance stabilization plot</code></p>
+<p><code># 4) heatmap of clustering analysis</code></p>
+<p><code># 5) PCA plot</code></p>
+<p><code>#</code></p>
+<p><code>#</code></p>
+<p><code>####################################################################################</code></p>
+<p><code># MA plot of RNAseq data for entire dataset</code></p>
+<p><code># [http://en.wikipedia.org/wiki/MA_plot](http://en.wikipedia.org/wiki/MA_plot)</code></p>
+<p><code># genes with padj &lt; 0.1 are colored Red</code></p>
+<p><code>plotMA``(dds, ylim=``c``(-8,8),main =</code> <code>&quot;RNAseq experiment&quot;``)</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2_MAplot_initial_analysis.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># transform raw counts into normalized values</code></p>
+<p><code># DESeq2 has two options:  1) rlog transformed and 2) variance stabilization</code></p>
+<p><code># variance stabilization is very good for heatmaps, etc.</code></p>
+<p><code>rld &lt;-</code> <code>rlogTransformation``(dds, blind=T)</code></p>
+<p><code>vsd &lt;-</code> <code>varianceStabilizingTransformation``(dds, blind=T)</code></p>
+<p><code># save normalized values</code></p>
+<p><code>write.table``(``as.data.frame``(``assay``(rld),file=``&#39;DATE-DESeq2-rlog-transformed-counts.txt&#39;``, sep=``&#39;\t&#39;``)</code></p>
+<p><code>write.table``(``as.data.frame``(``assay``(vsd),file=``&#39;DATE-DESeq2-vst-transformed-counts.txt&#39;``, sep=``&#39;\t&#39;``)</code></p>
+<p><code># plot to show effect of transformation</code></p>
+<p><code># axis is square root of variance over the mean for all samples</code></p>
+<p><code>par``(mai =</code> <code>ifelse``(1:4 &lt;= 2,</code> <code>par``(``&#39;mai&#39;``),0))</code></p>
+<p><code>px &lt;-</code> <code>counts``(dds)[,1] /</code> <code>sizeFactors``(dds)[1]</code></p>
+<p><code>ord &lt;-</code> <code>order``(px)</code></p>
+<p><code>ord &lt;- ord[px[ord] &lt; 150]</code></p>
+<p><code>ord &lt;- ord[``seq``(1,``length``(ord),length=50)]</code></p>
+<p><code>last &lt;- ord[``length``(ord)]</code></p>
+<p><code>vstcol &lt;-</code> <code>c``(``&#39;blue&#39;``,``&#39;black&#39;``)</code></p>
+<p><code>matplot``(px[ord],</code> <code>cbind``(``assay``(vsd)[,1],</code> <code>log2``(px))[ord, ],type=``&#39;l&#39;``, lty = 1, col=vstcol, xlab =</code> <code>&#39;n&#39;``, ylab =</code> <code>&#39;f(n)&#39;``)</code></p>
+<p><code>legend``(``&#39;bottomright&#39;``,legend=``c``(``expression``(``&#39;variance stabilizing transformation&#39;``),</code> <code>expression``(log[2](n/s[1]))), fill=vstcol)</code></p>
+<p><code>dev.copy``(png,``&quot;DATE-DESeq2_variance_stabilizing.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># clustering analysis</code></p>
+<p><code>library``(``&quot;gplots&quot;``)</code></p>
+<p><code>distsRL &lt;-</code> <code>dist``(``t``(``assay``(rld)))</code></p>
+<p><code>mat &lt;-</code> <code>as.matrix``(distsRL)</code></p>
+<p><code>rownames``(mat) &lt;-</code> <code>colnames``(mat) &lt;-</code> <code>with``(``colData``(dds),</code> <code>paste``(condition, type, sep=``&quot; : &quot;``))</code></p>
+<p><code># OR</code></p>
+<p><code># if you want the conditions used</code></p>
+<p><code># rownames(mat) &lt;- colnames(mat) &lt;- with(colData(dds),condition)</code></p>
+<p><code>heatmap.2``(mat, trace =</code> <code>&quot;none&quot;``, col =</code> <code>rev``(hmcol), margin =</code> <code>c``(13, 13))</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2-clustering.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># Principal components plot</code></p>
+<p><code># will show additional clustering of samples</code></p>
+<p><code># showing basic PCA function in R from DESeq2 package</code></p>
+<p><code># this lacks sample IDs and only broad sense of sample clustering</code></p>
+<p><code># its not nice - but it does the job</code></p>
+<p><code>print``(``plotPCA``(rld, intgroup =</code> <code>c``(``&quot;condition&quot;``)))</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2_PCA_initial_analysis.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># or ggplot PCA plot</code></p>
+<p><code>library``(``&quot;grDevices&quot;``)</code></p>
+<p><code>library``(``&#39;ggplot2&#39;``)</code></p>
+<p><code>library``(``&quot;genefilter&quot;``)</code></p>
+<p><code>rv &lt;-</code> <code>rowVars``(``assay``(rld))</code></p>
+<p><code>select &lt;-</code> <code>order``(rv, decreasing=T)[``seq_len``(``min``(500,``length``(rv)))]</code></p>
+<p><code>pc &lt;-</code> <code>prcomp``(``t``(``assay``(vsdMF)[select,]))</code></p>
+<p><code># set condition</code></p>
+<p><code>condition &lt;-</code> <code>c``(``&quot;condition1&quot;``,</code> <code>&#39;condition2&#39;``)</code></p>
+<p><code>scores &lt;-</code> <code>data.frame``(sampleFiles, pca$x, condition)</code></p>
+<p><code>(pcaplot &lt;-</code> <code>ggplot``(scores,</code> <code>aes``(x = PC1, y = PC2, col = (``factor``(condition))))</code></p>
+<p><code>+</code> <code>geom_point``(size = 5)</code></p>
+<p><code>+</code> <code>ggtitle``(``&quot;Principal Components&quot;``)</code></p>
+<p><code>+</code> <code>scale_colour_brewer``(name =</code> <code>&quot; &quot;``, palette =</code> <code>&quot;Set1&quot;``)</code></p>
+<p><code>+</code> <code>theme``(</code></p>
+<p> <code>plot.title =</code> <code>element_text``(face =</code> <code>&#39;bold&#39;``),</code></p>
+<p> <code>legend.position =</code> <code>c``(0,0),</code></p>
+<p> <code>legend.key =</code> <code>element_rect``(fill =</code> <code>&#39;NA&#39;``),</code></p>
+<p> <code>legend.text =</code> <code>element_text``(size = 10, face =</code> <code>&quot;bold&quot;``),</code></p>
+<p> <code>axis.text.y =</code> <code>element_text``(colour =</code> <code>&quot;Black&quot;``),</code></p>
+<p> <code>axis.text.x =</code> <code>element_text``(colour =</code> <code>&quot;Black&quot;``),</code></p>
+<p> <code>axis.title.x =</code> <code>element_text``(face =</code> <code>&quot;bold&quot;``),</code></p>
+<p> <code>axis.title.y =</code> <code>element_text``(face =</code> <code>&#39;bold&#39;``),</code></p>
+<p> <code>panel.grid.major.x =</code> <code>element_blank``(),</code></p>
+<p> <code>panel.grid.major.y =</code> <code>element_blank``(),</code></p>
+<p> <code>panel.grid.minor.x =</code> <code>element_blank``(),</code></p>
+<p> <code>panel.grid.minor.y =</code> <code>element_blank``(),</code></p>
+<p> <code>panel.background =</code> <code>element_rect``(color =</code> <code>&#39;black&#39;``,fill =</code> <code>NA``)</code></p>
+<p><code>))</code></p>
+<p><code>ggsave``(pcaplot,file=``&quot;DATE-PCA_ggplot2.pdf&quot;``)</code></p>
+<p><code># scatter plot of rlog transformations between Sample conditions</code></p>
+<p><code># nice way to compare control and experimental samples</code></p>
+<p><code>head``(``assay``(rld))</code></p>
+<p><code>plot``(``log2``(1+``counts``(dds,normalized=T)[,1:2]),col=``&#39;black&#39;``,pch=20,cex=0.3, main=``&#39;Log2 transformed&#39;``)</code></p>
+<p><code>plot``(``assay``(rld)[,1:2],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,3:4],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,5:6],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,7:8],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,9:10],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,11:12],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,13:14],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,15:16],col=``&#39;#00000020&#39;``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code># heatmap of data</code></p>
+<p><code>library``(``&quot;RColorBrewer&quot;``)</code></p>
+<p><code>library``(``&quot;gplots&quot;``)</code></p>
+<p><code># 1000 top expressed genes with heatmap.2</code></p>
+<p><code>select &lt;-</code> <code>order``(``rowMeans``(``counts``(dds,normalized=T)),decreasing=T)[1:1000]</code></p>
+<p><code>my_palette &lt;-</code> <code>colorRampPalette``(``c``(``&quot;blue&quot;``,``&#39;white&#39;``,``&#39;red&#39;``))(n=1000)</code></p>
+<p><code>heatmap.2``(``assay``(vsd)[select,], col=my_palette,</code></p>
+<p> <code>scale=``&quot;row&quot;``, key=T, keysize=1, symkey=T,</code></p>
+<p> <code>density.info=``&quot;none&quot;``, trace=``&quot;none&quot;``,</code></p>
+<p> <code>cexCol=0.6, labRow=F,</code></p>
+<p> <code>main=``&quot;TITLE&quot;``)</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2-HEATMAP.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># top 2000 genes based on row variance with heatmap3</code></p>
+<p><code>library``(heatmap3)</code></p>
+<p><code>colsidecolors =</code> <code>c``(``&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p> <code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p> <code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p> <code>&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p> <code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p> <code>&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p> <code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p> <code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``)</code></p>
+<p><code>rv &lt;-</code> <code>rowVars``(``assay``(vsd))</code></p>
+<p><code>select &lt;-</code> <code>order``(rv, decreasing=T)[``seq_len``(``min``(2000,``length``(rv)))]</code></p>
+<p><code>my_palette &lt;-</code> <code>colorRampPalette``(``c``(``&quot;blue&quot;``,</code> <code>&quot;white&quot;``,</code> <code>&quot;red&quot;``))(1024)</code></p>
+<p><code>heatmap3``(``assay``(vsd)[select,],col=my_palette,</code></p>
+<p> <code>labRow = F,cexCol = 0.8,margins=``c``(6,6))</code></p>
+<p><code>dev.copy``(pdf,</code> <code>&quot;DATE-DESeq2-heatmap3.pdf&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>sessionInfo``()</code></p>
+<p><code>###############################################################</code></p>
+<p><code>#</code></p>
+<p><code># Optional analyses</code></p>
+<p><code>#</code></p>
+<p><code>###############################################################</code></p>
+<p><code># multifactor designs</code></p>
+<p><code># can analysis with more than one factor influencing the counts  (e.g., different library preps, PE vs. SE)</code></p>
+<p><code># from manual section 1.5 for more information and rationale</code></p>
+<p><code># make copy of DESeq2 results</code></p>
+<p><code>ddsMF &lt;- dds</code></p>
+<p><code># change design formulate controlling for Batch</code></p>
+<p><code>design``(ddsMF) &lt;-</code> <code>formula``(~ Batch + condition)</code></p>
+<p><code># rerun DESeq analysis</code></p>
+<p><code>ddsMF &lt;-</code> <code>DESeq``(ddsMF)</code></p>
+<p><code>resMF &lt;-</code> <code>results``(ddsMF)</code></p>
+<p><code># order by padj values</code></p>
+<p><code>resMF &lt;- resMF[``order``(resMF$padj),]</code></p>
+<p><code>head``(resMF)</code></p>
+<p><code># should see DataFrame of baseMean, log2Foldchange, stat, pval, padj</code></p>
+<p><code># save data &#39;resMF&#39; to csv!</code></p>
+<p><code>write.csv``(``as.data.frame``(resMF),file=``&#39;DATE-DESeq2_batchcontroll_initial_analysis.csv&#39;``)</code></p>
+<p>future post idea: pairing HTSeq-DESeq2 for DE gene expression with DEXSeq for splice variants as this pipeline is agnostic for differential exon usage.  *May miss true DE genes if total exon counts are the same but use different exons in different conditions (per Lior Pachter) Future post idea: comparing STAR-HTSeq-DESeq2 to Bowtie-RSEM for gene expression analysis on the same dataset.</p>
+<p>This entry was posted in <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/bioinformatics/">bioinformatics</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/deseq2/">DESeq2</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/dexseq/">DEXSeq</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/ggplot2/">ggplot2</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/htseq-count/">HTSeq-count</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/r/">R</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/rnaseq/">RNAseq</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/star/">STAR</a> on<a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/" title="8:33 pm">November 10, 2014</a>.</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2016/03/01/how-to-use-deseq2-to-analyse-rnaseq-data/">How to use DESeq2 to analyse RNAseq data</a><a class="next" href="/2016/02/29/python%E6%A8%A1%E5%9D%97%E7%9A%84%E5%A4%9A%E7%A7%8D%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">Python：Python 模块的多种安装方法</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/03/09/Peoteomics-Using-MaxQuant-to-analyze-LC-MS-MS-data/">Peoteomics | Using MaxQuant to analyze LC-MS/MS data</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Plant-Rice-Oryza-sativa-subsp-japonica-and-indica/">Plant | Rice: Oryza sativa subsp. japonica and indica</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/Linux-Meet-I-O-error-when-using-harddisk-in-Linux/">Linux | Meet I/O error when using harddisk in Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

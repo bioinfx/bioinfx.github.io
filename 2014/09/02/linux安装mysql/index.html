@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>linux安装mysql | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">linux安装mysql</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">linux安装mysql</h1><div class="post-meta">2014-09-02<span> | </span><span class="category"><a href="/categories/Linux/">Linux</a></span></div><div class="post-content"><p>本文转自shenwei.me</p>
+<a id="more"></a>
+<p>我的MySQL将安装在下面的目录，将设置默认端口号为33060（可任意，必须大于1024，且不能其它软件冲突）。</p>
+<p>1</p>
+<p>/db/home/shenwei/local/app/msyql</p>
+<p>下文中的配置文件中，最好使用绝对路径，不要使用相对路径，如“~/”。   <strong>安装编译工具</strong> cmake是必须的，其它基本的编译工具，如gcc等就不说了吧，如果configure过程中提醒缺少编译器，请自行google。 请到<a target="_blank" rel="noopener" href="http://www.cmake.org/files/%E9%80%89%E6%8B%A9%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84cmake%E9%93%BE%E6%8E%A5%EF%BC%8C%E7%84%B6%E5%90%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%EF%BC%9A">http://www.cmake.org/files/选择最新版的cmake链接，然后下载安装：</a></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>wget <a target="_blank" rel="noopener" href="http://www.cmake.org/files/v2.8/cmake/-2.8.11.1.tar.gz">http://www.cmake.org/files/v2.8/cmake\-2.8.11.1.tar.gz</a></p>
+<p>cd cmake-2.8.11.1</p>
+<p>./configure --prefix=/db/home/shenwei/local/app/cmake</p>
+<p>make &amp;&amp; make install</p>
+<p>将cmake目录加入环境变量(或者在<del>/local/bin下面建立链接cmake可执行程序的软链接, ~/local/bin是我自己的bin目录, 已经加入到环境变量$PATH中)：编辑</del>/.bashrc或者~/.bash_profile，加入以下内容：</p>
+<p>1</p>
+<p>export PATH=~/local/app/cmake:$PATH</p>
+<p>让其生效</p>
+<p>1</p>
+<p>. ~/.bashrc</p>
+<p>  <strong>编译、安装MySQL</strong> 下载前请到<a target="_blank" rel="noopener" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a>中，选择source code，页面最下端，下载最新版本的源码（mysql-5.6.××.tar.gz）。33060是自定义的端口号。</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>tar -zxvf mysql-5.6.19.tar.gz</p>
+<p>cd mysql-5.6.19</p>
+<p>cmake -DCMAKE_INSTALL_PREFIX=/db/home/shenwei/local/app/mysql -DMYSQL_TCP_PORT=33060</p>
+<p>make &amp;&amp; make install</p>
+<p>  <strong>配置</strong> <strong>1）</strong>将MySQL的bin目录和scripts目录加入环境变量：编辑<del>/.bashrc或者</del>/.bash_profile，加入以下内容：</p>
+<p>1</p>
+<p>export PATH=<del>/local/app/mysql/bin:</del>/local/app/mysql/scripts:$PATH</p>
+<p>让其生效</p>
+<p>1</p>
+<p>. ~/.bashrc</p>
+<p><strong>2）</strong>安装数据库。 先再mysql下面创建一个tmp目录。</p>
+<p>1</p>
+<p>mkdir ~/local/app/mysql/tmp</p>
+<p>用mysql_install_db安装数据库。此处设置的–user是mysqld进程所属用户，最好设置为你的linux用户，才不会出现mysqld对文件操作的权限问题。</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>mkdir /db/home/shenwei/local/app/mysql/tmp</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts</p>
+<p>./mysql_install_db --basedir=/db/home/shenwei/local/app/mysql --datadir=/db/home/shenwei/local/app/mysql/data --tmpdir=/db/home/shenwei/local/app/mysql/tmp --user=shenwei</p>
+<p> <strong>3）</strong> 配置mysql配置文件 创建etc目录，并将my.cnf移入其中。为何放这儿呢？因为这是mysqladmin命令搜索配置文件的路径之一。</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>cd /db/home/shenwei/local/app/mysql</p>
+<p>mkdir etc</p>
+<p>mv my.cnf etc</p>
+<p>编辑my.cnf，如下：</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>[client]</p>
+<p>port=33060</p>
+<p>socket=/db/home/shenwei/local/app/mysql/my.sock</p>
+<p>[mysqld]</p>
+<p>port=33060</p>
+<p>socket=/db/home/shenwei/local/app/mysql/my.sock</p>
+<p>datadir=/db/home/shenwei/local/app/mysql/data</p>
+<p>[mysql.server]</p>
+<p>user=shenwei</p>
+<p>basedir=/db/home/shenwei/local/app/mysql</p>
+<p>sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</p>
+<p><strong>4)</strong> 创建Mysql启动脚本。 为了方便，在mysql目录scripts下面创建，并增加可执行属性。</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts</p>
+<p>touch my_mysql_start</p>
+<p>chmod a+x my_mysql_start</p>
+<p>my_mysql_start内容为：</p>
+<p>1</p>
+<p>2</p>
+<p>#!/bin/sh</p>
+<p>/db/home/shenwei/local/app/mysql/bin/mysqld_safe --defaults-file=/db/home/shenwei/local/app/mysql/etc/my.cnf --socket=/db/home/shenwei/local/app/mysql/my.sock --pid-file=/db/home/shenwei/local/app/mysql/my.pid &amp;</p>
+<p><strong>5）</strong>通过mysql_secure_installation进行安全性设置 由于mysql_secure_installation命令无法指定socket文件，无法成功连接mysqld，会出现以下错误，请转到第6）步</p>
+<p>1</p>
+<p>ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ (2)</p>
+<p> <strong>6）</strong>设置root密码 先通过my_mysql_start脚本启动mysqld，由于它所在目录scripts已经被加入环境变量PATH中，可直接运行。</p>
+<p>1</p>
+<p>my_mysql_start</p>
+<p>由于目前root密码为空，可直接进去mysql客户端：</p>
+<p>1</p>
+<p>2</p>
+<p>cd /db/home/shenwei/local/mysql/bin</p>
+<p>./mysql -P 33060 -u root -p</p>
+<p>题外话：也可以不必进入你的mysql/bin目录，而直接用系统的mysql客户端mysql，不过一定要指定端口。 输入上述命令，后出现“Enter password:  ”直接回车即可（密码为空）。 进入mysql命令行后，输入以下命令，设置root密码：</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>mysql&gt; use mysql;</p>
+<p>Reading table information for completion of table and column names</p>
+<p>You can turn off this feature to get a quicker startup with -A</p>
+<p>Database changed</p>
+<p>mysql&gt; update user set password=PASSWORD(“mysqlpassword”) where user=“root”;</p>
+<p>Query OK, 0 rows affected (0.00 sec)</p>
+<p>Rows matched: 4 Changed: 0 Warnings: 0</p>
+<p>mysql&gt; flush privileges;</p>
+<p>Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; quit</p>
+<p>Bye</p>
+<p> <strong>7）</strong> 创建Mysql关闭脚本。 为了方便，在mysql目录scripts下面创建，并增加可执行属性。</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts</p>
+<p>touch my_mysql_stop</p>
+<p>chmod a+x my_mysql_stop</p>
+<p>my_mysql_stop内容为：</p>
+<p>1</p>
+<p>2</p>
+<p>#!/bin/sh</p>
+<p>/db/home/shenwei/local/app/mysql/bin/mysqladmin shutdown -P 33060 -u root -p</p>
+<p>今后可以直接通过my_mysq_stop关闭mysql。   <strong>经验</strong> 多Google！出错后，自己看提示信息，看帮助信息（command –help）后仍无法解决，用核心的错误信息去Google!   <strong>参考</strong> </p>
+<ol>
+<li> <a target="_blank" rel="noopener" href="http://notes.oneplus.info/Operation/2012/12/03/install-mysql-php-without-root/">http://notes.oneplus.info/Operation/2012/12/03/install-mysql-php-without-root/</a></li>
+<li> <a target="_blank" rel="noopener" href="http://san-yun.iteye.com/blog/1493931">http://san-yun.iteye.com/blog/1493931</a></li>
+<li> 其它无数google出来的页面</li>
+</ol>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2014/09/08/cufflinks%E5%AE%89%E8%A3%85%E5%89%8D%E6%8F%90%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85boost/">cufflinks安装前提之一：安装boost</a><a class="next" href="/2014/08/30/cant-locate-iozlib-pm/">解决Can't locate CPAN.pm in @INC的问题</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/03/09/Peoteomics-Using-MaxQuant-to-analyze-LC-MS-MS-data/">Peoteomics | Using MaxQuant to analyze LC-MS/MS data</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/31/Plant-Rice-Oryza-sativa-subsp-japonica-and-indica/">Plant | Rice: Oryza sativa subsp. japonica and indica</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/27/Linux-Meet-I-O-error-when-using-harddisk-in-Linux/">Linux | Meet I/O error when using harddisk in Linux</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2022 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

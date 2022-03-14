@@ -1,0 +1,28 @@
+---
+title: About
+id: '1'
+tags: []
+categories:
+  - - uncategorized
+date: 2015-08-24 15:48:05
+---
+
+<font face="Georgia" color=green size=5>**FENG's Notes**</font>
+
+
+<font face="Georgia" color=green size=3>
+I use this blog to record technical notes when learning bioinformatics.
+
+Keep learning, keep growing.
+
+**My study areas**
+
+-Plant genome sequencing and assembly
+-NGS data analysis (RNA seq, ChIP seq, etc.)
+-Proteomics data analysis
+-Molecular biotechnologies
+</font>
+
+------
+这是一个页面示例。文章按照发表顺序显示在博客的头版，与此不同，页面更适合显示您想轻松访问的没有时间限制（比如“关于”的或“联系信息”）的内容。
+点击“编辑”链接修改此页或[添加另一页](https://wordpress.com/page/98070259/new/ "指向控制面板中的“添加新页面”的直接链接")。

@@ -1,43 +1,2704 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2016/02/29/python%E6%A8%A1%E5%9D%97%E7%9A%84%E5%A4%9A%E7%A7%8D%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">Python：Python 模块的多种安装方法</a></h1><div class="post-meta">2016-02-29</div><div class="post-content"><p><strong>Python模块安装方法</strong><br><strong>一、方法1： 单文件模块</strong><br>直接把文件拷贝到 <code>$python\_dir/Lib</code></p>
-<p><strong>二、方法2： 多文件模块，带setup.py</strong><br>下载模块包，进行解压，进入模块文件夹，执行： <code>python setup.py install</code></p></div><p class="readmore"><a href="/2016/02/29/python%E6%A8%A1%E5%9D%97%E7%9A%84%E5%A4%9A%E7%A7%8D%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/29/linux%E7%B3%BB%E7%BB%9F%EF%BC%9Apython2-6%E5%92%8Cpython2-7%E5%90%8C%E6%97%B6%E5%AD%98%E5%9C%A8/">Linux系统：Python2.6和Python2.7同时存在</a></h1><div class="post-meta">2016-02-29</div><div class="post-content"><p>CENTOS 6.X 系列默认安装的 Python 2.6 ，目前开发中主要是使用 Python 2.7 ，这两个版本之间还是有不少差异的，程序在 Python 2.6 下经常会出问题。 比如： <code>re.sub</code> 函数 ，2.7 支持 <code>flags</code> 参数，而 2.6 却不支持。 所以，打算安装 Python 2.7 来运行 Flask 应用程序，但 2.6 不能删除，因为系统对它有依赖。</p></div><p class="readmore"><a href="/2016/02/29/linux%E7%B3%BB%E7%BB%9F%EF%BC%9Apython2-6%E5%92%8Cpython2-7%E5%90%8C%E6%97%B6%E5%AD%98%E5%9C%A8/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/28/cuffmerge%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%AD%E5%B0%86%E7%9B%B8%E9%82%BB%E7%9A%84%E5%9F%BA%E5%9B%A0merge%E6%88%90%E4%B8%80%E4%B8%AA%E5%9F%BA%E5%9B%A0/">cuffmerge的结果中将相邻的基因merge成一个“基因”</a></h1><div class="post-meta">2016-02-28</div><div class="post-content"><p>cuffmerge combining genes from adjacent loci?? <a target="_blank" rel="noopener" href="https://www.biostars.org/p/104551/">https://www.biostars.org/p/104551/</a> <a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=19772">http://seqanswers.com/forums/showthread.php?t=19772</a> <a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=48571">http://seqanswers.com/forums/showthread.php?t=48571</a> <a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!searchin/tuxedo-tools-users/cuffmerge/tuxedo-tools-users/HSZmU\_KDflo/Zz5mMtZkW6wJ">https://groups.google.com/forum/#!searchin/tuxedo-tools-users/cuffmerge/tuxedo-tools-users/HSZmU\_KDflo/Zz5mMtZkW6wJ</a></p></div><p class="readmore"><a href="/2016/02/28/cuffmerge%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%AD%E5%B0%86%E7%9B%B8%E9%82%BB%E7%9A%84%E5%9F%BA%E5%9B%A0merge%E6%88%90%E4%B8%80%E4%B8%AA%E5%9F%BA%E5%9B%A0/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/28/rna-seq%E8%BD%AC%E5%BD%95%E7%BB%84%E6%B5%8B%E5%BA%8F%E8%B4%A8%E6%8E%A7%E5%B7%A5%E5%85%B7%EF%BC%9Akraken/">RNA Seq转录组测序质控工具：Kraken</a></h1><div class="post-meta">2016-02-28</div><div class="post-content"><h2 id="Kraken-A-set-of-tools-for-quality-control-and-analysis-of-high-throughput-sequence-data"><a href="#Kraken-A-set-of-tools-for-quality-control-and-analysis-of-high-throughput-sequence-data" class="headerlink" title="Kraken: A set of tools for quality control and analysis of high-throughput sequence data"></a>Kraken: A set of tools for quality control and analysis of high-throughput sequence data</h2><p>Matthew P.A. Davis, Stijn van Dongen, Cei Abreu-Goodger, Nenad Bartonicek and Anton J. Enright <em>Methods (2013) - Volume 63, Issue 1, 1 September 2013, Pages 41–49</em> </p></div><p class="readmore"><a href="/2016/02/28/rna-seq%E8%BD%AC%E5%BD%95%E7%BB%84%E6%B5%8B%E5%BA%8F%E8%B4%A8%E6%8E%A7%E5%B7%A5%E5%85%B7%EF%BC%9Akraken/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/">无root权限安装Python</a></h1><div class="post-meta">2016-02-26</div><div class="post-content"><p>RedHat系统自带python2.6，一些用户程序的要求python2.7以上，但是2.6版本的python不能随便删除，因为系统程序会用到。 可以在用户目录下安装python2.7 方法： 1.安装python</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/12/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/26/Bioinfo-dogma-chloroplast-genome-annotation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/05/26/Bioinfo-dogma-chloroplast-genome-annotation/" class="post-title-link" itemprop="url">使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-05-26 22:55:49" itemprop="dateCreated datePublished" datetime="2016-05-26T22:55:49+08:00">2016-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="dogma可以对叶绿体基因组进行注释并可以生成直接导入sequin软件的注释信息从而生成genbank格式的注释可提交ncbi也可在ogdraw进行绘图"><a class="markdownIt-Anchor" href="#dogma可以对叶绿体基因组进行注释并可以生成直接导入sequin软件的注释信息从而生成genbank格式的注释可提交ncbi也可在ogdraw进行绘图"></a> DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。</h2>
+<h2 id="dogma-help"><a class="markdownIt-Anchor" href="#dogma-help"></a> DOGMA Help</h2>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#assumptions">Platforms/Browsers</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#userids">Userids/Passwords</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#unique">Unique IDs</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#retrieving">Retrieving or removing an existing annotation</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#input_file">Input file format</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#input_file_problems">Input file problems</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#gapped">Gapped alignment</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#rna_per">Percent identity cutoffs</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#gcode">Genetic code</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#evalue">E-values</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#reorient">Reorienting genomes</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#cutoff">COVE threshold</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#dogbase">Databases</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#numberline">Numberline panel</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#extract">Extracting sequences</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#summaries">Displaying summaries</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#annotation_panel">Annotation panel</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#sequin_input">Sequin input window</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#delete_gene">Deleting a gene</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#sequin_files">Using Sequin to submit files to GenBank</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/dirs.html#misc">Misc. data files</a></p>
+</li>
+<li>
+<p><strong>Platforms/Browsers</strong></p>
+<ul>
+<li>DOGMA was developed using Safari (Mac’s <a target="_blank" rel="noopener" href="http://www.apple.com/safari">browser</a> for OS X) under Panther (10.3.2) so these are the conditions under which DOGMA works best. It seems to run fine under Tiger, however there are some issues with the middle panel refreshing. When you originally retrieve an annotation you have been working on, you must hit the refresh button in the lower right-hand corner. DOGMA may be functional with Internet Explorer for the Mac running OS X, but Microsoft is no longer supporting IE on the Mac and there are no gaurantees with DOGMA under IE.</li>
+<li>You should set your font to size 14 (or smaller) in the browser Preferences (having a larger size may cause DOGMA windows to display incorrectly) .</li>
+<li>You should also set your monitor resolution to at least 1152 x 768.</li>
+<li>For Safari, make sure you don’t have pop-up windows blocked (under the Safari menu).</li>
+</ul>
+</li>
+<li>
+<p><strong>Userids</strong> Your userid gives you access to the your own data files. Your userid will give you access only to your own data. Because this site is not encrypted, the passwords are not secure and you should use a password that is not used for secure purposes. Userid and passwords are <em>case sensitive</em>. Userids should be alpha-numeric (no spaces!). If you are having trouble logging in, make sure you are typing with proper capitalization. If you forget your userid or password, send email to <a href="mailto:staciakwyman@gmail.com">staciakwyman@gmail.com</a></p>
+</li>
+<li>
+<p><strong>Unique IDs</strong> Unique IDs are how you identify and distinguish between your different annotations. When you are retrieving an existing ID, your will be given a list of annotations by unique ID. It is best to name the annotation with the genome name and perhaps the DOGMA settings that the annotation is created with. Unique IDs should be alpha-numeric (no spaces!). It’s a good idea to identify them by taxon and their settings. For example, if you had several nicotiana annotations, you might name them this way:</p>
+<ul>
+<li>nicotianaGap50</li>
+<li>nicotianaUngap60</li>
+<li>etc…</li>
+</ul>
+</li>
+<li>
+<p><strong>Retrieving or removing an existing annotation</strong> When you enter your userid and then hit submit in the retrieve section, you will be presented with a list of the annotations that exist in your data directory and the date that it was last edited. You may remove obsolete annotations here, or view and edit unfinished annotations. If you remove an annotation, it <em>can</em> be retrieved, but not quickly or easily and perhaps not the most recent copy, so be sure you want to delete it.</p>
+</li>
+<li>
+<p><strong>Input file format</strong> The input file should be in FASTA format. The first line should begin with a “&gt;” followed immediately by the SeqID and then the nucleotide sequence beginning on the next line. In order for a feature table to be imported into Sequin, the SeqId of the FASTA file (the first word immediately after &gt; ), must match the SeqId of the feature table. So be aware that the first word (after the &gt;) on the first line of the FASTA file will be used as the SeqId in Sequin.For example, in the following file, the SeqId is Sc_16:</p>
+<p>&gt;Sc_16 [organism=Saccharomyces cerevisiae] [strain=S288C]<br />
+CGACCACAATGGTACGATTGTTCATAAATCAGGAGATGTTCCTATTCATATAAAGATACC<br />
+AAACAGATCTCTAATACATGACCAGGATATCAACTTCTATAATGGTTCCGAAAACGAAAG<br />
+AAAACCAAATCTAGAGCGTAGAGACGTCGACCGTGTTGGTGATCCAATGAGGATGGATAG<br />
+[etc.]</p>
+<p>And the first line of the feature table file would look like:</p>
+<p>&gt;Features Sc_16</p>
+<p>More information is available at <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/Sequin/table.html">the NCBI site.</a> Sequence data may contain any of the characters from the IUPAC code:</p>
+<p><strong>A</strong></p>
+<p>adenosine</p>
+<p><strong>M</strong></p>
+<p>A or C (amino)</p>
+<p><strong>C</strong></p>
+<p>cytidine</p>
+<p><strong>S</strong></p>
+<p>G or C (strong)</p>
+<p><strong>G</strong></p>
+<p>guanine</p>
+<p><strong>W</strong></p>
+<p>A or T (weak)</p>
+<p><strong>T</strong></p>
+<p>thymidine</p>
+<p><strong>B</strong></p>
+<p>G or T or C</p>
+<p><strong>U</strong></p>
+<p>uridine</p>
+<p><strong>D</strong></p>
+<p>G or A or T</p>
+<p><strong>R</strong></p>
+<p>G or A (purine)</p>
+<p><strong>H</strong></p>
+<p>A or C or T</p>
+<p><strong>Y</strong></p>
+<p>T or C (pyrimidine)</p>
+<p><strong>V</strong></p>
+<p>G or C or A</p>
+<p><strong>K</strong></p>
+<p>G or T (keto)</p>
+<p><strong>N</strong></p>
+<p>A G C T (any)</p>
+</li>
+<li>
+<p>Problems? Read below <strong>IF YOU GET OUTPUT WITH NO GENES:</strong> This usually means your input file had the wrong kind of line breaks. Follow the directions below and try uploading your file again. If you have a situation not covered in the instructions below, send <a href="mailto:staciakwyman@gmail.com">staciakwyman@gmail.com</a> email.<strong>Creating an input file:</strong> To prepare your file for uploading to DOGMA, several steps may be required depending on which program (Sequencher, MacVector, Consed, Word, etc.) you used to save your data. Different programs save files with different kinds of line breaks, and it must be a specific kind for uploading to DOGMA. In the instructions below, I am assuming you are using a Mac running OS X.</p>
+<ul>
+<li><strong>To save from Sequencer or MacVector:</strong> If you have a Sequencher (or MacVector) file, you’ll need to execute several steps to get it ready to input to DOGMA. Save the file as Pearson/FASTA format from the export menu (FASTA text in MacVector).Then you have two options to convert it to a file which may be uploaded through the browser to DOGMA (if you are you Mac OS X):
+<ol>
+<li>Using a terminal window.
+<ul>
+<li>Open a terminal window (the terminal application is in the Utilities folder under Applications).</li>
+<li>cd to the directory with the file in it (if the file is on the Desktop, open the terminal window and then type “cd Desktop” at the prompt).</li>
+<li>At the prompt, type: native2ascii filename filename</li>
+<li>Then try uploading the file to DOGMA</li>
+</ul>
+</li>
+<li>Using MS Word.
+<ul>
+<li>Open the file in MS Word, then save as MS-DOS Text. NOT TEXT ONLY.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><strong>To save from MS Word</strong> Save the file as MS-DOS text. NOT TEXT ONLY.</li>
+<li><strong>Other:</strong>
+<ul>
+<li>If you aren’t sure what program the file came from and it isn’t uploading correctly to DOGMA, try running native2ascii on it (as in the directions for saving from Sequencher above. Doing this to a file will do no harm if it’s already in ASCII format). The symptom of not uploading correctly is that DOGMA finds no genes in input sequence.</li>
+<li>Files saved from Consed should be OK for uploading to DOGMA.</li>
+<li>Files downloaded through the browser from GenBank (as in the tutorial) should be OK for uploading.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>To gap or not to gap</strong> <strong>MT Genomes</strong> For mitchondrial genomes, we have not found any genomes for which ungapped BLAST finds something that gapped BLAST misses, so gapped BLAST should be used for mt genomes. You could also run both and compare the results.<strong>CP Genomes</strong> The option for gapped and ungapped alignment may give slightly different results for chloroplast genomes. The ungapped option will generally generate shorter BLASTX matches with higher percent identity scores. This will result in some genes appearing as multiple, contiguous pieces in the annotation window. The gapped alignment will generate longer BLASTX matches but for genomes with some protein coding genes that are quite divergent from the ones in the database, these genes may be missed. The more divergent genes can be found by either running an ungapped alignment or by running a gapped alignment with a lower percent identity cutoff than the 60% default value. The best thing to do is run it both gapped (with and without lowering the percent identity cutoff) and ungapped alignment and compare the results. We also recommend that users examine the BLASTX results before deciding if a gene is present when there are differences between gapped and ungapped annotations (BLAST results for a gene can be viewed by clicking on the gene name in the top panel). We have evaluated the differences between these two options for several genomes but we would be interested in hearing about any differences you detect. I suggest that when you are annotating a complete cp genome, keep one of the runs as the “master” copy to which you can add genes which are found with difference settings.</p>
+</li>
+<li>
+<p><strong>Percent identity cutoffs</strong> <strong>Protein coding gene cutoffs</strong> In the first run, try the default values for the percent identity cutoff and if you are missing genes, lower the value and run it again. If your genome is only distantly related to the other genomes in the database (see <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/cp_taxa">cp taxa</a> or <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/mt_taxa">mt taxa</a> for a list of genomes in the database).<strong>Chloroplast tRNA cutoffs</strong> Chloroplast tRNAs are identified by BLASTN searches against a data base of 15 chloroplast genomes. The high level of nucleotide sequence conservation among the same tRNAs in different genomes enables accurate identification of chloroplast tRNAs by this method. When selecting the percent identity cutoff for RNAs in cp genomes, we recommend using a high cutoff (85-90%) to avoid spurious trna matches. The optimum percent identity may vary some depending on how divergent the genome you are annotating is relative to the sequences in the database. Thus, it may be necessary to do multiple runs with different percent identity settings. Furthermore, putatively identified tRNAs could be confirmed with other available programs for identifying tRNAs.</p>
+</li>
+<li>
+<p><strong>Which genetic code do I use?</strong> For chloroplast annotations, use number 11 (Bacterial and Plant Plastid), which is identical to the standard genetic code, but has more start codons. The standard genetic code has just ATG, TTG, CTG, number 11 also has ATT, ATC, ATA and GTG. Using Genetic Code 11 instead of the Standard Genetic Code for chloroplast genomes only has the effect of highlighting more potential start codons, but should have no other effect.</p>
+</li>
+<li>
+<p><strong>BLAST E-values</strong> Blast e-values tell you approximately how many sequences with that score you would expect to find in the database by chance. Therefore, a higher number (i.e. 1e-5) indicates that the sequence is more likely to appear by chance, and is therefore a <em>less</em> stringent cutoff. A lower number (i.e. 1e-30) indicates the sequence is less likely to appear by chance, and is therefore a more stringent cutoff. Note, however, that these scores are based on the length of the match and the length of the database and can be misleading at times.</p>
+</li>
+<li>
+<p><strong>Reorienting mitochondrial genomes</strong> If you want your fasta file to be reoriented so that the cox1 gene turns up as the first gene in the annotation, select Yes here. This is to provide consistency in finished genomes. Cox1 was chosen as a reliable starting place because it tends to be the most conserved gene for mitochondrial genomes.</p>
+</li>
+<li>
+<p><strong>COVE threshold</strong> Only tRNAs scoring above this value are reported. This cuts down on the number of spurius tRNAs that are found. If many tRNAs are found which overlap with protein coding genes, set this value higher to screen out some of the lower-scoring tRNAs.</p>
+</li>
+<li>
+<p><strong>Database taxa</strong> Click <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/cp_taxa">here</a> for a list of taxa in the chloroplast database. Click <a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/html/mt_taxa">here</a> for a list of taxa in the mitochondrial database.</p>
+</li>
+<li>
+<p><strong>Numberline panel</strong> This panel displays all the genes graphically on a numberline. When the colored block representing the gene is clicked, that gene is displayed in the top panel. When you mouse over the gene block and hold the mouse still, information about that gene will appear in a yellow box. It gives the gene name, gene start, gene end, and strand of the gene. Protein coding genes are light purple on the forward strand, and dark striped purple on the reverse. Transfer RNAs are light blue on the forward strand, and dark striped blue on the reverse. Ribosomal RNAs are light green on the forward strand, and dark striped green on the reverse. After a gene has been annotated, it shows up in the middle panel with a black border. For genes with introns, the black border connects the exons.</p>
+</li>
+<li>
+<p><strong>Extracting sequences</strong> There are several kinds of sequences which can be extracted from the annotation. All of the sequences are generated from the text summary file, so if genes are not yet annotated, the sequences generated may not be correct.<br />
+*   <strong>Intergenic sequences</strong> This will return the set of nucleotide sequences between all the genes in the input.<br />
+*   <strong>Introns</strong> This will return the nucleotide sequences of all the introns for annotated genes with more than one exon.<br />
+*   <strong>Protein coding aa sequences</strong> This will return the set of sequences for all the genes in the text summary, translated to amino acids. For genes with introns, the intron sequences are not returned and the translated exons are each given on a separate line.<br />
+*   <strong>Protein coding nt sequences</strong> This will return the set of nucleotide sequences for all the genes in the text summary. For genes with introns, the intron sequences are not returned and the exons are each given on a separate line.<br />
+*   <strong>tRNAs</strong>The nucleotide sequence for the tRNA is returned.<br />
+*   <strong>rRNAs</strong>The nucleotide sequence for the rRNA is returned.</p>
+</li>
+<li>
+<p><strong>Displaying summaries</strong> Clicking on the Show Sequin Format button brings up the Sequin input file. If no genes have been annotated, it will be empty. Clicking on the Show Text Summary button brings up the list of genes produced by BLASTing against the database. This list is modified as the genes are annotated. It does not represent a correct list until all genes have been annotated. (For example, the BLAST hits don’t contain stop codons, so all the protein coding genes are initially 3 nucleotides short.) Once a gene has been annotated, it is shown labelled “Annotated” in the text summary. Exons are listed separately, one after another in the text summary.</p>
+</li>
+<li>
+<p><strong>Annotating genes</strong> <strong>Protein coding genes</strong> When you click on a gene in the numberline panel, information about that gene appears in the top panel. Both the forward and reverse strands of the DNA sequence containing that gene plus 60 basepairs up and down stream of the gene are shown. The amino acid sequence for the input genome is shown directly adjacent (above for genes on the forward strand, below for genes on the reverse strand) to the nucleotide sequence. The amino acid sequences for the closest BLAST hits (how many is a setting the user can change on the first form page) are show next. The user needs to pick a start and stop codon for the gene based on these BLAST hits.<strong>Protein coding genes with introns</strong> For a gene with an intron, it will likely show up as two adjacent genes on the number line. When annotating a gene with an intron, the start and stop codons of the first and last exons must first be annotated, and then the exons can be joined (using the button on the Sequin window) in the annotation.<strong>Example:</strong> When nicotiana is run through DOGMA, the gene atpF has an intron and shows up on the numberline in two pieces: from 12206 12673 and 13294 13452 on the reverse strand. Before the exons can be joined, the start codon must be chosen by clicking on the second exon (since it is on the reverse strand). Then the first exon can be selected and the stop codon picked and then the “Add an exon” button in the Sequin window can be selected. This will bring up a list of all the potential exons for that gene.</p>
+</li>
+<li>
+<p><strong>Sequin input window</strong> The Sequin Window appears when a gene block is clicked on in the numberline panel. It appears with all of the required information already filled in when the window appears, but the user needs to verify the beginning and end of the gene. When a link for a potential start and stop codon is click in the top panel of the Annotation Window, the values are automatically updated in the Sequin Window. Values in the Sequin Window may also be manually updated.</p>
+</li>
+<li>
+<p><strong>Deleting a gene</strong> There are two ways to remove a gene. One is to, select the “Delete Gene” button from the bottom panel in DOGMA and then type in the name of the gene exactly as it appears in the text summary. You will be asked to confirm the gene you want to remove. The other way to delete a gene is to click the delete button next to the gene you want to remove in the text summary for the annotation. Once a gene is deleted, it can’t be undone. You can, however, add a gene using the “Add Gene” button in the bottom panel.</p>
+</li>
+<li>
+<p><strong>Preparing files to input to Sequin program</strong> In order for a feature table to be imported into Sequin, the SeqId of the FASTA file (the first word after &gt; ), must match the SeqId of the feature table. So be aware that the first word (after the &gt;) on the first line of the FASTA file will be used as the SeqId in Sequin.Example: In the following file, the SeqId is Sc_16:</p>
+</li>
+</ol>
+<pre><code>\&gt;Sc\_16 \[organism=Saccharomyces cerevisiae\] \[strain=S288C\] 
+CGACCACAATGGTACGATTGTTCATAAATCAGGAGATGTTCCTATTCATATAAAGATACC
+AAACAGATCTCTAATACATGACCAGGATATCAACTTCTATAATGGTTCCGAAAACGAAAG
+AAAACCAAATCTAGAGCGTAGAGACGTCGACCGTGTTGGTGATCCAATGAGGATGGATAG
+\[etc.\]
+
+More information is available at [the NCBI site.](http://www.ncbi.nlm.nih.gov/Sequin/table.html) When preparing a Sequin submission, you'll need two files: the FASTA file containing the genome sequence, and the feature table file created by DOGMA. To prepare the feature table file after annotating all the genes:
+
+1.  Click on the \`\`Show Sequin Format'' button.
+2.  Copy and paste the contents of the file as into Word.
+3.  Save the Word file as \`\`Text only.''
+
+The Sequin page at NCBI is [Sequin](http://www.ncbi.nlm.nih.gov/Sequin/). You can download the Sequin stand-alone application from this [page](http://www.ncbi.nlm.nih.gov/Sequin/download/seq_mac_download.html). Click on the sequin.Mac.hqx link on the page to download a file called Sequin Folder.sit. This should automagically uncompress and inside that folder, you should double-click on the SequinOSX application. You should read through the Sequin documentation on the NCBI site to familiarize yourself with it, but you can also pretty much ignore it.
+1.  Choose Start New Submission
+2.  Enter the information for the 4 tabs: Submission, Contact, Authors, and Affiliation. It won't let you proceed until it has this information.
+3.  You can save and re-use this information by going back to the Submission tab and selecting Export Submitter Info from the File menu (convention is to name it with a .sbt extension). Then, for your next submission, when you are on the Submission tab, select Import Submitter Info from the File menu and load the saved file.
+4.  The next form you typically won't need to change, just select Next Form.
+5.  Now fill out the organism information under the Organism tab. For chloroplasts, you should change Location of Sequence to Chloroplast. Sequin will then fill in the genetic code for you.
+6.  Under the Nucleotide tab, you should import your import your fasta file. For chloroplasts, change topology to circular.
+7.  Click next page, do nothing on this tab, then click Next Form. When it says &quot;You have not entered proteins. Is this correct?&quot; say OK.
+8.  Next you get a window with the GenBank format, and now you import your feature table file by choosing \`\`File&gt;Open'' and selecting the feature table file. The GenBank format should then include all your annotations and the protein sequences for all your protein coding genes.
+9.  You should then select &quot;Search&gt;Validate&quot; to see any errors that you might need to fix.
+10.  When you save the Sequin file and quit, Sequin will tell you to email the file to gb-sub@ncbi.nlm.nih.gov. You can also save the GenBank flat file.
+</code></pre>
+<ol start="21">
+<li><strong>Misc. data files</strong> For each annotation, there are many files which are stored with it. These can be accessed by giving the URL prefix for the annotation:<a target="_blank" rel="noopener" href="http://dogma.ccbb.utexas.edu/data/USERID/UNIQUE/FILENAMESome">http://dogma.ccbb.utexas.edu/data/USERID/UNIQUE/FILENAMESome</a> files you might be interested in looking at are:</li>
+</ol>
+<pre><code>*   **missed.txt** If DOGMA missed any genes, they will be listed in this file.
+*   **cm\_out** (for mt data) This is the raw cove output. It gives the cove score and the coordinates of putative tRNAs.
+*   **cm\_strings** This is the sequences that COVE identified as potential tRNAs. It may have putative tRNAs which are not in DOGMA because the folding program wansn't able to fold the string of nucleotides.
+*   **blast\_output** this is a directory containing the BLAST output for each of the genes.
+
+**Sorry, for security reasons, directory listing has been turned off for this server so some of the files are no longer available.**
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/19/Bioinfo-understanding-pacbio-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/19/Bioinfo-understanding-pacbio-format/" class="post-title-link" itemprop="url">PacBio测序数据格式释义</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-04-19 16:33:49" itemprop="dateCreated datePublished" datetime="2016-04-19T16:33:49+08:00">2016-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文摘抄/参考自：<a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider">https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider</a> 为什么原始数据中有三个“.bas.h5”文件？原因：实际上在PacBio早期的测序原始数据里，只有一个bas.h5文件，因为后来单个SMRT Cell的数据通量有所提高，从而增加了bas.h5文件用以存储base calling数据。 This page describes some of the data files you received from your service provider.</p>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#primary-analysis-data"></a>Primary Analysis Data</h2>
+<p>This is data <strong>directly</strong> generated by a PacBio RS II run.</p>
+<ul>
+<li>The <code>Primary</code> directory includes one subdirectory for <strong>each</strong> run.</li>
+<li>Each run directory includes a subdirectory for <strong>each</strong> SMRT Cell used in the run.</li>
+<li>Each SMRT Cell directory includes an <code>Analysis_Results</code> subdirectory, which contains output files of interest. <strong>Example:</strong></li>
+</ul>
+<p>/path/to/secondary/storage/2420294/0011<br />
+├── Analysis_Results<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.bas.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.sts.csv<br />
+│   └── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.sts.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.mcd.h5<br />
+└── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.metadata.xml</p>
+<h3 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#pacbio-file-naming-convention"></a>PacBio File Naming Convention</h3>
+<p>Many files and sequences used in primary and secondary analysis contain a long string identifier. Below is a typical ID string from a subread with fields defined:</p>
 <blockquote>
-<p>Python ： <a target="_blank" rel="noopener" href="http://www.python.org/getit/">http://www.python.org/getit/</a></p>
-<p>cd $HOME/local/app/</p>
-<p>tar -zxvf Python-2.7.11.tgz</p>
-<p>mv  Python-2.7.11 python</p>
-<p>cd python</p>
-<p>./configure –-prefix=<strong>$HOME/local</strong>（你准备安装的路径，可自己更改）</p>
-<p>make &amp;&amp; make install</p>
+<p>m140415_143853_42175_c100635972550000001823121909121417_s1_p0/553/3100_11230<br />
+└1┘└────2─────┘ └─3─┘ └────────────────4────────────────┘└5┘└6┘└7┘ └───8────┘</p>
 </blockquote>
-<p>2. 将指定路径下的lib和bin分别加入环境变量中：</p>
+<ol>
+<li>“m” = movie</li>
+<li>Time of Run Start (yymmdd_hhmmss)</li>
+<li>Instrument Serial Number</li>
+<li>SMRT Cell Barcode</li>
+<li>Set Number (a.k.a. “Look Number”. Deprecated field, used in earlier version of RS)</li>
+<li>Part Number (usually “p0”, “X0” when using expired reagents)</li>
+<li>ZMW hole number †</li>
+<li>Subread Region (start_stop using polymerase read coordinates) †</li>
+</ol>
 <blockquote>
-<p>echo “PYTHONPATH=$HOME/local/lib/python2.7/site-packages” &gt;&gt; .bashrc</p>
-<p>echo “export PATH=$HOME/local/app/python:$PATH” &gt;&gt; .bashrc</p>
-<p>source ~/.bashrc</p>
+<p>† Note that Fields 7 and 8 are used as sequence IDs in FASTAFASTQ files. They are not used in filenames.</p>
 </blockquote>
-<p>这样就实现了在没有root权限的情况下安装python的模块。 3. 如何在无root权限下安装python模块呢？ 按照上面的方法安装python之后，再安装setuptools，（即easy_install），从而可以使用easy_install来自动安装python包。</p>
+<p>For information on the main files of interest, see:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/2.0.0/bas.h5+Reference+Guide.pdf">bas.h5 Reference Guide</a> <strong>(PDF)</strong>: Describes the main output files produced by the primary analysis pipeline: <code>bas.h5</code>,<code>.1.bax.h5</code>, <code>.2.bax.h5</code>, and <code>.3.bax.h5</code>. The <code>bax.h5</code> files contain base call information from the sequencing run. The <code>bas.h5</code> file is essentially a pointer to the three <code>bax.h5</code> files.</li>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/2.0.0/Metadata+Output+Guide.pdf">Metadata Output Guide</a> <strong>(PDF)</strong>: Describes the file <code>metadata.xml</code>, which contains top-level information about the data, including what sequencing enzyme and chemistry were used, sample name, and other metadata.</li>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/1.3.1/Statistics+Output+Guide.pdf">Statistics Output Guide</a> <strong>(PDF)</strong>: Describes the file <code>sts.xml</code>, which includes summary statistics from a single movie acquisition.</li>
+</ul>
+<h2 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#secondary-analysis-data"></a>Secondary Analysis Data</h2>
+<p>This is data produced by secondary analysis, which is performed on the primary analysis data generated by the instrument.</p>
 <blockquote>
-<p>tar -zxvf setuptools-0.6c11.tar.gz</p>
-<p>cd setuptools-0.6c11</p>
-<p>/your_python_dir/bin/python2.7 setup.py build</p>
-<p>/your_python_dir/bin/python2.7 setup.py install</p>
+<ul>
+<li>
+<p>All files for a specific job reside in <strong>one</strong> directory that is named according to the job ID number</p>
+</li>
+<li>
+<p>Every SMRT Portal job has the following structure. <strong>Example:</strong></p>
+<p>/path/to/smrtanalysis/userdata/jobs/016/016234<br />
+├── data/<br />
+├── results/<br />
+├── log/<br />
+├── workflow/<br />
+├── <a target="_blank" rel="noopener" href="http://job.sh">job.sh</a><br />
+├── input.xml<br />
+└── settings.xml</p>
+<ul>
+<li><code>data</code> is a <strong>directory</strong> that contains intermediate and final data files for the analysis job</li>
+<li><code>results</code> is a <strong>directory</strong> that contains summary statistics and plots for the analysis job</li>
+<li><code>log</code> is a <strong>directory</strong> that contains all log files for the analysis job</li>
+<li><code>workflow</code> is a <strong>directory</strong> that contains all the executables for the analysis job</li>
+<li><code>job.sh</code> is an executable file used by SMRT Portal to run the <code>smrtpipe.py</code> analysis job</li>
+<li><code>input.xml</code> is a .xml file containing a list of input <code>bax.h5</code> files used to run the analysis job</li>
+<li><code>settings.xml</code> is a .xml file containing the parameters needed to perform the analysis job</li>
+</ul>
+</li>
+<li>
+<p>For more detail on specific protocol outputs, see <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Navigating-the-SMRT-Pipe-Job-Directory">Navigating the SMRT Pipe Job Directory</a>.</p>
+</li>
+</ul>
 </blockquote>
-<p>4. 安装其他python模块/套件 先使用easy_install安装pip工具：</p>
+<p>Within the <code>data</code> directory are several types of output files. You can use these data files as input for further downstream processing, pass on to collaborators, or upload to public genome sites. Depending on the protocol being performed, the <code>data</code> directory contain files in the following formats:</p>
+<ul>
+<li><strong>cmp.h5:</strong> The primary sequence alignment file for SMRT sequencing data. (Click <a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/1.4/doc/cmp.h5+Reference+Guide.pdf">here</a> **(PDF)**for further details.)</li>
+<li><strong>H5:</strong> <code>Hierarchical Data Format</code>; a file-system-like data format. (Click <a target="_blank" rel="noopener" href="http://www.hdfgroup.org/HDF5/doc/H5.intro.html">here</a> for further details.)</li>
+<li><strong>SAM:</strong> <code>Sequence Alignment Map</code> is a generic nucleotide alignment format that describes the alignment of query sequences or sequencing reads to a reference sequence or assembly. (Click <a target="_blank" rel="noopener" href="http://samtools.sourceforge.net/">here</a> for further details.)</li>
+<li><strong>BAM:</strong> Binary version of the <code>Sequence Alignment Map (SAM)</code> format. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/goldenPath/help/bam.html">here</a> for further details.)</li>
+<li><strong>BAI:</strong> The index file for a file generated in the BAM format. (This is a non-standard file type.)</li>
+<li><strong>FASTA:</strong> FASTA-formatted sequence files contains either nucleic acid sequence (such as DNA) or protein sequence information. FASTA files store multiple sequences in a single file. (Click <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/FASTA_format">here</a> for further details.)</li>
+<li><strong>GFF:</strong> <code>General Feature Format</code>, used for describing genes and other features associated with DNA, RNA and Protein sequences. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/FAQ/FAQformat#format3">here</a> for further details.)</li>
+<li><strong>VCF:</strong> <code>Variant Call Format</code>, for use with the molecular visualization and analysis program VMD. (Click <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variant_Call_Format">here</a> for further details.)</li>
+<li><strong>BED:</strong> Format that defines the data lines displayed in an annotation track. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/FAQ/FAQformat#format1">here</a> for further details.)</li>
+<li><strong>CSV:</strong> Comma-Separated Values file. Can be viewed using Microsoft Excel or a text editor.</li>
+<li><strong>GML:</strong> An XML representation of the scaffold graph that results from scaffolding contigs using the AHA hybrid assembly algorithm.</li>
+</ul>
+<h2 id="-4"><a class="markdownIt-Anchor" href="#-4"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#smrt-portal-reports"></a>SMRT Portal Reports</h2>
+<p>Your service provider included secondary analysis reports generated using SMRT Portal.</p>
+<ul>
+<li>For an explanation of the report fields, click <a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/Reports+-+Terminology.pdf">here</a> <strong>(PDF)</strong>.</li>
+</ul>
+<h2 id="-5"><a class="markdownIt-Anchor" href="#-5"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#downloading-smrt-analysis-software"></a>Downloading SMRT Analysis Software</h2>
+<ul>
+<li>The latest version of the SMRT Analysis software is available <a target="_blank" rel="noopener" href="http://www.pacb.com/devnet/">here</a>.</li>
+<li>Pacific Biosciences provides a free Amazon Machine Image that you can use to run SMRT Portal in the cloud. See <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/Bioinformatics-Training/wiki/%22Installing%22-SMRT-Portal-the-easy-way---Launching-A-SMRT-Portal-AMI">here</a> for details.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/08/Bioinfo-denovo-rna-seq-assembly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/04/08/Bioinfo-denovo-rna-seq-assembly/" class="post-title-link" itemprop="url">多个样品的denovo RNA Seq组装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-04-08 13:41:43" itemprop="dateCreated datePublished" datetime="2016-04-08T13:41:43+08:00">2016-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题：先各自组装，然后合并组装的结果；还是先合并reads，再一起组装？ 应该是合并Reads再进行组装能得到更好的结果。 参考资料：<a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=33452">http://seqanswers.com/forums/showthread.php?t=33452</a> #9： I’ve tried assembling combined reads vs. assembling separate reads for several species, and combining reads has always given a more contiguous and accurate assembly. If you have &gt; 200 million combined reads, I strongly recommend using Trinity In-Silico Normalization, which will give a good assembly in much shorter run time when compared to non-normalized assembly. 也有人分开组装，然后合并。 合并方法： TGICL CAP3 CD-HIT</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/17/%E8%8B%B1%E6%96%87email%E5%86%99%E4%BD%9C%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BC%80%E5%A4%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/17/%E8%8B%B1%E6%96%87email%E5%86%99%E4%BD%9C%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BC%80%E5%A4%B4/" class="post-title-link" itemprop="url">英文Email写作：如何开头</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-17 15:46:57" itemprop="dateCreated datePublished" datetime="2016-03-17T15:46:57+08:00">2016-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>Here are some example opening sentences for emails:</strong> <em>I hope you enjoyed your holiday and are finding it easy to settle back in to work.</em> <em>It was good to meet you in [place]. I hope you had a safe journey home.</em> <em>Thank you very much for your email. I am glad to hear that you and your family are well.</em> <em>Thank you for your prompt reply.</em> <em>I apologise for not replying sooner, but I have been very busy these last few weeks.</em> <em>Thank you for your email of [date]. Please find my reply to your query below.</em> <em>I am writing with regard to XXXX.</em> <em>Thank you for getting in touch with us about XXXX.</em> (Less formal, more friendly) <em>Thank you for contacting us regarding XXXX.</em> (More formal) <em>With reference to your email of [date], I would like to bring the following to your attention.</em> <em>As a follow-up to our phone call this morning, I would like summarise the key issues.</em> <em>Re the question you raised in your previous email, please find my explanation below.</em> <em>Following our meeting on [date] / in [place], please find below a summary of the points we discussed.</em> <em>In reply to your query regarding XXXX, I would like to make the following points.</em> <strong>Phrases best avoided:</strong> <em>I hope this email finds you well.</em> <em>Please be informed that…</em> <em>Please be advised as follows.</em> <em>This email concerns…</em> 参考资料：<a target="_blank" rel="noopener" href="http://blog.harwardcommunications.com/2012/11/06/how-to-start-emails/">http://blog.harwardcommunications.com/2012/11/06/how-to-start-emails/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/07/Bioinfo-pacbio-smrt-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/07/Bioinfo-pacbio-smrt-analysis/" class="post-title-link" itemprop="url">安装PacBio数据分析工具包SMRT Analysis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-07 15:55:16" itemprop="dateCreated datePublished" datetime="2016-03-07T15:55:16+08:00">2016-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="download-smrt-analysis"><a class="markdownIt-Anchor" href="#download-smrt-analysis"></a> Download SMRT Analysis</h2>
+<p>Download SMRT Analysis from PacBio DevNet (<a target="_blank" rel="noopener" href="http://www.pacbiodevnet.com/">http://www.pacbiodevnet.com</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377.run</span><br><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377-patch-3.run</span><br></pre></td></tr></table></figure>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#installation-summary"></a>Installation Summary</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">sudo mkdir $SMRT_ROOT</span><br><span class="line">sudo chown smrtanalysis:smrtanalysis $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">su -l smrtanalysis</span><br><span class="line">smrtanalysis-2.2.0.133377.run -p smrtanalysis-2.2.0.133377-patch-3.run --rootdir $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br><span class="line">$SMRT_ROOT/admin/bin/kodosd start</span><br></pre></td></tr></table></figure>
+<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#upgrade-summary"></a>Upgrade Summary</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su -l smrtanalysis</span><br><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop </span><br><span class="line">$SMRT_ROOT/admin/bin/smrtupdater -- -p smrtanalysis-2.2.0.133377-patch-3.run smrtanalysis-2.2.0.133377.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
+<p>Once SMRT Portal is installed, proceed to the following sections to complete setup:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#set-up-smrt-portal">Set up SMRT Portal</a> (for new installations only)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#verify-the-installation">Verify the Installation</a> (for new installations <strong>and</strong> upgrades)</li>
+</ol>
+<h2 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#patch-summary"></a>Patch Summary</h2>
+<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop</span><br></pre></td></tr></table></figure>
+<p><strong>These two commands must be run as <code>root</code> (e.x. using <code>sudo</code>). Skip these commands if the files do not exist.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /tmp/mysql_XXXXX.sock </span><br><span class="line">sudo rm $SMRT_ROOT/userdata/database/../../error.log </span><br></pre></td></tr></table></figure>
+<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$SMRT_ROOT/admin/bin/smrtupdater smrtanalysis-2.2.0.133377-patch-3.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
+<p>Note： [20180704]使用的过程中发现 SMRT analysis 还是会依赖系统的一些程序的，之前系统用的是 Python 2.7，运行SMRTanalysis中的甲基化分析流程没问题，前段时间将默认的 Python 换成了 Python 3.6（Anaconda），结果遇到甲基化分析中断，报错信息: <code>Exiting smrtpipe last error: SmrtExit task://016448/P_Mapping/covGFF Failed</code> 在bashrc中将默认的 Python 设置为 Python 2.7，然后甲基化分析就可以正常运行了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/06/Python-intro-anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/06/Python-intro-anaconda/" class="post-title-link" itemprop="url">Python 发行版：Anaconda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-06 13:04:34" itemprop="dateCreated datePublished" datetime="2016-03-06T13:04:34+08:00">2016-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转自：<a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/">http://liam0205.me/2015/11/21/Python-distribution-Anaconda/</a></p>
+<h1 id="python-发行版anaconda"><a class="markdownIt-Anchor" href="#python-发行版anaconda"></a> Python 发行版：Anaconda</h1>
+<p>发表于 2015 年 11 月 21 日 分类于 <a target="_blank" rel="noopener" href="http://liam0205.me/categories/IT/">IT</a>     本文共被围观 205 次     <a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/#comments">1条评论</a></p>
+<p>Python 是一款优秀的编程语言，其语法优雅简单，但更重要的是各类第三方 Python 库丰富。甚至可以说，学 Python 主要不是学它的语法，而是学习各类第三方 Python 库的用法。安装第三方 Python 库也很简单：Python 拥有 pip 这个包管理器（Package Manager），执行 <code>pip install &lt;package_name&gt;</code> 即可安装所需。 然而，在实际使用中，可能经常会遇到以下一些情况，导致我们无法轻易用 pip 安装第三方库：</p>
+<ul>
+<li>系统 Python 安装在系统目录，需要 Root 权限才可写入，因此执行 <code>pip</code> 需要使用 <code>sudo</code> 命令。若当前用户不在 sudoer 组内，则无法使用 pip 安装第三方库。</li>
+<li>系统 Python 安装在系统目录，需要 Root 权限才可写入。若当前用户不在 sudoer 组内，且未安装 pip，则用户无法安装 pip，继而无法用 pip 安装第三方库。</li>
+<li>系统 Python 安装在用户 Home 目录，但因系统没有 <code>libffi</code>/<code>zlib</code>/<code>openssl</code> 或编译安装 Python 时没有正确配置好这些库的依赖，则也无法安装 Python 的 Setuptools 和 pip。</li>
+</ul>
+<p>总而言之，pip 虽然方便，但是因为系统权限、依赖库等问题，有时难以使用。问系统管理员要权限，当然是一个解决方案，但是每次安装新的 Python 库都要麻烦别人，未免麻烦。 最近，我就遇到了这样的问题。 使用的账号没有在 sudoer 组内，因而不能用 <code>sudo</code> 命令获得临时的 root 权限。于是，我只能尝试自行编译安装，但又被各种第三方依赖库搞得焦头烂额。一番搜索之后，在网络上也并没有找到合适的解决方法，只好在<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/questions/239691/how-to-install-python-on-centos-without-root-privileges">Unix.sx 上提问</a>。 其中，<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/users/47709/back2basics">Back2Basics</a> 提出，可以尝试 Anaconda 这个 Python 发行版。该发行版内置了许多常用的 Python 第三方库，安装之后直接就可使用。此外，Anaconda 还安装了 Setuptools 和 pip 两个 Python 包管理器。最关键的是，Anaconda 不需要自己编译，可以直接安装在用户目录。此外 Anaconda 支持 Windows/Linux/Mac OS X 全平台，更是让人心头爱得不行。 具体：</p>
+<ul>
+<li>默认安装的第三方库列表：<a target="_blank" rel="noopener" href="http://docs.continuum.io/anaconda/pkg-docs">http://docs.continuum.io/anaconda/pkg-docs</a></li>
+<li>下载地址：<a target="_blank" rel="noopener" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a>
+<ul>
+<li>Windows: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86_64.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86_64.exe">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86.exe">Python 3.5</a></li>
+<li>OS X: 10.7 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.pkg">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.pkg">Python 3.5</a> 10.5 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.sh">Python 3.5</a></li>
+<li>Linux: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86_64.sh">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86.sh">Python 3.5</a></li>
+</ul>
+</li>
+</ul>
+<p>Anaconda 的安装过程十分简单，这里就不赘述了。<code>: )</code></p>
+<p>======</p>
+<p>使用过程中遇到的问题：启动故障。</p>
 <blockquote>
-<p>easy_install pip</p>
+<p>[fenglei@localhost bin]$ python3<br />
+Failed to import the site module<br />
+Traceback (most recent call last):<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br />
+__boot()<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br />
+import imp # Avoid import loop in Python &gt;= 3.3<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br />
+import tokenize<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br />
+import re<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br />
+class RegexFlag(enum.IntFlag):<br />
+AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
 </blockquote>
-<p>在安裝python套件的时候用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 查看目前已有的模块：</p>
+<p>解决办法：</p>
+<p>在home目录下，vi .bashrc，注释掉里面的PYTHONPATH，退出之后打开新窗口，就可以运行python3和conda了。</p>
+<hr />
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/03/R-bar-plot%E4%B8%8A-error-barsd-se-or-ci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/03/R-bar-plot%E4%B8%8A-error-barsd-se-or-ci/" class="post-title-link" itemprop="url">R：条形图(bar plot)上的误差线(Error Bar):SD, SE or CI?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-03 16:54:48" itemprop="dateCreated datePublished" datetime="2016-03-03T16:54:48+08:00">2016-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:46:43" itemprop="dateModified" datetime="2020-12-08T11:46:43+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载自：<a target="_blank" rel="noopener" href="http://yufree.cn/blogcn/2013/08/18/error-bar.html">http://yufree.cn/blogcn/2013/08/18/error-bar.html</a></p>
+<p>经常会遇到有人问条形图上误差线画什么的问题，有人说标准差（sd），有人说标准误（se），有的直接说置信区间（CI），其实这倒也不是什么大问题，你按什么画就在文章中注明就是了。后来看到JCB上有一篇科普<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2064100/">文章</a>，分析的比较到位，就把里面的干货跳出来翻译一下并对其中的难点进行解读，既是总结也是提高，懒得看过程可直接看文末的规则。</p>
+<ul>
+<li>概念问题</li>
+<li><img src="https://genehub.files.wordpress.com/2016/03/qqe688aae59c9620160303165551.jpg" alt="QQ截圖20160303165551" /></li>
+</ul>
+<p>误差线</p>
+<p>种类</p>
+<p>描述</p>
+<p>公式</p>
+<p>范围</p>
+<p>描述性</p>
+<p>极值间距离</p>
+<p>xmax−xminxmax−xmin</p>
+<p>标准差</p>
+<p>描述性</p>
+<p>数据点与均值的平均差异</p>
+<p>SD=∑(x−x¯)2n−1−−−−−−−√SD=∑(x−x¯)2n−1</p>
+<p>标准误</p>
+<p>推断性</p>
+<p>重复多次均值的变化</p>
+<p>SE=SDn√SE=SDn</p>
+<p>置信区间(95%)</p>
+<p>推断性</p>
+<p>一个有95%信心出现均值的范围</p>
+<p>x¯±tn−1×SEx¯±tn−1×SE</p>
+<ul>
+<li>标准差</li>
+</ul>
+<p>标准差是描述性统计里用来表示数据本身均值范围的，两倍标准差范围以外就可能是异常值了，标准差的使用不牵扯均值对比推测，仅仅是描述性的。样本标准差会随着样本数增加接近总体标准差，可用来作为总体标准差的估计，不随样本数变化而变化。</p>
 <blockquote>
-<p>pip list</p>
+<p><strong>既然随着样本数增加样本标准差与总体标准差是一致的，怎么又说不随样本数变化？</strong></p>
 </blockquote>
-<p>pip查看需要更新的package</p>
 <blockquote>
-<p>pip list –outdated</p>
+<p>你可以这样理解，总体方差是客观存在的，我们用样本去对总体方差进行估计，具体的算法就是上面那个公式，可用点估计方法自行推导，得到的就是一个接近总体方差的数，这个数当然不会随样本数发生变化了。至于说公式，要记住伴随样本数增大，分子也在增大，所以整体上这个数是不会随样本数发生变化，毕竟只是一个估值无偏性的问题。</p>
 </blockquote>
-<h3 id="下面是更详细的pip介绍："><a href="#下面是更详细的pip介绍：" class="headerlink" title="下面是更详细的pip介绍："></a>下面是更详细的pip介绍：</h3><h3 id="pip安装"><a href="#pip安装" class="headerlink" title="pip安装"></a>pip安装</h3></div><p class="readmore"><a href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/25/python%E5%A5%97%E4%BB%B6-pbh5tools-pacbio-rawdata-%E6%A0%BC%E5%BC%8F%E8%BD%89%E6%8F%9B/">python套件 pbh5tools: PacBio rawdata 格式轉換</a></h1><div class="post-meta">2016-02-25</div><div class="post-content"><p>2016-09-06更新：pbh5tools是PacBio公司早期推出的数据分析工具，其后已经被SMRTanalysis工具所替换。SMRTanalysis的安装与使用都更简单，Linux安装之后可以直接在网页里面进行数据分析操作。 ====================================== 转载自：<a target="_blank" rel="noopener" href="http://jeffreyy.pixnet.net/">http://jeffreyy.pixnet.net/</a> PacBio 是第三代定序技術 (Third generation sequencing)的技術公司，目前的最新機型為RSII，最長長度可到30kb。 出來的rawdata其檔案格式為hdf5，其中有兩種，一個是bas.h5和bax.h5，其PacBio的文件有寫到以下: “Due to the increased throughput and read lengths achieved by the PacBio® RS II upgrade, this information is now contained in one bas.h5 file and three bax.h5 files.” <a target="_blank" rel="noopener" href="http://files.pacb.com/software/instrument/2.0.0/bas.h5%20Reference%20Guide.pdf">http://files.pacb.com/software/instrument/2.0.0/bas.h5%20Reference%20Guide.pdf</a> hdf5 格式並無法直接觀看，如果要看序列，必須要經過格式轉換，PacBio有出一個軟體為pbh5tools來進行hdf5的格式轉換。   pbh5tools是以python寫的套件，所以安裝前需要安裝其他python套件，在安裝python套件用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 <a target="_blank" rel="noopener" href="http://blog.longwin.com.tw/2014/08/python-setup-pip-package-2014/">安裝 PIP 來管理 Python Packages</a> 除了python套件外，其他的套件還有python-devel 和 hdf5與其相關套件。   其安裝其他requirement套件指令為:</p></div><p class="readmore"><a href="/2016/02/25/python%E5%A5%97%E4%BB%B6-pbh5tools-pacbio-rawdata-%E6%A0%BC%E5%BC%8F%E8%BD%89%E6%8F%9B/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/25/pacbio%E6%B5%8B%E5%BA%8F%EF%BC%9A%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D%E7%9A%84%E5%AE%9A%E4%B9%89/">PacBio测序：专有名词的定义</a></h1><div class="post-meta">2016-02-25</div><div class="post-content"><p><a target="_blank" rel="noopener" href="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal/_PacBio/_Glossary.htm">http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal\_PacBio\_Glossary.htm</a></p></div><p class="readmore"><a href="/2016/02/25/pacbio%E6%B5%8B%E5%BA%8F%EF%BC%9A%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D%E7%9A%84%E5%AE%9A%E4%B9%89/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/22/linux%E7%94%A8parallel%E5%91%BD%E4%BB%A4%E5%B9%B6%E8%A1%8C%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/">Linux用Parallel命令并行处理命令</a></h1><div class="post-meta">2016-02-22</div><div class="post-content"><p>你是否曾经有过要计算一个非常大的数据(几百GB)的需求？或在里面搜索，或其它操作——一些无法并行的操作。数据专家们，我是在对你们说。你可能有一个4核或更多核的CPU，但我们合适的工具，例如 <strong>grep</strong>, <strong>bzip2</strong>, <strong>wc</strong>, <strong>awk</strong>, <strong>sed</strong>等等，都是单线程的，只能使用一个CPU内核。 借用卡通人物Cartman的话，“如何我能使用这些内核”? 要想让Linux命令使用所有的CPU内核，我们需要用到<a target="_blank" rel="noopener" href="https://www.gnu.org/software/parallel/" title="GNU Parallel">GNU Parallel</a>命令，它让我们所有的CPU内核在单机内做神奇的map-reduce操作，当然，这还要借助很少用到的<strong>–pipes</strong> 参数(也叫做<strong>–spreadstdin</strong>)。这样，你的负载就会平均分配到各CPU上，真的。</p></div><p class="readmore"><a href="/2016/02/22/linux%E7%94%A8parallel%E5%91%BD%E4%BB%A4%E5%B9%B6%E8%A1%8C%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/01/28/tmux%E7%9A%84%E4%BD%BF%E7%94%A8/">Tmux的使用</a></h1><div class="post-meta">2016-01-28</div><div class="post-content"><p>介绍 <a target="_blank" rel="noopener" href="https://wiki.freebsdchina.org/software/t/tmux">tmux</a>是一个优秀的终端复用软件，即使非正常掉线，也能保证当前的任务运行，这一点对于 远程SSH访问特别有用，网络不好的情况下仍然能保证工作现场不丢失!此外，tmux完全使用键盘 控制窗口，实现窗口的切换功能。 简单地说，tmux对于我主要有两个功能（这应该也是tmux的主要功能）:</p></div><p class="readmore"><a href="/2016/01/28/tmux%E7%9A%84%E4%BD%BF%E7%94%A8/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/01/27/linux%E5%AE%89%E8%A3%85tmux/">Linux安装tmux</a></h1><div class="post-meta">2016-01-27</div><div class="post-content"><p>按照tmux官网（<a target="_blank" rel="noopener" href="https://github.com/tmux/tmux%EF%BC%89%E7%9A%84%E6%8C%87%E7%A4%BA%EF%BC%8C%E9%81%87%E5%88%B0%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%8C%E9%80%90%E4%B8%AA%E8%A7%A3%E5%86%B3%EF%BC%9A">https://github.com/tmux/tmux）的指示，遇到几个问题，逐个解决：</a></p></div><p class="readmore"><a href="/2016/01/27/linux%E5%AE%89%E8%A3%85tmux/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/11/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/13/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<ul>
+<li>标准误</li>
+</ul>
+<p>置信区间是针对均值自身而言的，是对均值真实值出现范围的估计，在这一范围内每个点都可能是真值，在置信区间的计算中也会用到标准误。因为涉及均值出现范围，一般就会涉及均值比较与估计的问题，谁比谁大或小，是否显著，这属于推断性统计。置信区间与样本是相关的，越大越不准，越小表示准确度高（样本数自然要大一些）。在使用这类误差线时要考虑自己是否有此意图。</p>
+<blockquote>
+<p><strong>95%置信区间中样本平均值的地位</strong></p>
+</blockquote>
+<blockquote>
+<p>这个95%的置信度可以用仿真实验来掩饰，谢益辉写的R扩展包animation中conf.int()可以很清楚的演示这一过程：不断从总体中取样并计算95%置信区间，重复n次，最后统计区间包含总体均值的概率你会发现有95%的区间包含的真值。区间包含真值的概率是95%，而不是真值在这个区间里变动，计算出的置信区间可能不包含真值，毕竟置信度为95%。样本的均值是没有固定位置的会跟着取样走，但总体均值不会乱跑，因为不知道，所以用含有置信度的区间估计会更可靠一些。</p>
+</blockquote>
+<blockquote>
+<p><strong>标准误与置信区间的区别</strong></p>
+</blockquote>
+<blockquote>
+<p>看公式就知道了，标准误跟着样本数走，样本数越大，标准误越小，很多文章会使用MSE，这代表了均值的标准误。应该说重复越多，这个数就越压缩均值出现的范围，一般而言都是样本数为3，不是因为多了不行，而是说3个样本可以说明问题，有条件当然样本多了好了，结果会更准。置信区间还涉及一个t值的问题，在样本数较少例如3的时候，t值比较大，约为4，样本数多于10，一般就是2左右了。置信区间在一定程度上对样本数不如标准误敏感，给出MSE与样本数是可以推测置信区间的，样本数为3就是4倍MSE，为10就是3倍MSE。</p>
+</blockquote>
+<blockquote>
+<p><strong>如何利用置信区间来判断显著性</strong></p>
+</blockquote>
+<blockquote>
+<p>置信区间是统计估计问题，显著性是统计推断问题，这是首先需要分清楚的，然后看下面这个来自原文的图就很清楚了。通过间距判断就可以，这里需要纠正的问题就是一定要间距完全分开才有显著性差异，根据情况来。</p>
+</blockquote>
+<blockquote>
+<p><img src="http://yufree.github.io/blogcn/figure/cisig.jpg" alt="alt text" /></p>
+</blockquote>
+<blockquote>
+<p><img src="http://yufree.github.io/blogcn/figure/cisig2.jpg" alt="alt text" /></p>
+</blockquote>
+<ul>
+<li>样本数</li>
+</ul>
+<p>使用样本数要注意你是一个样本重复测定n次，还是n个样本测定1次。前者表示同一样本，n实际为1，后者表示独立样本，样本数为n。如果你展示的是一组代表性独立数据，那就不用给出重复测定误差线，这对总体推断没多大意义。</p>
+<blockquote>
+<p><strong>实验设计中的可重复性究竟指的是什么？</strong></p>
+</blockquote>
+<blockquote>
+<p>一个实验设计三个平行，重复了4次，那么n应该是多少？n为4，因为这4次测定是与你要检验的假说有关的，那三个平行取均值就可以了，作为对数据真实性的保证。保证数据可用与重复性是两个概念，这一点是经常被混淆的。有人做实验重复了10次发现其中有1次结果是可用的就用这组数据去写文章，里面实际只有平行，没有重复。实际的科研是要考虑这10次结果的，当然前提是每次实验所有操作都是一致的，只用一组数据去写文章是碰运气，可以说完全没有重复性，这里每一次重复代表获得一次独立样本。当然这也分情况，根据你的题目自行考虑。</p>
+</blockquote>
+<blockquote>
+<p><strong>如何表示重复测量数据？</strong></p>
+</blockquote>
+<blockquote>
+<p>做分析的会比较关注，组内重复测量数据对于组间比较是没有意义的。例如在暴露实验中，同一时间点的数据带有误差线的暴露组与对照组是可比的，但是不同时间点的数据置信区间就没什么意义了，或者你可以用配对t检验差值的方法来考虑同一组内不同时间点测定区别是否显著。一般遇到这个问题都是考虑影响因素的时候，最好每个因素单一考虑，当然你也可以设计正交实验。重复性与独立性是相对的，根据你的实验设计来决定。</p>
+</blockquote>
+<ul>
+<li>规则
+<ol>
+<li>使用误差线要注明种类</li>
+<li>要注明样本数n</li>
+<li>误差线与显著性只用在独立重复实验上，代表性的实验结果不应该包含误差线与P值，因为这相当于n=1</li>
+<li>推断性实验的误差线最好使用标准误或置信区间，对于n为3的实验，可直接列出3次的结果，不标注误差线</li>
+<li>95%置信区间表示有95%信心里面有总体的均值，n为3时，标准误的4倍为这个区间</li>
+<li>n为3，两倍标准误不重复覆盖，P &lt; 0.05, 刚好覆盖，P接近0.05；n大于10，间距1倍标准误，P接近0.05，两倍就是0.01</li>
+<li>置信范围表示误差线时，n为3，重叠一臂，P为0.05；重叠半臂，P为0.01</li>
+<li>同一组内的重复实验，标准误与置信区间不能用来表示组内差异</li>
+</ol>
+</li>
+</ul>
+<p>原文：Cumming G, Fidler F, Vaux DL.Error bars in experimental biology.J Cell Biol. 2007 Apr 9;177(1):7-11.</p>
+<p><a target="_blank" rel="noopener" href="http://yufree.github.com/blogcn">yufree</a> / 2013-08-18 Published under <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/01/Bioinfo-how-to-use-deseq2-to-analyse-rnaseq-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/01/Bioinfo-how-to-use-deseq2-to-analyse-rnaseq-data/" class="post-title-link" itemprop="url">How to use DESeq2 to analyse RNAseq data</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-01 17:16:27" itemprop="dateCreated datePublished" datetime="2016-03-01T17:16:27+08:00">2016-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="how-to-use-deseq2-to-analyse-rnaseq-data"><a class="markdownIt-Anchor" href="#how-to-use-deseq2-to-analyse-rnaseq-data"></a> How to use DESeq2 to analyse RNAseq data</h1>
+<p>（<a target="_blank" rel="noopener" href="http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/%EF%BC%89">http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/）</a></p>
+<p>Posted on <a target="_blank" rel="noopener" href="http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/" title="8:29 pm">February 17, 2014</a></p>
+<p><strong>News:</strong> <em>My colleagues at NZGL have developed an open source R based GUI for generating plots using cuffdiff data. One for deseq2 will be available soon! Feel free to<a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff">check it out</a> and get back to us with any <a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff/issues">suggestions</a></em>. <em>Only requires <a target="_blank" rel="noopener" href="https://github.com/NZGL/shiny_cuffdiff">R-studio</a></em>. There is only one thing better than DESeq and thats DESeq2! The <a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/2.13/bioc/html/DESeq2.html">updated version</a> is out and I’m keen to give it a whirl. Like with my old <a target="_blank" rel="noopener" href="http://dwheelerau.com/2013/04/15/how-to-use-deseq-to-analyse-rnaseq-data/">DESeq post</a>, once again I am really just following the excellent <a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/2.13/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf">DESeq2 manual</a>, thanks again to the authors for the great documentation! Just a quick warning that I haven’t tested this workflow extensively, let me know if things don’t work. Also, DESeq2 is new so some of the function might have changed, so if you have problems makes sure you check what version you are using versus what I used (see sessionInfo below). The files I used for this are found <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/0B6eVTdUN1IlwdnNiMkpvV1FWMUk/edit?usp=sharing">here</a> if you want to give them a go or follow along. I’ve already got a <a target="_blank" rel="noopener" href="http://dwheelerau.com/2013/04/15/how-to-use-deseq-to-analyse-rnaseq-data/">blow by blow run through on how to do use DESeq</a> and much of that applies to the new package, so here I’ll just concentrate on some DESeq2 specific stuff as well as all the graphs. I’ve included some side by side comparisons between DESeq and DESeq2. Installing is easy:</p>
+<p>1</p>
+<p>2</p>
+<p><code>source``(``'[http://bioconductor.org/biocLite.R](http://bioconductor.org/biocLite.R)'``)</code></p>
+<p><code>biocLite``(``'DESeq2'``)</code></p>
+<p>One important change is that now you can directly create the count table using raw <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">HT-Seq-count</a> output, and I’ll show you how to do that below. Remember HT-Seq-count will create a single file for each replicate of a condition (based on an SAM alignment file), so in my case with two conditions (control and treatment) and 3 reps each, that makes a total of 6 files. I called these files treated1.txt, treated2.txt, treated3.txt, untreated1 untreated2, untreated3 so that i can use grep to import them (explained below). Previously i would use a script to merge them all together, now DESeq2 allows you to import these files directory. Below I set the directory where the files are located; use grep to catch all these files based on the string match “treated” that they all share (be carefully it doesn’t catch anything else), this is stored in sampleFiles. If you like you could just directly specify the files using “sampleFiles&lt;-c(“treated1.txt”,…etc…”untreated3.txt”). Importantly, we need to setup the sampleConditions, with the same order as that found for the file names in sampleFiles (so it knows what each files represents). Finally we make a dataframe that becomes a deseq table. Note my “#” lines are just nonfunctional comment lines that I am using to print out the output from the screen!</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p>34</p>
+<p>35</p>
+<p><code>library``(``'DESeq2'``)</code></p>
+<p><code>directory&lt;-``'/home/dwheeler/Desktop/BLOG/Dec_post2'</code></p>
+<p><code>#use grep to search for the 'treated' part of filename to collect files</code></p>
+<p><code>sampleFiles&lt;-``grep``(``'treated'``,``list.files``(directory),value=``TRUE``)</code></p>
+<p><code># sampleFiles</code></p>
+<p><code>#[1] 'treated1.txt'   'treated2.txt' 'treated3.txt'  'untreated1.txt'</code></p>
+<p><code>#[5] 'untreated2.txt' 'untreated3.txt'</code></p>
+<p><code>sampleCondition&lt;-``c``(``'treated'``,``'treated'``,``'treated'``,``'untreated'``,``'untreated'``,``'untreated'``)</code></p>
+<p><code>sampleTable&lt;-``data.frame``(sampleName=sampleFiles, fileName=sampleFiles, condition=sampleCondition)</code></p>
+<p><code>####</code></p>
+<p><code>#sampleTable</code></p>
+<p><code>#     sampleName       fileName condition</code></p>
+<p><code>#1   treated1.txt   treated1.txt   treated</code></p>
+<p><code>#2   treated2.txt   treated2.txt   treated</code></p>
+<p><code>#3   treated3.txt   treated3.txt   treated</code></p>
+<p><code>#4 untreated1.txt untreated1.txt untreated</code></p>
+<p><code>#5 untreated2.txt untreated2.txt untreated</code></p>
+<p><code>#6 untreated3.txt untreated3.txt untreated</code></p>
+<p><code>######</code></p>
+<p><code>ddsHTSeq&lt;-``DESeqDataSetFromHTSeqCount``(sampleTable=sampleTable, directory=directory, design=~condition)</code></p>
+<p><code>#####</code></p>
+<p><code>#ddsHTSeq</code></p>
+<p><code>#class: DESeqDataSet</code></p>
+<p><code>#dim: 7921 6</code></p>
+<p><code>#exptData(0):</code></p>
+<p><code>#assays(1): counts</code></p>
+<p><code>#rownames(7921): seq_1 seq_2 ... seq_7920 seq_7921</code></p>
+<p><code>#rowData metadata column names(0):</code></p>
+<p><code>#colnames(6): treated1.txt treated2.txt ... untreated2.txt</code></p>
+<p><code>#  untreated3.txt</code></p>
+<p><code>#colData names(1): condition</code></p>
+<p><code>#######</code></p>
+<p><code>colData``(ddsHTSeq)$condition&lt;-``factor``(``colData``(ddsHTSeq)$condition, levels=``c``(``'untreated'``,``'treated'``))</code></p>
+<p>The levels in colData are important because they are used in the log calculations; it makes sense to set untreated or control first so that the direction of the logs fold changes doesn’t confuse everyone (typically we do comparisons to the control)! Now for the guts of the DEseq2 analysis.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p><code>dds&lt;-``DESeq``(ddsHTSeq)</code></p>
+<p><code>res&lt;-``results``(dds)</code></p>
+<p><code>res&lt;-res[``order``(res$padj),]</code></p>
+<p><code>head``(res)</code></p>
+<p><code>#DataFrame with 6 rows and 6 columns</code></p>
+<p><code>#          baseMean log2FoldChange      lfcSE      stat       pvalue</code></p>
+<p><code>#</code></p>
+<p><code>#seq_3146  997.5419      0.7894523 0.08297687  9.514125 1.832488e-21</code></p>
+<p><code>#seq_1802  746.3972      0.5685789 0.08533961  6.662544 2.691282e-11</code></p>
+<p><code>#seq_2146  406.1395      0.9424543 0.14108613  6.679993 2.389544e-11</code></p>
+<p><code>#seq_7548  466.5453      0.6036683 0.10178158  5.931017 3.010637e-09</code></p>
+<p><code>#seq_3240 1569.6556      0.6132326 0.11145966  5.501835 3.758596e-08</code></p>
+<p><code>#seq_958   149.6504      0.7398193 0.14154162  5.226868 1.724055e-07</code></p>
+<p><code>#                 padj</code></p>
+<p><code>#</code></p>
+<p><code>#seq_3146 1.299050e-17</code></p>
+<p><code>#seq_1802 6.359498e-08</code></p>
+<p><code>#seq_2146 6.359498e-08</code></p>
+<p><code>#seq_7548 5.335601e-06</code></p>
+<p><code>#seq_3240 5.328937e-05</code></p>
+<p><code>#seq_958  2.036971e-04</code></p>
+<p>Looking good, time for some plots. BTW I’m using the same dataset I used for the original DESeq blog post (links to data and that blog at top of page).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p><code>plotMA``(dds,ylim=``c``(-2,2),main=``'DESeq2'``)</code></p>
+<p><code>dev.copy``(png,``'deseq2_MAplot.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq1_deseq2_maplot2.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq1_deseq2_maplot2.png?w=584&amp;h=297" alt="MAPlot of DESeq1 (left) and DESeq2  (right) for the same data" /></a> As expected for this dataset there are not many differentially expressed genes (red). There certainly is a difference in the level of scatter with this dataset using DESeq and DESeq2. Also note that there is good reduction in scatter for low count reads (left hand side of the graph) in DESeq2 versus the original version. DESeq tends to be a conservative approach, I like that, and with that in mind the update uses a test called cooks distance to remove outliers from the analysis. <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Cook's_distance">Cooks distance</a> looks to see how much each sample contributes to a genes overall value fold change, with samples that cause extreme effects removed. To be specific, the gene will not be analysed for differential expression if one of its samples is considered an outlier. The idea being here that we want to see only DE genes that show a consistent pattern. The draw back of this approach is that there is a loss of power, as some genes that are truly DE will be removed before the statistical tests are performed. We can save the table, and also print out some information on what the columns mean.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p><code>mcols``(res,use.names=``TRUE``)</code></p>
+<p><code>#DataFrame with 6 rows and 2 columns</code></p>
+<p><code>#                       type</code></p>
+<p><code>#baseMean       intermediate</code></p>
+<p><code>#log2FoldChange      results</code></p>
+<p><code>#lfcSE               results</code></p>
+<p><code>#stat                results</code></p>
+<p><code>#pvalue              results</code></p>
+<p><code>#padj                results</code></p>
+<p><code>#description</code></p>
+<p><code>#baseMean                        the base mean over all rows</code></p>
+<p><code>#log2FoldChange log2 fold change (MAP): condition treated vs untreated</code></p>
+<p><code>#lfcSE           standard error: condition treated vs untreated</code></p>
+<p><code>#stat            Wald statistic: condition treated vs untreated</code></p>
+<p><code>#pvalue          Wald test p-value: condition treated vs untreated</code></p>
+<p><code>#padj            BH adjusted p-values</code></p>
+<p><code>#write the table to a csv file</code></p>
+<p><code>write.csv``(``as.data.frame``(res),file=``'sim_condition_treated_results_deseq2.csv'``)</code></p>
+<p>BTW take this with a pinch of salt because its only a simple sample dataset, but the difference in gene counts is that deseq only found a single differentially expressed gene (at padj 0.1), whilst deseq2 called this same gene plus 23 others.  Also, reducing the cut-off multiple testing correction to 0.05 only removes 3 genes from the list with DESeq2. Now we want to transform the raw discretely distributed counts so that we can do clustering.</p>
+<p>1</p>
+<p>2</p>
+<p><code>rld&lt;-</code> <code>rlogTransformation``(dds, blind=``TRUE``)</code></p>
+<p><code>vsd&lt;-``varianceStabilizingTransformation``(dds, blind=``TRUE``)</code></p>
+<p>Here we choose blind so that the initial conditions setting does not influence the outcome, ie we want to see if the conditions cluster based purely on the individual datasets, in an unbiased way. According to the documentation, the rlogTransformation method that converts counts to log2 values is apparently better than the old varienceStabilisation method when the data size factors vary by large amounts. The code and plot below shows the [nice] effect of the transformation.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p><code>par``(mai=``ifelse``(1:4 &lt;= 2,</code> <code>par``(``'mai'``), 0))</code></p>
+<p><code>px     &lt;-</code> <code>counts``(dds)[,1] /</code> <code>sizeFactors``(dds)[1]</code></p>
+<p><code>ord    &lt;-</code> <code>order``(px)</code></p>
+<p><code>ord    &lt;- ord[px[ord]&lt;150]</code></p>
+<p><code>ord    &lt;- ord[``seq``(1,</code> <code>length``(ord), length=50)]</code></p>
+<p><code>last   &lt;- ord[``length``(ord)]</code></p>
+<p><code>vstcol &lt;-</code> <code>c``(``'blue'``,</code> <code>'black'``)</code></p>
+<p><code>matplot``(px[ord],</code> <code>cbind``(``assay``(vsd)[, 1],</code> <code>log2``(px))[ord, ], type=l, lty=1, col=vstcol, xlab=``'n'``, ylab=``'f(n)'``)</code></p>
+<p><code>legend``(``'bottomright'``, legend =</code> <code>c``(``expression``(``'variance stabilizing transformation'``),</code> <code>expression``(log[2](n/s[1]))), fill=vstcol)</code></p>
+<p><code>dev.copy``(png,``'DESeq2_VST_and_log2.png'``)</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_vst_and_log21.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_vst_and_log21.png?w=300&amp;h=300" alt="Graph showing variance stabilizing transformation for sample 1 (blue) and of the transformation f (n) = log2 (n/s1 ) (black)" /></a> The x axis is the square root of variance over the mean for all samples, so this will naturally included variance due to the treatment. The goal here is to flattern the curve so that there is consistent variance across the read counts, and that is what we got.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p><code>library``(``'vsn'``)</code></p>
+<p><code>par``(mfrow=``c``(1,3))</code></p>
+<p><code>notAllZero &lt;- (``rowSums``(``counts``(dds))&gt;0)</code></p>
+<p><code>meanSdPlot``(``log2``(``counts``(dds,normalized=``TRUE``)[notAllZero,] + 1), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><code>meanSdPlot``(``assay``(rld[notAllZero,]), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><code>meanSdPlot``(``assay``(vsd[notAllZero,]), ylim =</code> <code>c``(0,2.5))</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_stabilizing_comp1.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_stabilizing_comp1.png?w=584" alt="deseq2_stabilizing_comp" /></a> This interesting plot shows the standard deviation across all samples against the mean counts using three different methods of transformation. With this data you can see that the shifted logarithm method (left) seems to do pretty badly at for low count genes, with both regularized log (center) and DESeqs variance stabilisation (right) doing a much better job across the entire dynamic range of counts. For some reason, everyone loves a good heat map!</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p><code>library``(``'RColorBrewer'``)</code></p>
+<p><code>library``(``'gplots'``)</code></p>
+<p><code>select &lt;-</code> <code>order``(``rowMeans``(``counts``(dds,normalized=``TRUE``)),decreasing=``TRUE``)[1:30]</code></p>
+<p><code>hmcol&lt;-</code> <code>colorRampPalette``(``brewer.pal``(9,</code> <code>'GnBu'``))(100)</code></p>
+<p><code>heatmap.2``(``counts``(dds,normalized=``TRUE``)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``'none'``,</code></p>
+<p><code>dendrogram=``'none'``, trace=``'none'``, margin=``c``(10,6))</code></p>
+<p><code>dev.copy``(png,``'DESeq2_heatmap1'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>heatmap.2``(``assay``(rld)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``'none'``,</code></p>
+<p><code>dendrogram=``'none'``, trace=``'none'``, margin=``c``(10, 6))</code></p>
+<p><code>dev.copy``(png,``'DESeq2_heatmap2'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>heatmap.2``(``assay``(vsd)[select,], col = hmcol,</code></p>
+<p><code>Rowv =</code> <code>FALSE``, Colv =</code> <code>FALSE``, scale=``'none'``,</code></p>
+<p><code>dendrogram=``'none'``, trace=``'none'``, margin=``c``(10, 6))</code></p>
+<p><code>dev.copy``(png,``'DESeq2_heatmap3'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_heatmaps.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_heatmaps.png?w=584&amp;h=261" alt="heatmaps" /></a> The above shows heatmaps for 30 most highly expressed genes (not necessarily the biggest fold change). The data is of raw counts (left), regularized log transformation (center) and from variance stabilizing transformation (right) and you can clearly see the effect of the transformation has by shrinking the variance so that we don’t get the squish effect shown in the left hand graph. Now we calculate sample to sample distances so we can make a dendrogram to look at the clustering of samples.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p><code>distsRL &lt;-</code> <code>dist``(``t``(``assay``(rld)))</code></p>
+<p><code>mat&lt;-</code> <code>as.matrix``(distsRL)</code></p>
+<p><code>rownames``(mat) &lt;-</code> <code>colnames``(mat) &lt;-</code> <code>with``(``colData``(dds),</code></p>
+<p><code>paste``(condition,sampleFiles , sep=``' : '``))</code></p>
+<p><code>#updated in latest vignette (See comment by Michael Love)</code></p>
+<p><code>#this line was incorrect</code></p>
+<p><code>#heatmap.2(mat, trace='none', col = rev(hmcol), margin=c(16, 16))</code></p>
+<p><code>#From the Apr 2015 vignette</code></p>
+<p><code>hc &lt;-</code> <code>hclust``(distsRL)</code></p>
+<p><code>heatmap.2``(mat, Rowv=``as.dendrogram``(hc),</code></p>
+<p><code>symm=``TRUE``, trace=``'none'``,</code></p>
+<p><code>col =</code> <code>rev``(hmcol), margin=``c``(13, 13))</code></p>
+<p><code>dev.copy``(png,``'deseq2_heatmaps_samplebysample.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="https://dwheelerau.files.wordpress.com/2014/02/dist_matrix.png"><img src="http://dwheelerau.files.wordpress.com/2014/02/dist_matrix.png?w=584" alt="dist_matrix" /></a> Although this result looks terrible, as we would expect samples to cluster by treatment, in this case I’m actually happy by this result. Why? Well this was actually a control experiment to show that slightly different (and unavoidable) experimental setup for the different samples, wasn’t responsible for the observed expression differences, so seeing that there is little treatment effect makes me happy. Remember, always <em>try</em> and do what Fisher tells us to, <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Design_of_experiments">replicate, randomised, block</a>. Similarly the pca.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p><code>print``(``plotPCA``(rld, intgroup=``c``(``'condition'``)))</code></p>
+<p><code>dev.copy``(png,``'deseq2_pca.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_pca.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_pca.png?w=300&amp;h=247" alt="deseq2_pca" /></a> I hope your’s looks better! Previously we talked about the cooks distance treatment of outliers, in that a gene is thrown away if one of its samples is deemed to be an outlier. You may not want this to happen so DESeq2 we can take a different approach by replacing the outlier value with one estimated value as predicted by the distribution using the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Truncated_mean">trimmed mean</a> approach. DESeq2 recomends you only do this if you have several replicates per treatment, and indeed it automatically uses this feature if you have 7 or more replicates in your datatable.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p><code>ddsClean &lt;-</code> <code>replaceOutliersWithTrimmedMean``(dds)</code></p>
+<p><code>ddsClean &lt;-</code> <code>DESeq``(ddsClean)</code></p>
+<p><code>tab &lt;-</code> <code>table``(initial =</code> <code>results``(dds)$padj &lt; .1,</code></p>
+<p><code>cleaned =</code> <code>results``(ddsClean)$padj &lt; .1)</code></p>
+<p><code>addmargins``(tab)</code></p>
+<p><code>write.csv``(``as.data.frame``(tab),file=``'sim_condition_treated_results_cleaned_summary_deseq2.csv'``)</code></p>
+<p><code>resClean &lt;-</code> <code>results``(ddsClean)</code></p>
+<p><code>write.csv``(``as.data.frame``(resClean),file=``'sim_condition_treated_results_cleaned_deseq2.csv'``)</code></p>
+<p>In my case it didn’t really make much difference. Dispersion plot shows how the estimates are shrunk from the gene wise values (black dots) toward the fitted estimates, with the final values used in testing being the blue dots.</p>
+<p>1</p>
+<p><code>plotDispEsts``(dds)</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_dispersion_plot.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_dispersion_plot.png?w=584" alt="Dispersion plots deseq and deseq2 (right)" /></a> and compared DESeq1 and 2. <a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/dispersion_estimages.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/dispersion_estimages.png?w=584&amp;h=437" alt="dispersion plots Deseq1 Left and right deseq2" /></a> Now independent filtering to remove any tests that have little chance of pass to reduce the number of tests we have to perform, thus reducing the effects of multiple testing error. (false discovery). You can see how many genes are rejected based on different values of alpha (FDR)</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>#filtering threashold</code></p>
+<p><code>attr``(res,``'filterThreshold'``)</code></p>
+<p><code>#     10%</code></p>
+<p><code>#91.48005</code></p>
+<p><code>plot``(``attr``(res,``'filterNumRej'``),type=``'b'``, ylab=``'number of rejections'``)</code></p>
+<p><code>dev.copy``(png,``'deseq2_filtering_treshold.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_filtering-threashold_ed.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_filtering-threashold_ed.png?w=584" alt="deseq2_filtering threashold_Ed" /></a></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p><code>W &lt;- res$stat</code></p>
+<p><code>maxCooks &lt;-</code> <code>apply``(``assays``(dds)[[``'cooks'``]],1,max)</code></p>
+<p><code>idx &lt;- !``is.na``(W)</code></p>
+<p><code>plot``(``rank``(W[idx]), maxCooks[idx], xlab=``'rank of Wald statistic'``,</code></p>
+<p><code>ylab=``'maximum Cook'``s distance per gene',</code></p>
+<p><code>ylim=``c``(0,5), cex=.4, col=``rgb``(0,0,0,.3))</code></p>
+<p><code>m &lt;-</code> <code>ncol``(dds)</code></p>
+<p><code>p &lt;- 3</code></p>
+<p><code>abline``(h=``qf``(.99, p, m - p))</code></p>
+<p><code>dev.copy``(png,``'deseq2_cooksdist.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/cooks-distance.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/cooks-distance.png?w=300&amp;h=270" alt="cooks distance" /></a> Plot of the maximum Cook’s distance per gene over the rank of the Wald statistics for the condition. Here more about independent filtering. What it shows in genes with very low counts are unlikely to have a significant p-value due to excessive dispersion at the left side of the dynamic range of counts. The y-axis here is -log10, so bigger numbers are smaller p-values (better).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>plot``(res$baseMean+1, -``log10``(res$pvalue),</code></p>
+<p><code>log=``'x'``, xlab=``'mean of normalized counts'``,</code></p>
+<p><code>ylab=``expression``(-log[10](pvalue)),</code></p>
+<p><code>ylim=``c``(0,30),</code></p>
+<p><code>cex=.4, col=``rgb``(0,0,0,.3))</code></p>
+<p><code>dev.copy``(png,``'deseq2_indep_filt.png'``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2_indep_filtering.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2_indep_filtering.png?w=300&amp;h=270" alt="deseq2_indep_filtering" /></a> All those dots on the left hand side the graph represent failed tests due to very low count values, thus we can really just get rid of them to reduce our chance of making a type I error. And again, you can see that only a few small (or no) p-values are discarded by the filtering. NOTE: You might only see blue lines [I’ve broken something??]</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p><code>use &lt;- res$baseMean &gt;</code> <code>attr``(res,``'filterThreshold'``)</code></p>
+<p><code>table``(use)</code></p>
+<p><code>h1 &lt;-</code> <code>hist``(res$pvalue[!use], breaks=0:50/50, plot=``FALSE``)</code></p>
+<p><code>h2 &lt;-</code> <code>hist``(res$pvalue[use], breaks=0:50/50, plot=``FALSE``)</code></p>
+<p><code>colori &lt;-</code> <code>c``(``'do not pass'``=``'khaki'``,</code> <code>'pass'``=``'powderblue'``)</code></p>
+<p><code>barplot``(height =</code> <code>rbind``(h1$counts, h2$counts), beside =</code> <code>FALSE``,</code></p>
+<p><code>col = colori, space = 0, main =</code> <code>''``, ylab=``'frequency'``)</code></p>
+<p><code>text``(x =</code> <code>c``(0,</code> <code>length``(h1$counts)), y = 0, label =</code> <code>paste``(``c``(0,1)),</code></p>
+<p><code>adj =</code> <code>c``(0.5,1.7), xpd=``NA``)</code></p>
+<p><code>legend``(``'topright'``, fill=``rev``(colori), legend=``rev``(``names``(colori)))</code></p>
+<p><a target="_blank" rel="noopener" href="http://dwheelerau.files.wordpress.com/2013/12/deseq2-pvals-and-mulittest.png"><img src="http://dwheelerau.files.wordpress.com/2013/12/deseq2-pvals-and-mulittest.png?w=584&amp;h=282" alt="deseq2 pvals and mulittest" /></a> The graph on the left ranks the p-values from smallest to biggest (x-axis) and plots them. The black line is the actual p-value numbers (remember only about 23 genes had a p-value lower than 0.05). The red line has a slope that represents the number of tests divided by the false discovery rate (0.1). The idea here is the FDR is controlled at the 0.1% value for all tests that occur to the left of the right-most intersection of the black and red line. The code for the right hand plot above.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p><code>resFilt &lt;- res[use &amp; !``is.na``(res$pvalue),]</code></p>
+<p><code>orderInPlot &lt;-</code> <code>order``(resFilt$pvalue)</code></p>
+<p><code>showInPlot &lt;- (resFilt$pvalue[orderInPlot] &lt;= 0.08)</code></p>
+<p><code>alpha &lt;- 0.1</code></p>
+<p><code>plot``(``seq``(along=``which``(showInPlot)), resFilt$pvalue[orderInPlot][showInPlot],</code></p>
+<p><code>pch=``'.'``, xlab =</code> <code>expression``(``rank``(p[i])), ylab=``expression``(p[i]))</code></p>
+<p><code>abline``(a=0, b=alpha/``length``(resFilt$pvalue), col=``'red3'``, lwd=2)</code></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p><code>sessionInfo``()</code></p>
+<p><code>R version</code> <code>3.0.2</code> <code>(2013-09-25)</code></p>
+<p><code>Platform: x86_64-pc-linux-``gnu</code> <code>(64-bit)</code></p>
+<p><code>locale:</code></p>
+<p><code>[1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C</code></p>
+<p><code>[3] LC_TIME=en_US.UTF-8 LC_COLLATE=en_US.UTF-8</code></p>
+<p><code>[5] LC_MONETARY=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8</code></p>
+<p><code>[7] LC_PAPER=en_US.UTF-8 LC_NAME=C</code></p>
+<p><code>[9] LC_ADDRESS=C LC_TELEPHONE=C</code></p>
+<p><code>[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C</code></p>
+<p><code>attached base packages:</code></p>
+<p><code>[1] parallel stats graphics grDevices utils datasets methods</code></p>
+<p><code>[8] base</code></p>
+<p><code>other attached packages:</code></p>
+<p><code>[1] gplots_2.12.1 RColorBrewer_1.0-5 BiocInstaller_1.12.0</code></p>
+<p><code>[4] DESeq2_1.2.8 RcppArmadillo_0.3.920.3 Rcpp_0.10.6</code></p>
+<p><code>[7] GenomicRanges_1.14.3 XVector_0.2.0 IRanges_1.20.6</code></p>
+<p><code>[10] BiocGenerics_0.8.0</code></p>
+<p><code>loaded via a</code> <code>namespace</code> <code>(and not attached):</code></p>
+<p><code>[1] affy_1.40.0 affyio_1.30.0 annotate_1.40.0</code></p>
+<p><code>[4] AnnotationDbi_1.24.0 Biobase_2.22.0 bitops_1.0-6</code></p>
+<p><code>[7] caTools_1.16 DBI_0.2-7 DESeq_1.14.0</code></p>
+<p><code>[10] gdata_2.13.2 genefilter_1.44.0 geneplotter_1.40.0</code></p>
+<p><code>[13] grid_3.0.2 gtools_3.1.1 KernSmooth_2.23-10</code></p>
+<p><code>[16] lattice_0.20-24 limma_3.18.5 locfit_1.5-9.1</code></p>
+<p><code>[19] preprocessCore_1.24.0 RSQLite_0.11.4 splines_3.0.2</code></p>
+<p><code>[22] stats4_3.0.2 survival_2.37-4 tools_3.0.2</code></p>
+<p><code>[25] vsn_3.30.0 XML_3.98-1.1 xtable_1.7-1</code></p>
+<p><code>[28] zlibb</code></p>
+<p>[Updated July ’14: to fix errors with distance matrix plot, cooks distance, and the Benjamini-Hochberg multiple testing adjustment procedure (props to Stefan for pointing them out]</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/" class="post-title-link" itemprop="url">DESeq2: RNAseq pipeline – Alignment to DE analysis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-29 21:57:13" itemprop="dateCreated datePublished" datetime="2016-02-29T21:57:13+08:00">2016-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="rnaseq-pipeline-alignment-to-de-analysis"><a class="markdownIt-Anchor" href="#rnaseq-pipeline-alignment-to-de-analysis"></a> <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/">RNAseq pipeline – alignment to DE analysis</a></h1>
+<p><a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/#comments">1 Reply</a></p>
+<p>RNA sequencing has quickly surpassed microarrays for differential gene expression analysis in most labs.  I wanted to post a RNAseq pipelines from Raw sequencing reads to differential expression analysis and various other downstream analyses.  There are quite a few pipelines for RNAseq analysis and each has its pro/cons.  One of the most popular pipelines is alignment to the genome with <a target="_blank" rel="noopener" href="https://code.google.com/p/rna-star/">STAR aligner</a>, binning of sequencing reads to genes/exons with <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">HTseq-count</a>, and finally differential analysis with <a target="_blank" rel="noopener" href="http://bioconductor.org/packages/release/bioc/html/DESeq.html">DESeq</a>/<a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/release/bioc/html/DESeq2.html">DESeq2</a>.  I linked the online manuals for each tool here but I would highly suggest the initial publications for each as those will include benchmarking compared to other programs and the general theory behind of each algorithm (<a target="_blank" rel="noopener" href="http://bioinformatics.oxfordjournals.org/content/early/2012/10/25/bioinformatics.bts635">here</a>, <a target="_blank" rel="noopener" href="http://biorxiv.org/content/early/2014/08/19/002824">here</a> and <a target="_blank" rel="noopener" href="http://genomebiology.com/2010/11/10/r106">here</a> – the original Deseq paper now has over 1800 citations on google scholar!).  I’d suggest DESeq2. This example assumes that you starting with RNA sequencing reads in fastq format after quality control (FastQC, etc.) and demultiplexing (fastq_multx, etc.).  Those steps will be a future post.  Depending on who is doing your actual sequencing (in-house core, BGI, etc.), they will probably release the fastq reads to you after each of these steps have been done. <strong>1. Alignment to genome with STAR aligner v2.4.0.1.</strong> STAR is wonderfully fast and accurate alignment program written by Alexander Dobin.  Alignment speeds with STAR are advertised at  400 million pairs per hour for 100 bp paired end reads on 12-core server (compared to Tophat at 20 million reads per hour).   In our hands, on 50 bp paired end reads, we are aligning at about 600 million pairs per hour on average with ~75-80% unique alignment rate.   The key with STAR is that it needs A LOT of memory, at least 30 GB.  Our cluster has dedicated job queues to allocate up to 64 GB memory for each STAR alignment job. <strong>1a) Alignment generate genome.</strong> Before alignment can be done, you must prepare the necessary genome index files.  The basic input for genome index files are 1) genome in fasta format and 2) annotation gtf file (needed in later steps).  You can download the genome files for human/mouse/etc from <a target="_blank" rel="noopener" href="http://support.illumina.com/sequencing/sequencing_software/igenome.html">igenome</a> from Illumina.  For the new version of STAR, there are pre-made <a target="_blank" rel="noopener" href="http://labshare.cshl.edu/shares/gingeraslab/www-data/dobin/STAR/STARgenomes/">index files</a>, depending on which reference you want to build.  They have various builds and model organisms.  We have been using the mouse mm10 reference from UCSC and have been happy with alignment rates.  I downloaded the mouse mm10 reference from igenome and renamed it “mm10_index/” .  You will also have to designate a directory for the genome index files STAR produces (“~/STAR_mm10/” or /path/to/STAR_mm10/”).</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --runMode genomeGenerate \</code></p>
+<p><code>--genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--genomeFastaFiles ~``/mm10_index/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome``.fa \</code></p>
+<p><code>--runThreadN 16</code></p>
+<p>After STAR runs, you should have a few files in the /STAR_mm10/ directory:</p>
+<ol>
+<li>Genome</li>
+<li>genomeParameters.txt</li>
+<li>chrLength.txt, chrNameLength.txt, chrStart.txt</li>
+<li>SA, SAindex</li>
+<li>Log.out</li>
+</ol>
+<p>STAR will use these files for alignment in the next step. <strong>1b) Alignment to genome (or transcriptome).</strong>  The newer version (2.4.0). has the option to align specifically to the transcriptome and not the genome.  This option is for downstream analysis with RSEM ( another future post).  I’ll detail the basic STAR alignment job for now.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--readFilesIn read_1.fq read_2.fq \</code></p>
+<p><code>--runThreadN 16 \</code></p>
+<p><code>--outSAMtype BAM SortedByCoordinate</code></p>
+<p>STAR will generate a few files:</p>
+<ol>
+<li>Log.out</li>
+<li>Log.progress.out</li>
+<li>Log.final.out – summary mapping statistics – will give you an idea on qc</li>
+<li>Aligned.sortedByCoord.out.bam – your reads aligned in standard BAM format sorted by coordinate – similar to samtools sort command</li>
+<li>SJ.out.tab – high confidence splice junction in tab-delimited format</li>
+</ol>
+<p>To generate an alignment file to the transcriptome with STAR v2.4.0:</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p><code>STAR --genomeDir</code> <code>/path/to/STAR_mm10/</code> <code>\</code></p>
+<p><code>--readFilesIn read_1.fq read_2.fq \</code></p>
+<p><code>--runThreadN 16 \</code></p>
+<p><code>--quantMode TranscriptomeSAM</code></p>
+<p>I haven’t had a chance to really run through this option yet (more for RSEM instead of DESeq2) but I am excited to try. <strong>Optional) Sorting, munging, etc.</strong>  The new version of STAR allows for generating alignment into a BAM file sorted by genomic coordinate.  Earlier versions didn’t and one would have to run the Aligned.out.sam files through various samtools munging steps to get alignment file into the correct format for downstream read counting.  For this example, it is necessary to have samtools-0.1.19.  First you convert the Aligned.out.sam to bam format with samtools view and pipe the output directly to samtools sort and sorting by genome position.  Finally converting back from bam to sam format.  If you have the python module pysam installed you can use a BAM file in the next steps.</p>
+<p>1</p>
+<p>2</p>
+<p><code>samtools view -uS Aligned.out.sam -b samtools</code> <code>sort</code> <code>-@ 8 -m 800000000 - Aligned.sorted</code></p>
+<p><code>samtools view Aligned.sorted.bam &gt; Aligned.sorted.sam</code></p>
+<p>**3) raw counts generation using HTSeq-count. ** htseq-count has a few options:</p>
+<ul>
+<li>-m union: union is one of three options for htseq count for binning of reads to features (genes/exons).  it is the recommended option per <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">htseq count’s manual</a>.  It is the most stringent option as it will only count a read if it aligns to only 1 gene.</li>
+<li>-r pos : meaning that the BAM/SAM file is sorted by genomic coordinate/position</li>
+<li>-i gene_name : tells htseq-count to use the gene name in output file</li>
+<li>-a 10 : tells htseq-count to skip reads with alignment score less than 10.</li>
+<li>–stranded=no : the RNAseq reads are not strand specific</li>
+</ul>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p><code>htseq-count -m union \</code></p>
+<p><code>-r pos \</code></p>
+<p><code>-i gene_name \</code></p>
+<p><code>-a 10 \</code></p>
+<p><code>--stranded=no \</code></p>
+<p><code>Aligned.sortedByCoord.out.bam \</code></p>
+<p><code>~``/mm10_index/Mus_musculus/UCSC/mm10/Annotation/Genes/genes``.gtf &gt; output_basename.counts</code></p>
+<p>Output of htseq count is a tab-delimited text file containing two columns: 1) gene id 2) number of read counts. Below is just an example of various cadherins with number of reads mapped to each.</p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p><code>Cdh1 731</code></p>
+<p><code>Cdh10 41</code></p>
+<p><code>Cdh11 129</code></p>
+<p><code>Cdh12 0</code></p>
+<p><code>Cdh13 50538</code></p>
+<p><code>Cdh15 0</code></p>
+<p><code>Cdh16 0</code></p>
+<p><code>Cdh17 648</code></p>
+<p><code>Cdh18 0</code></p>
+<p><code>Cdh19 0</code></p>
+<p><code>Cdh2 570</code></p>
+<p><code>Cdh20 0</code></p>
+<p><code>Cdh22 0</code></p>
+<p><code>Cdh23 11</code></p>
+<p><code>Cdh24 3</code></p>
+<p><code>Cdh26 140</code></p>
+<p><code>Cdh3 3</code></p>
+<p><code>Cdh4 0</code></p>
+<p><code>Cdh5 237</code></p>
+<p><code>Cdh6 496</code></p>
+<p><strong>4) differential gene expression analysis using DESeq2.</strong></p>
+<p>1</p>
+<p>2</p>
+<p>3</p>
+<p>4</p>
+<p>5</p>
+<p>6</p>
+<p>7</p>
+<p>8</p>
+<p>9</p>
+<p>10</p>
+<p>11</p>
+<p>12</p>
+<p>13</p>
+<p>14</p>
+<p>15</p>
+<p>16</p>
+<p>17</p>
+<p>18</p>
+<p>19</p>
+<p>20</p>
+<p>21</p>
+<p>22</p>
+<p>23</p>
+<p>24</p>
+<p>25</p>
+<p>26</p>
+<p>27</p>
+<p>28</p>
+<p>29</p>
+<p>30</p>
+<p>31</p>
+<p>32</p>
+<p>33</p>
+<p>34</p>
+<p>35</p>
+<p>36</p>
+<p>37</p>
+<p>38</p>
+<p>39</p>
+<p>40</p>
+<p>41</p>
+<p>42</p>
+<p>43</p>
+<p>44</p>
+<p>45</p>
+<p>46</p>
+<p>47</p>
+<p>48</p>
+<p>49</p>
+<p>50</p>
+<p>51</p>
+<p>52</p>
+<p>53</p>
+<p>54</p>
+<p>55</p>
+<p>56</p>
+<p>57</p>
+<p>58</p>
+<p>59</p>
+<p>60</p>
+<p>61</p>
+<p>62</p>
+<p>63</p>
+<p>64</p>
+<p>65</p>
+<p>66</p>
+<p>67</p>
+<p>68</p>
+<p>69</p>
+<p>70</p>
+<p>71</p>
+<p>72</p>
+<p>73</p>
+<p>74</p>
+<p>75</p>
+<p>76</p>
+<p>77</p>
+<p>78</p>
+<p>79</p>
+<p>80</p>
+<p>81</p>
+<p>82</p>
+<p>83</p>
+<p>84</p>
+<p>85</p>
+<p>86</p>
+<p>87</p>
+<p>88</p>
+<p>89</p>
+<p>90</p>
+<p>91</p>
+<p>92</p>
+<p>93</p>
+<p>94</p>
+<p>95</p>
+<p>96</p>
+<p>97</p>
+<p>98</p>
+<p>99</p>
+<p>100</p>
+<p>101</p>
+<p>102</p>
+<p>103</p>
+<p>104</p>
+<p>105</p>
+<p>106</p>
+<p>107</p>
+<p>108</p>
+<p>109</p>
+<p>110</p>
+<p>111</p>
+<p>112</p>
+<p>113</p>
+<p>114</p>
+<p>115</p>
+<p>116</p>
+<p>117</p>
+<p>118</p>
+<p>119</p>
+<p>120</p>
+<p>121</p>
+<p>122</p>
+<p>123</p>
+<p>124</p>
+<p>125</p>
+<p>126</p>
+<p>127</p>
+<p>128</p>
+<p>129</p>
+<p>130</p>
+<p>131</p>
+<p>132</p>
+<p>133</p>
+<p>134</p>
+<p>135</p>
+<p>136</p>
+<p>137</p>
+<p>138</p>
+<p>139</p>
+<p>140</p>
+<p>141</p>
+<p>142</p>
+<p>143</p>
+<p>144</p>
+<p>145</p>
+<p>146</p>
+<p>147</p>
+<p>148</p>
+<p>149</p>
+<p>150</p>
+<p>151</p>
+<p>152</p>
+<p>153</p>
+<p>154</p>
+<p>155</p>
+<p>156</p>
+<p>157</p>
+<p>158</p>
+<p>159</p>
+<p>160</p>
+<p>161</p>
+<p>162</p>
+<p>163</p>
+<p>164</p>
+<p>165</p>
+<p>166</p>
+<p>167</p>
+<p>168</p>
+<p>169</p>
+<p>170</p>
+<p>171</p>
+<p>172</p>
+<p>173</p>
+<p>174</p>
+<p>175</p>
+<p>176</p>
+<p>177</p>
+<p>178</p>
+<p>179</p>
+<p>180</p>
+<p>181</p>
+<p>182</p>
+<p>183</p>
+<p>184</p>
+<p>185</p>
+<p>186</p>
+<p>187</p>
+<p>188</p>
+<p>189</p>
+<p>190</p>
+<p>191</p>
+<p>192</p>
+<p>193</p>
+<p>194</p>
+<p>195</p>
+<p>196</p>
+<p>197</p>
+<p>198</p>
+<p>199</p>
+<p>200</p>
+<p>201</p>
+<p>202</p>
+<p>203</p>
+<p>204</p>
+<p>205</p>
+<p>206</p>
+<p>207</p>
+<p>208</p>
+<p>209</p>
+<p>210</p>
+<p>211</p>
+<p>212</p>
+<p>213</p>
+<p>214</p>
+<p>215</p>
+<p>216</p>
+<p>217</p>
+<p>218</p>
+<p>219</p>
+<p>220</p>
+<p>221</p>
+<p>222</p>
+<p>223</p>
+<p>224</p>
+<p>225</p>
+<p>226</p>
+<p>227</p>
+<p>228</p>
+<p>229</p>
+<p>230</p>
+<p>231</p>
+<p>232</p>
+<p>233</p>
+<p>234</p>
+<p>235</p>
+<p>236</p>
+<p>237</p>
+<p>238</p>
+<p>239</p>
+<p>240</p>
+<p>241</p>
+<p>242</p>
+<p>243</p>
+<p>244</p>
+<p>245</p>
+<p>246</p>
+<p>247</p>
+<p>248</p>
+<p>249</p>
+<p>250</p>
+<p>251</p>
+<p>252</p>
+<p>253</p>
+<p>254</p>
+<p>255</p>
+<p>256</p>
+<p>257</p>
+<p>258</p>
+<p>259</p>
+<p>260</p>
+<p>261</p>
+<p>262</p>
+<p>263</p>
+<p>264</p>
+<p>265</p>
+<p>266</p>
+<p><code>&lt;pre&gt;``####################################################################################</code></p>
+<p><code># bioinformatic analysis of RNA-seq data using DESeq2</code></p>
+<p><code>#</code></p>
+<p><code># combined from DESeq2 manual and vignette</code></p>
+<p><code># [http://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf](http://www.bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf)</code></p>
+<p><code># and from Dave Wheeler's blog at Massey University</code></p>
+<p><code># [http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/](http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/)</code></p>
+<p><code>#</code></p>
+<p><code># analysis per htseq count -intersections-nonempty</code></p>
+<p><code># controlling for batch (different RNAseq prep libraries)</code></p>
+<p><code>#</code></p>
+<p><code># notes:</code></p>
+<p><code>#</code></p>
+<p><code>####################################################################################</code></p>
+<p><code>library``(``&quot;DESeq2&quot;``)</code></p>
+<p><code>setwd``(``&quot;~/path/to/working/directory/&quot;``)</code></p>
+<p><code>directory &lt;-</code> <code>&quot;/path/to/counts/directory/&quot;</code></p>
+<p><code># can merge individual sample files (i.e. ctrl1.counts, ctrl2.counts, etc.)</code></p>
+<p><code>sampleFiles &lt;-</code> <code>grep``(``&quot;counts&quot;``list.files``(directory),value=T)</code></p>
+<p><code># view sampleFiles</code></p>
+<p><code>sampleFiles</code></p>
+<p><code># can designate different batches of samples (i.e. different sequencers,</code></p>
+<p><code># PE vs SE, different library preps (eg. BATCH1 vs BATCH2))</code></p>
+<p><code>sampleBatch &lt;-</code> <code>c``(``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,``&quot;Batch1&quot;``,</code></p>
+<p><code>&quot;Batch2&quot;``,``&quot;Batch2&quot;``,``&quot;Batch2&quot;``,``&quot;Batch2&quot;``)</code></p>
+<p><code># set sampleConditions and sampleTable for experimental conditions</code></p>
+<p><code>sampleCondition &lt;-</code> <code>c``(``&quot;Control, Experimental&quot;``)</code></p>
+<p><code>sampleTable &lt;-</code> <code>data.frame``(sampleName = sampleFiles,</code></p>
+<p><code>fileName = sampleFiles,</code></p>
+<p><code>condition = sampleCondition,</code></p>
+<p><code>Batch = sampleBatch)</code></p>
+<p><code># view sampleTable</code></p>
+<p><code>sampleTable</code></p>
+<p><code>ddsHTseq &lt;-</code> <code>DESeqDataSetFromHTSeqCount``( sampleTable = sampleTable,</code></p>
+<p><code>directory = directory,</code></p>
+<p><code>design = ~condition)</code></p>
+<p><code>## view ddsHTseq - should give summary of class, data, etc.</code></p>
+<p><code>ddsHTseq</code></p>
+<p><code>colData``(ddsHTseq)$condition &lt;-</code> <code>factor``(``colData``(ddsHTseq)$condition,</code></p>
+<p><code>levels =</code> <code>c``(``'Control'``,``'Experimental'``))</code></p>
+<p><code># gut of DESeq2 analysis</code></p>
+<p><code>dds &lt;-</code> <code>DESeq``(ddsHTseq)</code></p>
+<p><code>res &lt;-</code> <code>results``(dds)</code></p>
+<p><code># order results by padj value (most significant to least)</code></p>
+<p><code>res &lt;- res[``order``(res$padj),]</code></p>
+<p><code>head``(res)</code></p>
+<p><code># should see DataFrame of baseMean, log2Foldchange, stat, pval, padj</code></p>
+<p><code># save data results and normalized reads to csv!</code></p>
+<p><code>resdata &lt;-</code> <code>merge``(``as.data.frame``(res),</code> <code>as.data.frame``(``counts``(dds,normalized=T)), by=``'row.names'``,sort=F)</code></p>
+<p><code>names``(resdata)[1] &lt;-</code> <code>'gene'</code></p>
+<p><code>head``(resdata)</code></p>
+<p><code>write.csv``(resdata, file=``&quot;DATE-DESeq2-results-with-normalized.csv&quot;``)</code></p>
+<p><code># send normalized counts to tab delimited file for GSEA, etc.</code></p>
+<p><code>write.table``(``as.data.frame``(``counts``(dds),normalized=T), file =</code> <code>'DATE_DESeq2_normalized_counts.txt'``, sep =</code> <code>'\t'``)</code></p>
+<p><code># produce DataFrame of results of statistical tests</code></p>
+<p><code># could way to record experimental design</code></p>
+<p><code>mcols``(res, use.names = T)</code></p>
+<p><code>write.csv``(``as.data.frame``(``mcols``(res, use.name = T)),file =</code> <code>&quot;DATE-DESeq2-test-conditions.csv&quot;``)</code></p>
+<p><code># replacing outlier value with estimated value as predicted by distrubution using</code></p>
+<p><code># &quot;trimmed mean&quot; approach. recommended if you have several replicates per treatment</code></p>
+<p><code># DESeq2 will automatically do this if you have 7 or more replicates</code></p>
+<p><code>ddsClean &lt;-</code> <code>replaceOutliersWithTrimmedMean``(dds)</code></p>
+<p><code>ddsClean &lt;-</code> <code>DESeq``(ddsClean)</code></p>
+<p><code>tab &lt;-</code> <code>table``(initial =</code> <code>results``(dds)$padj &lt; 0.1,</code></p>
+<p><code>cleaned =</code> <code>results``(ddsClean)$padj &lt; 0.1)</code></p>
+<p><code>addmargins``(tab)</code></p>
+<p><code>write.csv``(``as.data.frame``(tab),file =</code> <code>'DATE-DESeq2-replaceoutliers.csv'``)</code></p>
+<p><code>resClean &lt;-</code> <code>results``(ddsClean)</code></p>
+<p><code>resClean &lt;- resClean[``order``(resClean$padj),]</code></p>
+<p><code>head``(resClean)</code></p>
+<p><code>write.csv``(``as.data.frame``(resClean),file =</code> <code>'DATE-DESeq2-replaceoutliers-results.csv'``)</code></p>
+<p><code>####################################################################################</code></p>
+<p><code># Exploritory data analysis of RNAseq data with DESeq2</code></p>
+<p><code>#</code></p>
+<p><code># these next R scripts are for a variety of visualization, QC and other plots to</code></p>
+<p><code># get a sense of what the RNAseq data looks like based on DESEq2 analysis</code></p>
+<p><code>#</code></p>
+<p><code># 1) MA plot</code></p>
+<p><code># 2) rlog stabilization and variance stabiliazation</code></p>
+<p><code># 3) variance stabilization plot</code></p>
+<p><code># 4) heatmap of clustering analysis</code></p>
+<p><code># 5) PCA plot</code></p>
+<p><code>#</code></p>
+<p><code>#</code></p>
+<p><code>####################################################################################</code></p>
+<p><code># MA plot of RNAseq data for entire dataset</code></p>
+<p><code># [http://en.wikipedia.org/wiki/MA_plot](http://en.wikipedia.org/wiki/MA_plot)</code></p>
+<p><code># genes with padj &lt; 0.1 are colored Red</code></p>
+<p><code>plotMA``(dds, ylim=``c``(-8,8),main =</code> <code>&quot;RNAseq experiment&quot;``)</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2_MAplot_initial_analysis.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># transform raw counts into normalized values</code></p>
+<p><code># DESeq2 has two options:  1) rlog transformed and 2) variance stabilization</code></p>
+<p><code># variance stabilization is very good for heatmaps, etc.</code></p>
+<p><code>rld &lt;-</code> <code>rlogTransformation``(dds, blind=T)</code></p>
+<p><code>vsd &lt;-</code> <code>varianceStabilizingTransformation``(dds, blind=T)</code></p>
+<p><code># save normalized values</code></p>
+<p><code>write.table``(``as.data.frame``(``assay``(rld),file=``'DATE-DESeq2-rlog-transformed-counts.txt'``, sep=``'\t'``)</code></p>
+<p><code>write.table``(``as.data.frame``(``assay``(vsd),file=``'DATE-DESeq2-vst-transformed-counts.txt'``, sep=``'\t'``)</code></p>
+<p><code># plot to show effect of transformation</code></p>
+<p><code># axis is square root of variance over the mean for all samples</code></p>
+<p><code>par``(mai =</code> <code>ifelse``(1:4 &lt;= 2,</code> <code>par``(``'mai'``),0))</code></p>
+<p><code>px &lt;-</code> <code>counts``(dds)[,1] /</code> <code>sizeFactors``(dds)[1]</code></p>
+<p><code>ord &lt;-</code> <code>order``(px)</code></p>
+<p><code>ord &lt;- ord[px[ord] &lt; 150]</code></p>
+<p><code>ord &lt;- ord[``seq``(1,``length``(ord),length=50)]</code></p>
+<p><code>last &lt;- ord[``length``(ord)]</code></p>
+<p><code>vstcol &lt;-</code> <code>c``(``'blue'``,``'black'``)</code></p>
+<p><code>matplot``(px[ord],</code> <code>cbind``(``assay``(vsd)[,1],</code> <code>log2``(px))[ord, ],type=``'l'``, lty = 1, col=vstcol, xlab =</code> <code>'n'``, ylab =</code> <code>'f(n)'``)</code></p>
+<p><code>legend``(``'bottomright'``,legend=``c``(``expression``(``'variance stabilizing transformation'``),</code> <code>expression``(log[2](n/s[1]))), fill=vstcol)</code></p>
+<p><code>dev.copy``(png,``&quot;DATE-DESeq2_variance_stabilizing.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># clustering analysis</code></p>
+<p><code>library``(``&quot;gplots&quot;``)</code></p>
+<p><code>distsRL &lt;-</code> <code>dist``(``t``(``assay``(rld)))</code></p>
+<p><code>mat &lt;-</code> <code>as.matrix``(distsRL)</code></p>
+<p><code>rownames``(mat) &lt;-</code> <code>colnames``(mat) &lt;-</code> <code>with``(``colData``(dds),</code> <code>paste``(condition, type, sep=``&quot; : &quot;``))</code></p>
+<p><code># OR</code></p>
+<p><code># if you want the conditions used</code></p>
+<p><code># rownames(mat) &lt;- colnames(mat) &lt;- with(colData(dds),condition)</code></p>
+<p><code>heatmap.2``(mat, trace =</code> <code>&quot;none&quot;``, col =</code> <code>rev``(hmcol), margin =</code> <code>c``(13, 13))</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2-clustering.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># Principal components plot</code></p>
+<p><code># will show additional clustering of samples</code></p>
+<p><code># showing basic PCA function in R from DESeq2 package</code></p>
+<p><code># this lacks sample IDs and only broad sense of sample clustering</code></p>
+<p><code># its not nice - but it does the job</code></p>
+<p><code>print``(``plotPCA``(rld, intgroup =</code> <code>c``(``&quot;condition&quot;``)))</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2_PCA_initial_analysis.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># or ggplot PCA plot</code></p>
+<p><code>library``(``&quot;grDevices&quot;``)</code></p>
+<p><code>library``(``'ggplot2'``)</code></p>
+<p><code>library``(``&quot;genefilter&quot;``)</code></p>
+<p><code>rv &lt;-</code> <code>rowVars``(``assay``(rld))</code></p>
+<p><code>select &lt;-</code> <code>order``(rv, decreasing=T)[``seq_len``(``min``(500,``length``(rv)))]</code></p>
+<p><code>pc &lt;-</code> <code>prcomp``(``t``(``assay``(vsdMF)[select,]))</code></p>
+<p><code># set condition</code></p>
+<p><code>condition &lt;-</code> <code>c``(``&quot;condition1&quot;``,</code> <code>'condition2'``)</code></p>
+<p><code>scores &lt;-</code> <code>data.frame``(sampleFiles, pca$x, condition)</code></p>
+<p><code>(pcaplot &lt;-</code> <code>ggplot``(scores,</code> <code>aes``(x = PC1, y = PC2, col = (``factor``(condition))))</code></p>
+<p><code>+</code> <code>geom_point``(size = 5)</code></p>
+<p><code>+</code> <code>ggtitle``(``&quot;Principal Components&quot;``)</code></p>
+<p><code>+</code> <code>scale_colour_brewer``(name =</code> <code>&quot; &quot;``, palette =</code> <code>&quot;Set1&quot;``)</code></p>
+<p><code>+</code> <code>theme``(</code></p>
+<p><code>plot.title =</code> <code>element_text``(face =</code> <code>'bold'``),</code></p>
+<p><code>legend.position =</code> <code>c``(0,0),</code></p>
+<p><code>legend.key =</code> <code>element_rect``(fill =</code> <code>'NA'``),</code></p>
+<p><code>legend.text =</code> <code>element_text``(size = 10, face =</code> <code>&quot;bold&quot;``),</code></p>
+<p><code>axis.text.y =</code> <code>element_text``(colour =</code> <code>&quot;Black&quot;``),</code></p>
+<p><code>axis.text.x =</code> <code>element_text``(colour =</code> <code>&quot;Black&quot;``),</code></p>
+<p><code>axis.title.x =</code> <code>element_text``(face =</code> <code>&quot;bold&quot;``),</code></p>
+<p><code>axis.title.y =</code> <code>element_text``(face =</code> <code>'bold'``),</code></p>
+<p><code>panel.grid.major.x =</code> <code>element_blank``(),</code></p>
+<p><code>panel.grid.major.y =</code> <code>element_blank``(),</code></p>
+<p><code>panel.grid.minor.x =</code> <code>element_blank``(),</code></p>
+<p><code>panel.grid.minor.y =</code> <code>element_blank``(),</code></p>
+<p><code>panel.background =</code> <code>element_rect``(color =</code> <code>'black'``,fill =</code> <code>NA``)</code></p>
+<p><code>))</code></p>
+<p><code>ggsave``(pcaplot,file=``&quot;DATE-PCA_ggplot2.pdf&quot;``)</code></p>
+<p><code># scatter plot of rlog transformations between Sample conditions</code></p>
+<p><code># nice way to compare control and experimental samples</code></p>
+<p><code>head``(``assay``(rld))</code></p>
+<p><code>plot``(``log2``(1+``counts``(dds,normalized=T)[,1:2]),col=``'black'``,pch=20,cex=0.3, main=``'Log2 transformed'``)</code></p>
+<p><code>plot``(``assay``(rld)[,1:2],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,3:4],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,5:6],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,7:8],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,9:10],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,11:12],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,13:14],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code>plot``(``assay``(rld)[,15:16],col=``'#00000020'``,pch=20,cex=0.3, main =</code> <code>&quot;rlog transformed&quot;``)</code></p>
+<p><code># heatmap of data</code></p>
+<p><code>library``(``&quot;RColorBrewer&quot;``)</code></p>
+<p><code>library``(``&quot;gplots&quot;``)</code></p>
+<p><code># 1000 top expressed genes with heatmap.2</code></p>
+<p><code>select &lt;-</code> <code>order``(``rowMeans``(``counts``(dds,normalized=T)),decreasing=T)[1:1000]</code></p>
+<p><code>my_palette &lt;-</code> <code>colorRampPalette``(``c``(``&quot;blue&quot;``,``'white'``,``'red'``))(n=1000)</code></p>
+<p><code>heatmap.2``(``assay``(vsd)[select,], col=my_palette,</code></p>
+<p><code>scale=``&quot;row&quot;``, key=T, keysize=1, symkey=T,</code></p>
+<p><code>density.info=``&quot;none&quot;``, trace=``&quot;none&quot;``,</code></p>
+<p><code>cexCol=0.6, labRow=F,</code></p>
+<p><code>main=``&quot;TITLE&quot;``)</code></p>
+<p><code>dev.copy``(png,</code> <code>&quot;DATE-DESeq2-HEATMAP.png&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code># top 2000 genes based on row variance with heatmap3</code></p>
+<p><code>library``(heatmap3)</code></p>
+<p><code>colsidecolors =</code> <code>c``(``&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p><code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p><code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p><code>&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p><code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p><code>&quot;darkgreen&quot;``,``&quot;darkgreen&quot;``,</code></p>
+<p><code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``,</code></p>
+<p><code>&quot;mediumpurple2&quot;``,``&quot;mediumpurple2&quot;``)</code></p>
+<p><code>rv &lt;-</code> <code>rowVars``(``assay``(vsd))</code></p>
+<p><code>select &lt;-</code> <code>order``(rv, decreasing=T)[``seq_len``(``min``(2000,``length``(rv)))]</code></p>
+<p><code>my_palette &lt;-</code> <code>colorRampPalette``(``c``(``&quot;blue&quot;``,</code> <code>&quot;white&quot;``,</code> <code>&quot;red&quot;``))(1024)</code></p>
+<p><code>heatmap3``(``assay``(vsd)[select,],col=my_palette,</code></p>
+<p><code>labRow = F,cexCol = 0.8,margins=``c``(6,6))</code></p>
+<p><code>dev.copy``(pdf,</code> <code>&quot;DATE-DESeq2-heatmap3.pdf&quot;``)</code></p>
+<p><code>dev.off``()</code></p>
+<p><code>sessionInfo``()</code></p>
+<p><code>###############################################################</code></p>
+<p><code>#</code></p>
+<p><code># Optional analyses</code></p>
+<p><code>#</code></p>
+<p><code>###############################################################</code></p>
+<p><code># multifactor designs</code></p>
+<p><code># can analysis with more than one factor influencing the counts  (e.g., different library preps, PE vs. SE)</code></p>
+<p><code># from manual section 1.5 for more information and rationale</code></p>
+<p><code># make copy of DESeq2 results</code></p>
+<p><code>ddsMF &lt;- dds</code></p>
+<p><code># change design formulate controlling for Batch</code></p>
+<p><code>design``(ddsMF) &lt;-</code> <code>formula``(~ Batch + condition)</code></p>
+<p><code># rerun DESeq analysis</code></p>
+<p><code>ddsMF &lt;-</code> <code>DESeq``(ddsMF)</code></p>
+<p><code>resMF &lt;-</code> <code>results``(ddsMF)</code></p>
+<p><code># order by padj values</code></p>
+<p><code>resMF &lt;- resMF[``order``(resMF$padj),]</code></p>
+<p><code>head``(resMF)</code></p>
+<p><code># should see DataFrame of baseMean, log2Foldchange, stat, pval, padj</code></p>
+<p><code># save data 'resMF' to csv!</code></p>
+<p><code>write.csv``(``as.data.frame``(resMF),file=``'DATE-DESeq2_batchcontroll_initial_analysis.csv'``)</code></p>
+<p>future post idea: pairing HTSeq-DESeq2 for DE gene expression with DEXSeq for splice variants as this pipeline is agnostic for differential exon usage.  *May miss true DE genes if total exon counts are the same but use different exons in different conditions (per Lior Pachter) Future post idea: comparing STAR-HTSeq-DESeq2 to Bowtie-RSEM for gene expression analysis on the same dataset.</p>
+<p>This entry was posted in <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/bioinformatics/">bioinformatics</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/deseq2/">DESeq2</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/dexseq/">DEXSeq</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/ggplot2/">ggplot2</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/htseq-count/">HTSeq-count</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/r/">R</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/rnaseq/">RNAseq</a>, <a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/category/star/">STAR</a> on<a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/" title="8:33 pm">November 10, 2014</a>.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/29/Python-How-to-install-packages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/29/Python-How-to-install-packages/" class="post-title-link" itemprop="url">Python：Python 模块的多种安装方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-29 21:10:07" itemprop="dateCreated datePublished" datetime="2016-02-29T21:10:07+08:00">2016-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 17:02:16" itemprop="dateModified" datetime="2020-12-08T17:02:16+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>Python模块安装方法</strong><br />
+<strong>一、方法1： 单文件模块</strong><br />
+直接把文件拷贝到 <code>$python\_dir/Lib</code></p>
+<p><strong>二、方法2： 多文件模块，<a target="_blank" rel="noopener" href="http://xn--setup-3o1j.py">带setup.py</a></strong><br />
+下载模块包，进行解压，进入模块文件夹，执行： <code>python setup.py install</code></p>
+<p><strong>三、 方法3：easy_install 方式</strong><br />
+先下载ez_setup.py,运行<code>python ez\_setup</code> 进行easy_install工具的安装，之后就可以使用<code>easy\_install</code>进行安装package了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;  easy\_install  packageName </span><br><span class="line"># 安装  easy\_install -m packageName </span><br><span class="line"># 卸载  easy\_install  package.egg #安装</span><br></pre></td></tr></table></figure>
+<p><strong>四、方法4：pip 方式</strong><br />
+先进行pip工具的安裝：easy_install pip（pip 可以通过easy_install 安裝，而且也会装到 Scripts 文件夹下。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; 安裝：pip install PackageName </span><br><span class="line">更新：pip install -U PackageName </span><br><span class="line">移除：pip uninstall PackageName </span><br><span class="line">搜索：pip search PackageName </span><br><span class="line">帮助：pip help</span><br></pre></td></tr></table></figure>
+<hr />
+<p>注：虽然Python的模块可以拷贝安装，但是一般情况下推荐制作一个安装包，即写一个setup.py文件来安装。<br />
+setup.py文件的使用如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python setup.py build     </span><br><span class="line">#编译 % python setup.py install    </span><br><span class="line">#安装 % python setup.py sdist     </span><br><span class="line">#制作分发包 % python setup.py bdist\_wininst    </span><br><span class="line">#制作windows下的分发包 % python setup.py bdist\_rpm</span><br></pre></td></tr></table></figure>
+<p>setup.py文件的编写 setup.py中主要执行一个 setup函数，该函数中大部分是描述性东西，最主要的是packages参数，列出所有的package，可以用自带的find_packages来动态获取package。<br />
+所以setup.py文件的编写实际是很简单的。 简单的例子: setup.py文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import setup, find\_packages setup(       name = &quot; mytest &quot; ,       version = &quot; 0.10 &quot; ,       description = &quot; My test module &quot; ,       author = &quot; Robin Hood &quot; ,       url = &quot; http://www.csdn.net &quot; ,       license = &quot; LGPL &quot; ,       packages = find\_packages(),       scripts = \[ &quot; scripts/test.py &quot; \],       ) mytest.py import sys def get():     return sys.path scripts/test.py import os print os.environ.keys() </span><br></pre></td></tr></table></figure>
+<p>setup中的scripts表示将该文件放到 Python的Scripts目录下，可以直接用。OK，简单的安装成功，可以运行所列举的命令生成安装包，或者安装该python包。本机测试成功(win32-python25)！</p>
+<p><strong>附注：setuptools工具安装方法</strong></p>
+<h3 id="方法一-使用ez_setuppy安装setuptools"><a class="markdownIt-Anchor" href="#方法一-使用ez_setuppy安装setuptools"></a> （方法一）. 使用ez_setup.py安装<strong>setuptools</strong></h3>
+<p>进入<a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/setuptools%E4%B8%8B%E8%BD%BDez%5C_setup.py">https://pypi.python.org/pypi/setuptools下载ez\_setup.py</a> 这是 setuptools 自豪的一种安装方式，只需要一个大约 8K 作为的脚本ez_setup.py，就能自动为用户安装包括 setuptools 自身在内的许多 Python 包。 使用这种方式，用户只需要下载 ez_setup。py 并运行，就可以自动下载和安装适合用户当前 Python 版本的适当的 setuptools egg 文件(当然，用户需要 Python 2.3.5 以上的版本，64 位操作系统的用户则需要 Python 2.4 以上的版本)。此外，这段脚本还会将可执行的 easy_install 脚本安装到用户所有的操作系统 Python 可执行脚本正常应该安装的位置(例如，Windows 用户会安装到 Python 安装目录下的 Scripts 目录中)。关于这种安装方法的更详细说明和注意事项，请参考其官方说明（见扩展阅读）。简单的安装命令如下： 　　wget -q ez_setup。py下载地址（见扩展阅读） 安装完后，最好确保</p>
+<h3 id="方法二-使用完整的安装包安装setuptools"><a class="markdownIt-Anchor" href="#方法二-使用完整的安装包安装setuptools"></a> （方法二）. 使用完整的安装包安装<strong>setuptools</strong></h3>
+<p>当然，用户也可以直接使用 setuptools发布版本来安装。<br />
+对于使用 Windows 的用户，这也是挺方便的方法，许多 Linux 发行版的官方包管理仓库都包含 setuptools 的某个版本。<br />
+例如，如果你跟我一样使用 Ubuntu ，那安装 setuptools 只是简单的进行如下操作： # apt-get install python-setuptools</p>
+<p>安装 easy_install package-name，比如 easy_install pylab</p>
+<p>模块卸载 easy_install -m package-name， 比如easy_install -m pylab</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">easy\_install -m 包名，可以卸载软件包，但是卸载后还要手动删除遗留文件。</span><br></pre></td></tr></table></figure>
+<p>setuptools它可以自动的安装模块，只需要你提供给它一个模块名字就可以，并且自动帮你解决模块的依赖问题。一般情况下用setuptools给安装的模块会自动放到一个后缀是.egg的目录里。<br />
+在Windows里，easy_install这个命令在python安装目录下的scripts里面，所以需要把scripts加到环境变量的PATH里，这样用起来就更方便，linux下不需要注意这个问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 禁止系统响应任何从外部&#x2F;内部来的ping请求 攻击者一般首先通过ping命令检测此主机或者IP是否处于活动状态，如果能够ping通 某个主机或者IP，那么攻击者就认为此系统处于活动状态，继而进行攻击或破坏。如果没有人能ping通机器并收到响应，那么就可以大大增强服务器的安全性，linux下可以执行如下设置，禁止ping请求： [root@localhost ~]#echo “1”&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统安全策略（IP限定）">
+<meta property="og:url" content="http://example.com/2015/12/11/linux-safety-by-restricted-ip/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="1. 禁止系统响应任何从外部&#x2F;内部来的ping请求 攻击者一般首先通过ping命令检测此主机或者IP是否处于活动状态，如果能够ping通 某个主机或者IP，那么攻击者就认为此系统处于活动状态，继而进行攻击或破坏。如果没有人能ping通机器并收到响应，那么就可以大大增强服务器的安全性，linux下可以执行如下设置，禁止ping请求： [root@localhost ~]#echo “1”&gt;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-12-11T12:38:53.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.027Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2015/12/11/linux-safety-by-restricted-ip/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux系统安全策略（IP限定） | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/11/linux-safety-by-restricted-ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统安全策略（IP限定）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-11 20:38:53" itemprop="dateCreated datePublished" datetime="2015-12-11T20:38:53+08:00">2015-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="1-禁止系统响应任何从外部内部来的ping请求"><a class="markdownIt-Anchor" href="#1-禁止系统响应任何从外部内部来的ping请求"></a> 1. 禁止系统响应任何从外部/内部来的ping请求</h4>
+<p>攻击者一般首先通过ping命令检测此主机或者IP是否处于活动状态，如果能够ping通 某个主机或者IP，那么攻击者就认为此系统处于活动状态，继而进行攻击或破坏。如果没有人能ping通机器并收到响应，那么就可以大大增强服务器的安全性，linux下可以执行如下设置，禁止ping请求：</p>
+<p>[root@localhost ~]#echo “1”&gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</p>
+<p>默认情况下“icmp_echo_ignore_all”的值为“0”，表示响应ping操作。 可以加上面的一行命令到/etc/rc.d/rc.local文件中，以使每次系统重启后自动运行。</p>
+<span id="more"></span>
+<h4 id="2禁止control-alt-delete组合键重启系统"><a class="markdownIt-Anchor" href="#2禁止control-alt-delete组合键重启系统"></a> 2．禁止Control-Alt-Delete组合键重启系统</h4>
+<p>在linux的默认设置下，同时按下Control-Alt-Delete键，系统将自动重启，这是很不安全的，因此要禁止Control-Alt-Delete组合键重启系统，只需修改/etc/inittab文件：</p>
+<p>[root@localhost ~]#vi /etc/inittab</p>
+<p>找到此行：ca::ctrlaltdel:/sbin/shutdown -t3 -r now 在之前加上“#” 然后执行：</p>
+<p>[root@localhost ~]#telinit q</p>
+<p></p>
+<h4 id="3限制shell记录历史命令大小"><a class="markdownIt-Anchor" href="#3限制shell记录历史命令大小"></a> 3．限制Shell记录历史命令大小</h4>
+<p>默认情况下，bash shell会在文件<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi mathvariant="normal">.</mi><mi>b</mi><mi>a</mi><mi>s</mi><mi>h</mi><mi mathvariant="normal">_</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>o</mi><mi>r</mi><mi>y</mi><mtext>中存放多达</mtext><mn>1000</mn><mtext>条命令记录</mtext><mo stretchy="false">(</mo><mtext>根据系统不同，默认记录条数不同</mtext><mo stretchy="false">)</mo><mtext>。系统中每个用户的主目录下都有一个这样的文件。这么多的历史命令记录，肯定是不安全的，因此必须限制该文件的大小。可以编辑</mtext><mi mathvariant="normal">/</mi><mi>e</mi><mi>t</mi><mi>c</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>f</mi><mi>i</mi><mi>l</mi><mi>e</mi><mtext>文件，修改其中的选项如下：</mtext><mi>H</mi><mi>I</mi><mi>S</mi><mi>T</mi><mi>S</mi><mi>I</mi><mi>Z</mi><mi>E</mi><mo>=</mo><mn>30</mn><mtext>表示在文件</mtext></mrow><annotation encoding="application/x-tex">HOME/.bash\_history中存放多达1000条命令记录(根据系统不同，默认记录条数不同)。系统中每个用户的主目录下都有一个这样的文件。 这么多的历史命令记录，肯定是不安全的，因此必须限制该文件的大小。 可以编辑/etc/profile文件，修改其中的选项如下： HISTSIZE=30 表示在文件</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord">.</span><span class="mord mathnormal">b</span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord mathnormal">h</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathnormal">h</span><span class="mord mathnormal">i</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">存</span><span class="mord cjk_fallback">放</span><span class="mord cjk_fallback">多</span><span class="mord cjk_fallback">达</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord cjk_fallback">条</span><span class="mord cjk_fallback">命</span><span class="mord cjk_fallback">令</span><span class="mord cjk_fallback">记</span><span class="mord cjk_fallback">录</span><span class="mopen">(</span><span class="mord cjk_fallback">根</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">统</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">同</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">默</span><span class="mord cjk_fallback">认</span><span class="mord cjk_fallback">记</span><span class="mord cjk_fallback">录</span><span class="mord cjk_fallback">条</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">同</span><span class="mclose">)</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">统</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">每</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">户</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">主</span><span class="mord cjk_fallback">目</span><span class="mord cjk_fallback">录</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">都</span><span class="mord cjk_fallback">有</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">样</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">这</span><span class="mord cjk_fallback">么</span><span class="mord cjk_fallback">多</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">历</span><span class="mord cjk_fallback">史</span><span class="mord cjk_fallback">命</span><span class="mord cjk_fallback">令</span><span class="mord cjk_fallback">记</span><span class="mord cjk_fallback">录</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">肯</span><span class="mord cjk_fallback">定</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">不</span><span class="mord cjk_fallback">安</span><span class="mord cjk_fallback">全</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">因</span><span class="mord cjk_fallback">此</span><span class="mord cjk_fallback">必</span><span class="mord cjk_fallback">须</span><span class="mord cjk_fallback">限</span><span class="mord cjk_fallback">制</span><span class="mord cjk_fallback">该</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">大</span><span class="mord cjk_fallback">小</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">编</span><span class="mord cjk_fallback">辑</span><span class="mord">/</span><span class="mord mathnormal">e</span><span class="mord mathnormal">t</span><span class="mord mathnormal">c</span><span class="mord">/</span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">e</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">件</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">修</span><span class="mord cjk_fallback">改</span><span class="mord cjk_fallback">其</span><span class="mord cjk_fallback">中</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">选</span><span class="mord cjk_fallback">项</span><span class="mord cjk_fallback">如</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">：</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.07153em;">Z</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">文</span><span class="mord cjk_fallback">件</span></span></span></span>HOME/.bash_history中记录最近的30条历史命令。如果将“HISTSIZE”设置为0，则表示不记录历史命令，那么也就不能用键盘的上下键查找历史命令了。</p>
+<h4 id="4删除系统默认的不必要用户和组"><a class="markdownIt-Anchor" href="#4删除系统默认的不必要用户和组"></a> 4．删除系统默认的不必要用户和组</h4>
+<p>Linux提供了各种系统账户，在系统安装完毕，如果不需要某些用户或者组，就要立即删除它，因为账户越多，系统就越不安全，越容易受到攻击。 删除系统不必要的用户用下面命令 [root@localhost ~]# userdel username 删除系统不必要的组用如下命令： [root@localhost ~]# groupdel  groupname Linux系统中可以删除的默认用户和组有： 删除的用户,如adm,lp,sync,shutdown,halt,news,uucp,operator,games,gopher等。 删除的组,如adm,lp,news,uucp,games,dip,pppusers,popusers,slipusers等。</p>
+<h4 id="5-关闭selinux"><a class="markdownIt-Anchor" href="#5-关闭selinux"></a> 5. 关闭selinux</h4>
+<p>SELinux是 Security-Enhanced Linux的简称，是一种内核强制访问控制安全系统，目前SELinux已经集成到Linux 2.6内核的主线和大多数Linux发行版上，由于SELinux与现有Linux应用程序和Linux内核模块兼容性还存在一些问题，因此建议初学者先关闭selinux，等到对linux有了深入的认识后，再对selinux深入研究不迟！ 查看linux系统selinux是否启用，可以使用getenforce命令： [root@localhost ~]# getenforce Disabled 关闭selinux，在redhat系列发行版中，可以直接修改如下文件： [root@localhost ~]#vi /etc/sysconfig/selinux # This file controls the state of SELinux on the system. # SELINUX= can take one of these three values: #       enforcing - SELinux security policy is enforced. #       permissive - SELinux prints warnings instead of enforcing. #       disabled - SELinux is fully disabled. SELINUX=enforcing # SELINUXTYPE= type of policy in use. Possible values are: #       targeted - Only targeted network daemons are protected. #       strict - Full SELinux protection. SELINUXTYPE=targeted 将SELINUX=enforcing修改为SELINUX=disabled, 重启系统后将会停止SElinux。</p>
+<h4 id="6设定tcp_wrappers防火墙"><a class="markdownIt-Anchor" href="#6设定tcp_wrappers防火墙"></a> 6．设定tcp_wrappers防火墙</h4>
+<p>Tcp_Wrappers是一个用来分析TCP/IP封包的软件，类似的IP封包软件还有iptables，linux默认都安装了此软件，作为一个安全的系统，Linux本身有两层安全防火墙，通过IP过滤机制的iptables实现第一层防护，iptables防火墙通过直观地监视系统的运行状况，阻挡网络中的一些恶意攻击，保护整个系统正常运行，免遭攻击和破坏。关于iptables的实现，将在下个章节详细讲述。如果通过了第一层防护，那么下一层防护就是tcp_wrappers了，通过Tcp_Wrappers可以实现对系统中提供的某些服务的开放与关闭、允许和禁止，从而更有效地保证系统安全运行。 Tcp_Wrappers的使用很简单，仅仅两个配置文件：/etc/hosts.allow和/etc/hosts.deny （1） 查看系统是否安装了Tcp_Wrappers [root@localhost ~]#rpm -q tcp_wrappers  或者 [root@localhost ~]#rpm -qa grep tcp tcp_wrappers-7.6-37.2 tcpdump-3.8.2-10.RHEL4 如果有上面的类似输出，表示系统已经安装了tcp_wrappers模块。如果没有显示，可能是没有安装，可以从linux系统安装盘找到对应RPM包进行安装。 （2）tcp_wrappers防火墙的局限性 系统中的某个服务是否可以使用tcp_wrappers防火墙，取决于该服务是否应用了libwrapped库文件，如果应用了就可以使用tcp_wrappers防火墙，系统中默认的一些服务如：sshd、portmap、sendmail、xinetd、vsftpd、tcpd等都可以使用tcp_wrappers防火墙。 (3)  tcp_wrappers设定的规则 tcp_wrappers防火墙的实现是通过/etc/hosts.allow和/etc/hosts.deny两个文件来完成的，首先看一下设定的格式： service:host(s) [:action]  service：代表服务名，例如sshd、vsftpd、sendmail等。  host(s)：主机名或者IP地址，可以有多个，例如192.168.60.0、<a target="_blank" rel="noopener" href="http://www.ixdba.net/">www.ixdba.net</a>  action：动作， 符合条件后所采取的动作。 几个关键字：  ALL：所有服务或者所有IP。  ALL EXCEPT：所有的服务或者所有IP除去指定的。 例如：ALL:ALL EXCEPT 192.168.60.132 表示除了192.168.60.132这台机器，任何机器执行所有服务时或被允许或被拒绝。 了解了设定语法后，下面就可以对服务进行访问限定。 例如互联网上一台linux服务器，实现的目标是：仅仅允许222.90.66.4、61.185.224.66以及域名softpark.com通过SSH服务远程登录到系统，设置如下： 首先设定允许登录的计算机，即配置/etc/hosts.allow文件，设置很简单，只要修改/etc/hosts.allow（如果没有此文件，请自行建立）这个文件即可。 只需将下面规则加入/etc/hosts.allow即可。 sshd: 222.90.66.4 61.185.224.66 <a target="_blank" rel="noopener" href="http://softpark.com">softpark.com</a> 接着设置不允许登录的机器，也就是配置/etc/hosts.deny文件了。 一般情况下，linux会首先判断/etc/hosts.allow这个文件，如果远程登录的计算机满足文件/etc/hosts.allow设定的话，就不会去使用/etc/hosts.deny文件了，相反，如果不满足hosts.allow文件设定的规则的话，就会去使用hosts.deny文件了，如果满足hosts.deny的规则，此主机就被限制为不可访问linux服务器，如果也不满足hosts.deny的设定，此主机默认是可以访问linux服务器的，因此，当设定好/etc/hosts.allow文件访问规则之后，只需设置/etc/hosts.deny为“所有计算机都不能登录状态”即可。 sshd:ALL 这样，一个简单的tcp_wrappers防火墙就设置完毕了。 本文出自 “<a target="_blank" rel="noopener" href="http://ixdba.blog.51cto.com/">技术成就梦想</a>” 博客，请务必保留此出处<a target="_blank" rel="noopener" href="http://ixdba.blog.51cto.com/2895551/526443">http://ixdba.blog.51cto.com/2895551/526443</a></p>
+<h1 id="linux-hosts的allow和deny"><a class="markdownIt-Anchor" href="#linux-hosts的allow和deny"></a> <strong>linux hosts的allow和deny</strong></h1>
+<p>/etc/hosts.allow和/etc/hosts.deny两个文件是控制远程访问设置的，通过他可以允许或者拒绝某个ip或者ip段的客户访问linux的某项服务。 网络防火墙是阻挡非授权主机访问网络的第一道防护，但是它们不应该仅有一道屏障。 Linux使用了两个文件/etc/host.allow和/etc/hosts.deny，根据网络请求的来源限制对服务的访问。 host.allow文件列出了允许连接到一个特定服务的主机，而hosts.deny文件则负责限制访问。 不过，这两个文件只控制对有hosts_access功能的服务（如xinetd所管理的那些服务、sshd和某些配置的sendmail）的访问。 在大多数情况下，明智的做法是先做限制，然后只允许从指定主机访问关键服务。</p>
+<blockquote>
+<p>我们建议，默认在hosts.deny文件中加上下面这一行配置，拒绝所有的访问： ALL:ALL</p>
+</blockquote>
+<p>接下来，您可以在hosts.allow文件中逐个开放访问许可。下面的配置允许从网络192.168/16访问SSH，而从任何地方访问sendmail。</p>
+<p>sshd: 192.168.0.0/255.255.0.0<br />
+sendmail: ALL</p>
+<p>两个文件每行配置的格式都是service: host或者service: network。失败的连接企图被记录到syslog中。从没有得到允许访问该服务的主机来的连接会被立即关闭。 大多数Linux发行版本默认都带host.allow和hosts.deny，但是它们通常为空。 修改/etc/hosts.allow文件</p>
+<h1 id=""><a class="markdownIt-Anchor" href="#"></a> </h1>
+<h1 id="hostsallow-this-file-describes-the-names-of-the-hosts-which-are"><a class="markdownIt-Anchor" href="#hostsallow-this-file-describes-the-names-of-the-hosts-which-are"></a> hosts.allow This file describes the names of the hosts which are</h1>
+<h1 id="allowed-to-use-the-local-inet-services-as-decided"><a class="markdownIt-Anchor" href="#allowed-to-use-the-local-inet-services-as-decided"></a> allowed to use the local INET services, as decided</h1>
+<h1 id="by-the-usrsbintcpd-server"><a class="markdownIt-Anchor" href="#by-the-usrsbintcpd-server"></a> by the ‘/usr/sbin/tcpd’ server.</h1>
+<h1 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> </h1>
+<p>sshd:210.13.218.*:allow</p>
+<p>sshd:222.77.15.*:allow</p>
+<p>以上写法表示允许210和222两个ip段连接sshd服务（这必然需要hosts.deny这个文件配合使用），当然:allow完全可以省略的。 当然如果管理员集中在一个IP那么这样写是比较省事的 all:218.24.129.110 //他表示接受110这个ip的所有请求！ /etc/hosts.deny文件，此文件是拒绝服务列表，文件内容如下：</p>
+<h1 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> </h1>
+<h1 id="hostsdeny-this-file-describes-the-names-of-the-hosts-which-are"><a class="markdownIt-Anchor" href="#hostsdeny-this-file-describes-the-names-of-the-hosts-which-are"></a> hosts.deny This file describes the names of the hosts which are</h1>
+<h1 id="not-allowed-to-use-the-local-inet-services-as-decided"><a class="markdownIt-Anchor" href="#not-allowed-to-use-the-local-inet-services-as-decided"></a> *not* allowed to use the local INET services, as decided</h1>
+<h1 id="by-the-usrsbintcpd-server-2"><a class="markdownIt-Anchor" href="#by-the-usrsbintcpd-server-2"></a> by the ‘/usr/sbin/tcpd’ server.</h1>
+<h1 id="-4"><a class="markdownIt-Anchor" href="#-4"></a> </h1>
+<h1 id="the-portmap-line-is-redundant-but-it-is-left-to-remind-you-that"><a class="markdownIt-Anchor" href="#the-portmap-line-is-redundant-but-it-is-left-to-remind-you-that"></a> The portmap line is redundant, but it is left to remind you that</h1>
+<h1 id="the-new-secure-portmap-uses-hostsdeny-and-hostsallow-in-particular"><a class="markdownIt-Anchor" href="#the-new-secure-portmap-uses-hostsdeny-and-hostsallow-in-particular"></a> the new secure portmap uses hosts.deny and hosts.allow. In particular</h1>
+<h1 id="you-should-know-that-nfs-uses-portmap"><a class="markdownIt-Anchor" href="#you-should-know-that-nfs-uses-portmap"></a> you should know that NFS uses portmap!</h1>
+<p>sshd:all:deny</p>
+<p>注意看：sshd:all:deny表示拒绝了所有sshd远程连接。:deny可以省略。 所以：当hosts.allow和 host.deny相冲突时，以hosts.allow设置为准。 注意修改完后： service xinetd restart 才能让刚才的更改生效。 /etc/hosts.allow（允许）和/etc/hosts.deny（禁止）这两个文件是tcpd服务器的配置文件 tcpd服务器可以控制外部IP对本机服务的访问 linux 系统会先检查/etc/hosts.deny规则，再检查/etc/hosts.allow规则，如果有冲突 按/etc/hosts.allow规则处理 比如： 1.禁止所有ip访问linux 的ssh功能 可以在/etc/hosts.deny添加一行 sshd:all:deny 2.禁止某一个ip（192.168.11.112）访问ssh功能 可以在/etc/hosts.deny添加一行sshd:192.168.11.112 3.如果在/etc/hosts.deny和/etc/hosts.allow同时 有sshd:192.168.11.112 规则，则192.168.11.112可以访问主机的ssh服务</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/12/07/%E7%A1%AC%E5%AE%9E%E7%A7%8D%E5%AD%90%E7%9A%84%E5%A4%84%E7%90%86%E4%B8%8E%E5%82%AC%E8%8A%BD/" rel="prev" title="硬实种子的处理与催芽">
+      <i class="fa fa-chevron-left"></i> 硬实种子的处理与催芽
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/12/14/Bioinfo-annotate-RNA-seq-by-NR-database/" rel="next" title="转录组数据分析之nr数据库注释">
+      转录组数据分析之nr数据库注释 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A6%81%E6%AD%A2%E7%B3%BB%E7%BB%9F%E5%93%8D%E5%BA%94%E4%BB%BB%E4%BD%95%E4%BB%8E%E5%A4%96%E9%83%A8%E5%86%85%E9%83%A8%E6%9D%A5%E7%9A%84ping%E8%AF%B7%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text"> 1. 禁止系统响应任何从外部&#x2F;内部来的ping请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E7%A6%81%E6%AD%A2control-alt-delete%E7%BB%84%E5%90%88%E9%94%AE%E9%87%8D%E5%90%AF%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text"> 2．禁止Control-Alt-Delete组合键重启系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E9%99%90%E5%88%B6shell%E8%AE%B0%E5%BD%95%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.</span> <span class="nav-text"> 3．限制Shell记录历史命令大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E5%88%A0%E9%99%A4%E7%B3%BB%E7%BB%9F%E9%BB%98%E8%AE%A4%E7%9A%84%E4%B8%8D%E5%BF%85%E8%A6%81%E7%94%A8%E6%88%B7%E5%92%8C%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text"> 4．删除系统默认的不必要用户和组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%85%B3%E9%97%ADselinux"><span class="nav-number">5.</span> <span class="nav-text"> 5. 关闭selinux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E8%AE%BE%E5%AE%9Atcp_wrappers%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">6.</span> <span class="nav-text"> 6．设定tcp_wrappers防火墙</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux-hosts%E7%9A%84allow%E5%92%8Cdeny"><span class="nav-number"></span> <span class="nav-text"> linux hosts的allow和deny</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hostsallow-this-file-describes-the-names-of-the-hosts-which-are"><span class="nav-number"></span> <span class="nav-text"> hosts.allow This file describes the names of the hosts which are</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#allowed-to-use-the-local-inet-services-as-decided"><span class="nav-number"></span> <span class="nav-text"> allowed to use the local INET services, as decided</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#by-the-usrsbintcpd-server"><span class="nav-number"></span> <span class="nav-text"> by the ‘&#x2F;usr&#x2F;sbin&#x2F;tcpd’ server.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#-2"><span class="nav-number"></span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#-3"><span class="nav-number"></span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hostsdeny-this-file-describes-the-names-of-the-hosts-which-are"><span class="nav-number"></span> <span class="nav-text"> hosts.deny This file describes the names of the hosts which are</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#not-allowed-to-use-the-local-inet-services-as-decided"><span class="nav-number"></span> <span class="nav-text"> *not* allowed to use the local INET services, as decided</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#by-the-usrsbintcpd-server-2"><span class="nav-number"></span> <span class="nav-text"> by the ‘&#x2F;usr&#x2F;sbin&#x2F;tcpd’ server.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#-4"><span class="nav-number"></span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-portmap-line-is-redundant-but-it-is-left-to-remind-you-that"><span class="nav-number"></span> <span class="nav-text"> The portmap line is redundant, but it is left to remind you that</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#the-new-secure-portmap-uses-hostsdeny-and-hostsallow-in-particular"><span class="nav-number"></span> <span class="nav-text"> the new secure portmap uses hosts.deny and hosts.allow. In particular</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#you-should-know-that-nfs-uses-portmap"><span class="nav-number"></span> <span class="nav-text"> you should know that NFS uses portmap!</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

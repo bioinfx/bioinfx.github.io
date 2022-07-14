@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Python模块安装方法 一、方法1： 单文件模块 直接把文件拷贝到 $python\_dir&#x2F;Lib 二、方法2： 多文件模块，带setup.py 下载模块包，进行解压，进入模块文件夹，执行： python setup.py install 三、 方法3：easy_install 方式 先下载ez_setup.py,运行python ez\_setup 进行easy_install工具的安装，之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python：Python 模块的多种安装方法">
+<meta property="og:url" content="http://example.com/2016/02/29/Python-How-to-install-packages/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="Python模块安装方法 一、方法1： 单文件模块 直接把文件拷贝到 $python\_dir&#x2F;Lib 二、方法2： 多文件模块，带setup.py 下载模块包，进行解压，进入模块文件夹，执行： python setup.py install 三、 方法3：easy_install 方式 先下载ez_setup.py,运行python ez\_setup 进行easy_install工具的安装，之">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-02-29T13:10:07.000Z">
+<meta property="article:modified_time" content="2020-12-08T09:02:16.291Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2016/02/29/Python-How-to-install-packages/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python：Python 模块的多种安装方法 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/29/Python-How-to-install-packages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python：Python 模块的多种安装方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-29 21:10:07" itemprop="dateCreated datePublished" datetime="2016-02-29T21:10:07+08:00">2016-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 17:02:16" itemprop="dateModified" datetime="2020-12-08T17:02:16+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>Python模块安装方法</strong><br />
+<strong>一、方法1： 单文件模块</strong><br />
+直接把文件拷贝到 <code>$python\_dir/Lib</code></p>
+<p><strong>二、方法2： 多文件模块，<a target="_blank" rel="noopener" href="http://xn--setup-3o1j.py">带setup.py</a></strong><br />
+下载模块包，进行解压，进入模块文件夹，执行： <code>python setup.py install</code></p>
+<p><strong>三、 方法3：easy_install 方式</strong><br />
+先下载ez_setup.py,运行<code>python ez\_setup</code> 进行easy_install工具的安装，之后就可以使用<code>easy\_install</code>进行安装package了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;  easy\_install  packageName </span><br><span class="line"># 安装  easy\_install -m packageName </span><br><span class="line"># 卸载  easy\_install  package.egg #安装</span><br></pre></td></tr></table></figure>
+<p><strong>四、方法4：pip 方式</strong><br />
+先进行pip工具的安裝：easy_install pip（pip 可以通过easy_install 安裝，而且也会装到 Scripts 文件夹下。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; 安裝：pip install PackageName </span><br><span class="line">更新：pip install -U PackageName </span><br><span class="line">移除：pip uninstall PackageName </span><br><span class="line">搜索：pip search PackageName </span><br><span class="line">帮助：pip help</span><br></pre></td></tr></table></figure>
+<hr />
+<p>注：虽然Python的模块可以拷贝安装，但是一般情况下推荐制作一个安装包，即写一个setup.py文件来安装。<br />
+setup.py文件的使用如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python setup.py build     </span><br><span class="line">#编译 % python setup.py install    </span><br><span class="line">#安装 % python setup.py sdist     </span><br><span class="line">#制作分发包 % python setup.py bdist\_wininst    </span><br><span class="line">#制作windows下的分发包 % python setup.py bdist\_rpm</span><br></pre></td></tr></table></figure>
+<p>setup.py文件的编写 setup.py中主要执行一个 setup函数，该函数中大部分是描述性东西，最主要的是packages参数，列出所有的package，可以用自带的find_packages来动态获取package。<br />
+所以setup.py文件的编写实际是很简单的。 简单的例子: setup.py文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import setup, find\_packages setup(       name = &quot; mytest &quot; ,       version = &quot; 0.10 &quot; ,       description = &quot; My test module &quot; ,       author = &quot; Robin Hood &quot; ,       url = &quot; http://www.csdn.net &quot; ,       license = &quot; LGPL &quot; ,       packages = find\_packages(),       scripts = \[ &quot; scripts/test.py &quot; \],       ) mytest.py import sys def get():     return sys.path scripts/test.py import os print os.environ.keys() </span><br></pre></td></tr></table></figure>
+<p>setup中的scripts表示将该文件放到 Python的Scripts目录下，可以直接用。OK，简单的安装成功，可以运行所列举的命令生成安装包，或者安装该python包。本机测试成功(win32-python25)！</p>
+<p><strong>附注：setuptools工具安装方法</strong></p>
+<h3 id="方法一-使用ez_setuppy安装setuptools"><a class="markdownIt-Anchor" href="#方法一-使用ez_setuppy安装setuptools"></a> （方法一）. 使用ez_setup.py安装<strong>setuptools</strong></h3>
+<p>进入<a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/setuptools%E4%B8%8B%E8%BD%BDez%5C_setup.py">https://pypi.python.org/pypi/setuptools下载ez\_setup.py</a> 这是 setuptools 自豪的一种安装方式，只需要一个大约 8K 作为的脚本ez_setup.py，就能自动为用户安装包括 setuptools 自身在内的许多 Python 包。 使用这种方式，用户只需要下载 ez_setup。py 并运行，就可以自动下载和安装适合用户当前 Python 版本的适当的 setuptools egg 文件(当然，用户需要 Python 2.3.5 以上的版本，64 位操作系统的用户则需要 Python 2.4 以上的版本)。此外，这段脚本还会将可执行的 easy_install 脚本安装到用户所有的操作系统 Python 可执行脚本正常应该安装的位置(例如，Windows 用户会安装到 Python 安装目录下的 Scripts 目录中)。关于这种安装方法的更详细说明和注意事项，请参考其官方说明（见扩展阅读）。简单的安装命令如下： 　　wget -q ez_setup。py下载地址（见扩展阅读） 安装完后，最好确保</p>
+<h3 id="方法二-使用完整的安装包安装setuptools"><a class="markdownIt-Anchor" href="#方法二-使用完整的安装包安装setuptools"></a> （方法二）. 使用完整的安装包安装<strong>setuptools</strong></h3>
+<p>当然，用户也可以直接使用 setuptools发布版本来安装。<br />
+对于使用 Windows 的用户，这也是挺方便的方法，许多 Linux 发行版的官方包管理仓库都包含 setuptools 的某个版本。<br />
+例如，如果你跟我一样使用 Ubuntu ，那安装 setuptools 只是简单的进行如下操作： # apt-get install python-setuptools</p>
+<p>安装 easy_install package-name，比如 easy_install pylab</p>
+<p>模块卸载 easy_install -m package-name， 比如easy_install -m pylab</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">easy\_install -m 包名，可以卸载软件包，但是卸载后还要手动删除遗留文件。</span><br></pre></td></tr></table></figure>
+<p>setuptools它可以自动的安装模块，只需要你提供给它一个模块名字就可以，并且自动帮你解决模块的依赖问题。一般情况下用setuptools给安装的模块会自动放到一个后缀是.egg的目录里。<br />
+在Windows里，easy_install这个命令在python安装目录下的scripts里面，所以需要把scripts加到环境变量的PATH里，这样用起来就更方便，linux下不需要注意这个问题。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/02/29/Linux-python2-6-python2-7-in-a-system/" rel="prev" title="Linux系统：Python2.6和Python2.7同时存在">
+      <i class="fa fa-chevron-left"></i> Linux系统：Python2.6和Python2.7同时存在
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/" rel="next" title="DESeq2: RNAseq pipeline – Alignment to DE analysis">
+      DESeq2: RNAseq pipeline – Alignment to DE analysis <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E4%BD%BF%E7%94%A8ez_setuppy%E5%AE%89%E8%A3%85setuptools"><span class="nav-number">1.</span> <span class="nav-text"> （方法一）. 使用ez_setup.py安装setuptools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E4%BD%BF%E7%94%A8%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AE%89%E8%A3%85%E5%8C%85%E5%AE%89%E8%A3%85setuptools"><span class="nav-number">2.</span> <span class="nav-text"> （方法二）. 使用完整的安装包安装setuptools</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

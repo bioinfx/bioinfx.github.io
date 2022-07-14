@@ -1,65 +1,500 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Bioinfo | Using Circos for genome visualization | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Bioinfo | Using Circos for genome visualization</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Bioinfo | Using Circos for genome visualization</h1><div class="post-meta">2021-05-28<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><p>circos 是以环形展示基因组序列和注释信息的工具，我首先按照 circos 官网的指引进行手动安装，即手动逐个安装 Perl 模块，最后再安装 circos 文件，但是卡在 GD 库，没法成功运行 circos。但是换了一台服务器，进入 anaconda3 下面的 python3.7 环境，直接用 conda 不到一分钟就成功安装 circos。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="circos 是以环形展示基因组序列和注释信息的工具，我首先按照 circos 官网的指引进行手动安装，即手动逐个安装 Perl 模块，最后再安装 circos 文件，但是卡在 GD 库，没法成功运行 circos。但是换了一台服务器，进入 anaconda3 下面的 python3.7 环境，直接用 conda 不到一分钟就成功安装 circos。 First, understand the r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | Using Circos for genome visualization">
+<meta property="og:url" content="http://example.com/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="circos 是以环形展示基因组序列和注释信息的工具，我首先按照 circos 官网的指引进行手动安装，即手动逐个安装 Perl 模块，最后再安装 circos 文件，但是卡在 GD 库，没法成功运行 circos。但是换了一台服务器，进入 anaconda3 下面的 python3.7 环境，直接用 conda 不到一分钟就成功安装 circos。 First, understand the r">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i.imgur.com/ZkOgjPN.jpg">
+<meta property="og:image" content="http://qiubio.com/wp-content/uploads/2011/11/circos-architecture.png">
+<meta property="article:published_time" content="2021-05-28T03:40:21.000Z">
+<meta property="article:modified_time" content="2021-06-03T13:11:14.329Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i.imgur.com/ZkOgjPN.jpg">
+
+<link rel="canonical" href="http://example.com/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | Using Circos for genome visualization | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | Using Circos for genome visualization
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-28 11:40:21" itemprop="dateCreated datePublished" datetime="2021-05-28T11:40:21+08:00">2021-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-03 21:11:14" itemprop="dateModified" datetime="2021-06-03T21:11:14+08:00">2021-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>circos 是以环形展示基因组序列和注释信息的工具，我首先按照 circos 官网的指引进行手动安装，即手动逐个安装 Perl 模块，最后再安装 circos 文件，但是卡在 GD 库，没法成功运行 circos。但是换了一台服务器，进入 anaconda3 下面的 python3.7 环境，直接用 conda 不到一分钟就成功安装 circos。</p>
 <p>First, understand the <a target="_blank" rel="noopener" href="http://circos.ca/software/requirements">requirements</a>. If you are a Windows user, read about pertinent differences between UNIX and Windows.</p>
 <p><a target="_blank" rel="noopener" href="http://circos.ca/software/download">Download</a> and <a target="_blank" rel="noopener" href="http://circos.ca/software/install">install</a> the software, then follow the <a target="_blank" rel="noopener" href="http://circos.ca/documentation/tutorials">tutorials</a>.</p>
-<h3 id="Installing-Perl-modules"><a href="#Installing-Perl-modules" class="headerlink" title="Installing Perl modules"></a>Installing Perl modules</h3><p>安装 Circos 的第一步，安装 Perl 以及相关的若干 Perl 模块。我 Linux 系统自带的 Perl，进入命令行界面时报错（<code>perl -MCPAN -e shell</code> Can’t locate CPAN.pm in @INC），所以我先尝试自己安装的 Perl，即 anaconda3/python37 里面的 Perl v5.26.2，但是在安装 Params::Validate 包时候无法通过。我再次尝试系统默认的 Perl v5.16.3，先安装 CPAN，再逐个安装包，成功安装 Params::Validate。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">perl --version</span><br><span class="line"># This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br><span class="line">perl --version</span><br><span class="line">This is perl 5, version 16, subversion 3 (v5.16.3) built for x86_64-linux-thread-multi</span><br><span class="line">perl -MCPAN -e shell</span><br><span class="line"></span><br><span class="line">Config::General (v2.50 or later)</span><br><span class="line">Font::TTF</span><br><span class="line">GD</span><br><span class="line">List::MoreUtils</span><br><span class="line">Math::Bezier</span><br><span class="line">Math::Round</span><br><span class="line">Math::VecStat</span><br><span class="line">Params::Validate (自动安装失败，尝试手动安装)</span><br><span class="line">Readonly</span><br><span class="line">Regexp::Common</span><br><span class="line">Set::IntSpan (v1.16 or later)</span><br><span class="line">Text::Format</span><br></pre></td></tr></table></figure>
-
+<h3 id="installing-perl-modules"><a class="markdownIt-Anchor" href="#installing-perl-modules"></a> Installing Perl modules</h3>
+<p>安装 Circos 的第一步，安装 Perl 以及相关的若干 Perl 模块。我 Linux 系统自带的 Perl，进入命令行界面时报错（<code>perl -MCPAN -e shell</code> Can’t locate <a target="_blank" rel="noopener" href="http://CPAN.pm">CPAN.pm</a> in @INC），所以我先尝试自己安装的 Perl，即 anaconda3/python37 里面的 Perl v5.26.2，但是在安装 Params::Validate 包时候无法通过。我再次尝试系统默认的 Perl v5.16.3，先安装 CPAN，再逐个安装包，成功安装 Params::Validate。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">perl --version</span><br><span class="line"># This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br><span class="line">perl --version</span><br><span class="line">This is perl 5, version 16, subversion 3 (v5.16.3) built for x86_64-linux-thread-multi</span><br><span class="line">perl -MCPAN -e shell</span><br><span class="line"></span><br><span class="line">Config::General (v2.50 or later)</span><br><span class="line">Font::TTF</span><br><span class="line">GD</span><br><span class="line">List::MoreUtils</span><br><span class="line">Math::Bezier</span><br><span class="line">Math::Round</span><br><span class="line">Math::VecStat</span><br><span class="line">Params::Validate (自动安装失败，尝试手动安装)</span><br><span class="line">Readonly</span><br><span class="line">Regexp::Common</span><br><span class="line">Set::IntSpan (v1.16 or later)</span><br><span class="line">Text::Format</span><br></pre></td></tr></table></figure>
 <p>安装 Params::Validate 的过程中，同时安装了下列 Perl 模块。均是模块安装包下载之后解压，进入模块目录后依次运行 <code>perl Makefile.PL</code>，<code>make Makefile</code>，<code>make install Makefile</code> 即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;D&#x2F;DR&#x2F;DROLSKY&#x2F;Params-Validate-1.30.tar.gz</span><br><span class="line"># wget http:&#x2F;&#x2F;search.cpan.org&#x2F;CPAN&#x2F;authors&#x2F;id&#x2F;D&#x2F;DR&#x2F;DROLSKY&#x2F;Params-Validate-0.95.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;E&#x2F;ET&#x2F;ETHER&#x2F;Module-Metadata-1.000037.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;L&#x2F;LE&#x2F;LEONT&#x2F;version-0.9929.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;B&#x2F;BI&#x2F;BINGOS&#x2F;IPC-Cmd-1.04.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;B&#x2F;BI&#x2F;BINGOS&#x2F;Params-Check-0.38.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;J&#x2F;JE&#x2F;JESSE&#x2F;Locale-Maketext-Simple-0.21.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;B&#x2F;BI&#x2F;BINGOS&#x2F;Module-Load-Conditional-0.74.tar.gz</span><br><span class="line">wget https:&#x2F;&#x2F;cpan.metacpan.org&#x2F;authors&#x2F;id&#x2F;B&#x2F;BI&#x2F;BINGOS&#x2F;Module-Load-0.36.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h3 id="INSTALLING-libpng-freetype-libgd-AND-gd"><a href="#INSTALLING-libpng-freetype-libgd-AND-gd" class="headerlink" title="INSTALLING libpng, freetype, libgd AND gd"></a>INSTALLING libpng, freetype, libgd AND gd</h3><p>About half of the support questions in the Google Group are about installing Perl’s GD module, which is the interface to the libgd system graphics library.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.30.tar.gz</span><br><span class="line"># wget http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Params-Validate-0.95.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/E/ET/ETHER/Module-Metadata-1.000037.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/L/LE/LEONT/version-0.9929.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/IPC-Cmd-1.04.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Params-Check-0.38.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/J/JE/JESSE/Locale-Maketext-Simple-0.21.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-0.74.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Module-Load-0.36.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="installing-libpng-freetype-libgd-and-gd"><a class="markdownIt-Anchor" href="#installing-libpng-freetype-libgd-and-gd"></a> INSTALLING libpng, freetype, libgd AND gd</h3>
+<p>About half of the support questions in the Google Group are about installing Perl’s GD module, which is the interface to the libgd system graphics library.</p>
 <p>The installation process is not robust because of dependencies and the possibility of their being different versions of these dependencies on your system. Below I show the process of installing GD on a new Mac OS Mavericks system (10.9.4).</p>
 <p>Below I link to my local copies of the versions of each library that I installed. These are mature libraries and newer versions are likely to be minor bug releases. The exception is GD—I was unable to successfully compile v2.56 (boot_GD symbol warning which I could not fix). However v2.53 worked.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libpng-1.6.14.tar.gz</span><br><span class="line">&gt; cd libpng-1.6.14</span><br><span class="line">&gt; .&#x2F;configure —prefix&#x3D;&#x2F;usr&#x2F;local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz jpegsrc.v9.tar.gz</span><br><span class="line">&gt; cd jpeg-9</span><br><span class="line">&gt; .&#x2F;configure —prefix&#x3D;&#x2F;usr&#x2F;local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz freetype-2.4.0.tar.gz</span><br><span class="line">&gt; cd freetype-2.4.0</span><br><span class="line">&gt; .&#x2F;configure —prefix&#x3D;&#x2F;usr&#x2F;local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libpng-1.6.14.tar.gz</span><br><span class="line">&gt; cd libpng-1.6.14</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz jpegsrc.v9.tar.gz</span><br><span class="line">&gt; cd jpeg-9</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz freetype-2.4.0.tar.gz</span><br><span class="line">&gt; cd freetype-2.4.0</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
 <p>You should now have libraries in /usr/local/lib as we as some header files in /usr/local/include.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   650336 21 Nov 11:15 libfreetype.6.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  3676456 21 Nov 11:15 libfreetype.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       19 21 Nov 11:15 libfreetype.dylib -&gt; libfreetype.6.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      957 21 Nov 11:15 libfreetype.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   275736 21 Nov 11:14 libjpeg.9.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1492952 21 Nov 11:14 libjpeg.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       15 21 Nov 11:14 libjpeg.dylib -&gt; libjpeg.9.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      920 21 Nov 11:14 libjpeg.la</span><br><span class="line">lrwxr-xr-x  1 root  wheel       10 21 Nov 11:13 libpng.a -&gt; libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       14 21 Nov 11:13 libpng.dylib -&gt; libpng16.dylib</span><br><span class="line">lrwxr-xr-x  1 root  wheel       11 21 Nov 11:13 libpng.la -&gt; libpng16.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   240580 21 Nov 11:13 libpng16.16.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1077240 21 Nov 11:13 libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       17 21 Nov 11:13 libpng16.dylib -&gt; libpng16.16.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      924 21 Nov 11:13 libpng16.la</span><br><span class="line">drwxr-xr-x  6 root  wheel      204 21 Nov 11:15 pkgconfig&#x2F;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   650336 21 Nov 11:15 libfreetype.6.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  3676456 21 Nov 11:15 libfreetype.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       19 21 Nov 11:15 libfreetype.dylib -&gt; libfreetype.6.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      957 21 Nov 11:15 libfreetype.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   275736 21 Nov 11:14 libjpeg.9.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1492952 21 Nov 11:14 libjpeg.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       15 21 Nov 11:14 libjpeg.dylib -&gt; libjpeg.9.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      920 21 Nov 11:14 libjpeg.la</span><br><span class="line">lrwxr-xr-x  1 root  wheel       10 21 Nov 11:13 libpng.a -&gt; libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       14 21 Nov 11:13 libpng.dylib -&gt; libpng16.dylib</span><br><span class="line">lrwxr-xr-x  1 root  wheel       11 21 Nov 11:13 libpng.la -&gt; libpng16.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   240580 21 Nov 11:13 libpng16.16.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1077240 21 Nov 11:13 libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       17 21 Nov 11:13 libpng16.dylib -&gt; libpng16.16.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      924 21 Nov 11:13 libpng16.la</span><br><span class="line">drwxr-xr-x  6 root  wheel      204 21 Nov 11:15 pkgconfig/</span><br></pre></td></tr></table></figure>
 <p>Now install libgd, linking to the libraries installed above</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libgd-2.1.0.tar.gz</span><br><span class="line">&gt; cd libgd-2.1.0</span><br><span class="line">&gt; .&#x2F;configure --with-png&#x3D;&#x2F;usr&#x2F;local --with-freetype&#x3D;&#x2F;usr&#x2F;local --with-jpeg&#x3D;&#x2F;usr&#x2F;local --prefix&#x3D;&#x2F;usr&#x2F;local</span><br><span class="line">.&#x2F;configure --with-png&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local --with-freetype&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local --with-jpeg&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local --prefix&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local</span><br><span class="line">…</span><br><span class="line">** Configuration summary for libgd 2.1.0:</span><br><span class="line"></span><br><span class="line">   Support for Zlib:                 yes</span><br><span class="line">   Support for PNG library:          yes</span><br><span class="line">   Support for JPEG library:         yes</span><br><span class="line">   Support for VPX library:          no</span><br><span class="line">   Support for TIFF library:         no</span><br><span class="line">   Support for Freetype 2.x library: yes</span><br><span class="line">   Support for Fontconfig library:   no</span><br><span class="line">   Support for Xpm library:          no</span><br><span class="line">   Support for pthreads:             yes</span><br><span class="line">…</span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libgd-2.1.0.tar.gz</span><br><span class="line">&gt; cd libgd-2.1.0</span><br><span class="line">&gt; ./configure --with-png=/usr/local --with-freetype=/usr/local --with-jpeg=/usr/local --prefix=/usr/local</span><br><span class="line">./configure --with-png=/home/fenglei/local --with-freetype=/home/fenglei/local --with-jpeg=/home/fenglei/local --prefix=/home/fenglei/local</span><br><span class="line">…</span><br><span class="line">** Configuration summary for libgd 2.1.0:</span><br><span class="line"></span><br><span class="line">   Support for Zlib:                 yes</span><br><span class="line">   Support for PNG library:          yes</span><br><span class="line">   Support for JPEG library:         yes</span><br><span class="line">   Support for VPX library:          no</span><br><span class="line">   Support for TIFF library:         no</span><br><span class="line">   Support for Freetype 2.x library: yes</span><br><span class="line">   Support for Fontconfig library:   no</span><br><span class="line">   Support for Xpm library:          no</span><br><span class="line">   Support for pthreads:             yes</span><br><span class="line">…</span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
 <p>You now have libgd in /usr/local/lib</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   389372 19 Nov 14:47 libgd.3.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1217200 19 Nov 14:47 libgd.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       13 19 Nov 14:47 libgd.dylib -&gt; libgd.3.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel     1139 19 Nov 14:47 libgd.la</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   389372 19 Nov 14:47 libgd.3.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1217200 19 Nov 14:47 libgd.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       13 19 Nov 14:47 libgd.dylib -&gt; libgd.3.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel     1139 19 Nov 14:47 libgd.la</span><br></pre></td></tr></table></figure>
 <p>as well as some binaries in /usr/local/bin. In particular, you have /usr/local/bin/glib-config, which provides the configuration for your libgd installation</p>
-<p>The –with-* parameters during the configure stage of gdlib installation sets the sources of the dependencies that will be build into gdlib. If you used a different -prefix in compiling these dependencies (see above), adjust these parameters accordingly. For example, if you compiled libpng with -prefix=/my/path then use –with-png=/my/path/.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;local&#x2F;bin&#x2F;gdlib-config --all</span><br><span class="line"></span><br><span class="line">GD library  2.1.0</span><br><span class="line">includedir: &#x2F;usr&#x2F;local&#x2F;include</span><br><span class="line">cflags:     -I&#x2F;usr&#x2F;local&#x2F;include</span><br><span class="line">ldflags:     -L&#x2F;usr&#x2F;local&#x2F;lib</span><br><span class="line">libs:       -ljpeg -lz  -L&#x2F;usr&#x2F;local&#x2F;lib -lpng16 -L&#x2F;usr&#x2F;local&#x2F;lib -lfreetype -lz -liconv</span><br><span class="line">libdir:     &#x2F;usr&#x2F;local&#x2F;lib</span><br><span class="line">features:   GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
-
+<p>The --with-* parameters during the configure stage of gdlib installation sets the sources of the dependencies that will be build into gdlib. If you used a different -prefix in compiling these dependencies (see above), adjust these parameters accordingly. For example, if you compiled libpng with -prefix=/my/path then use --with-png=/my/path/.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/gdlib-config --all</span><br><span class="line"></span><br><span class="line">GD library  2.1.0</span><br><span class="line">includedir: /usr/local/include</span><br><span class="line">cflags:     -I/usr/local/include</span><br><span class="line">ldflags:     -L/usr/local/lib</span><br><span class="line">libs:       -ljpeg -lz  -L/usr/local/lib -lpng16 -L/usr/local/lib -lfreetype -lz -liconv</span><br><span class="line">libdir:     /usr/local/lib</span><br><span class="line">features:   GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
 <p>由于我安装的 gd 时候是配置到了用户目录下，所以得到下面的信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GD library  2.1.0</span><br><span class="line">includedir: &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;include</span><br><span class="line">cflags:     -I&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;include</span><br><span class="line">ldflags:     -L&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib</span><br><span class="line">libs:       -ljpeg -lz -lm  -L&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib -lpng16 -L&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib -lfreetype -lz -lfontconfig -lfreetype   -lfontconfig -lXpm -lX11   &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib&#x2F;libiconv.so -Wl,-rpath -Wl,&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib</span><br><span class="line">libdir:     &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;lib</span><br><span class="line">features:   GD_XPM GD_JPEG GD_FONTCONFIG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GD library  2.1.0</span><br><span class="line">includedir: /home/fenglei/local/include</span><br><span class="line">cflags:     -I/home/fenglei/local/include</span><br><span class="line">ldflags:     -L/home/fenglei/local/lib</span><br><span class="line">libs:       -ljpeg -lz -lm  -L/home/fenglei/local/lib -lpng16 -L/home/fenglei/local/lib -lfreetype -lz -lfontconfig -lfreetype   -lfontconfig -lXpm -lX11   /home/fenglei/local/lib/libiconv.so -Wl,-rpath -Wl,/home/fenglei/local/lib</span><br><span class="line">libdir:     /home/fenglei/local/lib</span><br><span class="line">features:   GD_XPM GD_JPEG GD_FONTCONFIG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
 <p>You must have GD_FREETYPE and GD_PNG for Circos to run. The other features, such as support for JPEG and TIFF are optional. In this example, I’ve included the JPEG library in the installation.</p>
 <p>Now, install the Perl interface to libgd — the GD module.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz GD-2.53.tar.gz</span><br><span class="line">&gt; perl Makefile.PL</span><br><span class="line"></span><br><span class="line">Configuring for libgd version 2.1.0.</span><br><span class="line">Checking for stray libgd header files...none found.</span><br><span class="line"></span><br><span class="line">Included Features:          GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br><span class="line">GD library used from:       &#x2F;usr&#x2F;local</span><br><span class="line">Checking if your kit is complete...</span><br><span class="line">Looks good</span><br><span class="line">Writing Makefile for GD</span><br><span class="line">Writing MYMETA.yml and MYMETA.json</span><br><span class="line"></span><br><span class="line">During the installation GD will look for libgd-config (see above) for libgd configuration. </span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; perl -MGD -e &#39;print $GD::VERSION,”\n”’</span><br><span class="line">&gt; 2.53</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz GD-2.53.tar.gz</span><br><span class="line">&gt; perl Makefile.PL</span><br><span class="line"></span><br><span class="line">Configuring for libgd version 2.1.0.</span><br><span class="line">Checking for stray libgd header files...none found.</span><br><span class="line"></span><br><span class="line">Included Features:          GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br><span class="line">GD library used from:       /usr/local</span><br><span class="line">Checking if your kit is complete...</span><br><span class="line">Looks good</span><br><span class="line">Writing Makefile for GD</span><br><span class="line">Writing MYMETA.yml and MYMETA.json</span><br><span class="line"></span><br><span class="line">During the installation GD will look for libgd-config (see above) for libgd configuration. </span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; perl -MGD -e &#x27;print $GD::VERSION,”\n”’</span><br><span class="line">&gt; 2.53</span><br></pre></td></tr></table></figure>
 <p>Test that the modules are installed using</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos --modules</span><br><span class="line">…</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.53 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.39 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;circos.ca&#x2F;distribution&#x2F;circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">.&#x2F;bin&#x2F;circos --modules</span><br><span class="line"></span><br><span class="line">ok       1.26 Carp</span><br><span class="line">missing            Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.40 Cwd</span><br><span class="line">ok      2.145 Data::Dumper</span><br><span class="line">ok       2.52 Digest::MD5</span><br><span class="line">ok       2.84 File::Basename</span><br><span class="line">ok       3.40 File::Spec::Functions</span><br><span class="line">ok     0.2301 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">missing            GD</span><br><span class="line">missing            GD::Polyline</span><br><span class="line">ok        2.4 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.430 List::MoreUtils</span><br><span class="line">ok       1.27 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok      1.997 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok       1.02 Memoize</span><br><span class="line">ok       1.30 POSIX</span><br><span class="line">ok       1.30 Params::Validate</span><br><span class="line">ok       1.63 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">missing            SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">missing            Statistics::Basic</span><br><span class="line">ok       2.45 Storable</span><br><span class="line">ok       1.16 Sys::Hostname</span><br><span class="line">ok       2.02 Text::Balanced</span><br><span class="line">ok       0.62 Text::Format</span><br><span class="line">ok     1.9725 Time::HiRes</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos --modules</span><br><span class="line">…</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.53 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.39 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">wget http://circos.ca/distribution/circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">./bin/circos --modules</span><br><span class="line"></span><br><span class="line">ok       1.26 Carp</span><br><span class="line">missing            Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.40 Cwd</span><br><span class="line">ok      2.145 Data::Dumper</span><br><span class="line">ok       2.52 Digest::MD5</span><br><span class="line">ok       2.84 File::Basename</span><br><span class="line">ok       3.40 File::Spec::Functions</span><br><span class="line">ok     0.2301 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">missing            GD</span><br><span class="line">missing            GD::Polyline</span><br><span class="line">ok        2.4 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.430 List::MoreUtils</span><br><span class="line">ok       1.27 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok      1.997 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok       1.02 Memoize</span><br><span class="line">ok       1.30 POSIX</span><br><span class="line">ok       1.30 Params::Validate</span><br><span class="line">ok       1.63 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">missing            SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">missing            Statistics::Basic</span><br><span class="line">ok       2.45 Storable</span><br><span class="line">ok       1.16 Sys::Hostname</span><br><span class="line">ok       2.02 Text::Balanced</span><br><span class="line">ok       0.62 Text::Format</span><br><span class="line">ok     1.9725 Time::HiRes</span><br></pre></td></tr></table></figure>
 <p>Install missing packages</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cpan -i SVG</span><br><span class="line">cpan -i Clone</span><br><span class="line">cpan -i Statistics::Basic</span><br></pre></td></tr></table></figure>
-
-<h3 id="以上做完依然报错"><a href="#以上做完依然报错" class="headerlink" title="以上做完依然报错"></a>以上做完依然报错</h3><p>运行 <code>circos --mudules</code> 显示 GD 模块缺失。（已经分别安装 libgd 和 Perl 的 GD 模块，为什么circos还是显示没有 GD 模块？）</p>
-<h3 id="使用-conda-安装-circos"><a href="#使用-conda-安装-circos" class="headerlink" title="使用 conda 安装 circos"></a>使用 conda 安装 circos</h3><p>换一台服务器，<code>source activate python37</code> 切换成 python3.7 环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; which perl</span><br><span class="line">~&#x2F;local&#x2F;app&#x2F;anaconda3&#x2F;envs&#x2F;python37&#x2F;bin&#x2F;perl</span><br><span class="line">&gt; perl --version</span><br><span class="line">This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cpan -i SVG</span><br><span class="line">cpan -i Clone</span><br><span class="line">cpan -i Statistics::Basic</span><br></pre></td></tr></table></figure>
+<h3 id="以上做完依然报错"><a class="markdownIt-Anchor" href="#以上做完依然报错"></a> 以上做完依然报错</h3>
+<p>运行 <code>circos --mudules</code> 显示 GD 模块缺失。（已经分别安装 libgd 和 Perl 的 GD 模块，为什么circos还是显示没有 GD 模块？）</p>
+<h3 id="使用-conda-安装-circos"><a class="markdownIt-Anchor" href="#使用-conda-安装-circos"></a> 使用 conda 安装 circos</h3>
+<p>换一台服务器，<code>source activate python37</code> 切换成 python3.7 环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; which perl</span><br><span class="line">~/local/app/anaconda3/envs/python37/bin/perl</span><br><span class="line">&gt; perl --version</span><br><span class="line">This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br></pre></td></tr></table></figure>
 <p>再运行 <code>conda install -c bioconda circos</code> 顺利安装！下面是模块测试。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost ~]$ circos --modules</span><br><span class="line">ok       1.38 Carp</span><br><span class="line">ok       0.42 Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.75 Cwd</span><br><span class="line">ok      2.167 Data::Dumper</span><br><span class="line">ok       2.55 Digest::MD5</span><br><span class="line">ok       2.85 File::Basename</span><br><span class="line">ok       3.67 File::Spec::Functions</span><br><span class="line">ok     0.2304 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.71 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.49 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.428 List::MoreUtils</span><br><span class="line">ok     1.4602 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok   1.999806 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok    1.03_01 Memoize</span><br><span class="line">ok       1.76 POSIX</span><br><span class="line">ok       1.29 Params::Validate</span><br><span class="line">ok       1.69 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">ok       2.84 SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">ok     1.6611 Statistics::Basic</span><br><span class="line">ok       2.62 Storable</span><br><span class="line">ok       1.20 Sys::Hostname</span><br><span class="line">ok       2.03 Text::Balanced</span><br><span class="line">ok       0.59 Text::Format</span><br><span class="line">ok     1.9741 Time::HiRes</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost ~]$ circos --modules</span><br><span class="line">ok       1.38 Carp</span><br><span class="line">ok       0.42 Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.75 Cwd</span><br><span class="line">ok      2.167 Data::Dumper</span><br><span class="line">ok       2.55 Digest::MD5</span><br><span class="line">ok       2.85 File::Basename</span><br><span class="line">ok       3.67 File::Spec::Functions</span><br><span class="line">ok     0.2304 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.71 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.49 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.428 List::MoreUtils</span><br><span class="line">ok     1.4602 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok   1.999806 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok    1.03_01 Memoize</span><br><span class="line">ok       1.76 POSIX</span><br><span class="line">ok       1.29 Params::Validate</span><br><span class="line">ok       1.69 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">ok       2.84 SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">ok     1.6611 Statistics::Basic</span><br><span class="line">ok       2.62 Storable</span><br><span class="line">ok       1.20 Sys::Hostname</span><br><span class="line">ok       2.03 Text::Balanced</span><br><span class="line">ok       0.59 Text::Format</span><br><span class="line">ok     1.9741 Time::HiRes</span><br></pre></td></tr></table></figure>
 <p>再以 circos 自带的案例做画图测试。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;circos.ca&#x2F;distribution&#x2F;circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">cd circos-0.69-9</span><br><span class="line">cd example</span><br><span class="line"># 在 example 目录下有名为 run 的脚本：..&#x2F;bin&#x2F;circos -conf etc&#x2F;circos.conf -debug_group summary,timer &gt; run.out</span><br><span class="line"># 由于我调用的是 anaconda3 里面的 circos，所以用下面的命令，几秒钟即可运行完毕，顺利得到 circos.svg &amp; circos.png 图。</span><br><span class="line">circos -conf etc&#x2F;circos.conf -debug_group summary,timer &gt; run.out</span><br></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/ZkOgjPN.jpg" alt="example/circos.png"></p>
-<p>注：<br>另一台服务器上，通过 conda 可以安装 circos，但是运行的时候报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos</span><br><span class="line">perl: symbol lookup error: &#x2F;home&#x2F;fenglei&#x2F;perl5&#x2F;lib&#x2F;perl5&#x2F;x86_64-linux-thread-multi&#x2F;auto&#x2F;Clone&#x2F;Clone.so: undefined symbol: Perl_xs_apiversion_bootcheck</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget http://circos.ca/distribution/circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">cd circos-0.69-9</span><br><span class="line">cd example</span><br><span class="line"># 在 example 目录下有名为 run 的脚本：../bin/circos -conf etc/circos.conf -debug_group summary,timer &gt; run.out</span><br><span class="line"># 由于我调用的是 anaconda3 里面的 circos，所以用下面的命令，几秒钟即可运行完毕，顺利得到 circos.svg &amp; circos.png 图。</span><br><span class="line">circos -conf etc/circos.conf -debug_group summary,timer &gt; run.out</span><br></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/ZkOgjPN.jpg" alt="example/circos.png" /></p>
+<p>注：<br />
+另一台服务器上，通过 conda 可以安装 circos，但是运行的时候报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos</span><br><span class="line">perl: symbol lookup error: /home/fenglei/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Clone/Clone.so: undefined symbol: Perl_xs_apiversion_bootcheck</span><br></pre></td></tr></table></figure>
 <p>看来是 Perl 环境变量的问题。</p>
 <p>Circos 的文件结构如下图所示，conf 文件即图片属性设置，txt 文件就是统计数据，circos 将二者的结合就是图片。</p>
-<p><img src="http://qiubio.com/wp-content/uploads/2011/11/circos-architecture.png"></p>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/06/02/Bioinfo-Installation-of-OrthoMCL-pipeline/">Bioinfo | Installation of OrthoMCL-pipeline</a><a class="next" href="/2021/04/23/Bioinfo-Repeat-sequence-analysis-by-RepeatExplorer2-with-TAREAN-Tandem-Repeat-Analyzer/">Bioinfo | Repeat sequence analysis by RepeatExplorer2 with TAREAN (Tandem Repeat Analyzer)</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p><img src="http://qiubio.com/wp-content/uploads/2011/11/circos-architecture.png" alt="" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/23/Bioinfo-Repeat-sequence-analysis-by-RepeatExplorer2-with-TAREAN-Tandem-Repeat-Analyzer/" rel="prev" title="Bioinfo | Repeat sequence analysis by RepeatExplorer2 with TAREAN (Tandem Repeat Analyzer)">
+      <i class="fa fa-chevron-left"></i> Bioinfo | Repeat sequence analysis by RepeatExplorer2 with TAREAN (Tandem Repeat Analyzer)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/02/Bioinfo-Installation-of-OrthoMCL-pipeline/" rel="next" title="Bioinfo | Installation of OrthoMCL-pipeline">
+      Bioinfo | Installation of OrthoMCL-pipeline <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#installing-perl-modules"><span class="nav-number">1.</span> <span class="nav-text"> Installing Perl modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#installing-libpng-freetype-libgd-and-gd"><span class="nav-number">2.</span> <span class="nav-text"> INSTALLING libpng, freetype, libgd AND gd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8A%E5%81%9A%E5%AE%8C%E4%BE%9D%E7%84%B6%E6%8A%A5%E9%94%99"><span class="nav-number">3.</span> <span class="nav-text"> 以上做完依然报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-conda-%E5%AE%89%E8%A3%85-circos"><span class="nav-number">4.</span> <span class="nav-text"> 使用 conda 安装 circos</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

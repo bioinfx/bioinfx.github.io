@@ -1,4 +1,263 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>进化树的构建 | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">进化树的构建</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">进化树的构建</h1><div class="post-meta">2015-11-19<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a><a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></span></div><div class="post-content"><p>一、序列收集</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、序列收集  核酸序列与蛋白序列均可。寻找同源序列可以用NCBI的blast工具。随后保存为fasta格式。使用Editplus对序列文件编辑，将基因名称同修改为统一格式，去掉不必要的字符。  二、序列比对  使用Clustalx导入上述fasta格式文件。如果遇到打不开的问题，可能是文件存储路径有中文或空格，注意改正。比对之后另存为新的fasta文件。改文件将包含许多“-”，使各个基因的保守序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进化树的构建">
+<meta property="og:url" content="http://example.com/2015/11/19/%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="一、序列收集  核酸序列与蛋白序列均可。寻找同源序列可以用NCBI的blast工具。随后保存为fasta格式。使用Editplus对序列文件编辑，将基因名称同修改为统一格式，去掉不必要的字符。  二、序列比对  使用Clustalx导入上述fasta格式文件。如果遇到打不开的问题，可能是文件存储路径有中文或空格，注意改正。比对之后另存为新的fasta文件。改文件将包含许多“-”，使各个基因的保守序">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://wumii-cc.wumii.cn/site_images/ti/6SPXZBmv.png?i=IkN1cfoI">
+<meta property="og:image" content="http://wumii-cc.wumii.cn/site_images/ti/fO86xoNB.png?i=EBRfYZCy">
+<meta property="og:image" content="http://wumii-cc.wumii.cn/resources/images/related_item_default/21.jpg">
+<meta property="og:image" content="http://wumii-cc.wumii.cn/site_images/ti/cUtaNae8.jpg?i=tYpYK9hP">
+<meta property="og:image" content="http://wumii-cc.wumii.cn/resources/images/related_item_default/56.jpg">
+<meta property="article:published_time" content="2015-11-19T09:08:21.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.007Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://wumii-cc.wumii.cn/site_images/ti/6SPXZBmv.png?i=IkN1cfoI">
+
+<link rel="canonical" href="http://example.com/2015/11/19/%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>进化树的构建 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/19/%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          进化树的构建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-11-19 17:08:21" itemprop="dateCreated datePublished" datetime="2015-11-19T17:08:21+08:00">2015-11-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一、序列收集</p>
 <blockquote>
 <p>核酸序列与蛋白序列均可。寻找同源序列可以用NCBI的blast工具。随后保存为fasta格式。使用Editplus对序列文件编辑，将基因名称同修改为统一格式，去掉不必要的字符。</p>
 </blockquote>
@@ -14,45 +273,252 @@
 <blockquote>
 <p>然后在Mega软件主界面点击“Phylogeny”图表，选择构建进化树的类型，比如Maxmium Likelihood还是Neighbor-Joining；并且记得勾选bootstrap选项。 参考资料：<a target="_blank" rel="noopener" href="http://liucheng.name/603/">http://liucheng.name/603/</a></p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 <p>参考资料： <a target="_blank" rel="noopener" href="http://abc.cbi.pku.edu.cn/talk/phylogeny-huang-by.pdf">http://abc.cbi.pku.edu.cn/talk/phylogeny-huang-by.pdf</a> ========================================================= 参考资料：<a target="_blank" rel="noopener" href="http://liucheng.name/577/">http://liucheng.name/577/</a> 柳城：</p>
-<h1 id="系统进化树构建及数据分析的简介"><a href="#系统进化树构建及数据分析的简介" class="headerlink" title="系统进化树构建及数据分析的简介"></a>系统进化树构建及数据分析的简介</h1><h2 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h2><p>开始动笔写这篇短文之前，我问自己，为什么要写这样的文章？写这样的文章有实际的意义吗？我希望能够解决什么样的问题？带着这样的疑惑，我随手在丁香园（DXY）上以关键字“进化 分析 求助”进行了搜索，居然有289篇相关的帖子（2006年9月12日）。而以关键字“进化分析”和“进化”为关键字搜索，分别找到2,733和7,724篇相关的帖子。考虑到有些帖子的内容与分子进化无关，这里我保守的估计，大约有 3,000~4,000篇帖子的内容，是关于分子进化的。粗略地归纳一下，我大致将提出的问题分为下述的几类：</p>
-<h3 id="1．涉及基本概念"><a href="#1．涉及基本概念" class="headerlink" title="1．涉及基本概念"></a>1．涉及基本概念</h3><p>例如，“分子进化与生物进化是不是一个概念”，“关于微卫星进化模型有没有什么新的进展”以及“关于Kruglyak的模型有没有改进的出现”，等等。</p>
-<h3 id="2．关于构建进化树的方法的选择"><a href="#2．关于构建进化树的方法的选择" class="headerlink" title="2．关于构建进化树的方法的选择"></a>2．关于构建进化树的方法的选择</h3><p>例如，“用boostrap NJ得到XX图，请问该怎样理解？能否应用于文章？用boostrap test中的ME法得到的是XXX树，请问与上个树比，哪个更好”，等等。</p>
-<h3 id="3．关于软件的选择"><a href="#3．关于软件的选择" class="headerlink" title="3．关于软件的选择"></a>3．关于软件的选择</h3><p>例如，“想做一个进化树，不知道什么软件能更好的使用且可以说明问题，并且有没有说明如何做”，“拿到了16sr RNA数据，打算做一个<a target="_blank" rel="noopener" href="http://liucheng.name/tag/%e7%b3%bb%e7%bb%9f%e8%bf%9b%e5%8c%96%e6%a0%91/" title="View all posts in 系统进化树">系统进化树</a>分析，可是原来没有做过这方面的工作啊，都要什么软件”，“请问各位高手用clustalx做出来的进化树与 phylip做的有什么区别”，“请问有做过进化树分析的朋友，能不能提供一下，做树的时候参数的设置，以及代表的意思。还有各个分支等数值的意思，说明的问题等”，等等。</p>
-<h3 id="4．蛋白家族的分类问题"><a href="#4．蛋白家族的分类问题" class="headerlink" title="4．蛋白家族的分类问题"></a>4．蛋白家族的分类问题</h3><p>例如，“搜集所有的关于一个特定domain的序列，共141条，做的进化树不知具体怎么分析”，等等。</p>
-<h3 id="5．新基因功能的推断"><a href="#5．新基因功能的推断" class="headerlink" title="5．新基因功能的推断"></a>5．新基因功能的推断</h3><p>例如，“根据一个新基因A氨基酸序列构建的系统发生树，这个进化树能否说明这个新基因A和B同源，属于同一基因家族”，等等。</p>
-<h3 id="6．计算基因分化的年代"><a href="#6．计算基因分化的年代" class="headerlink" title="6．计算基因分化的年代"></a>6．计算基因分化的年代</h3><p>例如，“想在基因组水平比较两个或三个比较接近物种之间的进化年代的远近，具体推算出他们之间的分歧时间”，“如何估计病毒进化中变异所需时间”，等等。</p>
-<h3 id="7．进化树的编辑"><a href="#7．进化树的编辑" class="headerlink" title="7．进化树的编辑"></a>7．进化树的编辑</h3><p>例如生成的进化树图片，如何进行后续的编辑，比如希望在图片上标注某些特定的内容，等等。 由于相关的帖子太多，作者在这里对无法阅读全部的相关内容而致以歉意。同时，作者归纳的这七个问题也并不完全代表所有的提问。对于问题1所涉及到的基本的概念，作者推荐读者可参考由Masatoshi Nei与Sudhir Kumar所撰写的《分子进化与系统发育》（Molecular Evolution and Phylogenetics）一书，以及相关的分子进化方面的最新文献。对于问题7，作者之一lylover一般使用Powerpoint进行编辑，而 Photoshop、Illustrator及Windows自带的画图工具等都可以使用。 这里，作者在这里对问题2-6进行简要地解释和讨论，并希望能够初步地解答初学者的一些疑问。</p>
-<h2 id="二、方法的选择"><a href="#二、方法的选择" class="headerlink" title="二、方法的选择"></a>二、方法的选择</h2><p>首先是方法的选择。基于距离的方法有UPGMA、ME（Minimum Evolution，最小进化法）和NJ（Neighbor-Joining，邻接法）等。其他的几种方法包括MP（Maximum parsimony，最大简约法）、ML（Maximum likelihood，最大似然法）以及贝叶斯（Bayesian）推断等方法。其中UPGMA法已经较少使用。 一般来讲，如果模型合适，ML的效果较好。对近缘序列，有人喜欢MP，因为用的假设最少。MP一般不用在远缘序列上，这时一般用NJ或ML。对相似度很低的序列，NJ往往出现Long-branch attraction（LBA，长枝吸引现象），有时严重干扰进化树的构建。贝叶斯的方法则太慢。对于各种方法构建<a target="_blank" rel="noopener" href="http://liucheng.name/tag/%e5%88%86%e5%ad%90%e8%bf%9b%e5%8c%96%e6%a0%91/" title="View all posts in 分子进化树">分子进化树</a>的准确性，一篇综述（Hall BG. Mol Biol Evol 2005, 22(3):792-802）认为贝叶斯的方法最好，其次是ML，然后是MP。其实如果序列的相似性较高，各种方法都会得到不错的结果，模型间的差别也不大。 对于NJ和ML，是需要选择模型的。对于各种模型之间的理论上的区别，这里不作深入的探讨，可以参看Nei的书。对于蛋白质序列以及DNA序列，两者模型的选择是不同的。以作者的经验来说，对于蛋白质的序列，一般选择Poisson Correction（泊松修正）这一模型。而对于核酸序列，一般选择Kimura 2-parameter（Kimura-2参数）模型。如果对各种模型的理解并不深入，作者并不推荐初学者使用其他复杂的模型。 Bootstrap几乎是一个必须的选项。一般Bootstrap的值&gt;70，则认为构建的进化树较为可靠。如果Bootstrap的值太低，则有可能进化树的拓扑结构有错误，进化树是不可靠的。 对于进化树的构建，如果对理论的了解并不深入，作者推荐使用缺省的参数。需要选择模型的时候（例如用NJ或者ML建树），对于蛋白序列使用Poisson Correction模型，对于核酸序列使用Kimura-2参数模型。另外需要做Bootstrap检验，当Bootstrap值过低时，所构建的进化树其拓扑结构可能存在问题。并且，一般推荐用两种不同的方法构建进化树，如果所得到的进化树类似，则结果较为可靠。</p>
-<h2 id="三、软件的选择"><a href="#三、软件的选择" class="headerlink" title="三、软件的选择"></a>三、软件的选择</h2><p>表1中列出了一些与构建分子进化树相关的软件。 构建NJ树，可以用PHYLIP（写得有点问题，例如比较慢，并且Bootstrap检验不方便）或者MEGA。MEGA是Nei开发的方法并设计的图形化的软件，使用非常方便。作者推荐MEGA软件为初学者的首选。虽然多雪列比对工具ClustalW/X自带了一个NJ的建树程序，但是该程序只有p- distance模型，而且构建的树不够准确，一般不用来构建进化树。 构建MP树，最好的工具是PAUP，但该程序属于商业软件，并不对学术免费。因此，作者并不建议使用PAUP。而MEGA和PHYLIP也可以用来构建进化树。这里，作者推荐使用MEGA来构建MP树。理由是，MEGA是图形化的软件，使用方便，而PHYLIP则是命令行格式的软件，使用较为繁琐。对于近缘序列的进化树构建，MP方法几乎是最好的。 构建ML树可以使用PHYML，速度最快。或者使用Tree-puzzle，速度也较快，并且该程序做蛋白质序列的进化树效果比较好。而PAML则并不适合构建进化树。ML的模型选择是看构出的树的likelihood值，从参数少，简单的模型试起，到likelihood值最大为止。ML也可以使用 PAUP或者PHYLIP来构建。这里作者推荐的工具是BioEdit。BioEdit集成了一些PHYLIP的程序，用来构建进化树。Tree- puzzle是另外一个不错的选择，不过该程序是命令行格式的，需要学习DOS命令。PHYML的不足之处是没有win32的版本，只有适用于64位的版本，因此不推荐使用。值得注意的是，构建ML树，不需要事先的多序列比对，而直接使用FASTA格式的序列即可。 贝叶斯的算法以MrBayes为代表，不过速度较慢。一般的进化树分析中较少应用。由于该方法需要很多背景的知识，这里不作介绍。 <strong>表1 构建分子进化树相关的软件</strong> 软件        网址        说明 ClustalX        <a target="_blank" rel="noopener" href="http://bips.u-strasbg.fr/fr/Documentation/ClustalX/">http://bips.u-strasbg.fr/fr/Documentation/ClustalX/</a>                                  图形化的多序列比对工具 ClustalW        <a target="_blank" rel="noopener" href="http://www.cf.ac.uk/biosi/research/biosoft/Downloads/clustalw.html">http://www.cf.ac.uk/biosi/resear … loads/clustalw.html</a>        命令行格式的多序列比对工具 GeneDoc        <a target="_blank" rel="noopener" href="http://www.psc.edu/biomed/genedoc/">http://www.psc.edu/biomed/genedoc/</a>                                              多序列比对结果的美化工具（可以导入fasta格式的文件，出来的图可用于发表，我用过） BioEdit        <a target="_blank" rel="noopener" href="http://www.mbio.ncsu.edu/BioEdit/bioedit.html">http://www.mbio.ncsu.edu/BioEdit/bioedit.html</a>                                     序列分析的综合工具 MEGA        <a target="_blank" rel="noopener" href="http://www.megasoftware.net/">http://www.megasoftware.net/</a>                                                            图形化、集成的进化分析工具，不包括ML PAUP        <a target="_blank" rel="noopener" href="http://paup.csit.fsu.edu/">http://paup.csit.fsu.edu/</a>                                                                       商业软件，集成的进化分析工具 PHYLIP        <a target="_blank" rel="noopener" href="http://evolution.genetics.washington.edu/phylip.html">http://evolution.genetics.washington.edu/phylip.html</a>                             免费的、集成的进化分析工具 PHYML        <a target="_blank" rel="noopener" href="http://atgc.lirmm.fr/phyml/">http://atgc.lirmm.fr/phyml/</a>                                                                  最快的ML建树工具 PAML        <a target="_blank" rel="noopener" href="http://abacus.gene.ucl.ac.uk/software/paml.html">http://abacus.gene.ucl.ac.uk/software/paml.html</a>                                      ML建树工具 Tree-puzzle        <a target="_blank" rel="noopener" href="http://www.tree-puzzle.de/">http://www.tree-puzzle.de/</a>                                                          较快的ML建树工具 MrBayes        <a target="_blank" rel="noopener" href="http://mrbayes.csit.fsu.edu/">http://mrbayes.csit.fsu.edu/</a>                                                              基于贝叶斯方法的建树工具 MAC5        <a target="_blank" rel="noopener" href="http://www.agapow.net/software/mac5/">http://www.agapow.net/software/mac5/</a>                                              基于贝叶斯方法的建树工具 TreeView        <a target="_blank" rel="noopener" href="http://taxonomy.zoology.gla.ac.uk/rod/treeview.html">http://taxonomy.zoology.gla.ac.uk/rod/treeview.html</a>                          进化树显示工具 （加红色标注的为最通用的分析软件） 需要注意的几个问题是，其一，如果对核酸序列进行分析，并且是CDS编码区的核酸序列，一般需要将核酸序列分别先翻译成氨基酸序列，进行比对，然后再对应到核酸序列上。这一流程可以通过MEGA 3.0以后的版本实现。MEGA3现在允许两条核苷酸，先翻成蛋白序列比对之后再倒回去，做后续计算。 其二，无论是核酸序列还是蛋白序列，一般应当先做成 FASTA格式。FASTA格式的序列，第一行由符号“&gt;”开头，后面跟着序列的名称，可以自定义，例如user1，protein1等等。将所有的FASTA格式的序列存放在同一个文件中。文件的编辑可用Windows自带的记事本工具，或者EditPlus（google搜索可得）来操作。 另外，构建NJ或者MP树需要先将序列做多序列比对的处理。作者推荐使用ClustalX进行多序列比对的分析。多序列比对的结果有时需要后续处理并应用于文章中，这里作者推荐使用GeneDoc工具。而构建ML树则不需要预先的多序列比对。 因此，作者推荐的软件组合为：MEGA + ClustalX + GeneDoc + BioEdit。</p>
-<h2 id="四、数据分析及结果推断"><a href="#四、数据分析及结果推断" class="headerlink" title="四、数据分析及结果推断"></a>四、数据分析及结果推断</h2><p>一般碰到的几类问题是，（1）推断基因/蛋白的功能；（2）基因/蛋白家族分类；（3）计算基因分化的年代。关于这方面的文献非常多，这里作者仅做简要的介绍。 推断基因/蛋白的功能，一般先用BLAST工具搜索同一物种中与不同物种的同源序列，这包括直向同源物（ortholog）和旁系同源物（paralog）。如何界定这两种同源物，网上有很多详细的介绍，这里不作讨论。然后得到这些同源物的序列，做成FASTA格式的文件。一般通过NJ构建进化树，并且进行Bootstrap分析所得到的结果已足够。如果序列近缘，可以再使用MP构建进化树，进行比较。如果序列较远源，则可以做ML树比较。使用两种方法得到的树，如果差别不大，并且Bootstrap总体较高，则得到的进化树较为可靠。 基因/蛋白家族分类。这方面可以细分为两个问题。一是对一个大的家族进行分类，另一个就是将特定的一个或多个基因/蛋白定位到已知的大的家族上，看看属于哪个亚家族。例如，对驱动蛋白（kinesin）超家族进行分类，属于第一个问题。而假如得到一个新的驱动蛋白的序列，想分析该序列究竟属于驱动蛋白超家族的14个亚家族中的哪一个，则属于后一个问题。这里，一般不推荐使用MP的方法。大多数的基因/蛋白家族起源较早，序列分化程度较大，相互之间较为远源。这里一般使用NJ、ME或者ML的方法。 计算基因分化的年代。这个一般需要知道物种的核苷酸替代率。常见物种的核苷酸替代率需要查找相关的文献。这里不作过多的介绍。一般对于这样的问题，序列多数是近缘的，选择NJ或者MP即可。 如果使用MEGA进行分析，选项中有一项是“Gaps/Missing Data”，一般选择“Pairwise Deletion”。其他多数的选项保持缺省的参数。</p>
-<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>在实用中，只要方法、模型合理，建出的树都有意义，可以任意选择自己认为好一个。最重要的问题是：你需要解决什么样的问题？如果分析的结果能够解决你现有的问题，那么，这样的分析足够了。因此，在做进化分析前，可能需要很好的考虑一下自己的问题所在，这样所作的分析才有针对性。 六、致谢 本文由mediocrebeing在2005年9月8日所发起的讨论《关于建树的经验》扩充、修改而来。文章的作者按原贴ID出现先后排名，由 lylover执笔。作者同时感谢所有参与讨论的战友。作者lylover感谢中国科大细胞动力学实验室的金长江博士所给的一些有益的建议。 来源:丁香园(mediocrebeing, rodger, lylover , klaus, oldfish, yzwpf)</p>
+<h1 id="系统进化树构建及数据分析的简介"><a class="markdownIt-Anchor" href="#系统进化树构建及数据分析的简介"></a> 系统进化树构建及数据分析的简介</h1>
+<h2 id="一-引言"><a class="markdownIt-Anchor" href="#一-引言"></a> 一、引言</h2>
+<p>开始动笔写这篇短文之前，我问自己，为什么要写这样的文章？写这样的文章有实际的意义吗？我希望能够解决什么样的问题？带着这样的疑惑，我随手在丁香园（DXY）上以关键字“进化 分析 求助”进行了搜索，居然有289篇相关的帖子（2006年9月12日）。而以关键字“进化分析”和“进化”为关键字搜索，分别找到2,733和7,724篇相关的帖子。考虑到有些帖子的内容与分子进化无关，这里我保守的估计，大约有 3,000~4,000篇帖子的内容，是关于分子进化的。粗略地归纳一下，我大致将提出的问题分为下述的几类：</p>
+<h3 id="1涉及基本概念"><a class="markdownIt-Anchor" href="#1涉及基本概念"></a> 1．涉及基本概念</h3>
+<p>例如，“分子进化与生物进化是不是一个概念”，“关于微卫星进化模型有没有什么新的进展”以及“关于Kruglyak的模型有没有改进的出现”，等等。</p>
+<h3 id="2关于构建进化树的方法的选择"><a class="markdownIt-Anchor" href="#2关于构建进化树的方法的选择"></a> 2．关于构建进化树的方法的选择</h3>
+<p>例如，“用boostrap NJ得到XX图，请问该怎样理解？能否应用于文章？用boostrap test中的ME法得到的是XXX树，请问与上个树比，哪个更好”，等等。</p>
+<h3 id="3关于软件的选择"><a class="markdownIt-Anchor" href="#3关于软件的选择"></a> 3．关于软件的选择</h3>
+<p>例如，“想做一个进化树，不知道什么软件能更好的使用且可以说明问题，并且有没有说明如何做”，“拿到了16sr RNA数据，打算做一个<a target="_blank" rel="noopener" href="http://liucheng.name/tag/%e7%b3%bb%e7%bb%9f%e8%bf%9b%e5%8c%96%e6%a0%91/" title="View all posts in 系统进化树">系统进化树</a>分析，可是原来没有做过这方面的工作啊，都要什么软件”，“请问各位高手用clustalx做出来的进化树与 phylip做的有什么区别”，“请问有做过进化树分析的朋友，能不能提供一下，做树的时候参数的设置，以及代表的意思。还有各个分支等数值的意思，说明的问题等”，等等。</p>
+<h3 id="4蛋白家族的分类问题"><a class="markdownIt-Anchor" href="#4蛋白家族的分类问题"></a> 4．蛋白家族的分类问题</h3>
+<p>例如，“搜集所有的关于一个特定domain的序列，共141条，做的进化树不知具体怎么分析”，等等。</p>
+<h3 id="5新基因功能的推断"><a class="markdownIt-Anchor" href="#5新基因功能的推断"></a> 5．新基因功能的推断</h3>
+<p>例如，“根据一个新基因A氨基酸序列构建的系统发生树，这个进化树能否说明这个新基因A和B同源，属于同一基因家族”，等等。</p>
+<h3 id="6计算基因分化的年代"><a class="markdownIt-Anchor" href="#6计算基因分化的年代"></a> 6．计算基因分化的年代</h3>
+<p>例如，“想在基因组水平比较两个或三个比较接近物种之间的进化年代的远近，具体推算出他们之间的分歧时间”，“如何估计病毒进化中变异所需时间”，等等。</p>
+<h3 id="7进化树的编辑"><a class="markdownIt-Anchor" href="#7进化树的编辑"></a> 7．进化树的编辑</h3>
+<p>例如生成的进化树图片，如何进行后续的编辑，比如希望在图片上标注某些特定的内容，等等。 由于相关的帖子太多，作者在这里对无法阅读全部的相关内容而致以歉意。同时，作者归纳的这七个问题也并不完全代表所有的提问。对于问题1所涉及到的基本的概念，作者推荐读者可参考由Masatoshi Nei与Sudhir Kumar所撰写的《分子进化与系统发育》（Molecular Evolution and Phylogenetics）一书，以及相关的分子进化方面的最新文献。对于问题7，作者之一lylover一般使用Powerpoint进行编辑，而 Photoshop、Illustrator及Windows自带的画图工具等都可以使用。 这里，作者在这里对问题2-6进行简要地解释和讨论，并希望能够初步地解答初学者的一些疑问。</p>
+<h2 id="二-方法的选择"><a class="markdownIt-Anchor" href="#二-方法的选择"></a> 二、方法的选择</h2>
+<p>首先是方法的选择。基于距离的方法有UPGMA、ME（Minimum Evolution，最小进化法）和NJ（Neighbor-Joining，邻接法）等。其他的几种方法包括MP（Maximum parsimony，最大简约法）、ML（Maximum likelihood，最大似然法）以及贝叶斯（Bayesian）推断等方法。其中UPGMA法已经较少使用。 一般来讲，如果模型合适，ML的效果较好。对近缘序列，有人喜欢MP，因为用的假设最少。MP一般不用在远缘序列上，这时一般用NJ或ML。对相似度很低的序列，NJ往往出现Long-branch attraction（LBA，长枝吸引现象），有时严重干扰进化树的构建。贝叶斯的方法则太慢。对于各种方法构建<a target="_blank" rel="noopener" href="http://liucheng.name/tag/%e5%88%86%e5%ad%90%e8%bf%9b%e5%8c%96%e6%a0%91/" title="View all posts in 分子进化树">分子进化树</a>的准确性，一篇综述（Hall BG. Mol Biol Evol 2005, 22(3):792-802）认为贝叶斯的方法最好，其次是ML，然后是MP。其实如果序列的相似性较高，各种方法都会得到不错的结果，模型间的差别也不大。 对于NJ和ML，是需要选择模型的。对于各种模型之间的理论上的区别，这里不作深入的探讨，可以参看Nei的书。对于蛋白质序列以及DNA序列，两者模型的选择是不同的。以作者的经验来说，对于蛋白质的序列，一般选择Poisson Correction（泊松修正）这一模型。而对于核酸序列，一般选择Kimura 2-parameter（Kimura-2参数）模型。如果对各种模型的理解并不深入，作者并不推荐初学者使用其他复杂的模型。 Bootstrap几乎是一个必须的选项。一般Bootstrap的值&gt;70，则认为构建的进化树较为可靠。如果Bootstrap的值太低，则有可能进化树的拓扑结构有错误，进化树是不可靠的。 对于进化树的构建，如果对理论的了解并不深入，作者推荐使用缺省的参数。需要选择模型的时候（例如用NJ或者ML建树），对于蛋白序列使用Poisson Correction模型，对于核酸序列使用Kimura-2参数模型。另外需要做Bootstrap检验，当Bootstrap值过低时，所构建的进化树其拓扑结构可能存在问题。并且，一般推荐用两种不同的方法构建进化树，如果所得到的进化树类似，则结果较为可靠。</p>
+<h2 id="三-软件的选择"><a class="markdownIt-Anchor" href="#三-软件的选择"></a> 三、软件的选择</h2>
+<p>表1中列出了一些与构建分子进化树相关的软件。 构建NJ树，可以用PHYLIP（写得有点问题，例如比较慢，并且Bootstrap检验不方便）或者MEGA。MEGA是Nei开发的方法并设计的图形化的软件，使用非常方便。作者推荐MEGA软件为初学者的首选。虽然多雪列比对工具ClustalW/X自带了一个NJ的建树程序，但是该程序只有p- distance模型，而且构建的树不够准确，一般不用来构建进化树。 构建MP树，最好的工具是PAUP，但该程序属于商业软件，并不对学术免费。因此，作者并不建议使用PAUP。而MEGA和PHYLIP也可以用来构建进化树。这里，作者推荐使用MEGA来构建MP树。理由是，MEGA是图形化的软件，使用方便，而PHYLIP则是命令行格式的软件，使用较为繁琐。对于近缘序列的进化树构建，MP方法几乎是最好的。 构建ML树可以使用PHYML，速度最快。或者使用Tree-puzzle，速度也较快，并且该程序做蛋白质序列的进化树效果比较好。而PAML则并不适合构建进化树。ML的模型选择是看构出的树的likelihood值，从参数少，简单的模型试起，到likelihood值最大为止。ML也可以使用 PAUP或者PHYLIP来构建。这里作者推荐的工具是BioEdit。BioEdit集成了一些PHYLIP的程序，用来构建进化树。Tree- puzzle是另外一个不错的选择，不过该程序是命令行格式的，需要学习DOS命令。PHYML的不足之处是没有win32的版本，只有适用于64位的版本，因此不推荐使用。值得注意的是，构建ML树，不需要事先的多序列比对，而直接使用FASTA格式的序列即可。 贝叶斯的算法以MrBayes为代表，不过速度较慢。一般的进化树分析中较少应用。由于该方法需要很多背景的知识，这里不作介绍。 <strong>表1 构建分子进化树相关的软件</strong> 软件        网址        说明 ClustalX        <a target="_blank" rel="noopener" href="http://bips.u-strasbg.fr/fr/Documentation/ClustalX/">http://bips.u-strasbg.fr/fr/Documentation/ClustalX/</a>                                  图形化的多序列比对工具 ClustalW        <a target="_blank" rel="noopener" href="http://www.cf.ac.uk/biosi/research/biosoft/Downloads/clustalw.html">http://www.cf.ac.uk/biosi/resear … loads/clustalw.html</a>        命令行格式的多序列比对工具 GeneDoc        <a target="_blank" rel="noopener" href="http://www.psc.edu/biomed/genedoc/">http://www.psc.edu/biomed/genedoc/</a>                                              多序列比对结果的美化工具（可以导入fasta格式的文件，出来的图可用于发表，我用过） BioEdit        <a target="_blank" rel="noopener" href="http://www.mbio.ncsu.edu/BioEdit/bioedit.html">http://www.mbio.ncsu.edu/BioEdit/bioedit.html</a>                                     序列分析的综合工具 MEGA        <a target="_blank" rel="noopener" href="http://www.megasoftware.net/">http://www.megasoftware.net/</a>                                                            图形化、集成的进化分析工具，不包括ML PAUP        <a target="_blank" rel="noopener" href="http://paup.csit.fsu.edu/">http://paup.csit.fsu.edu/</a>                                                                       商业软件，集成的进化分析工具 PHYLIP        <a target="_blank" rel="noopener" href="http://evolution.genetics.washington.edu/phylip.html">http://evolution.genetics.washington.edu/phylip.html</a>                             免费的、集成的进化分析工具 PHYML        <a target="_blank" rel="noopener" href="http://atgc.lirmm.fr/phyml/">http://atgc.lirmm.fr/phyml/</a>                                                                  最快的ML建树工具 PAML        <a target="_blank" rel="noopener" href="http://abacus.gene.ucl.ac.uk/software/paml.html">http://abacus.gene.ucl.ac.uk/software/paml.html</a>                                      ML建树工具 Tree-puzzle        <a target="_blank" rel="noopener" href="http://www.tree-puzzle.de/">http://www.tree-puzzle.de/</a>                                                          较快的ML建树工具 MrBayes        <a target="_blank" rel="noopener" href="http://mrbayes.csit.fsu.edu/">http://mrbayes.csit.fsu.edu/</a>                                                              基于贝叶斯方法的建树工具 MAC5        <a target="_blank" rel="noopener" href="http://www.agapow.net/software/mac5/">http://www.agapow.net/software/mac5/</a>                                              基于贝叶斯方法的建树工具 TreeView        <a target="_blank" rel="noopener" href="http://taxonomy.zoology.gla.ac.uk/rod/treeview.html">http://taxonomy.zoology.gla.ac.uk/rod/treeview.html</a>                          进化树显示工具 （加红色标注的为最通用的分析软件） 需要注意的几个问题是，其一，如果对核酸序列进行分析，并且是CDS编码区的核酸序列，一般需要将核酸序列分别先翻译成氨基酸序列，进行比对，然后再对应到核酸序列上。这一流程可以通过MEGA 3.0以后的版本实现。MEGA3现在允许两条核苷酸，先翻成蛋白序列比对之后再倒回去，做后续计算。 其二，无论是核酸序列还是蛋白序列，一般应当先做成 FASTA格式。FASTA格式的序列，第一行由符号“&gt;”开头，后面跟着序列的名称，可以自定义，例如user1，protein1等等。将所有的FASTA格式的序列存放在同一个文件中。文件的编辑可用Windows自带的记事本工具，或者EditPlus（google搜索可得）来操作。 另外，构建NJ或者MP树需要先将序列做多序列比对的处理。作者推荐使用ClustalX进行多序列比对的分析。多序列比对的结果有时需要后续处理并应用于文章中，这里作者推荐使用GeneDoc工具。而构建ML树则不需要预先的多序列比对。 因此，作者推荐的软件组合为：MEGA + ClustalX + GeneDoc + BioEdit。</p>
+<h2 id="四-数据分析及结果推断"><a class="markdownIt-Anchor" href="#四-数据分析及结果推断"></a> 四、数据分析及结果推断</h2>
+<p>一般碰到的几类问题是，（1）推断基因/蛋白的功能；（2）基因/蛋白家族分类；（3）计算基因分化的年代。关于这方面的文献非常多，这里作者仅做简要的介绍。 推断基因/蛋白的功能，一般先用BLAST工具搜索同一物种中与不同物种的同源序列，这包括直向同源物（ortholog）和旁系同源物（paralog）。如何界定这两种同源物，网上有很多详细的介绍，这里不作讨论。然后得到这些同源物的序列，做成FASTA格式的文件。一般通过NJ构建进化树，并且进行Bootstrap分析所得到的结果已足够。如果序列近缘，可以再使用MP构建进化树，进行比较。如果序列较远源，则可以做ML树比较。使用两种方法得到的树，如果差别不大，并且Bootstrap总体较高，则得到的进化树较为可靠。 基因/蛋白家族分类。这方面可以细分为两个问题。一是对一个大的家族进行分类，另一个就是将特定的一个或多个基因/蛋白定位到已知的大的家族上，看看属于哪个亚家族。例如，对驱动蛋白（kinesin）超家族进行分类，属于第一个问题。而假如得到一个新的驱动蛋白的序列，想分析该序列究竟属于驱动蛋白超家族的14个亚家族中的哪一个，则属于后一个问题。这里，一般不推荐使用MP的方法。大多数的基因/蛋白家族起源较早，序列分化程度较大，相互之间较为远源。这里一般使用NJ、ME或者ML的方法。 计算基因分化的年代。这个一般需要知道物种的核苷酸替代率。常见物种的核苷酸替代率需要查找相关的文献。这里不作过多的介绍。一般对于这样的问题，序列多数是近缘的，选择NJ或者MP即可。 如果使用MEGA进行分析，选项中有一项是“Gaps/Missing Data”，一般选择“Pairwise Deletion”。其他多数的选项保持缺省的参数。</p>
+<h2 id="五-总结"><a class="markdownIt-Anchor" href="#五-总结"></a> 五、总结</h2>
+<p>在实用中，只要方法、模型合理，建出的树都有意义，可以任意选择自己认为好一个。最重要的问题是：你需要解决什么样的问题？如果分析的结果能够解决你现有的问题，那么，这样的分析足够了。因此，在做进化分析前，可能需要很好的考虑一下自己的问题所在，这样所作的分析才有针对性。 六、致谢 本文由mediocrebeing在2005年9月8日所发起的讨论《关于建树的经验》扩充、修改而来。文章的作者按原贴ID出现先后排名，由 lylover执笔。作者同时感谢所有参与讨论的战友。作者lylover感谢中国科大细胞动力学实验室的金长江博士所给的一些有益的建议。 来源:丁香园(mediocrebeing, rodger, lylover , klaus, oldfish, yzwpf)</p>
 <p><a target="_blank" rel="noopener" href="http://www.wumii.com/item/dr005pgc">22</a></p>
 <p>无觅猜您也喜欢：</p>
-<p><a target="_blank" rel="noopener" href="http://liucheng.name/603/" title="图文讲解MEGA4.1建进化树步骤"><img src="http://wumii-cc.wumii.cn/site_images/ti/6SPXZBmv.png?i=IkN1cfoI"></a></p>
+<p><a target="_blank" rel="noopener" href="http://liucheng.name/603/" title="图文讲解MEGA4.1建进化树步骤"><img src="http://wumii-cc.wumii.cn/site_images/ti/6SPXZBmv.png?i=IkN1cfoI" alt="" /></a></p>
 <p>图文讲解MEGA4.1建进化树步骤</p>
-<p><a target="_blank" rel="noopener" href="http://liucheng.name/612/" title="MEGA4的中文使用说明"><img src="http://wumii-cc.wumii.cn/site_images/ti/fO86xoNB.png?i=EBRfYZCy"></a></p>
+<p><a target="_blank" rel="noopener" href="http://liucheng.name/612/" title="MEGA4的中文使用说明"><img src="http://wumii-cc.wumii.cn/site_images/ti/fO86xoNB.png?i=EBRfYZCy" alt="" /></a></p>
 <p>MEGA4的中文使用说明</p>
-<p><a target="_blank" rel="noopener" href="http://liucheng.name/491/" title="phylip软件包建进化树"><img src="http://wumii-cc.wumii.cn/resources/images/related_item_default/21.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="http://liucheng.name/491/" title="phylip软件包建进化树"><img src="http://wumii-cc.wumii.cn/resources/images/related_item_default/21.jpg" alt="" /></a></p>
 <p>phylip软件包建进化树</p>
-<p><a target="_blank" rel="noopener" href="http://liucheng.name/565/" title="COBALT：NCBI在线蛋白多序列比对（比ClustalW还强大的工具）"><img src="http://wumii-cc.wumii.cn/site_images/ti/cUtaNae8.jpg?i=tYpYK9hP"></a></p>
+<p><a target="_blank" rel="noopener" href="http://liucheng.name/565/" title="COBALT：NCBI在线蛋白多序列比对（比ClustalW还强大的工具）"><img src="http://wumii-cc.wumii.cn/site_images/ti/cUtaNae8.jpg?i=tYpYK9hP" alt="" /></a></p>
 <p>COBALT：NCBI在线蛋白多序列比对（比ClustalW还强大的工具）</p>
-<p><a target="_blank" rel="noopener" href="http://liucheng.name/515/" title="【生物信息学教程】5：分子进化"><img src="http://wumii-cc.wumii.cn/resources/images/related_item_default/56.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="http://liucheng.name/515/" title="【生物信息学教程】5：分子进化"><img src="http://wumii-cc.wumii.cn/resources/images/related_item_default/56.jpg" alt="" /></a></p>
 <p>【生物信息学教程】5：分子进化</p>
 <p><a target="_blank" rel="noopener" href="http://www.wumii.com/widget/relatedItems" title="无觅关联推荐">无觅关联推荐[?]</a></p>
-<h3 id="有点相关的文章"><a href="#有点相关的文章" class="headerlink" title="有点相关的文章"></a>有点相关的文章</h3><ul>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/565/">COBALT：NCBI在线蛋白多序列比对（比ClustalW还强大的工具）</a> (1.000)</li>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/603/">图文讲解MEGA4.1建进化树步骤</a> (1.000)</li>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/612/">MEGA4的中文使用说明</a> (1.000)</li>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/329/">LIUCHENG.NAME教程：如何把clusterX的结果转为漂亮的图片</a> (0.537)</li>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/347/">图解：如何在NCBI上找到HNF-4基因第4个外显子的序列</a> (0.537)</li>
-<li>  <a target="_blank" rel="noopener" href="http://liucheng.name/517/">【生物信息学教程】6.2：人类和鼠类公共物理图谱数据库的使用</a> (RANDOM - 0.500)</li>
+<h3 id="有点相关的文章"><a class="markdownIt-Anchor" href="#有点相关的文章"></a> 有点相关的文章</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/565/">COBALT：NCBI在线蛋白多序列比对（比ClustalW还强大的工具）</a> (1.000)</li>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/603/">图文讲解MEGA4.1建进化树步骤</a> (1.000)</li>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/612/">MEGA4的中文使用说明</a> (1.000)</li>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/329/">LIUCHENG.NAME教程：如何把clusterX的结果转为漂亮的图片</a> (0.537)</li>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/347/">图解：如何在NCBI上找到HNF-4基因第4个外显子的序列</a> (0.537)</li>
+<li><a target="_blank" rel="noopener" href="http://liucheng.name/517/">【生物信息学教程】6.2：人类和鼠类公共物理图谱数据库的使用</a> (RANDOM - 0.500)</li>
 </ul>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2015/11/21/%E8%BD%AC%EF%BC%9A%E5%A4%A7%E6%A0%B7%E6%9C%ACrna-seq%E6%95%B0%E6%8D%AE%E7%9A%84%E5%85%B1%E8%A1%A8%E8%BE%BE%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90/">转：大样本RNA-seq数据的共表达网络分析</a><a class="next" href="/2015/11/16/perl%E6%A8%A1%E5%9D%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C%EF%BC%88%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%E3%80%81%E5%88%A0%E9%99%A4%E5%B7%B2%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%EF%BC%89/">perl模块的一些操作（安装模块、删除已安装模块）</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/11/16/perl%E6%A8%A1%E5%9D%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C%EF%BC%88%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%E3%80%81%E5%88%A0%E9%99%A4%E5%B7%B2%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%EF%BC%89/" rel="prev" title="perl模块的一些操作（安装模块、删除已安装模块）">
+      <i class="fa fa-chevron-left"></i> perl模块的一些操作（安装模块、删除已安装模块）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/11/21/Bioinfo-coexpression-network-analysis/" rel="next" title="转：大样本RNA-seq数据的共表达网络分析">
+      转：大样本RNA-seq数据的共表达网络分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%BF%9B%E5%8C%96%E6%A0%91%E6%9E%84%E5%BB%BA%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 系统进化树构建及数据分析的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-%E5%BC%95%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text"> 一、引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E6%B6%89%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.1.</span> <span class="nav-text"> 1．涉及基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E5%85%B3%E4%BA%8E%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.1.2.</span> <span class="nav-text"> 2．关于构建进化树的方法的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.1.3.</span> <span class="nav-text"> 3．关于软件的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E8%9B%8B%E7%99%BD%E5%AE%B6%E6%97%8F%E7%9A%84%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.4.</span> <span class="nav-text"> 4．蛋白家族的分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E6%96%B0%E5%9F%BA%E5%9B%A0%E5%8A%9F%E8%83%BD%E7%9A%84%E6%8E%A8%E6%96%AD"><span class="nav-number">1.1.5.</span> <span class="nav-text"> 5．新基因功能的推断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E8%AE%A1%E7%AE%97%E5%9F%BA%E5%9B%A0%E5%88%86%E5%8C%96%E7%9A%84%E5%B9%B4%E4%BB%A3"><span class="nav-number">1.1.6.</span> <span class="nav-text"> 6．计算基因分化的年代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E7%BC%96%E8%BE%91"><span class="nav-number">1.1.7.</span> <span class="nav-text"> 7．进化树的编辑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-%E6%96%B9%E6%B3%95%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.2.</span> <span class="nav-text"> 二、方法的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-%E8%BD%AF%E4%BB%B6%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.3.</span> <span class="nav-text"> 三、软件的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%8F%8A%E7%BB%93%E6%9E%9C%E6%8E%A8%E6%96%AD"><span class="nav-number">1.4.</span> <span class="nav-text"> 四、数据分析及结果推断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text"> 五、总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E7%82%B9%E7%9B%B8%E5%85%B3%E7%9A%84%E6%96%87%E7%AB%A0"><span class="nav-number">1.5.1.</span> <span class="nav-text"> 有点相关的文章</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

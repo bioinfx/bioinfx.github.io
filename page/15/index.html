@@ -1,21 +1,1251 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2015/03/21/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8Bhisat%E6%AF%94%E5%AF%B9/">转录组数据分析之HISAT比对</a></h1><div class="post-meta">2015-03-21</div><div class="post-content"><p>HISAT全称为Hierarchical Indexing for Spliced Alignment of Transcripts，由约翰霍普金斯大学开发。它取代Bowtie/TopHat程序，能够将RNA-Seq的读取与基因组进行快速比对。这项成果发表在3月9日的《Nature Methods》上。 HISAT利用大量FM索引，以覆盖整个基因组。以人类基因组为例，它需要48,000个索引，每个索引代表~64,000 bp的基因组区域。这些小的索引结合几种比对策略，实现了RNA-Seq读取的高效比对，特别是那些跨越多个外显子的读取。尽管它利用大量索引，但HISAT只需要4.3 GB的内存。这种应用程序支持任何规模的基因组，包括那些超过40亿个碱基的。 第一步：建立数据库索引 命令：hisat-build genome.fa genome 将得到<code>NAME.1.bt2</code>, <code>NAME.2.bt2</code>,<code>NAME.3.bt2</code>, <code>NAME.4.bt2</code>, <code>NAME.5.bt2</code>, <code>NAME.6.bt2</code>, <code>NAME.rev.1.bt2</code>, <code>NAME.rev.2.bt2</code>, <code>NAME.rev.5.bt2</code>, and <code>NAME.rev.6.bt2 这六个文件。</code> 第二步：将转录组数据比对到基因组 命令：hisat -p 8 –phred64 -x genome -1 reads.1.fq.gz -2 reads.2.fq.gz -S out.sam [使用拟南芥转录组数据，该步骤6分钟即可完成，而原来的TopHat需要1小时。] 第三步：将sam转为bam文件，并对bam文件进行排序。 第四部：使用cufflinks进行下游分析。</p></div><p class="readmore"><a href="/2015/03/21/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8Bhisat%E6%AF%94%E5%AF%B9/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2015/02/05/could-not-find-function-sqlitequicksql/">could not find function \&quot;sqliteQuickSQL\&quot;</a></h1><div class="post-meta">2015-02-05</div><div class="post-content"><p>问题描述：转录组测序数据分析，使用cummeRbund的过程中报错： &gt; library(cummeRbund) Loading required package: BiocGenerics Loading required package: parallel Attaching package: ‘BiocGenerics’ The following objects are masked from ‘package:parallel’: clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap, parApply, parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB The following object is masked from ‘package:stats’: xtabs The following objects are masked from ‘package:base’: anyDuplicated, append, as.data.frame, as.vector, cbind, colnames, do.call, duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames, sapply, setdiff, sort, table, tapply, union, unique, unlist Loading required package: RSQLite Loading required package: DBI Loading required package: ggplot2 Loading required package: reshape2 Loading required package: fastcluster Attaching package: ‘fastcluster’ The following object is masked from ‘package:stats’: hclust Loading required package: rtracklayer Loading required package: GenomicRanges Loading required package: IRanges Loading required package: GenomeInfoDb Loading required package: Gviz Loading required package: grid Attaching package: ‘cummeRbund’ The following object is masked from ‘package:GenomicRanges’: promoters The following object is masked from ‘package:IRanges’: promoters &gt; cuff_data &lt;- readCufflinks(‘diff_out_CM_c.vs.m’) Creating database diff_out_CM_c.vs.m/cuffData.db Error in FUN(c(“n– Creator: MySQL Workbench 5.2.33/ExportSQLite plugin 2009.12.02n– Author: Loyal Goffn– Caption: New Modeln– Project: Name of the projectn– Changed: 2012-04-30 22:21n– Created: 2011-05-02 12:52nPRAGMA foreign_keys = OFF”, : could not find function “sqliteQuickSQL” ======================================= 失败的解决方法： &gt; remove.packages(“RSQLite”) &gt;install.packages(“/home/fenglei/Downloads/RSQLite_0.9-0.tar.gz”) &gt; library(RSQLite) Loading required package: DBI &gt; install.packages(“DBI”) 成功解决方法 First, upgrade biocLite: &gt;source(“<a target="_blank" rel="noopener" href="http://www.bioconductor.org/biocLite.R&quot;">http://www.bioconductor.org/biocLite.R&quot;</a>) &gt;biocLite(“BiocUpgrade”) Then, install “cummeRbund” &gt;biocLite(“cummeRbund”) Last, install or reinstall “RSQLite” &gt;biocLite(“RSQLite”) I hope it works for you.</p></div><p class="readmore"><a href="/2015/02/05/could-not-find-function-sqlitequicksql/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/">使用ReSeqTools/iTools进行fastq数据统计、质检、过滤</a></h1><div class="post-meta">2015-01-02</div><div class="post-content"><p>重测序分析集成工具包 linux 64位平台 静态编译 chmod 便可以直接运行了。 （ReSeqTools/iTools） 即在linux64机上只须</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/15/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/15/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/" class="post-title-link" itemprop="url">Gene Counts Table of RNA seq: The sam/bam file for HTseq should be sorted</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-10-06 23:54:41" itemprop="dateCreated datePublished" datetime="2015-10-06T23:54:41+08:00">2015-10-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Posted on <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/" title="23:44">2015-10-06</a> by <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/author/fengleiluck/" title="查看该作者所有主题 FENG Lei">FENG Lei</a> — <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/#respond">发表评论</a></p>
+<p>下面摘抄自网络。实际使用中，转录组比对使用tophat或者hisat，注意tophat输出的bam文件未经排序，而hisat输出的sam文件已经排序。<strong>HTseq进行reads count时候，要求输入的sam/bam文件是经过排序的。</strong> ————————</p>
+<p><strong>A. Counting reads</strong></p>
+<p>DEseq uses a table of raw counts as the basis of DE calls. Any transformed counts, such as FPKM counts will not work with this package. The top row of the table can be a descriptor, these can be imported into R to act as column labels. Gene names should be column 1 (remember R counting starts from 1 rather than 0), each column after that should be a raw count for each biological replicate and for each treatment. Note that if technical reps are performed, these should be merged based on the sum of the two runs (they will be normalised by read count latter).</p>
+<p>Here I used BWA to align the reads to my reference and generate SAM files that are then processed by <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html">HTseq</a> count. Note that you have to run this on each sample, so in this current example I will generate 6 sam files, 1 for each treatment and condition. Also, see that I used the<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">intersection-strict</a> mode for HTseq. &gt;bwa aln sarcop_pep_rnaseqfiltered.fa Sample_ST72-1/ST72-1.subset.fastq &gt; ST72-1.subset.sai</p>
+<p>&gt;bwa samse sarcop_pep_rnaseqfiltered.fa ST72-1.subset.sai Sample_ST72-1/ST72-1.subset.fastq &gt; ST72-1.subset.sam</p>
+<p>&gt;htseq-count -m intersection-strict –stranded=no ST72-1.subset.sam sarcop_pep_rnaseqfiltered.gtf &gt; ST72-1.subset.counts</p>
+<p>In the above ST72-1.subset.counts is a table of counts that can be merged with the other count data before being imported into DEseq as a R data table. Here is a <a target="_blank" rel="noopener" href="https://docs.google.com/file/d/0B99ewTsEZTkidElVekliSUxldW8/edit?usp=sharing">python script</a> for merging, see the header of the script for usage, if that helps. For full detailed explanation of HTseq see (<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/install.html#installation-on-linux">http://www-huber.embl.de/users/anders/HTSeq/doc/install.html#installation-on-linux</a>) and this seems to be the default way of doing it (instructions :<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">http://www-huber.embl.de/users/anders/HTSeq/doc/count.html</a>).</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/09/25/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/09/25/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-title-link" itemprop="url">基因组浏览器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-09-25 11:42:37" itemprop="dateCreated datePublished" datetime="2015-09-25T11:42:37+08:00">2015-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>1 GBrowse</strong></p>
 <blockquote>
-<ul>
-<li>  tar -zxvf ReSeqTools_XXX.tar.gz ;</li>
-<li>  cd iTools_Code; chmod 775 iTools ;</li>
-<li>  ./ iTools -h ;</li>
-<li>  无须重新make</li>
-</ul>
+<p><a target="_blank" rel="noopener" href="http://gmod.org/wiki/GBrowse">http://gmod.org/wiki/GBrowse</a> <img src="http://gmod.org/mediawiki/images/thumb/0/04/GBrowseLogo.png/400px-GBrowseLogo.png" alt="" /></p>
 </blockquote>
-<p>QQ交流群 群名称是Reseqtools QQ群号： 125293663</p></div><p class="readmore"><a href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/31/%E4%BD%BF%E7%94%A8scp%E5%91%BD%E4%BB%A4%E4%BB%8Elinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E8%AE%A1%E7%AE%97%E6%9C%BA/">使用scp命令从linux服务器传输文件到本地计算机</a></h1><div class="post-meta">2014-12-31</div><div class="post-content"><p>一、对于Mac OS：</p>
-<p>进入终端，输入</p>
-<p>$ scp <a href="mailto:&#x75;&#115;&#x72;&#x6e;&#97;&#109;&#x65;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#49;&#x2e;&#x31;&#x31;&#49;">&#x75;&#115;&#x72;&#x6e;&#97;&#109;&#x65;&#x40;&#x31;&#57;&#x32;&#46;&#x31;&#54;&#x38;&#46;&#49;&#x2e;&#x31;&#x31;&#49;</a>:/home/usrname/file.name ./Desktop</p></div><p class="readmore"><a href="/2014/12/31/%E4%BD%BF%E7%94%A8scp%E5%91%BD%E4%BB%A4%E4%BB%8Elinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E8%AE%A1%E7%AE%97%E6%9C%BA/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/23/trinity-need-java-1-6-or-java-1-7/">Trinity need java 1.6 or Java 1.7</a></h1><div class="post-meta">2014-12-23</div><div class="post-content"><p>原来安装了java 1.8，但是trinity 软件需要java 1.6 or Java 1.7。 解决办法：</p></div><p class="readmore"><a href="/2014/12/23/trinity-need-java-1-6-or-java-1-7/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/18/soap-denovo/">基因组组装软件：SOAP denovo与ALLPATHS-LG</a></h1><div class="post-meta">2014-12-18</div><div class="post-content"><p>2009年12月，华大基因公司李瑞强等人开发的SOAP denovo第一个版本发表在《Genome Research》，题为“De novo assembly of human genomes with massively parallel short read sequencing”，截至2014年12月18日，引用次数达到1090次；（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）SOAP denovo算法利用kmer构建De Brujin Graph。   2010年12月，<a target="_blank" rel="noopener" href="http://www.broadinstitute.org/software/allpaths-lg/blog/">ALLPATHS-LG</a>由Broad Institue发布，适合于组装short reads数据，由Computational Research and Development group at the Broad Institute开发，2008年推出ALLPATHS，适用小型基因组，截至目前引用次数分别450；2011年升级版发布，可用于大型基因组，“High-quality draft assemblies of mammalian genomes from massively parallel sequence data”发布在《PNAS》，截至目前引用次数380。ALLPATHS-LG是现在行业内公认进行基因组<em>De novo_组装效果最好的软件。（<a target="_blank" rel="noopener" href="https://www.broadinstitute.org/software/allpaths-lg/blog/">https://www.broadinstitute.org/software/allpaths-lg/blog/</a>）   2011年12月，Steven L. Salzberg开发GAGE对8个组装软件对4个物种分别进行基因组组装，发布在《genome research》，标题“<a target="_blank" rel="noopener" href="http://genome.cshlp.org/content/early/2012/01/12/gr.131383.111">GAGE: A critical evaluation of genome assemblies and assembly algorithms</a>.”。评估发现，allpaths-lg综合性能最优，SOAP denovo虽然得到N50最高，但是准确率也很高。主要结论是数据质量非常重要，因此作者使用quake等软件进行数据纠错。Three overarching conclusions are apparent: first, that data quality, rather than the assembler itself, has a dramatic effect on the quality of an assembled genome; second, that the degree of contiguity of an assembly varies enormously among different assemblers and different genomes; and third, that the correctness of an assembly also varies widely and is not well correlated with statistics on contiguity. （<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/index.html">http://gage.cbcb.umd.edu/index.html</a>）   2012年，华大基因公司罗锐邦升级SOAP denovo到SOAP denovo2，发表在《BMC Giga Science》，题为“SOAPdenovo2: an empirically improved memory-efficient short-read de novo assembler”，SOAP denovo2有哪些升级？为了解决序列连续性、准确性、覆盖度，尤其是重复序列问题。优化之后的软件，reduces memory consumption in graph construction, resolves more repeat regions in contig assembly, increases coverage and length in scaffold construction, improves gap closing, and optimizes for large genome. 截至2014年12月18日，引用次数达到243次。（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）   2014年12月，冷泉港Michael C Schatz教授对水稻3个品种分别进行测序，即pan-genome研究，发布在《genome biology》，标题“Whole genome _de novo</em> assemblies of three divergent strains of rice, <em>Oryza sativa</em>, document novel gene space of <em>aus</em> and <em>indica_”，使用ALLPATHS-LG组装，然后将quake矫正的数据分别使用SOAP denovo和SGA进行组装，最后发现ALLPATHS-LG的组装效果最好。作者认为We hypothesize that ALLPATHS-LG achieved superior results because the algorithm automatically measures many of the properties of the sequencing data, and could therefore self-adjust the various cutoffs used by the algorithm for error correction, contigging, and scaffolding.   _fenglei</em> <em>2014-12-18</em></p></div><p class="readmore"><a href="/2014/12/18/soap-denovo/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/">戴尔PowerEdge服务器命名规则和型号分类</a></h1><div class="post-meta">2014-12-18</div><div class="post-content"><p>从第十代服务器开始，戴尔重新规范了服务器的名字，以现在的第十二代主流PowerEdge R620服务器为例： <strong>第一位是字母，R代表机架式服务器，其它有：</strong></p>
-<ol>
-<li> R：Rack，机架式服务器</li>
-<li> T：Tower，塔式服务器</li></div><p class="readmore"><a href="/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/17/the-lander-waterman-model/">The Lander-Waterman model</a></h1><div class="post-meta">2014-12-17</div><div class="post-content"><h3 id="Lander-Waterman-theory"><a href="#Lander-Waterman-theory" class="headerlink" title="Lander-Waterman theory"></a>Lander-Waterman theory</h3><p>In 1988, <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Eric_Lander" title="Eric Lander">Eric Lander</a> and <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Michael_Waterman" title="Michael Waterman">Michael Waterman</a> published an important paper<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/DNA_sequencing_theory#cite_note-landerwaterman-6">[6]</a> examining the covering problem from the standpoint of gaps. Although they focused on the so-called <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Gene_mapping" title="Gene mapping">mapping problem</a>, the abstraction to sequencing is much the same. They furnished a number of useful results that were adopted as the standard theory from the earliest days of “large-scale” genome sequencing.<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/DNA_sequencing_theory#cite_note-fleischmann-7">[7]</a> Their model was also used in designing the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Human_Genome_Project" title="Human Genome Project">Human Genome Project</a> and continues to play an important role in DNA sequencing.</p></div><p class="readmore"><a href="/2014/12/17/the-lander-waterman-model/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/">基于illumina测序数据，使用Jellyfish估计基因组大小</a></h1><div class="post-meta">2014-12-17</div><div class="post-content"><p>一、数据 ① illumina测序数据：（细菌<strong><em>Staphylococcus aureus，</em></strong>基因组约3M，180bp文库，101PE测序，1294104条reads，测序碱基数据量约为130Mb，即基因组覆盖度45X。） <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus/_aureus/Data.original/frag/_1.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_1.fastq.gz</a> <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus/_aureus/Data.original/frag/_2.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_2.fastq.gz</a> ②  jellyfish 软件：（用来统计kmer频数。） <a href="ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz">ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz</a> ③jellyplot.pl软件：（用来画kmer图，以及估计基因组大小。） <a target="_blank" rel="noopener" href="https://github.com/josephryan/estimate/_genome/_size.pl">https://github.com/josephryan/estimate\_genome\_size.pl</a> ④fastx toolkit：（用来转换fastq和fasta格式文件。） hannonlab.cshl.edu/<strong>fastx</strong>_<strong>toolkit</strong>/   —————— 下面是实际运行代码： cat frag_1.fastq frag_2.fastq &gt; all.fastq fastq_to_fasta -i all.fastq -o all.fasta jellyfish count -m 17 -s 100M -t 10 -C all.fasta jellyfish histo mer_counts.jf -o out.2.txt jellyplot.pl out.2.txt estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz   结果：（预估基因组为7M，比实际大了一倍。可能是原始reads没有校正和过滤的原因。） $ estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz # running version 0.04 of estimate_genome_size.pl # run with this command: estimate_genome_size.pl TOTAL_NTS: 131998608 Estimated Coverage: 17.7906976744186 Estimated Genome Size: 7419529.6 <a target="_blank" rel="noopener" href="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg"><img src="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg?w=300" alt="QQ截圖20141217130925"></a> 使用校正之后的数据，（使用quake.py进行校正<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus/_aureus%EF%BC%89">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus）</a> 估计基因组大小为： # running version 0.04 of estimate_genome_size.pl # run with this command: /home/fenglei/perl5/bin/estimate_genome_size.pl TOTAL_NTS: 59609610 Estimated Coverage: 15.3684210526316 Estimated Genome Size: 3878707.5 这次距离实际情况比较近。     =================== 附：jellyfish 参数意义 jellyfish count -m 17 -s 100M -t 10 -C all.fasta -m是kmer长度； -s是预估哈希表的大小，即G+G*c*e*k。G是Genome Size；c是coverage（genome survey测序通常低于100x）；e是测序错误率（illumina为1%）；k是kmer大小。 -C表示考虑DNA正义与反义链，遇到反义kmer时，计入正义kmer频数中。</p></div><p class="readmore"><a href="/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/12/16/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E8%AF%84%E4%BC%B0/">基因组组装软件评估</a></h1><div class="post-meta">2014-12-16</div><div class="post-content"><p>比较下面8个软件，结论：AllPATHS-LG性能最优，组装的contig和scaffold比较长，错误率低；SOAP denovo组装得到的contig和scaffold几乎是几个软件里最长的，但是错误率也相对较高！   ABySS (Simpson et al. 2009) • ALLPATHS-LG (Gnerre et al. 2011) • Bambus2 (Koren et al. 2011) (<a target="_blank" rel="noopener" href="http://www.cbcb.umd.edu/software/">http://www.cbcb.umd.edu/software/</a> bambus). • CABOG (Miller et al. 2008) • MSR-CA (<a target="_blank" rel="noopener" href="http://www.genome.umd.edu/MSR/_CA/_MANUAL.htm">http://www.genome.umd.edu/MSR\_CA\_MANUAL.htm</a>) • SGA (Simpson and Durbin 2012) • SOAPdenovo (Li et al. 2010b) • Velvet (Zerbino and Birney 2008) ———————————— <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/index.html">http://gage.cbcb.umd.edu/index.html</a></p></div><p class="readmore"><a href="/2014/12/16/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E8%AF%84%E4%BC%B0/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/14/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p><strong>2. JBrowse</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://jbrowse.org/">http://jbrowse.org/</a> [embed]<a target="_blank" rel="noopener" href="https://youtu.be/NE8TBTbvDfM%5C%5B/embed%5C%5D">https://youtu.be/NE8TBTbvDfM\[/embed\]</a></p>
+</blockquote>
+<p><strong>3. UCSC</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://genome.ucsc.edu/">https://genome.ucsc.edu/</a> <img src="https://genome.ucsc.edu/images/title.jpg" alt="" /></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/09/25/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/09/25/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">转录组数据分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-09-25 10:48:46" itemprop="dateCreated datePublished" datetime="2015-09-25T10:48:46+08:00">2015-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li><strong>1. filtering</strong></li>
+</ul>
+<blockquote>
+<p>fastqc, iTools, …</p>
+</blockquote>
+<ul>
+<li><strong>2. aligment</strong></li>
+</ul>
+<blockquote>
+<p>HTSAT, TopHat</p>
+</blockquote>
+<ul>
+<li><strong>3. assembly</strong></li>
+</ul>
+<blockquote>
+<p>cufflinks</p>
+</blockquote>
+<ul>
+<li><strong>4. merge</strong></li>
+</ul>
+<blockquote>
+<p>cuffmerge</p>
+</blockquote>
+<ul>
+<li><strong>5. Differential expression</strong></li>
+</ul>
+<blockquote>
+<p>cuffdiff (good for time points &amp; with biological repeats) DEseq (good for pairwise samples) edegR</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/08/28/%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%E8%8B%B1%E6%96%87%E6%96%87%E7%8C%AE%E7%9A%84%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/08/28/%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%E8%8B%B1%E6%96%87%E6%96%87%E7%8C%AE%E7%9A%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">免费下载英文文献的方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-08-28 00:24:41" itemprop="dateCreated datePublished" datetime="2015-08-28T00:24:41+08:00">2015-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、国外代理下载。只需在文献网址里面插入代理网站的地址（<em><a target="_blank" rel="noopener" href="http://sci-hub.org">sci-hub.org</a> 或者 sci-hub.club</em>），如下操作。</p>
+<blockquote>
+<p>原文献地址：<a target="_blank" rel="noopener" href="http://www.plantcell.org/content/27/6/1595.full">http://www.plantcell.org/content/27/6/1595.full</a> 下载的地址：<a target="_blank" rel="noopener" href="http://www.plantcell.org">http://www.plantcell.org</a>.<em><a target="_blank" rel="noopener" href="http://sci-hub.org">sci-hub.org</a></em>/content/27/6/1595.full （代理网址可能无法长期使用。）</p>
+</blockquote>
+<p>二、丁香园论坛的“文献求助”功能。需要在www.dxy.cn注册账户，随后进入<a target="_blank" rel="noopener" href="http://paper.pubmed.cn/%E5%8D%B3%E5%8F%AF%E6%8C%89%E7%85%A7%E6%8F%90%E7%A4%BA%E4%B8%8B%E8%BD%BD%E6%96%87%E7%AB%A0%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%A1%AB%E5%86%99%E6%96%87%E7%AB%A0%E6%A0%87%E9%A2%98%E6%88%96PMID%EF%BC%8C%E7%A8%8D%E7%AD%89%E7%89%87%E5%88%BB%E5%B0%B1%E8%83%BD%E6%94%B6%E5%88%B0pdf%E6%A0%BC%E5%BC%8F%E6%96%87%E7%AB%A0%E7%9A%84%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5%E3%80%82">http://paper.pubmed.cn/即可按照提示下载文章，可以填写文章标题或PMID，稍等片刻就能收到pdf格式文章的下载链接。</a></p>
+<blockquote>
+<p>文献下载地址：<a target="_blank" rel="noopener" href="http://paper.pubmed.cn/">http://paper.pubmed.cn/</a></p>
+</blockquote>
+<p>三、购买下载账号。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/08/25/fastq-quality-control-and-filtering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/08/25/fastq-quality-control-and-filtering/" class="post-title-link" itemprop="url">Fastq quality control and filtering</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-08-25 16:35:04" itemprop="dateCreated datePublished" datetime="2015-08-25T16:35:04+08:00">2015-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>数据质量QC：<a target="_blank" rel="noopener" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></strong> fastqc <strong>去除adapter：<a target="_blank" rel="noopener" href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a></strong> （Trimmomatic: A flexible read trimming tool for Illumina NGS data）</p>
+<blockquote>
+<p>java -jar trimmomatic-0.30.jar PE -phred33 input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36</p>
+</blockquote>
+<p>**去除含N过多的Reads：① ITools ② <a target="_blank" rel="noopener" href="http://prinseq.sourceforge.net/manual.html">PRINSEQ</a> ** <em>Filter options</em></p>
+<p>-ns_max_p</p>
+<p>Filter sequence with more than ns_max_p percentage of Ns</p>
+<p>INT [0…100]</p>
+<p>-ns_max_n</p>
+<p>Filter sequence with more than ns_max_n Ns</p>
+<p>INT</p>
+<p><strong>去除含低质量碱基过多的Reads：</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/" class="post-title-link" itemprop="url">Fasta与Fastq文件操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-06-23 16:02:03" itemprop="dateCreated datePublished" datetime="2015-06-23T16:02:03+08:00">2015-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>1 fastx_toolkits</strong></p>
+<blockquote>
+<p>fastx_artifacts_filter fastx_nucleotide_distribution_graph.sh fastx_reverse_complement<br />
+fastx_barcode_splitter.pl fastx_nucleotide_distribution_line_graph.sh fastx_trimmer<br />
+fastx_clipper fastx_quality_stats fastx_uncollapser<br />
+fastx_collapser fastx_renamer</p>
+<p>fastqc fastq-dump.2.4.2 fastq-load.2.4.2 fastq_quality_converter fastq_to_fasta<br />
+fastq-dump fastq-load fastq_masker fastq_quality_filter<br />
+fastq-dump.2 fastq-load.2 fastq_quality_boxplot_graph.sh fastq_quality_trimmer</p>
+</blockquote>
+<p><strong>2 iTools (BGI_Shenzhen)</strong></p>
+<blockquote>
+<p><em>$ iTools Fatools</em></p>
+<p>FaTools Usage:</p>
+<p>stat quick stat fasta’s info<br />
+findN quick find fasta’s N region<br />
+findSubSeq quick find fasta’s one SubSeq region<br />
+extract get fragments from seq based on coordinates<br />
+regenerate merge a new Ref Based scaffolds<br />
+split split InFa, each Seq one File<br />
+filter filter the short &amp; too many ‘N’ Seq<br />
+cutF cut fasta to fixed Num of subFile in total<br />
+cutS cut fasta to fixed Num of Seq in each subfile<br />
+getSP get Seq by specified ID or pattern<br />
+getSN get Seq by specified order Num range<br />
+reform reform/modify the sequence<br />
+sort rank the seq By SeqID or Length<br />
+getCdsPep get CDS Seq &amp; Pep Seq based the gffFile<br />
+CDS2Pep Translate CDS-Seq to protein-Seq<br />
+SamHeader quick give out the Samheader of Fa<br />
+BaseModify modify the single base in seq<br />
+ChangPosi Change Position back to Scaffolds(regenerate)</p>
+</blockquote>
+<p><strong>3 常用工具</strong></p>
+<blockquote>
+<p>3.1 将fasta文件转换成每行固定的碱基数目：<br />
+iTools   Fatools  reform   （不要加这一参数：  -oneline ）<br />
+fastx_formater</p>
+<p>3.2 将fasta的序列名重新命名<br />
+seqtk rename<br />
+fastx_renamer</p>
+<p>3.3 统计fasta的序列长度，N50，N90信息<br />
+perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl -i genome.fa -o N50.stat.out</p>
+<p>3.4 按照坐标从基因组提取某段序列<br />
+iTools Fatools extract</p>
+<p>3.5 对Fasta序列进行反转<br />
+fastx_reverse_complement</p>
+<p>3.6 将fasta序列集合里某个长度范围的子序列提取出来<br />
+<a target="_blank" rel="noopener" href="http://prinseq-lite.pl">prinseq-lite.pl</a> -fastq yourfile.fastq -out_format 4 -out_good seqs_good -min_len 21 -trim_to_len 25</p>
+<p>3.7 依据序列ID从fastq提取序列<br />
+seqtk subseq 800bp_10M_1.fq FR-oneread.ids.list &gt; FR-oneread.ids.fq</p>
+<p>3.8 依据序列ID从fasta文件提取序列<br />
+seqtk subseq AM-scaffolds.fasta scafname.list &gt; scaf_selected.fa</p>
+<p>3.9 从pair end形式的的两个fastq文件各随机提取序列1000条，二者需要对应。<br />
+seqtk sample -s100 800bp_1.fastq.gz 1000 &gt; 800bp_10M_1.fq<br />
+seqtk sample -s100 800bp_2.fastq.gz 1000 &gt; 800bp_10M_2.fq</p>
+</blockquote>
+<p>4 seqtk (Li Heng)</p>
+<p>Usage: seqtk <command> <arguments><br />
+Version: 1.0-r82-dirty</p>
+<p>Command: seq common transformation of FASTA/Q<br />
+comp get the nucleotide composition of FASTA/Q<br />
+sample subsample sequences<br />
+subseq extract subsequences from FASTA/Q<br />
+fqchk fastq QC (base/quality summary)<br />
+mergepe interleave two PE FASTA/Q files<br />
+trimfq trim FASTQ using the Phred algorithm</p>
+<p>hety regional heterozygosity<br />
+gc identify high- or low-GC regions<br />
+mutfa point mutate FASTA at specified positions<br />
+mergefa merge two FASTA/Q files<br />
+dropse drop unpaired from interleaved PE FASTA/Q<br />
+rename rename sequence names<br />
+randbase choose a random base from hets<br />
+cutN cut sequence at long N<br />
+listhet extract the position of each het</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/15/%E5%A6%82%E4%BD%95%E7%94%A8gatk-call-snp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/06/15/%E5%A6%82%E4%BD%95%E7%94%A8gatk-call-snp/" class="post-title-link" itemprop="url">如何用GATK call snp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-06-15 17:22:48" itemprop="dateCreated datePublished" datetime="2015-06-15T17:22:48+08:00">2015-06-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如何用gatk-call-snp"><a class="markdownIt-Anchor" href="#如何用gatk-call-snp"></a> <a target="_blank" rel="noopener" href="http://www.cnblogs.com/freemao/p/3763885.html">如何用GATK call snp</a>（转自<a target="_blank" rel="noopener" href="http://www.cnblogs.com/freemao/p/3763885.html%EF%BC%89">http://www.cnblogs.com/freemao/p/3763885.html）</a></h2>
+<p>1， 什么是GATK？ The Genome Analysis Toolkit or GATK is a software package developed at the Broad Institute to analyse next-generation resequencing data. The toolkit offers a wide variety of tools, with a primary focus on variant discovery and genotyping as well as strong emphasis on data quality assurance. Its robust architecture, powerful processing engine and high-performance computing features make it capable of taking on projects of any size. 2， 如何用GATK call SNP？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/06/15/%E5%A6%82%E4%BD%95%E7%94%A8gatk-call-snp/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/05/10/%E6%A4%8D%E7%89%A9%E7%A7%8D%E5%AD%90%E8%90%8C%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/05/10/%E6%A4%8D%E7%89%A9%E7%A7%8D%E5%AD%90%E8%90%8C%E5%8F%91/" class="post-title-link" itemprop="url">植物种子萌发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-05-10 17:52:09" itemprop="dateCreated datePublished" datetime="2015-05-10T17:52:09+08:00">2015-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>萌发实验 选取发育良好的 30 粒成熟种子或果实，进行消毒（用 0.05%高锰酸甲浸泡 15 分 钟）后再用无菌水冲洗干净，播种于花盆中，播深为 0.5cm 左右，在室温下测定种子 的萌发率，重复 3 次。 贺慧. <em>阿拉善主要荒漠植物种子 (果实) 形态结构和萌发特性的适应性研究</em>. Diss. 内蒙古农业大学, 2008.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/04/29/sql%E5%AF%BC%E5%85%A5blast2go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/04/29/sql%E5%AF%BC%E5%85%A5blast2go/" class="post-title-link" itemprop="url">SQL导入blast2go</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-04-29 21:33:46" itemprop="dateCreated datePublished" datetime="2015-04-29T21:33:46+08:00">2015-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1 安装mysql，参考前面博文。 2 进入mysql [fenglei@localhost scripts]$ <strong>mysql -P 33060 -u root -p</strong> Enter password: Welcome to the MySQL monitor. Commands end with ; or g. Your MySQL connection id is 5 Server version: 5.6.20 Source distribution Copyright © 2000, 2014, Oracle and/or its affiliates. All rights reserved. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type ‘help;’ or ‘h’ for help. Type ‘c’ to clear the current input statement. mysql&gt; <strong>insert into mysql.user(Host,User,Password) values(“localhost”,“blast2go”,password(“blast4it”));</strong> Query OK, 1 row affected, 3 warnings (0.05 sec) mysql&gt; <strong>flush privileges;</strong> Query OK, 0 rows affected (0.02 sec) mysql&gt;<strong>exit</strong> Bye [fenglei@localhost scripts]$ <strong>mysql -hlocalhost -u blast2go -pblast4it</strong> Warning: Using a password on the command line interface can be insecure. Welcome to the MySQL monitor. Commands end with ; or g. Your MySQL connection id is 6 Server version: 5.6.20 Source distribution Copyright © 2000, 2014, Oracle and/or its affiliates. All rights reserved. Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners. Type ‘help;’ or ‘h’ for help. Type ‘c’ to clear the current input statement.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/03/21/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8Bhisat%E6%AF%94%E5%AF%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/03/21/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8Bhisat%E6%AF%94%E5%AF%B9/" class="post-title-link" itemprop="url">转录组数据分析之HISAT比对</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-03-21 11:31:54" itemprop="dateCreated datePublished" datetime="2015-03-21T11:31:54+08:00">2015-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>HISAT全称为Hierarchical Indexing for Spliced Alignment of Transcripts，由约翰霍普金斯大学开发。它取代Bowtie/TopHat程序，能够将RNA-Seq的读取与基因组进行快速比对。这项成果发表在3月9日的《Nature Methods》上。 HISAT利用大量FM索引，以覆盖整个基因组。以人类基因组为例，它需要48,000个索引，每个索引代表~64,000 bp的基因组区域。这些小的索引结合几种比对策略，实现了RNA-Seq读取的高效比对，特别是那些跨越多个外显子的读取。尽管它利用大量索引，但HISAT只需要4.3 GB的内存。这种应用程序支持任何规模的基因组，包括那些超过40亿个碱基的。 第一步：建立数据库索引 命令：hisat-build genome.fa genome 将得到<code>NAME.1.bt2</code>, <code>NAME.2.bt2</code>,<code>NAME.3.bt2</code>, <code>NAME.4.bt2</code>, <code>NAME.5.bt2</code>, <code>NAME.6.bt2</code>, <code>NAME.rev.1.bt2</code>, <code>NAME.rev.2.bt2</code>, <code>NAME.rev.5.bt2</code>, and <code>NAME.rev.6.bt2 这六个文件。</code> 第二步：将转录组数据比对到基因组 命令：hisat -p 8 --phred64 -x genome -1 reads.1.fq.gz -2 reads.2.fq.gz -S out.sam [使用拟南芥转录组数据，该步骤6分钟即可完成，而原来的TopHat需要1小时。] 第三步：将sam转为bam文件，并对bam文件进行排序。 第四部：使用cufflinks进行下游分析。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

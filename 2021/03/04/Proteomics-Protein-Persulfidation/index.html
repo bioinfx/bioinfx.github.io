@@ -1,18 +1,455 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Proteomics | 蛋白质硫巯基化修饰 | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Proteomics | 蛋白质硫巯基化修饰</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Proteomics | 蛋白质硫巯基化修饰</h1><div class="post-meta">2021-03-04<span> | </span><span class="category"><a href="/categories/Proteomics/">Proteomics</a></span></div><div class="post-content"><p>随着对硫化氢（hydrogen sulfide，H<sub>2</sub>S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H<sub>2</sub>S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的一种新的蛋白质翻译后修饰方式。对动物的研究表明，蛋白质硫巯基化修饰通过影响蛋白质活性和功能，从而在细胞内信号通路中发挥重要的调控作用。最近的研究结果提示，硫巯基化修饰还参与调节植物新陈代谢和形态建成。硫巯基化修饰也可能参与植物细胞信号转导。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="随着对硫化氢（hydrogen sulfide，H2S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H2S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Proteomics | 蛋白质硫巯基化修饰">
+<meta property="og:url" content="http://example.com/2021/03/04/Proteomics-Protein-Persulfidation/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="随着对硫化氢（hydrogen sulfide，H2S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H2S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png">
+<meta property="article:published_time" content="2021-03-04T09:02:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T09:14:19.880Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png">
+
+<link rel="canonical" href="http://example.com/2021/03/04/Proteomics-Protein-Persulfidation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Proteomics | 蛋白质硫巯基化修饰 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Proteomics-Protein-Persulfidation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Proteomics | 蛋白质硫巯基化修饰
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-04 17:02:00 / Modified: 17:14:19" itemprop="dateCreated datePublished" datetime="2021-03-04T17:02:00+08:00">2021-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>随着对硫化氢（hydrogen sulfide，H<sub>2</sub>S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H<sub>2</sub>S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的一种新的蛋白质翻译后修饰方式。对动物的研究表明，蛋白质硫巯基化修饰通过影响蛋白质活性和功能，从而在细胞内信号通路中发挥重要的调控作用。最近的研究结果提示，硫巯基化修饰还参与调节植物新陈代谢和形态建成。硫巯基化修饰也可能参与植物细胞信号转导。</p>
 <p>硫化氢（hydrogen sulfide, H<sub>2</sub>S）是一种无色、具有臭鸡蛋气味的气体。在人们的传统观念中，硫化氢一直被认为是一种有毒有害的气体。然而随着科技发展，关于生物体内产生硫化氢的现象被陆续报道，这暗示着硫化氢在某些生理代谢过程中可能发挥着重要作用。硫化氢可自由通过生物膜，以信号分子的角色参与信号传递。最近的发现表明，H<sub>2</sub>S 具有促使蛋白质 Cys 残基的硫醇基团（R-SH）转变为过硫化基团（R-SSH）的能力，这种翻译后修饰作用被称为 蛋白质过硫化/硫巯基化修饰（persulfidation）。蛋白质过硫化修饰是一种基于氧化还原状态的修饰，然而在高等植物中这一翻译后修饰的机制仍然知之甚少。</p>
 <p>当植物受到干旱、高低温、高盐、重金属等非生物胁迫刺激时，体内的硫化氢含量会显著提高，暗示硫化氢参与植物非生物胁迫响应过程。研究表明，在这一过程中硫化氢与多种信号分子，如活性氧（ROS）、一氧化氮（NO）、脱落酸（ABA）、乙烯等信号交叉对话，共同调节植物对胁迫的耐受性。</p>
 <p>脱落酸（ABA）作为一种重要的植物激素，在种子的成熟和休眠，气孔关闭和植物生长中起关键作用。同时，ABA也是增强植物对非生物胁迫如干旱，盐碱和寒冷的适应性的核心调节因子，而这些非生物胁迫是导致全球农作物减产的主要原因，因此研究植物体内ABA信号转导途径具有重要的实践意义。ABA促进气孔关闭并抑制气孔开放，从而在植物缺水时保留水分。SnRK2.6蛋白在植物气孔的保卫细胞中表达，是ABA信号通路中调节植物气孔开合的关键调节因子。硫化氢（H2S）是一种水溶性的气体信号分子，在调节植物对环境胁迫和生长的适应性方面发挥重要功能。Cys残基的翻译后修饰（Cys-SH基团转换为Cys-SSH基团）引起的过硫基团的形成直接受硫化氢调节，被称为S-硫巯基化修饰作用。研究首先在SnRK2.6中发现了两个S-硫巯基化修饰位点，并且发现这两个Cys残基暴露在SnRK2.6表面并且与激酶的催化环和关键的磷酸化位点相邻。研究表明当这两个Cys残基被S-硫巯基化修饰后，促进了SnRK2.6的活性及其与ABA信号下游的转录因子的相互作用。当将SnRK2.6中的Cys131，Cys137或两者均被丝氨酸部分或者全部取代时：SnRK2.6C131S和SnRK2.6C137S或SnRK2.6C131SC137S突变基因转入到ost1-3突变体中，这些点突变的基因无法恢复ost1-3突变体表型，显示出对ABA和H2S诱导的气孔关闭和Ca2+流入的敏感性降低，并增加了水分流失和抗旱性下降。此外，该研究还表明ABA诱导保卫细胞中的DES1酶催化产生硫化氢，随后硫化氢又通过SnRK2.6的过硫化反应过来正调控ABA信号传导，并影响钙离子流，最终调控气孔运动。因此该研究提出了一种新的调控ABA信号通路的机制，其中硫化氢通过S-硫巯基化SnRK2.6在保卫细胞中正调控ABA信号传导。</p>
-<p><img src="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png"></p>
+<p><img src="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png" alt="" /></p>
 <p>参考资料</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/426629232_732029">2020 南农综述：气体信号分子——硫化氢在植物适应非生物胁迫中的生理功能及作用机制 </a></li>
 <li><a target="_blank" rel="noopener" href="https://news.nwafu.edu.cn/xnxw/95411.htm">2020 西农文章：硫化氢介导的S-硫巯基化修饰促进气孔闭合关键调控蛋白SnRK2.6/OST1的活性从而参与调控脱落酸信号诱导植物气孔闭合的分子机制</a></li>
 <li><a target="_blank" rel="noopener" href="http://cjbmb.bjmu.edu.cn/CN/abstract/abstract24425.shtml">2018 生物化学与分子生物学报：《硫巯基化：一种新的蛋白质翻译后修饰》</a></li>
 </ol>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/">Proteomics | 质谱分析中DDA与DIA有什么不同？</a><a class="next" href="/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/">Proteomics | Common reagents and their functions in LC-MS/MS proteomics</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/" rel="prev" title="Proteomics | Common reagents and their functions in LC-MS/MS proteomics">
+      <i class="fa fa-chevron-left"></i> Proteomics | Common reagents and their functions in LC-MS/MS proteomics
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/" rel="next" title="Proteomics | 质谱分析中DDA与DIA有什么不同？">
+      Proteomics | 质谱分析中DDA与DIA有什么不同？ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

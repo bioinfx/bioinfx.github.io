@@ -1,26 +1,480 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Proteomics | Common reagents and their functions in LC-MS/MS proteomics | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Proteomics | Common reagents and their functions in LC-MS/MS proteomics</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Proteomics | Common reagents and their functions in LC-MS/MS proteomics</h1><div class="post-meta">2021-03-03<span> | </span><span class="category"><a href="/categories/Proteomics/">Proteomics</a></span></div><div class="post-content"><p>蛋白质组学实验 LC-MS/MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？</p>
-<h3 id="Acetone-丙酮"><a href="#Acetone-丙酮" class="headerlink" title="Acetone 丙酮"></a>Acetone 丙酮</h3><p>使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。</p>
-<p>丙酮是最简单的酮，化学式 CH<sub>3</sub>COCH<sub>3</sub>。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化水，破坏蛋白质胶体分子表面的水化层而使分子聚集沉淀。当蛋白沉淀后，立即分离蛋白和丙酮并复溶蛋白完成提取。丙酮在提取蛋白质中的主要作用是通过有机溶剂破坏蛋白质的水化层，降低介电常数 增强带电蛋白质分子的相互作用，促进蛋白颗粒的聚集沉淀。<br>丙酮要求低温操作且尽量缩短时间，避免蛋白变性。丙酮容易挥发。在提取大分子蛋白质时，TCA使蛋白沉淀之后，使用丙酮尽量将TCA抽提干净，</p>
-<h3 id="Acetonitrile-乙腈"><a href="#Acetonitrile-乙腈" class="headerlink" title="Acetonitrile 乙腈"></a>Acetonitrile 乙腈</h3><p>使用场景一：HPLC 实验中，ACN 可以与水分别作为流动相 B 与 A，用来洗脱不同种类的蛋白分子。<br>使用场景二：SDS-PAGE 胶，切下目的条带之后，加入ACN，无色透明的胶块会迅速失水，皱缩成白色不透明状。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="蛋白质组学实验 LC-MS&#x2F;MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？  Acetone 丙酮 使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。 丙酮是最简单的酮，化学式 CH3COCH3。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Proteomics | Common reagents and their functions in LC-MS&#x2F;MS proteomics">
+<meta property="og:url" content="http://example.com/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="蛋白质组学实验 LC-MS&#x2F;MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？  Acetone 丙酮 使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。 丙酮是最简单的酮，化学式 CH3COCH3。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-03T15:08:17.000Z">
+<meta property="article:modified_time" content="2021-03-04T06:04:42.196Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Proteomics | Common reagents and their functions in LC-MS/MS proteomics | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Proteomics | Common reagents and their functions in LC-MS/MS proteomics
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-03 23:08:17" itemprop="dateCreated datePublished" datetime="2021-03-03T23:08:17+08:00">2021-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-04 14:04:42" itemprop="dateModified" datetime="2021-03-04T14:04:42+08:00">2021-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>蛋白质组学实验 LC-MS/MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？</p>
+<h3 id="acetone-丙酮"><a class="markdownIt-Anchor" href="#acetone-丙酮"></a> Acetone 丙酮</h3>
+<p>使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。</p>
+<p>丙酮是最简单的酮，化学式 CH<sub>3</sub>COCH<sub>3</sub>。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化水，破坏蛋白质胶体分子表面的水化层而使分子聚集沉淀。当蛋白沉淀后，立即分离蛋白和丙酮并复溶蛋白完成提取。丙酮在提取蛋白质中的主要作用是通过有机溶剂破坏蛋白质的水化层，降低介电常数 增强带电蛋白质分子的相互作用，促进蛋白颗粒的聚集沉淀。<br />
+丙酮要求低温操作且尽量缩短时间，避免蛋白变性。丙酮容易挥发。在提取大分子蛋白质时，TCA使蛋白沉淀之后，使用丙酮尽量将TCA抽提干净，</p>
+<h3 id="acetonitrile-乙腈"><a class="markdownIt-Anchor" href="#acetonitrile-乙腈"></a> Acetonitrile 乙腈</h3>
+<p>使用场景一：HPLC 实验中，ACN 可以与水分别作为流动相 B 与 A，用来洗脱不同种类的蛋白分子。<br />
+使用场景二：SDS-PAGE 胶，切下目的条带之后，加入ACN，无色透明的胶块会迅速失水，皱缩成白色不透明状。</p>
 <p>乙腈（英语：Acetonitrile，又称氰基甲烷），化学式 CH<sub>3</sub>CN，英文缩写：ACN 或 AeCN。乙腈是无色的液体，是最简单的有机腈，并广泛用作极性非质子溶剂。对于 HPLC 级溶剂（我们在 HPLC 分析中应始终使用 HPLC 级溶液），<u>乙腈的吸光度在这两种溶剂中最低</u>，非常适合低紫外光分析。作为比较，甲醇在 205–210 nm 左右有较高的紫外光吸收值，在非常低的紫外光范围内略有限制。注意乙腈可以燃烧，并且有毒性。</p>
-<h3 id="Ammonium-acetate"><a href="#Ammonium-acetate" class="headerlink" title="Ammonium acetate"></a>Ammonium acetate</h3><p>乙酸铵是一个有机盐，分子式为CH<sub>3</sub>COONH<sub>4</sub>。</p>
-<h3 id="Ammonium-sulfate"><a href="#Ammonium-sulfate" class="headerlink" title="Ammonium sulfate"></a>Ammonium sulfate</h3><p>使用场景：在配制考马斯亮蓝染色液的时候，需要准备2% (wt/vol) phosphoric acid and 20% (wt/vol) ammonium sulfate 溶液。</p>
+<h3 id="ammonium-acetate"><a class="markdownIt-Anchor" href="#ammonium-acetate"></a> Ammonium acetate</h3>
+<p>乙酸铵是一个有机盐，分子式为CH<sub>3</sub>COONH<sub>4</sub>。</p>
+<h3 id="ammonium-sulfate"><a class="markdownIt-Anchor" href="#ammonium-sulfate"></a> Ammonium sulfate</h3>
+<p>使用场景：在配制考马斯亮蓝染色液的时候，需要准备2% (wt/vol) phosphoric acid and 20% (wt/vol) ammonium sulfate 溶液。</p>
 <p>硫酸铵，简称硫铵，又称硫酸铔，化学式为(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>，无色斜方晶体，易溶于水，水溶液为酸性。</p>
-<h3 id="Ammonium-hydrogen-carbonate-（ABC）"><a href="#Ammonium-hydrogen-carbonate-（ABC）" class="headerlink" title="Ammonium hydrogen carbonate （ABC）"></a>Ammonium hydrogen carbonate （ABC）</h3><p>使用场景： In-gel digestion 的 buffer，即 100 mM ABC</p>
+<h3 id="ammonium-hydrogen-carbonate-abc"><a class="markdownIt-Anchor" href="#ammonium-hydrogen-carbonate-abc"></a> Ammonium hydrogen carbonate （ABC）</h3>
+<p>使用场景： In-gel digestion 的 buffer，即 100 mM ABC</p>
 <p>碳酸氢铵 (Ammonium bicarbonate), 碳酸氢铵是氨的碳酸盐，分子式为NH<sub>4</sub>HCO<sub>3</sub>。用 Trypsin 酶解蛋白质时，碳酸氢氨的浓度应该是多少？酶解时碳酸氢氨的浓度一般在 10 ～ 50 mM 之间。碳酸氢氨的作用主要是提供一个碱性的水解环境，因为 Typsin 的活力在 pH8 ～ 9 之间最高。最常用的碳酸氢氨浓度有 20 mM ， 40 mM 。盐浓度过大时，后续的冻干过程中会有较多的盐析出；盐浓度过小时，则不能有效的提供碱性 pH 的水解环境（尤其是在样品的 pH 值低，而且体积大时）。</p>
-<h3 id="Ammonium-persulfate"><a href="#Ammonium-persulfate" class="headerlink" title="Ammonium persulfate"></a>Ammonium persulfate</h3><p>过硫酸铵（APS）是一种白色晶体，分子式为(NH<sub>4</sub>)<sub>2</sub>S<sub>2</sub>O<sub>8</sub>，具有强氧化性和腐蚀性，易溶于水。其干品具有良好的稳定性，保存在防潮箱中。聚丙烯酰胺（PAGE）是由丙烯酰胺聚合形成的高分子，这个聚合反应是自由基聚合，需要有引发剂产生自由基将反应引发过硫酸铵就是引发剂，而 TEMED 可以催化过硫酸铵产生自由基，从而加速丙烯酰胺凝胶的聚合。过硫酸铵配制成 10%溶液后，应当-20℃保存。同时应尽量减少室温存放时间，以防失效。保存不能超过两周。最好现配现用。</p>
-<h3 id="TCA-三氯乙酸"><a href="#TCA-三氯乙酸" class="headerlink" title="TCA 三氯乙酸"></a>TCA 三氯乙酸</h3><p>使用场景：用硫酸溶液破裂细胞核，释放组蛋白之后，加入 TCA 使组蛋白沉淀，为什么用 TCA 呢？</p>
+<h3 id="ammonium-persulfate"><a class="markdownIt-Anchor" href="#ammonium-persulfate"></a> Ammonium persulfate</h3>
+<p>过硫酸铵（APS）是一种白色晶体，分子式为(NH<sub>4</sub>)<sub>2</sub>S<sub>2</sub>O<sub>8</sub>，具有强氧化性和腐蚀性，易溶于水。其干品具有良好的稳定性，保存在防潮箱中。聚丙烯酰胺（PAGE）是由丙烯酰胺聚合形成的高分子，这个聚合反应是自由基聚合，需要有引发剂产生自由基将反应引发过硫酸铵就是引发剂，而 TEMED 可以催化过硫酸铵产生自由基，从而加速丙烯酰胺凝胶的聚合。过硫酸铵配制成 10%溶液后，应当-20℃保存。同时应尽量减少室温存放时间，以防失效。保存不能超过两周。最好现配现用。</p>
+<h3 id="tca-三氯乙酸"><a class="markdownIt-Anchor" href="#tca-三氯乙酸"></a> TCA 三氯乙酸</h3>
+<p>使用场景：用硫酸溶液破裂细胞核，释放组蛋白之后，加入 TCA 使组蛋白沉淀，为什么用 TCA 呢？</p>
 <p>TCA 化学式 CCl<sub>3</sub>COOH，其作用主要是在酸性条件下可与蛋白质形成不溶性盐。同时作为蛋白质变性剂使蛋白质构象发生改变，暴露出较多的疏水性基团，使之聚集沉淀。但是 TCA 可能渗入蛋白质分子内部而使之较难被完全除去，在电泳前样品加热处理时可能使蛋白质结构发生酸水解而形成碎片，所以在提取大分子蛋白质时要使用丙酮（Acetone）尽量将 TCA 抽提干净。</p>
-<h3 id="Acetic-acid-乙酸"><a href="#Acetic-acid-乙酸" class="headerlink" title="Acetic acid 乙酸"></a>Acetic acid 乙酸</h3><p>使用场景：SDS-PAGE胶脱色液，即考马斯亮蓝染色脱色液，配方为：40%乙醇，10%乙酸，50%蒸馏水。也可以使用其它适当的脱色液。</p>
+<h3 id="acetic-acid-乙酸"><a class="markdownIt-Anchor" href="#acetic-acid-乙酸"></a> Acetic acid 乙酸</h3>
+<p>使用场景：SDS-PAGE胶脱色液，即考马斯亮蓝染色脱色液，配方为：40%乙醇，10%乙酸，50%蒸馏水。也可以使用其它适当的脱色液。</p>
 <p>乙酸也叫做醋酸，化学式 CH<sub>3</sub>COOH，甲醇是为了更容易洗脱考马斯亮蓝，加得越多洗脱越容易，结合在蛋白上的染料也容易洗下来。冰乙酸是固定蛋白的，防止蛋白扩散。两者作用完全不同。</p>
-<h3 id="TFA-trifluoroacetic-acid-三氟乙酸"><a href="#TFA-trifluoroacetic-acid-三氟乙酸" class="headerlink" title="TFA (trifluoroacetic acid ) 三氟乙酸"></a>TFA (trifluoroacetic acid ) 三氟乙酸</h3><p>使用场景：组蛋白的 HPLC 纯化过程中，流动相 A 和 B 里面都会添加 0.1% TFA。</p>
+<h3 id="tfa-trifluoroacetic-acid-三氟乙酸"><a class="markdownIt-Anchor" href="#tfa-trifluoroacetic-acid-三氟乙酸"></a> TFA (trifluoroacetic acid ) 三氟乙酸</h3>
+<p>使用场景：组蛋白的 HPLC 纯化过程中，流动相 A 和 B 里面都会添加 0.1% TFA。</p>
 <p>三氟乙酸化学式 CF<sub>3</sub>COOH，在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸 (TFA) 作为离子对试剂是常见的手段。流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。三氟乙酸与多肽上的正电荷及极性基团相结合以减少极性保留，并把多肽带回到疏水的反相表面。以同样的方式，三氟乙酸屏蔽了固定相上残留的极性表面。三氟乙酸的行为可以理解为它滞留在反相固定相的表面，同时与多肽及柱床作用。三氟乙酸优于其他离子修饰剂的原因是它容易挥发，可以方便地从制备样品中除去。另一方面，三氟乙酸的紫外最大吸收峰低于 200 nm，对多肽在低波长处的检测干扰很小。改变三氟乙酸的浓度，可以细微地调整多肽在反相色谱上的选择性。这一影响对于优化分离条件、增大复杂色谱分析（如多肽的指纹图谱）的信息量是非常有益的。三氟乙酸添加在流动相中的浓度一般为 0.1%，在这个浓度下，大部分的反相色谱柱都可以产生良好的峰形，当三氟乙酸浓度大大低于这个水平时，峰的展宽和拖尾就变得十分明显。</p>
-<h3 id="FA-Formic-acid-甲酸"><a href="#FA-Formic-acid-甲酸" class="headerlink" title="FA (Formic acid) 甲酸"></a>FA (Formic acid) 甲酸</h3><p>使用场景：经过酶解和纯化的短肽，溶解于 0.1% FA 然后在 Orbitrap 质谱仪进行 LC-MS/MS 分析。</p>
+<h3 id="fa-formic-acid-甲酸"><a class="markdownIt-Anchor" href="#fa-formic-acid-甲酸"></a> FA (Formic acid) 甲酸</h3>
+<p>使用场景：经过酶解和纯化的短肽，溶解于 0.1% FA 然后在 Orbitrap 质谱仪进行 LC-MS/MS 分析。</p>
 <p>甲酸又称作蚁酸，化学式为HCOOH。在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸(TFA) 作为离子对试剂是常见的手段，流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。同时反相色谱与电喷雾质谱联用已成为多肽和蛋白质的分子量测定和结构分析的重要工具，但是含有三氟乙酸的流动相对质谱离子的产生具有抑制作用，一定程度上降低了液质联用技术的灵敏性和分析可靠性。目前常用的方法是降低流动相中 TFA 浓度， 达到降低这种抑制作用，但是也会造成色谱分析质量的降低；而如果用甲酸代替 TFA, 会造成色谱分离柱效降低，达不到理想的分离效果。本文采用双三元液相色谱系统 (DGLC)，充分利用双泵的优势，将两个泵分别作为流动相的输液泵和柱后溶液的传输泵，实现与质谱的全自动连接。采用 TFA-Fix 技术或者抑制器技术降低流动相中 TFA 对 MS 的离子产生的抑制作用，尤其是柱后抑制器技术大大提高了多肽样品在质谱上的灵敏度。</p>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/03/04/Proteomics-Protein-Persulfidation/">Proteomics | 蛋白质硫巯基化修饰</a><a class="next" href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/">R | Using ggrepel to repel overlapping text labels in ggplot2</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/" rel="prev" title="R | Using ggrepel to repel overlapping text labels in ggplot2">
+      <i class="fa fa-chevron-left"></i> R | Using ggrepel to repel overlapping text labels in ggplot2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/04/Proteomics-Protein-Persulfidation/" rel="next" title="Proteomics | 蛋白质硫巯基化修饰">
+      Proteomics | 蛋白质硫巯基化修饰 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#acetone-%E4%B8%99%E9%85%AE"><span class="nav-number">1.</span> <span class="nav-text"> Acetone 丙酮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acetonitrile-%E4%B9%99%E8%85%88"><span class="nav-number">2.</span> <span class="nav-text"> Acetonitrile 乙腈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ammonium-acetate"><span class="nav-number">3.</span> <span class="nav-text"> Ammonium acetate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ammonium-sulfate"><span class="nav-number">4.</span> <span class="nav-text"> Ammonium sulfate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ammonium-hydrogen-carbonate-abc"><span class="nav-number">5.</span> <span class="nav-text"> Ammonium hydrogen carbonate （ABC）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ammonium-persulfate"><span class="nav-number">6.</span> <span class="nav-text"> Ammonium persulfate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tca-%E4%B8%89%E6%B0%AF%E4%B9%99%E9%85%B8"><span class="nav-number">7.</span> <span class="nav-text"> TCA 三氯乙酸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#acetic-acid-%E4%B9%99%E9%85%B8"><span class="nav-number">8.</span> <span class="nav-text"> Acetic acid 乙酸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tfa-trifluoroacetic-acid-%E4%B8%89%E6%B0%9F%E4%B9%99%E9%85%B8"><span class="nav-number">9.</span> <span class="nav-text"> TFA (trifluoroacetic acid ) 三氟乙酸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fa-formic-acid-%E7%94%B2%E9%85%B8"><span class="nav-number">10.</span> <span class="nav-text"> FA (Formic acid) 甲酸</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

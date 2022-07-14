@@ -1,18 +1,1235 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2016/09/11/awk%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%B0%86%E6%95%B0%E5%AD%97%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5%E4%B9%8B%E5%90%8E%E8%BE%93%E5%87%BA%E6%95%B4%E6%95%B0/">Awk编程：将数字四舍五入之后输出整数</a></h1><div class="post-meta">2016-09-11</div><div class="post-content"><p> </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/10/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/10/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/05/12/Bioinfo-gene-names-were-converted-to-dates-in-excel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/12/Bioinfo-gene-names-were-converted-to-dates-in-excel/" class="post-title-link" itemprop="url">基因名称在Excel中显示成了日期的问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-05-12 18:14:55" itemprop="dateCreated datePublished" datetime="2017-05-12T18:14:55+08:00">2017-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Excel会自动把基因名称纠正为日期或者数字，这些错误很难被修正。例如，名为SEPT2和MARCH1的基因就会被Excel自动纠正为‘2-Sep ’和‘1-Mar’。此外，Excel还会自动将RIKEN标识符转化为浮点数字(比如将‘ 2310009E13’变成‘2.31E+13’)。 解决办法： 1 不要用excel直接打开文件，而是用导入数据功能。 启动Excel，在Excel功能栏里选择“数据”，然后点击“自文本”，选择目的文本文件。 <img src="https://genehub.files.wordpress.com/2017/05/qqe688aae59c9620170512181102.jpg" alt="QQ截圖20170512181102" /> 2选择文本文件，就会出来“文本导入向导”，点击有基因名称的那一列，数据格式选择“文本”即可。 <img src="https://genehub.files.wordpress.com/2017/05/qqe688aae59c9620170512181305.jpg" alt="QQ截圖20170512181305" />   <sub>END</sub></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/04/25/linux-transform-row-and-column/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/04/25/linux-transform-row-and-column/" class="post-title-link" itemprop="url">Linux中对文本的行与列进行转换</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-25 21:44:31" itemprop="dateCreated datePublished" datetime="2017-04-25T21:44:31+08:00">2017-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>命令： awk ‘{for(i=0;<ins>i&lt;=NF;)a[i]=a[i]?a[i] FS <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">i:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>i}END{for(i=0;i</ins>&lt;NF;)print a[i]}’  a.txt   Ref: <a target="_blank" rel="noopener" href="http://blog.csdn.net/reyleon/article/details/13018119">http://blog.csdn.net/reyleon/article/details/13018119</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/04/17/Linux-R-3-3-3-linux-redhat-without-root/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/04/17/Linux-R-3-3-3-linux-redhat-without-root/" class="post-title-link" itemprop="url">GCC与R 3.3.3升级与安装 — Linux (RedHat)无root 权限</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-17 22:36:04" itemprop="dateCreated datePublished" datetime="2017-04-17T22:36:04+08:00">2017-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-29 17:37:54" itemprop="dateModified" datetime="2020-12-29T17:37:54+08:00">2020-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="非root权限下安装gcc的方法"><a class="markdownIt-Anchor" href="#非root权限下安装gcc的方法"></a> 非root权限下安装gcc的方法</h3>
+<p>系统自带的GCC版本太低了（gcc version 4.4.7），不能够编译最新的 R 3.3.3</p>
+<p>首先在个人目录下安装了较新版本的GCC（gcc version 6.3.0），无需root权限。</p>
+<p>在安装GCC之前，必要条件是先要先依次安装gmp、mpfr和mpc。注意这三个软件configure的时候设定–with-gmp和–with-mpfr等参数。 然后安装GCC的命令是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/home/fenglei/local/ --with-mpc=/home/fenglei/local/ --with-mpfr=/home/fenglei/local/ --with-gmp=/home/fenglei/local/ --with-libelf=/home/fenglei/local/ --disable-multilib </span><br><span class="line">make -j 10 &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p><em>2017-04-17 备注：</em> Red hat 系统安装 gcc<br />
+make的时候报错，经过查询是路径问题。安装完上述三个依赖包后设置环境变量 $LD_LIBRARY_PATH，即在bashrc文件添加如下内容： 因为系统的LD_LIBRARY_PATH中有两个相邻的冒号，编译gcc的导致通不过，所以先把这个变量自己重新定义一下，然后将上面装的三个包添加到该变量中。</p>
+<p>bashrc中的内容</p>
+<p>找到动态链接库的路径<br />
+LD_LIBRARY_PATH=/xxx/xxx:/share/raid12/c-fenglei/local/lib<br />
+export LD_LIBRARY_PATH</p>
+<p>找到静态库的路径<br />
+LIBRARY_PATH=$LD_LIBRARY_PATH<br />
+export LIBRARY_PATH</p>
+<p>这样更新bashrc之后，顺利make -j 20 &amp;&amp; make install，测试gcc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) -bash-4.1$ gcc --version</span><br><span class="line">gcc (GCC) 9.1.0</span><br><span class="line">Copyright © 2019 Free Software Foundation, Inc.</span><br><span class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</span><br><span class="line">包括没有适销性和某一专用目的下的适用性担保。</span><br></pre></td></tr></table></figure>
+<p><em>2020-12-29 更新</em> CentOS 7 系统安装 gcc</p>
+<p>在一台机器上安装新版gcc，遇到问题：libiconv.so.2: cannot open shared object file<br />
+下载安装 <a target="_blank" rel="noopener" href="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz">libiconv</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make -j 20</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>在/etc/ld.so.conf中加一行/usr/local/lib，執行<code>ldconfig</code>，随后gcc就可以顺利make了。</p>
+<p>make的时候加上-j 20参数，大大减少等待的时间。否则安装的时候等挺长时间，差不多两个小时。</p>
+<p>make install 完成后，将下面的参数加入环境变量（编辑.bashrc文件）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/home/user/local/gcc-9.2.0/bin/:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/home/user/local/gcc-9.2.0/lib/:/home/user/local/gcc-9.2.0/lib64/:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+<p>测试gcc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost gnuplot-5.4.1]$ gcc --version</span><br><span class="line">gcc (GCC) 10.2.0</span><br><span class="line">Copyright (C) 2020 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+<h3 id="安装-r"><a class="markdownIt-Anchor" href="#安装-r"></a> 安装 R</h3>
+<p>（2020-12-29 备注：其实安装R还有另一个选项，通过conda安装，很方便，<code>conda install R</code> 一句话命令就安装好了。它自动解决依赖的其他程序，甚至都不需要关心gcc版本这些问题。）</p>
+<p>下面记录的是手动安装R的过程。(2017-04-17)</p>
+<p>随后开始准备安装R 3.3.3，下载了源码并在用户目录下安装，configure的过程遇到了缺失zlib、bzip2、xz、pcre、openssl和curl等问题。需要逐个下载并安装这些包。 在R的configure之前注意设定环境变量。具体如下。或者将其写入~/.bash_profile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD\_LIBRARY\_PATH=/home/fenglei/local/lib:/home/fenglei/local/lib64 export CFLAGS=&quot;-I/home/fenglei/local/include&quot; export LDFLAGS=&quot;-L/home/fenglei/local/lib&quot;</span><br></pre></td></tr></table></figure>
+<p>R的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/home/fenglei/local/ --enable-R-shlib make -j 10 &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>现在R终于可以启动了，然而在安装devtools等包的时候还是报错！错误信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ibssl.so.1.0.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>我猜想可能是openssl软件版本的问题，于是卸载openssl.1.1.0，安装openssl.1.0.0。然而编译openssl.1.0.0时还是报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POD document had syntax errors</span><br></pre></td></tr></table></figure>
+<p>参考网上的文章解决了该问题，网上（<a target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/20869.html">链接一</a>、<a target="_blank" rel="noopener" href="http://blog.csdn.net/zsl10/article/details/52145657">链接二</a>）的建议是删除 pod2man文件。我的解决方法是对pod2man文件进行了重命名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv  /usr/bin/pod2man  /usr/bin/pod2man~</span><br></pre></td></tr></table></figure>
+<p>这时候再启动R软件，还是不能安装devtools，想到curl包是依赖openssl的，那么重新安装openssl之后也同样需要重新安装curl。卸载原来的curl，并且重新安装。然后启动R ，终于可以安装git2r和devtools了！ 附安装zlib和bzip2等软件包的流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># step1:下载安装zlib </span><br><span class="line">$ wget http://www.zlib.net/zlib-1.2.11.tar.gz </span><br><span class="line">$ tar zlib-1.2.11.tar.gz $ cd zlib-1.2.11.tar.gz </span><br><span class="line">$ ./configure --prefix=/opt/packages </span><br><span class="line">$ make </span><br><span class="line">$ make install </span><br><span class="line"># step2:下载和安装bzip2： </span><br><span class="line"># bzip2不是标准的GNU包，根据下载的安装文件的说明文档，执行以下命令： </span><br><span class="line">$ wget http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz </span><br><span class="line">$ tar xzvf bzip2-1.0.6.tar.gz $ cd bzip2-1.0.6 </span><br><span class="line">$ make -f Makefile-libbz2\_so </span><br><span class="line">$ make clean </span><br><span class="line">$ make </span><br><span class="line">$ make install PREFIX=/opt/packages </span><br><span class="line"># 注意：这里下载完bzip2后，需要修改Makefile文件，在CFLAGS这个变量后面添加:-fPIC，否则后面安装R的时候会报错。 export CFLAGS=&quot;-fPIC -I/home/fenglei/local/include&quot; export LDFLAGS=&quot;-fPIC -L/home/fenglei/local/lib&quot; </span><br><span class="line"># step3:安装xz包： </span><br><span class="line">$ wget http://tukaani.org/xz/xz-5.2.2.tar.gz </span><br><span class="line">$ tar xzvf xz-5.2.2.tar.gz $ cd xz-5.2.2 </span><br><span class="line">$ ./configure --prefix=/opt/packages </span><br><span class="line">$ make -j3 $ make install # step4:安装pcre包： </span><br><span class="line">$ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz </span><br><span class="line">$ tar xzvf pcre-8.38.tar.gz $ cd pcre-8.38 </span><br><span class="line">$ ./configure --enable-utf8 --prefix=/opt/packages </span><br><span class="line">$ make -j3 </span><br><span class="line">$ make install OPENSSL ./config -fPIC --prefix=/home/fenglei/local/ enable-shared ./config -t make make install </span><br><span class="line"># 如何安装OPENSSL  http://www.jianshu.com/p/291294ad0ee7 </span><br><span class="line"># step5:安装curl包： </span><br><span class="line">$ wget --no-check-certificate http://curl.haxx.se/download/curl-7.51.0.tar.gz </span><br><span class="line">$ tar -zxf curl-7.51.0.tar.gz $ cd curl-7.51.0 $ ./configure --prefix=/opt/packages $ make -j3 </span><br><span class="line">$ make install </span><br><span class="line"># step6:设置安装好的包的环境变量，将下面命令写入~/.bash\_profile（这步重要）： </span><br><span class="line"># 前两个是“configure”过程需要用到的，后一个是安装R的“make”过程需要用到的。 </span><br><span class="line">export CFLAGS=&quot;-I/home/fenglei/local/include&quot; </span><br><span class="line">export LDFLAGS=&quot;-L/home/fenglei/local/lib&quot; </span><br><span class="line">LD_LIBRARY_PATH=/home/fenglei/local/lib:/home/fenglei/local/lib64</span><br></pre></td></tr></table></figure>
+<p>-END-</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/31/Linux-shell-find-files-based-on-their-edited-time/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/31/Linux-shell-find-files-based-on-their-edited-time/" class="post-title-link" itemprop="url">Linux shell: 对特定时间的文件执行操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-31 11:36:53" itemprop="dateCreated datePublished" datetime="2017-03-31T11:36:53+08:00">2017-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有时候目录下文件数目比较多，手动逐个操作费时费力，因此可以通过查找文件的生成时间找到这些文件，随后执行删除、转移等操作。 例如需要找到09点92分的文件并转移到tmp文件夹： for filename in `ls`; do if [ `date -r $filename +%H%M` == “0952” ]; then mv $filename ./tmp; fi; done</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/01/%E8%BD%AC%EF%BC%9A%E7%80%9A%E6%B5%B7%E5%B8%B8%E9%9D%92%E6%A0%91%E6%B2%99%E5%86%AC%E9%9D%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/01/%E8%BD%AC%EF%BC%9A%E7%80%9A%E6%B5%B7%E5%B8%B8%E9%9D%92%E6%A0%91%E6%B2%99%E5%86%AC%E9%9D%92/" class="post-title-link" itemprop="url">转：瀚海常青树沙冬青</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-01 15:38:17" itemprop="dateCreated datePublished" datetime="2017-03-01T15:38:17+08:00">2017-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>瀚海常青树沙冬青</p>
+<p>2010-10-15 编辑： 【大 中 小】</p>
+<p>自落叶阔叶树种称霸北方大地后，北方的冬天就增添了一片萧煞的沉闷，与绿色的南方形成鲜明的对比。 然而，我国北方的沙漠中，却独有一种常绿的阔叶木本植物，它叫做沙冬青。一听名字，就知道是沙漠中冬天仍保持绿色的植物。 沙冬青是豆科的一个属，生长在我国西北荒漠、半荒漠地区的沙冬青，只有两个种。一种叫蒙古沙冬青，主要分布在内蒙古的库布齐沙带、乌兰布和沙漠、腾格里沙漠；另一种叫新疆沙冬青，又叫矮沙冬青或小沙冬青，仅分布在我国新疆喀什地区的康苏一带，数量已经很少，已处于绝灭状态，被列为国家二级重点保护植物。沙冬青与胡杨一样，是第三纪的古老植物，在地球上已经存在了几千万年，也有“活化石”之称。 蒙古沙冬青高1~1.5米，叶片肥厚，常年保持绿色，不过冬天的绿略有一些灰暗。它从4月进入花期后，花期长近两个月，为中型花，色泽金黄。初夏时间，满树金黄花的沙冬青，点缀在无垠的沙海中，令人留连忘返。由于沙冬青常绿、花艳的特点，除可用于治理、美化沙漠外，也可作为一种观赏价值很高的树种应用于城市的园林建设，特别是作为绿篱使用。当你倘佯在金黄的绿萌夹道中时，一定会有心旷神怡的感觉。 过去，沙冬青被称为“不挪窝的植物”，生长再好，移植后很快就会死亡，为此影响了它在庭院中的应用。经过科学家们的努力，沙冬青带土移植已宣告成功，沙冬青由沙漠走向城市很快就会实现了。 新疆沙冬青却没有蒙古沙冬青好侍弄，它的身高不过50厘米，而且对原生地的留恋远超出蒙古沙冬青。迁地保护，并发展人工种群大约也是防止它的灭绝的唯一途径。目前，在新疆吐鲁番沙漠植物园已经有了新疆沙冬青的身影。我们想，新疆沙冬青告别过去，走向新生终究会实现。它会像它的兄弟蒙古沙冬青一样，既为生物多样性的保护尽到自己的职责，又为美化人们的生活做出自己的奉献。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/01/Plant-endangered-plants-in-China/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/03/01/Plant-endangered-plants-in-China/" class="post-title-link" itemprop="url">转：国家重点保护野生植物名录介绍</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-03-01 15:36:02" itemprop="dateCreated datePublished" datetime="2017-03-01T15:36:02+08:00">2017-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:46:12" itemprop="dateModified" datetime="2020-12-08T11:46:12+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>国家重点保护野生植物名录介绍   国家重点保护野生植物是指受国家法律重点保护的野生植物。1984年7月24日国务院环境保护委员会公布《中国珍稀濒危保护植物名录》，目的是对我国的珍稀濒危植物予以正式确认，进行重点保护。该名录共列出濒危、渐危、稀有植物354种，并分别规定了每种植物的保护级别。其中一级保护的8种，二级保护的143种，三级保护的203种。虽然该目录第一次对我国的珍稀濒危植物进行了确认和保护，但是并没有相应的法律来规范和保护。 直到1996年9月30日，我国第一部专门保护野生植物的行政法规——《中华人民共和国野生植物保护条例》由国务院正式发布，并于1997年1月1日起实施。才真正意义上有了保护野生植物的法律规范。在该条例中野生植物种类按其濒危稀有程度和其价值，仅分为国家一级和二级保护植物。 国家一级和二级保护植物由《国家重点保护野生植物名录》确定，是《中华人民共和国野生植物保护条例》的具体保护和管理对象。1999年8月4日，《国家重点保护野生植物名录（第一批）》由国务院正式批准公布，这是我国野生植物保护管理工作的一个里程碑，标志着此项工作纳入法制化轨道，意义重大。 该名录是由我国野生植物行政主管部门国家林业总局和农业部共同组织制定的，共列植物419种和13类（指种以上分类等级），其中一级保护的67种和4类，二级保护的352种和9类，受国家重点保护的野生植物一共约有1900种。 由于国家林业总局、农业部对《国家重点保护野生植物名录》所列物种的分管意见尚需协商，因此将分批上报、公布。现经国务院批准公布的只是分管意见一致的《国家重点保护野生植物名录（第一批）》，共列植物246种和8类。2001年8月4日，农业部、国家林业局发布第53号令，将念珠藻科的发菜保护级别由二级调整为一级。其余物种多属经济价值较高、资源破坏严重的种类（如人参、杜仲、甘草、肉苁蓉、五味子、牡丹组、黄连属、兰科等），待两部门协商分管意见后，将作为《国家重点保护野生植物名录（第二批）》再上报国务院批准公布。为了加强生物多样性保护，2011年国家林业总局“林办发[2011]1号”文件再次提出要推动《国家重点保护野生植物名录（第二批）》的调整和颁布。该名录有望近期得到国务院的批准公布。 《国家重点保护野生植物名录（第一批）》和《国家重点保护野生植物名录（第二批）》所批准或建议的物种可在中国科学院植物研究所建立的“中国植物主题数据库”国家重点保护野生植物名录（第一批和第二批）子数据库中查询：<a target="_blank" rel="noopener" href="http://www.plant.csdb.cn/protectlist">http://www.plant.csdb.cn/protectlist</a> 此外许多地方政府为了保护地方特有的野生植物，也制定了地方性野生动植物保护法规，公布了地方性的“重点保护野生植物名录”或“重点保护野生动植物名录”。如浙江省人民政府制定的《浙江省野生植物保护办法》，北京市人民政府批准的《北京市重点保护野生植物名录》等。 （植物分类学研究组 杜诚）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/11/21/R-map-of-China/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/11/21/R-map-of-China/" class="post-title-link" itemprop="url">R：绘制中国地图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-11-21 17:43:17" itemprop="dateCreated datePublished" datetime="2016-11-21T17:43:17+08:00">2016-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:32:08" itemprop="dateModified" datetime="2020-12-08T11:32:08+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转自：<a target="_blank" rel="noopener" href="http://cos.name/2009/07/drawing-china-map-using-r/">http://cos.name/2009/07/drawing-china-map-using-r/</a> 鉴于最近有不少人在讨论用R软件绘制地图的问题，我也就跟着凑了凑热闹，对相应的方法学习了一番。下面的这篇文章是一个初步的介绍，还有很多内容仍在学习和探索中，如果大家有什么意见或建议，我将根据自己学习的情况对文章进行进一步的补充。 在R中绘制地图其实是十分方便的，最直接的办法大概就是安装<code>maps</code>和<code>mapdata</code>这两个包，然后输入下面的命令：</p>
+<p>library(maps)<br />
+library(mapdata)<br />
+map(“china”)</p>
+<p>其中<code>map()</code>函数还可以加上很多参数，在这里就不一一详述，具体的用法只需问号之。然而仔细看一看这张地图你会发现重庆市和四川省仍然是浑然一体，可见该地图的数据应该是有些年头了。 幸运的是，通过<a target="_blank" rel="noopener" href="http://yihui.name/cn/2007/09/china-map-at-province-level/" title="终于搞定了中国分省市地图">谢益辉的这篇博文</a>我们已经可以大体知道该如何操作了，下面就为大家介绍一下具体的步骤。 首先，从<a target="_blank" rel="noopener" href="http://cos.name/wp-content/uploads/2009/07/chinaprovinceborderdata_tar_gz.zip">这里</a>下载中国地图的GIS数据，这是一个压缩包，完全解压后包含三个文件（bou2_4p.dbf、bou2_4p.shp和bou2_4p.shx），将这三个文件解压到同一个目录下，并在R中设好相应的工作空间，然后安装<code>maptools</code>包，运行如下程序：</p>
+<p>library(maptools);<br />
+x=read.shape(‘bou2_4p.shp’);#下文中会继续用到x这个变量，<br />
+#如果你用的是其它的名称，<br />
+#请在下文的程序中也进行相应的改动。<br />
+plot(x);</p>
+<p>【修改】新版本的maptools包不再提供read.shape()函数，请用readShapePoly()代替。 这时一张完整的中国地图就已经画好了。但是在实际使用的过程中，我们往往会根据自己的需要对地图中的某些省份着以特定的颜色，这时就可以通过调节<code>plot</code>命令中的<code>fg</code>参数来予以实现。然而为了清楚地说明这部分的内容，我需要插播一段R绘制地图的原理。 ==<mark><mark><mark><mark><mark><mark><mark><mark><mark><mark>传说中的分割线</mark></mark></mark></mark></mark></mark></mark></mark></mark></mark>= 在绘制地图时，每一个省市自治区或者岛屿都是用一个多边形来表示的。之前的GIS数据，其实就是提供了每一个行政区其多边形逐点的坐标，然后R软件通过顺次连接这些坐标，就绘制出了一个多边形区域。在上面的数据中，一共包含了925个多边形的信息，之所以有这么多是因为一些省份有很多小的附属岛屿。在这925个多边形中，每一个都对应一个唯一的ID，编号分别从1到925。 ==<mark><mark><mark><mark><mark><mark><mark><mark><mark><mark>传说中的分割线</mark></mark></mark></mark></mark></mark></mark></mark></mark></mark>= 回到刚才的话题，<code>plot</code>命令中的<code>fg</code>参数在本例中应该是一个长度为925的向量，其第i个分量的取值就代表了地图中第i个多边形的颜色。一个简单的尝试是运行下面这个命令看看效果：</p>
+<p>plot(x,fg=gray(924:0/924));</p>
+<p>【修改】新版本的<code>maptools</code>包的绘图参数也有所改变，请将<code>fg</code>换成<code>col</code>。 于是自然就产生了一个问题：如何获取某一个特定地区的ID，进而设置我们想要的颜色？事实上，在变量x中，就已经存储了我们想要的信息。在R中输入“<code>x[[2]]</code>”或“<code>x$att.data</code>”，会得到一个925行7列的数据框，这其实是bou2_4p.dbf这个文件中存储的信息，之前的<code>read.shape()</code>函数虽然读取的是bou2_4p.shp文件，但在默认情况下会把dbf文件的信息也放到变量之中。对于这个数据框，其行名就是每一个区域的ID编号，第一列和第二列分别是面积和周长，最后一列是该区域所属的行政区名，其它的列应该也是一些编号性质的变量。于是，通过查找相应的行政区对应的行名，就可以对<code>fg</code>参数进行赋值了。下面是我编的一个函数，用来生成所需的<code>fg</code>向量：</p>
+<p>getColor=function(mapdata,provname,provcol,othercol)<br />
+{<br />
+f=function(x,y) ifelse(x %in% y,which(y==x),0);<br />
+colIndex=sapply(mapdata<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">att.data</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>NAME,f,provname);<br />
+fg=c(othercol,provcol)[colIndex+1];<br />
+return(fg);<br />
+}</p>
+<p>【修改】地图数据的组织形式有所变化，上面函数中的<code>mapdata$att.data$NAME</code>需要替换为<code>mapdata@data$NAME</code>。 其中<code>mapdata</code>是存放地图数据的变量，在上面的例子中就是x，<code>provname</code>是需要改变颜色的地区的名称，<code>provcol</code>是对应于<code>provname</code>的代表颜色的向量（名称和数字均可），<code>othercol</code>是其它地区的颜色。举例如下：</p>
+<p>provname=c(“北京市”,“天津市”,“上海市”,“重庆市”);<br />
+provcol=c(“red”,“green”,“yellow”,“purple”);<br />
+plot(x,fg=getColor(x,provname,provcol,“white”));</p>
+<p><img src="http://cos.name/wp-content/uploads/2009/07/map00-e1262748931991.png" alt="map00" title="map00" /> 注意<code>provname</code>一定要写地区的全称，写法可以参照下面这条命令生成的向量：</p>
+<p>as.character(na.omit(unique(x<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">att.data</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>NAME)));</p>
+<p>由此生成的向量有33个元素，少了澳门特别行政区，这是这个数据中的一块瑕疵。在<code>x$att.data</code>的第899行有一个<code>NA</code>，不知道它代表的是否就是澳门。 利用类似的方法就可以根据自己的需要对不同的区域进行着色，下面再举一例。从国家统计局获取2007年我国各地区的人口数据，然后根据人口的多少对各省份进行着色。程序如下：</p>
+<p>provname=c(“北京市”,“天津市”,“河北省”,“山西省”,“内蒙古自治区”,<br />
+“辽宁省”,“吉林省”,“黑龙江省”,“上海市”,“江苏省”,<br />
+“浙江省”,“安徽省”,“福建省”,“江西省”,“山东省”,<br />
+“河南省”,“湖北省”,“湖南省”,“广东省”,<br />
+“广西壮族自治区”,“海南省”,“重庆市”,“四川省”,“贵州省”,<br />
+“云南省”,“西藏自治区”,“陕西省”,“甘肃省”,“青海省”,<br />
+“宁夏回族自治区”,“新疆维吾尔自治区”,“台湾省”,<br />
+“香港特别行政区”);<br />
+pop=c(1633,1115,6943,3393,2405,4298,2730,3824,1858,7625,<br />
+5060,6118,3581,4368,9367,9360,5699,6355,9449,<br />
+4768,845,2816,8127,3762,4514,284,3748,2617,<br />
+552,610,2095,2296,693);<br />
+provcol=rgb(red=1-pop/max(pop)/2,green=1-pop/max(pop)/2,blue=0);<br />
+plot(x,fg=getColor(x,provname,provcol,“white”),xlab=“”,ylab=“”);</p>
+<p><a target="_blank" rel="noopener" href="http://cos.name/wp-content/uploads/2009/07/map01.png"><img src="http://cos.name/wp-content/uploads/2009/07/map01-e1262748729327.png" alt="map01" title="map01" /></a> 其中颜色越深的地方代表人口数越多，反之为人口数越少。 此外，在绘制地图的过程中，还有一个比较有用的参数是<code>recs</code>，它是一个由多边形ID组成的向量，表示在地图中只画出这些ID所代表的区域。利用这个参数，就可以画出某一部分的地图，例如下面的例子是我国中部六省的地图：</p>
+<p>getID=function(mapdata,provname)<br />
+{<br />
+index=mapdata<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>t</mi><mi>t</mi><mi mathvariant="normal">.</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">att.data</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">t</span><span class="mord">.</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>NAME %in% provname;<br />
+ids=rownames(mapdata$att.data[index,]);<br />
+return(as.numeric(ids));<br />
+}<br />
+midchina=c(“河南省”,“山西省”,“湖北省”,“安徽省”,“湖南省”,“江西省”);<br />
+plot(x,recs=getID(x,midchina),fg=“green”,ol=“white”,xlab=“”,<br />
+ylab=“”);</p>
+<p><img src="http://cos.name/wp-content/uploads/2009/07/map02-e1262748890424.png" alt="map02" title="map02" /> 上面的<code>getID()</code>是我编写的一个功能与<code>getColor()</code>类似的函数，用来返回指定省份的ID。 【修改】新版本的<code>maptools</code>包的绘图函数已经取消了<code>recs</code>这个参数，现在要实现这个功能，可以在颜色上把不需要的省份变成白色，其中填充色用<code>col</code>参数，边界颜色用<code>border</code>参数。例如上面的例子可以用下面的函数来实现：</p>
+<p>plot(x, col = getColor(x, midchina, rep(“green”, 6),<br />
+“white”), border = “white”, xlab = “”, ylab = “”)</p>
+<p>最后要说的是，在画出的图上仍然可以用<code>points()</code>函数和<code>text()</code>函数加上点和文字，而<code>maptools</code>包中还提供了一个<code>pointLabel()</code>函数，用来解决文本标签的重叠问题。这部分内容请参阅博文：<a target="_blank" rel="noopener" href="http://yihui.name/cn/2008/10/china-map-and-city-locations-with-r/">用R画中国地图并标注城市位置</a>，以及<a target="_blank" rel="noopener" href="http://yihui.name/cn/2008/10/avoid-label-overlap-pointlabel-in-maptools/">避免文本标签重叠：maptools中的pointLabel()</a>。 从以上的内容来看，本文所述的都是一些最基本的绘图方法，还没有对地理信息数据进行更进一步的分析。如果有机会的话，这一主题的下一篇文章将为大家介绍地图数据的组成结构，并说明如何将不同格式的地理数据整合起来，例如如何在上面的地图上绘制出我国的铁路、水系分布等内容。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/10/27/%E9%BC%A0%E6%A0%87%E5%9C%A8%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%87%BA%E7%8E%B0%E5%9B%9E%E6%BB%9A%E7%8E%B0%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/10/27/%E9%BC%A0%E6%A0%87%E5%9C%A8%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%87%BA%E7%8E%B0%E5%9B%9E%E6%BB%9A%E7%8E%B0%E8%B1%A1/" class="post-title-link" itemprop="url">鼠标在谷歌浏览器中出现回滚现象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-10-27 10:08:01" itemprop="dateCreated datePublished" datetime="2016-10-27T10:08:01+08:00">2016-10-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>刚买不久的罗技M275无线鼠标，最近使用谷歌浏览器，用滑动鼠标滚轮使页面上下移动的时候总出现回滚现象。简直不能忍。 网上搜索之后，有人说是受潮了。我想有可能，因为之前鼠标一直放在干燥的办公室中，最近确实带回家用过两天，广东的气候本来就潮湿，家里由于没有抽湿系统，东西十分容易受潮。于是用吹风机对着鼠标吹到发热，结果冷下来之后也没有解决问题。 我怀疑是不是几周前摔到地上摔坏了内部零件，想拆开鼠标看看，结果还不知道怎么拆，因为看不到螺丝孔。谷歌一搜索logitech M280（M275的升级款），首先看到有人在抱怨同样的问题，另外看到了Youtube上面有M280拆开的视频：原来拿下电池之后，有一张塑料标签纸，要把塑料标签纸揭掉，方才看到螺丝。于是顺利拆开，发现并无损坏。这下咋办，先放到实验室的硅胶干燥剂中干燥一下。过会儿拿出来组装完毕，问题仍然没有解决，鼠标滚轮依然有回滚现象。 只能继续在网上搜索一下，有人说是谷歌浏览器的设置问题，如下摘录的文字所示，进入特定的设置页面，将“平滑滚动 ”设置为关闭，马上就恢复正常了！</p>
+<hr />
+<p>参考：<a target="_blank" rel="noopener" href="https://ii-i.org/archives/875">https://ii-i.org/archives/875</a> 在更新谷歌浏览器Chrome 49版本后，默认的是开启了平滑滚动功能的，这个平滑滚动有的朋友喜欢，有的朋友不喜欢，如果你需要停用平滑滚动功能，只需要在下面这个页面停用即可。 <code>chrome://flags/#disable-smooth-scrolling</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/10/11/R-using-r-to-draw-heatmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/10/11/R-using-r-to-draw-heatmap/" class="post-title-link" itemprop="url">R：Using R to draw Heatmap</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-10-11 21:31:44" itemprop="dateCreated datePublished" datetime="2016-10-11T21:31:44+08:00">2016-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:45:29" itemprop="dateModified" datetime="2020-12-08T11:45:29+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1-heatmap"><a class="markdownIt-Anchor" href="#1-heatmap"></a> #1 heatmap</h4>
+<p><a target="_blank" rel="noopener" href="http://blog.qiubio.com:8080/archives/2477">http://blog.qiubio.com:8080/archives/2477</a></p>
+<h4 id="2-heatmap2-需要安装gplots包"><a class="markdownIt-Anchor" href="#2-heatmap2-需要安装gplots包"></a> #2 heatmap.2 【需要安装gplots包】</h4>
+<p><a target="_blank" rel="noopener" href="https://www.r-bloggers.com/r-heatmaps-with-gplots/">https://www.r-bloggers.com/r-heatmaps-with-gplots/</a></p>
+<h4 id="3-d3heatmap-可以生成web交互图"><a class="markdownIt-Anchor" href="#3-d3heatmap-可以生成web交互图"></a> #3 d3heatmap 【可以生成Web交互图】</h4>
+<p><a target="_blank" rel="noopener" href="https://blog.rstudio.org/2015/06/24/d3heatmap/">https://blog.rstudio.org/2015/06/24/d3heatmap/</a></p>
+<h4 id="4-pheatmap-全称pretty-heatmap生成的图片比较好看"><a class="markdownIt-Anchor" href="#4-pheatmap-全称pretty-heatmap生成的图片比较好看"></a> #4 pheatmap 【全称pretty heatmap，生成的图片比较好看】</h4>
+<p><a target="_blank" rel="noopener" href="http://blog.sciencenet.cn/blog-1334016-932200.html">http://blog.sciencenet.cn/blog-1334016-932200.html</a></p>
+<h4 id="5-ggplot2"><a class="markdownIt-Anchor" href="#5-ggplot2"></a> #5 ggplot2</h4>
+<p><a target="_blank" rel="noopener" href="https://learnr.wordpress.com/2010/01/26/ggplot2-quick-heatmap-plotting/">https://learnr.wordpress.com/2010/01/26/ggplot2-quick-heatmap-plotting/</a> <strong>#6 ComplexHeatmap</strong> 可以对热图进行2D的注释，绘制用于注释的框线图、曲线图等。 <a target="_blank" rel="noopener" href="http://blog.qiubio.com:8080/archives/4232">http://blog.qiubio.com:8080/archives/4232</a> <strong>#7 heatmap3</strong> 可以对heatmap的每一个单元格做出特殊的标记，并且对行和列加上2D的基本注释图像 <strong>#8 heatPlus</strong> 可以对行和列进行多种不同数据类型的注释，也就是说对行或者列可以绘制2D的基本注释图像，比如说曲线，点图，以及histograms等 <strong>#9 heatmaply</strong> heatmaply是基于plotly的热图包。<a target="_blank" rel="noopener" href="https://plot.ly/javascript/">plotly.js</a> 是一个基于javascript的强大的交互绘图包。 <strong>#10 fields</strong>   #11</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/09/11/Linux-awk-how-to-print-int-number/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/11/Linux-awk-how-to-print-int-number/" class="post-title-link" itemprop="url">Awk编程：将数字四舍五入之后输出整数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-11 12:33:25" itemprop="dateCreated datePublished" datetime="2016-09-11T12:33:25+08:00">2016-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p></p>
 <ol>
-<li> awk ‘{print int($1+0.5)}’ file</li>
+<li>awk ‘{print int($1+0.5)}’ file</li>
 </ol>
-<p><em>复制代码</em></p></div><p class="readmore"><a href="/2016/09/11/awk%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%B0%86%E6%95%B0%E5%AD%97%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5%E4%B9%8B%E5%90%8E%E8%BE%93%E5%87%BA%E6%95%B4%E6%95%B0/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/09/06/mysql%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/">MYSQL的安装与启动</a></h1><div class="post-meta">2016-09-06</div><div class="post-content"><p>备注：本文转载至blog.shenwei.me 此处仅做备份之用。</p>
-<hr>
-<p>  如何在linux中无root权限安装MySQL。 <strong>约定</strong> 我的MySQL将安装在下面的目录，将设置默认端口号为33060（可任意，必须大于1024，且不能其它软件冲突）。</p></div><p class="readmore"><a href="/2016/09/06/mysql%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/08/26/%E6%8B%9F%E5%8D%97%E8%8A%A5/">拟南芥</a></h1><div class="post-meta">2016-08-26</div><div class="post-content"><p>神奇的模式植物–拟南芥</p>
-<p>　　拟南芥与油菜、萝卜、卷心菜等同为十字花科植物，向下细分为鼠耳芥属。拟南芥又名鼠耳芥、阿拉伯芥、阿拉伯草，拉丁文名为Arabidopsis thaliala (L.) Heynh。拟南芥作为一种草本植物广泛分布于欧亚大陆和非洲西北部。在我国的<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E5%86%85%E8%92%99" title="内蒙">内蒙</a>、新疆、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E9%99%95%E8%A5%BF" title="陕西">陕西</a>、甘肃、西藏、山东、江苏、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E5%AE%89%E5%BE%BD" title="安徽">安徽</a>、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E6%B9%96%E5%8C%97" title="湖北">湖北</a>、四川、云南等省区均有生长。我国古人常将身边的一些卑微、低贱之物“视若草芥”，拟南芥早先也就是一种无声无息、名不见经传的小草。拟南芥既不好吃、也不好看，对人类毫无经济价值。但近一百年来，随着生物学和经典遗传学的蓬勃发展，科学家们逐渐注意到它的研究价值。长期以来，科学家一直希望在植物中找到像动物中的黑腹果蝇（Drosophila melanogaster）那样繁殖快、易于在实验室培养、适于遗传操作的实验材料，进而从根本上改变植物遗传学研究的长期落后状况。   拟南芥植株较小（一个8cm见方的培养钵可种植4-10株）、生长周期短（从发芽到开花约4-6周）、结实多（每株植物可产生数千粒种子）。拟南芥的形态特征分明（图1），莲座叶着生在植株基部，呈倒卵形或匙形；茎生叶无柄，呈批针形或线形。侧枝着生在叶腋基部，主茎及侧枝顶部生有总状花序，四片白色匙形花瓣，四强雄蕊。长角果线形，长约1-1.5cm，每个果荚可着生50-60粒种子。  </p></div><p class="readmore"><a href="/2016/08/26/%E6%8B%9F%E5%8D%97%E8%8A%A5/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/08/22/2015%E5%B9%B4%E5%BA%A6%E6%A4%8D%E7%89%A9%E5%AD%A6%E7%A7%91%E6%9D%82%E5%BF%97%E7%9A%84%E5%BD%B1%E5%93%8D%E5%9B%A0%E5%AD%90top50/">2015年度植物学科杂志的影响因子Top50</a></h1><div class="post-meta">2016-08-22</div><div class="post-content"><p> </p>
-<p>排名</p>
-<p>期刊名</p>
-<p>IF2015</p>
-<p>IF2015-5Y</p></div><p class="readmore"><a href="/2016/08/22/2015%E5%B9%B4%E5%BA%A6%E6%A4%8D%E7%89%A9%E5%AD%A6%E7%A7%91%E6%9D%82%E5%BF%97%E7%9A%84%E5%BD%B1%E5%93%8D%E5%9B%A0%E5%AD%90top50/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/07/29/%E5%B1%95%E7%A4%BAdna%E5%BA%8F%E5%88%97%E5%A4%9A%E7%A7%8D%E6%AF%94%E5%AF%B9%EF%BC%88color-align-conservation%EF%BC%89/">展示DNA序列多种比对（Color Align Conservation）</a></h1><div class="post-meta">2016-07-29</div><div class="post-content"><p><img src="https://genehub.files.wordpress.com/2016/07/qq20160729-0.png" alt="QQ20160729-0"> 方法一、clustalx比对之后输出*.aln格式的比对序列，导入DNAman进行画图。 方法二、clustalx比对之后输出*.fasta格式的比对序列，导入在线网站进行画图：<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms2/color/_align/_cons.html">http://www.bioinformatics.org/sms2/color\_align\_cons.html</a></p></div><p class="readmore"><a href="/2016/07/29/%E5%B1%95%E7%A4%BAdna%E5%BA%8F%E5%88%97%E5%A4%9A%E7%A7%8D%E6%AF%94%E5%AF%B9%EF%BC%88color-align-conservation%EF%BC%89/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/">学习笔记：使用MEGA构建进化树</a></h1><div class="post-meta">2016-07-25</div><div class="post-content"><p>参考资料： <a target="_blank" rel="noopener" href="http://mbe.oxfordjournals.org/content/early/2013/03/13/molbev.mst012.full">Building Phylogenetic Trees from Molecular Data with MEGA</a> 如果需要对某个基因做进化树，首先需要得到其homologues，MEGA自带的blast可以做，提取fasta格式文件并作整理，序列名称遵循一定的规范，去掉其中多余字符。 导入序列之后，MEGA的菜单里alignment选项下有两个工具可以选择：clustal和muscle。推荐muscle，我经过实验测试发现muscle速度更快。如果比对的是编码基因的核酸序列，可见两个选项：<strong>Align DNA</strong> and <strong>Align Codons，</strong>就必须选择后者，即以氨基酸编码的顺序进行比对。 比对完毕的序列，缺口处会以“-”显示，可另存为*.meg格式的文件，或导出为新的fasta文件。随后在file选项下点击phylogenetic analysis，进入进化分析界面。在phylogeny选项下，有各种树选择：NJ、ML、MP等。 文中例子：构建MP树时候，有一个选项是是否选择删除所有的含有gap的column，文章作者认为不必要全部删除，有的可以留下。原文表述：<strong>Gaps/Missing Data Treatment</strong> determines how gaps are handled.<strong>Complete deletion</strong> means that MEGA5 ignores all columns in which there is a gap in any sequence. Unless there are very few gaps, that option can lose a lot of information because it removes a lot of sites from consideration. I prefer the <strong>Partial Deletion</strong> option in which sites with missing data are removed only as the need arises because that option retains more information.</p></div><p class="readmore"><a href="/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/06/27/preqc-of-sga/">Preqc of SGA</a></h1><div class="post-meta">2016-06-27</div><div class="post-content"><p>[Copied from <a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ\]">https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ\]</a></p></div><p class="readmore"><a href="/2016/06/27/preqc-of-sga/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/06/14/t%E6%A3%80%E9%AA%8C%E4%B8%AD%EF%BC%8C%E5%8D%95%E5%B0%BE%E5%92%8C%E5%8F%8C%E5%B0%BE%EF%BC%8C%E6%88%90%E5%AF%B9%E3%80%81%E7%AD%89%E6%96%B9%E5%B7%AE%E5%92%8C%E5%BC%82%E6%96%B9%E5%B7%AE%E7%9A%84%E5%B7%AE/">T检验中，单尾和双尾，成对、等方差和异方差的差异</a></h1><div class="post-meta">2016-06-14</div><div class="post-content"><p>        在做数据检验的时候，通常先要检验数据是否正态，因为正态分布下有非常详尽的理论基础，用起来非常方便，如果数据不服从正态分布怎么办呢？此时就可以用非参数检验，是基于秩（其实就是序号啦）的，也有很多种方法。你可能会问：不管数据是否正态，是否都能用非参数检验呢，其实也是可以的，不过正态下用非参数检验的话，检验功效就不如参数方法了。如果你不知道什么是检验功效的话就去查一查概率统计的课本。为了有较高的检验功效，非正态数据就用非参数方法，正态数据就用参数方法。 至于该做双尾还是单尾检验，是可以根据问题的实际意义进行判断的，如果不好判断就画画散点图，看一个是否明显在另一个之上或之下。 至于方差的要求那是因为在正态分布下，等方差会省去很多麻烦，所以通常假定方差相等，相关的检验理论也非常完善。如果你不知道方差到底是否相等，可以做检验，最直观的方法就是绘制箱线图，或计算样本标准差。</p></div><p class="readmore"><a href="/2016/06/14/t%E6%A3%80%E9%AA%8C%E4%B8%AD%EF%BC%8C%E5%8D%95%E5%B0%BE%E5%92%8C%E5%8F%8C%E5%B0%BE%EF%BC%8C%E6%88%90%E5%AF%B9%E3%80%81%E7%AD%89%E6%96%B9%E5%B7%AE%E5%92%8C%E5%BC%82%E6%96%B9%E5%B7%AE%E7%9A%84%E5%B7%AE/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/06/09/%E8%BF%9B%E5%8C%96%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90%EF%BC%9Akaks%E6%AF%94%E7%8E%87/">生物进化之选择压力分析：Ka/Ks比率</a></h1><div class="post-meta">2016-06-09</div><div class="post-content"><h3 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a><strong>背景知识</strong></h3><p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Genetics" title="Genetics">genetics</a>, the <strong>Ka/Ks ratio</strong> is an indicator of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Selective_pressure" title="Selective pressure">selective pressure</a> (the force applied by <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Natural_selection" title="Natural selection">natural selection</a>) acting on a protein-coding gene. It is calculated as the ratio of the number of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nonsynonymous_substitution" title="Nonsynonymous substitution">nonsynonymous substitutions</a> per non-synonymous site (Ka), in a given period of time, to the number of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Synonymous_substitution" title="Synonymous substitution">synonymous substitutions</a> per synonymous site (Ks), in the same period. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Homologous_gene" title="Homologous gene">Homologous genes</a> with a Ka/Ks ratio above 1 are evolving under <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Directional_selection" title="Directional selection">positive selection</a>, meaning that at least some of the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mutation" title="Mutation">mutations</a> concerned must be advantageous. If all the mutations are neutral or disadvantageous, the ratio will be in the range 0 to 1. However, if some of the mutations are advantageous and some disadvantageous, the ratio could be less than 1.</p></div><p class="readmore"><a href="/2016/06/09/%E8%BF%9B%E5%8C%96%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90%EF%BC%9Akaks%E6%AF%94%E7%8E%87/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/06/01/%E6%8B%9F%E5%8D%97%E8%8A%A5arabidopsis%E7%9A%84%E5%9F%BA%E5%9B%A0%E8%9B%8B%E7%99%BD%E7%AA%81%E5%8F%98%E4%BD%93%E4%B9%8B%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83/">拟南芥Arabidopsis的基因/蛋白/突变体之书写规范</a></h1><div class="post-meta">2016-06-01</div><div class="post-content"><p>（2）拟南芥（_Arabidopsis thaliana_） 基因：野生型基因名用大写的斜体字母表示，如：_EMBRYO_、_DEFECTIVE 1_。野生型基因符号由三个斜体的大写字母组成，如：_EMB1_。突变体基因名用小写斜体字母表示，如：_de-etiolated 1_。突变体基因符号用相应基因座名称的三个小写斜体字母命名，如：_det1_。 蛋白质：用相应的基因符号命名，大写，正体，如：EMB1、EMB2、DET1、DET2。 表型：用基因名或一个描述性的短语表示表型。有时也可以用基因符号来命名表型（正体，首字母大写），并用上标“＋”或“－”代表野生型或突变型，如：Abc＋、Abc－。   参考资料： <a target="_blank" rel="noopener" href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi-vLC3gYfNAhUGX5QKHWKoCysQFgg5MAQ&amp;url=http://www.medicine.sdu.edu.cn/0tongzhixinwen/2013/9/caoh/zhuanzhu/2.doc&amp;usg=AFQjCNFH8gNip2KCNwWmqqgY1DNmhVzQYQ&amp;sig2=4fUsnPVhVfLdB0h%5C_c3oxqA">https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi-vLC3gYfNAhUGX5QKHWKoCysQFgg5MAQ&amp;url=http%3A%2F%2Fwww.medicine.sdu.edu.cn%2F0tongzhixinwen%2F2013%2F9%2Fcaoh%2Fzhuanzhu%2F2.doc&amp;usg=AFQjCNFH8gNip2KCNwWmqqgY1DNmhVzQYQ&amp;sig2=4fUsnPVhVfLdB0h\_c3oxqA</a></p></div><p class="readmore"><a href="/2016/06/01/%E6%8B%9F%E5%8D%97%E8%8A%A5arabidopsis%E7%9A%84%E5%9F%BA%E5%9B%A0%E8%9B%8B%E7%99%BD%E7%AA%81%E5%8F%98%E4%BD%93%E4%B9%8B%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/9/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/11/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p><em>复制代码</em></p>
+<ol>
+<li>n====a% more file</li>
+<li>40</li>
+<li>72</li>
+<li>83.25</li>
+<li>222.032</li>
+<li>249.75</li>
+<li>1722.501</li>
+<li>n====a% awk ‘{print int($1+0.5)}’ file</li>
+<li>40</li>
+<li>72</li>
+<li>83</li>
+<li>222</li>
+<li>250</li>
+<li>1723</li>
+</ol>
+<p><strong>+0.5, 然后取整，是很多编程语言常用的计算四舍五入的方法。</strong>   Ref：<a target="_blank" rel="noopener" href="http://bbs.linuxtone.org/thread-16472-1-1.html">http://bbs.linuxtone.org/thread-16472-1-1.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

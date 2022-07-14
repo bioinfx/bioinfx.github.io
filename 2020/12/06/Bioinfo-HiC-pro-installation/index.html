@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="HiC-Pro可以用来处理Hi-C数据，从原始的fastq文件(配对端Illumina数据)到标准化的交互图谱。简单的来说就是将Hi-C数据比对到拼装好的参考基因组上，并形成交互文件去存储Hi-C数据。 下载 HiC-Pro VERSION 2.11.4 安装包，依赖 Python 2。（后续更新：HiC-Pro version 3.0.0 要求 Python 3） 1git clone http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装HiC-Pro （HiC数据预处理工具）与绘制HiC染色体互作图谱">
+<meta property="og:url" content="http://example.com/2020/12/06/Bioinfo-HiC-pro-installation/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="HiC-Pro可以用来处理Hi-C数据，从原始的fastq文件(配对端Illumina数据)到标准化的交互图谱。简单的来说就是将Hi-C数据比对到拼装好的参考基因组上，并形成交互文件去存储Hi-C数据。 下载 HiC-Pro VERSION 2.11.4 安装包，依赖 Python 2。（后续更新：HiC-Pro version 3.0.0 要求 Python 3） 1git clone http">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207122951.png?w=506">
+<meta property="og:image" content="https://gblobscdn.gitbook.com/assets%2F-LijQZQE8sc7HbVdoxEA%2F-Lj2gavu4NTsjkOUMYaT%2F-Lj2js_V0JRQoDXKpVvE%2FScreen%20Shot%202019-07-05%20at%2012.51.13%20PM.png?alt=media&amp;token=fdae559d-237e-45dd-a0dd-a12a22ff7506">
+<meta property="article:published_time" content="2020-12-06T05:17:53.000Z">
+<meta property="article:modified_time" content="2021-05-29T09:27:59.568Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207122951.png?w=506">
+
+<link rel="canonical" href="http://example.com/2020/12/06/Bioinfo-HiC-pro-installation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>安装HiC-Pro （HiC数据预处理工具）与绘制HiC染色体互作图谱 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/06/Bioinfo-HiC-pro-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          安装HiC-Pro （HiC数据预处理工具）与绘制HiC染色体互作图谱
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-06 13:17:53" itemprop="dateCreated datePublished" datetime="2020-12-06T13:17:53+08:00">2020-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-29 17:27:59" itemprop="dateModified" datetime="2021-05-29T17:27:59+08:00">2021-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>HiC-Pro可以用来处理Hi-C数据，从原始的fastq文件(配对端Illumina数据)到标准化的交互图谱。简单的来说就是将Hi-C数据比对到拼装好的参考基因组上，并形成交互文件去存储Hi-C数据。</p>
+<p>下载 HiC-Pro VERSION 2.11.4 安装包，依赖 Python 2。（后续更新：HiC-Pro version 3.0.0 要求 Python 3）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/nservant/HiC-Pro.git </span><br></pre></td></tr></table></figure>
+<h3 id="安装-hic-pro-version-2114"><a class="markdownIt-Anchor" href="#安装-hic-pro-version-2114"></a> 安装 HiC-Pro VERSION 2.11.4</h3>
+<p>由于需要python 2 （2.7以上），我之前已经在系统安装Anaconda3，并在里面分别安装了python3.7和python2.7，(<a target="_blank" rel="noopener" href="https://genehub.wordpress.com/2020/04/21/1070/">原文链接</a>, 这里只需要切换到python2.7环境即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate python27</span><br></pre></td></tr></table></figure>
+<p>再直接用conda命令安装相关软件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda install -y samtools bowtie2 R </span><br><span class="line">conda install -y pysam bx-python numpy scipy </span><br><span class="line">#打开R </span><br><span class="line">install.packages(c(&#x27;ggplot2&#x27;,&#x27;RColorBrewer&#x27;)) </span><br></pre></td></tr></table></figure>
+<p>通过 conda 安装 samtools，samtools 运行会报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">samtools: error while loading shared libraries: libcrypto.so.1.0.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>现在samtools的版本已经在1.9以上了，但是conda安装的samtools版本依然是1.7，这是出现问题的原因。<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangjunya/article/details/108235796">解决办法</a>：指定另一个更新的版本，重新安装如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c bioconda samtools=1.9 --force-reinstall</span><br></pre></td></tr></table></figure>
+<p>或者刚开始安装的时候：<code>conda install samtools=1.9</code>，就不会再出现上述问题。</p>
+<p>不知道为什么bx-python安装失败，换成下面的方法，可以安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge -c bioconda bx-python</span><br></pre></td></tr></table></figure>
+<p>然后进入HiC-Pro目录，修改config-install 文件，设置依赖软件的路径。PREFIX不要设置当前目录，会被覆盖。CLUSTER_SYS有四个选项，分别是TORQUE, SGE, SLURM 或 LSF，我随便填了一个TORQUE。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"> Paths and Settings  - Start editing here !</span><br><span class="line"> #</span><br><span class="line"> PREFIX = /home/user/local/scripts/HiC-Pro</span><br><span class="line"> BOWTIE2_PATH = /home/user/local/app/anaconda3/envs/python27/bin/</span><br><span class="line"> SAMTOOLS_PATH = /home/user/local/bin/</span><br><span class="line"> R_PATH = /home/user/local/app/anaconda3/envs/python27/bin</span><br><span class="line"> PYTHON_PATH = /home/user/local/app/anaconda3/envs/python27/bin</span><br><span class="line"> CLUSTER_SYS = TORQUE</span><br></pre></td></tr></table></figure>
+<p>接下里 make configure ，通过之后屏幕显示如下信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(python27) xxxxx/HiC-Pro$ make configure       </span><br><span class="line"> </span><br><span class="line">make -f ./scripts/install/Makefile CONFIG_SYS=./config-install.txt</span><br><span class="line"> make[1]: Entering directory &#x27;/home/-/local/app/HiC-Pro&#x27;</span><br><span class="line"> ./scripts/install/install_dependencies.sh -c ./config-install.txt -o  /home/-/local/scripts/HiC-Pro/HiC-Pro_2.11.4 -q</span><br><span class="line"> Make sure internet connection works for your shell prompt under current user&#x27;s privilege …</span><br><span class="line"> Starting HiC-Pro installation …</span><br><span class="line"> export /home/--/local/app/anaconda3/envs/python27/bin/ in PATH</span><br><span class="line"> export /home/-/local/bin/ in PATH</span><br><span class="line"> export /home/-/local/app/anaconda3/envs/python27/bin in PATH</span><br><span class="line"> export /home/-/local/app/anaconda3/envs/python27/bin in PATH</span><br><span class="line"> Checking dependencies … </span><br><span class="line"> Checking Python libraries …</span><br><span class="line"> The required Python libraries appear to be already installed. </span><br><span class="line"> Checking R installation …</span><br><span class="line"> The required R packages appear to be already installed. </span><br><span class="line"> Bowtie2 Aligner appears to be already installed. </span><br><span class="line"> Samtools appears to be already installed. </span><br><span class="line"> Dependencies checked !</span><br><span class="line"> Check HiC-Pro configuration … </span><br><span class="line"> Configuration for TORQUE/PBS system.</span><br><span class="line"> make[1]: Leaving directory &#x27;/home/-/local/app/HiC-Pro&#x27;</span><br></pre></td></tr></table></figure>
+<p>然后 make，通过即安装成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(some information are not shown here due to size limitation)</span><br><span class="line">cp -Ri /home/-/local/app/HiC-Pro /home/-/local/scripts/HiC-Pro/HiC-Pro_2.11.4 </span><br><span class="line">HiC-Pro installed in /home/-/local/scripts/HiC-Pro/HiC-Pro_2.11.4 !</span><br></pre></td></tr></table></figure>
+<p>测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(python27) XXX:~/local/scripts/HiC-Pro/HiC-Pro_2.11.4/bin$ ./HiC-Pro -h</span><br><span class="line"> usage : HiC-Pro -i INPUT -o OUTPUT -c CONFIG [-s ANALYSIS_STEP] [-p] [-h] [-v]</span><br><span class="line"> Use option -h--help for more information</span><br><span class="line"> HiC-Pro 2.11.4</span><br><span class="line"> OPTIONS</span><br><span class="line"> -i--input INPUT : input data folder; Must contains a folder per sample with input files</span><br><span class="line">    -o--output OUTPUT : output folder</span><br><span class="line">    -c--conf CONFIG : configuration file for Hi-C processing</span><br><span class="line">    [-p--parallel] : if specified run HiC-Pro on a cluster</span><br><span class="line">    [-s--step ANALYSIS_STEP] : run only a subset of the HiC-Pro workflow; if not specified the complete workflow is run</span><br><span class="line">       mapping: perform reads alignment - require fast files</span><br><span class="line">       proc_hic: perform Hi-C filtering - require BAM files</span><br><span class="line">       quality_checks: run Hi-C quality control plots</span><br><span class="line">       merge_persample: merge multiple inputs and remove duplicates if specified - require .validPairs files</span><br><span class="line">       build_contact_maps: Build raw inter/intrachromosomal contact maps - require .allValidPairs files</span><br><span class="line">       ice_norm : run ICE normalization on contact maps - require .matrix files</span><br></pre></td></tr></table></figure>
+<h3 id="optional-安装-hic-pro-version-300"><a class="markdownIt-Anchor" href="#optional-安装-hic-pro-version-300"></a> <s>Optional: 安装 HiC-Pro VERSION 3.0.0</s></h3>
+<p><s>conda create --name python38 python=3.8</s><br />
+<s>source activate python38</s><br />
+<s>conda install conda</s><br />
+<s># 前面的conda是anaconda3的conda，后面的conda是python3.8的conda</s></p>
+<p><s>conda install -c bioconda bowtie2</s><br />
+<s>conda install -c bioconda samtools=1.9</s><br />
+<s>conda install -c conda-forge -c bioconda bx-python</s></p>
+<p><s>在conda里面安装R和pysam遇到很多问题，更换python版本3.7/3.8/3.9都没成功，真是浪费时间，放弃。</s></p>
+<h3 id="使用hic-pro对hic数据进行分析的过程"><a class="markdownIt-Anchor" href="#使用hic-pro对hic数据进行分析的过程"></a> 使用HiC-Pro对HiC数据进行分析的过程</h3>
+<p>1. 在工作目录（例如HiC-analysis-workdir），建立若干文件夹，例如index、rawdata，方便管理，当然这些数据也可以在其他位置。</p>
+<p>2. 在index路径下，对参考基因组或者scaffolds建立index。HiC-Pro调用的比对软件是bowtie2。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bowtie2-build --threads 20 ref.fasta ref.fasta</span><br></pre></td></tr></table></figure>
+<p>3. 在工作目录，建立一个文本文件，内含参考基因组（或scaffolds）各个染色体名称和长度的信息。可以用samtools fadix，也可以用iTools或R语言等工具。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cat chromosome_size.txt</span><br><span class="line"> Chr01   11111</span><br><span class="line"> Chr02   1233333</span><br><span class="line"> Chr03   4444</span><br><span class="line"> Chr04   105314844</span><br><span class="line">(continue ...)</span><br></pre></td></tr></table></figure>
+<p>4. 在工作目录，新建一个文件夹（例如rawdata），用来存放作为input的测序数据。注意不能直接将测序文件放到rawdata目录下，而是要按照样品名先建立子文件夹（例如sample1、sample2）。sample1目录下即存放样品的测序文件，包含F/R两个测序文件，文件应该是.fastq(.gz)的命名，不可写成fq(.gz)；可以是软链接的形式。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207122951.png"><img src="https://genehub.files.wordpress.com/2020/12/e5beaee4bfa1e688aae59bbe_20201207122951.png?w=506" alt="" /></a></p>
+<p>4. 基因组的酶切位点识别。我用的MboI（酶切位点：^GATC）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2.7 XXX/HiC-Pro/HiC-Pro_2.11.4/bin/utils/digest_genome.py -r ^GATC -o mboi_resfrag_genome.bed Ref_genome.fa</span><br></pre></td></tr></table></figure>
+<p>得到的酶切信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> Chr01   0       3282    HIC_Chr01_1     0       +</span><br><span class="line"> Chr01   3282    3609    HIC_Chr01_2     0       +</span><br><span class="line"> Chr01   3609    3625    HIC_Chr01_3     0       +</span><br><span class="line"> Chr01   3625    4485    HIC_Chr01_4     0       +</span><br><span class="line"> Chr01   4485    5312    HIC_Chr01_5     0       +</span><br><span class="line"> Chr01   5312    5327    HIC_Chr01_6     0       +</span><br><span class="line"> Chr01   5327    5958    HIC_Chr01_7     0       +</span><br><span class="line"> Chr01   5958    6475    HIC_Chr01_8     0       +</span><br><span class="line"> Chr01   6475    7545    HIC_Chr01_9     0       +</span><br><span class="line">(continue ...)</span><br></pre></td></tr></table></figure>
+<p>5. 将HiC-Pro程序安装包目录下的 config-hicpro.txt 文件拷贝到工作目录，对其进行编辑。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># N_CPU，例如N_CPU = 24</span><br><span class="line"># JOB_NAME，例如JOB_NAME = Ga</span><br><span class="line"># JOB_WALLTIME，例如JOB_WALLTIME = 11:00:00</span><br><span class="line"># JOB_QUEUE，例如JOB_QUEUE = normal</span><br><span class="line"># JOB_MAIL，例如JOB_MAIL = 1570447120@qq.com</span><br><span class="line"># BOWTIE2_IDX_PATH，填写用bowtie2对reference建立索引的目录，注意是目录，而不是索引路径!如/PATH/to/Ga.ref</span><br><span class="line"># REFERENCE_GENOME，例如Ga 注意：这里REFERENCE_GENOME一定要和bowtie2建立的索引对应上,名字为物种名</span><br><span class="line"># GENOME_SIZE，即生成的文件Ga.fasta.size（最好使用绝对路径）</span><br><span class="line"># GENOME_FRAGMENT，用digest_genome.py程序生成的文件Ga.HindIII.txt</span><br><span class="line"># LIGATION_SITE，酶的序列，例如HindIII，则为AAGCTAGCTT；如果是MboI则序列为GATCGATC。</span><br><span class="line"># MIN_FRAG_SIZE，例如MIN_FRAG_SIZE = 100</span><br><span class="line"># MAX_FRAG_SIZE，例如MAX_FRAG_SIZE = 160000</span><br><span class="line"># MIN_INSERT_SIZE，例如MIN_INSERT_SIZE = 200</span><br><span class="line"># MAX_INSERT_SIZE，例如MAX_INSERT_SIZE = 600</span><br><span class="line"># GET_PROCESS_SAM，例如GET_PROCESS_SAM = 1</span><br></pre></td></tr></table></figure>
+<p>6. 运行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/PATH/TO/HiC-Pro_2.11.1/bin/HiC-Pro -i /PATH/TO/rawdata --output hicpro_output --conf config-hicpro.txt </span><br><span class="line"># --input reads所在的文件</span><br><span class="line"># --output 输出的文件夹</span><br><span class="line"># --conf 配置文件</span><br></pre></td></tr></table></figure>
+<p>7. 运行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── bowtie_results</span><br><span class="line">│   ├── bwt2</span><br><span class="line">│   │   └── sample1</span><br><span class="line">│   │       ├── mysample_R1_V3_20201206.fa.bwt2merged.bam</span><br><span class="line">│   │       ├── mysample_R1_V3_20201206.fa.mapstat</span><br><span class="line">│   │       ├── mysample_R2_V3_20201206.fa.bwt2merged.bam</span><br><span class="line">│   │       ├── mysample_R2_V3_20201206.fa.mapstat</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.bam</span><br><span class="line">│   │       └── _V3_20201206.fa.bwt2pairs.pairstat</span><br><span class="line">│   ├── bwt2_global</span><br><span class="line">│   │   └── sample1</span><br><span class="line">│   │       ├── mysample_R1_V3_20201206.fa.bwt2glob.bam</span><br><span class="line">│   │       ├── mysample_R1_V3_20201206.fa.bwt2glob.unmap.fastq</span><br><span class="line">│   │       ├── mysample_R2_V3_20201206.fa.bwt2glob.bam</span><br><span class="line">│   │       └── mysample_R2_V3_20201206.fa.bwt2glob.unmap.fastq</span><br><span class="line">│   └── bwt2_local</span><br><span class="line">│       └── sample1</span><br><span class="line">│           ├── mysample_R1_V3_20201206.fa.bwt2glob.unmap_bwt2loc.bam</span><br><span class="line">│           ├── mysample_R1_V3_20201206.fa.bwt2glob.unmap_trimmed.fastq</span><br><span class="line">│           ├── mysample_R2_V3_20201206.fa.bwt2glob.unmap_bwt2loc.bam</span><br><span class="line">│           └── mysample_R2_V3_20201206.fa.bwt2glob.unmap_trimmed.fastq</span><br><span class="line">├── config-hicpro.txt</span><br><span class="line">├── hic_results</span><br><span class="line">│   ├── data</span><br><span class="line">│   │   └── sample1</span><br><span class="line">│   │       ├── sample1.allValidPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.DEPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.DumpPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.FiltPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.REPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.RSstat</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.SCPairs</span><br><span class="line">│   │       ├── _V3_20201206.fa.bwt2pairs.SinglePairs</span><br><span class="line">│   │       └── _V3_20201206.fa.bwt2pairs.validPairs</span><br><span class="line">│   ├── matrix</span><br><span class="line">│   │   └── sample1</span><br><span class="line">│   │       ├── iced</span><br><span class="line">│   │       │   └── 200000</span><br><span class="line">│   │       │       ├── sample1_200000_iced.matrix</span><br><span class="line">│   │       │       └── sample1_200000_iced.matrix.biases</span><br><span class="line">│   │       └── raw</span><br><span class="line">│   │           └── 200000</span><br><span class="line">│   │               ├── sample1_200000_abs.bed</span><br><span class="line">│   │               └── sample1_200000.matrix</span><br><span class="line">│   ├── pic</span><br><span class="line">│   │   └── sample1</span><br><span class="line">│   │       ├── plotHiCContactRanges_sample1.pdf</span><br><span class="line">│   │       ├── plotHiCFragment_sample1.pdf</span><br><span class="line">│   │       ├── plotHiCFragmentSize_sample1.pdf</span><br><span class="line">│   │       ├── plotMappingPairing_sample1.pdf</span><br><span class="line">│   │       └── plotMapping_sample1.pdf</span><br><span class="line">│   └── stats</span><br><span class="line">│       └── sample1</span><br><span class="line">│           ├── sample1_allValidPairs.mergestat</span><br><span class="line">│           ├── sample1mysample_R1.mmapstat</span><br><span class="line">│           ├── sample1mysample_R2.mmapstat</span><br><span class="line">│           ├── sample1.mpairstat</span><br><span class="line">│           └── sample1.mRSstat</span><br><span class="line">├── logs</span><br><span class="line">│   └── sample1</span><br><span class="line">│       ├── build_raw_maps.log</span><br><span class="line">│       ├── mysample_R1_bowtie2.log</span><br><span class="line">│       ├── mysample_R1_V3_20201206.fa.bwt2glob.unmap_bowtie2.log</span><br><span class="line">│       ├── mysample_R1_V3_20201206.fa.bwt2glob.unmap_readsTrimming.log</span><br><span class="line">│       ├── mysample_R2_bowtie2.log</span><br><span class="line">│       ├── mysample_R2_V3_20201206.fa.bwt2glob.unmap_bowtie2.log</span><br><span class="line">│       ├── mysample_R2_V3_20201206.fa.bwt2glob.unmap_readsTrimming.log</span><br><span class="line">│       ├── ice_200000.log</span><br><span class="line">│       ├── make_Rplots.log</span><br><span class="line">│       ├── mapped_2hic_fragments.log</span><br><span class="line">│       ├── mapping_combine.log</span><br><span class="line">│       ├── mapping_stats.log</span><br><span class="line">│       ├── mapping_step1.log</span><br><span class="line">│       ├── mapping_step2.log</span><br><span class="line">│       ├── mergeSAM.log</span><br><span class="line">│       ├── merge_stats.log</span><br><span class="line">│       ├── merge_valid_interactions.log</span><br><span class="line">│       ├── plot_hic_contacts.Rout</span><br><span class="line">│       ├── plot_hic_fragment.Rout</span><br><span class="line">│       ├── plot_mapping_portion.Rout</span><br><span class="line">│       └── plot_pairing_portion.Rout</span><br><span class="line">├── rawdata -&gt; /PATH/TO//rawdata/</span><br><span class="line">└── tmp</span><br></pre></td></tr></table></figure>
+<p><strong>画图</strong></p>
+<p>HiC-Pro运行结果中，sample1.allValidPairs文件就表示 pair end reads 在染色体或 scaffolds 上面位置的信息，该文件是文本格式，需要进行格式转化成为.hic文件，才能放到 juicebox 软件中得到可视化的互作图谱。</p>
+<p>如何转换成.hic文件？使用HiC-Pro安装路径下的<code>hicpro2juicebox.sh</code>程序按照下面的方式运行即可得到.hic文件。<br />
+需要下载 juicer_tools_1.22.01.jar 文件作为输入文件。下载地址：<a target="_blank" rel="noopener" href="https://github.com/aidenlab/juicer/wiki/Download">https://github.com/aidenlab/juicer/wiki/Download</a><br />
+备注：我一开始下载错了，去<a target="_blank" rel="noopener" href="https://github.com/aidenlab/Juicebox/wiki/Download">https://github.com/aidenlab/Juicebox/wiki/Download</a> 页面下了个Juicebox.jar，结果不能用于下面的步骤。原来这是 JuiceBox，不是 Juicer！从论坛发现遇到这个问题的不止我一个人<a target="_blank" rel="noopener" href="https://groups.google.com/g/hic-pro/c/DF0zfZOivsE?pli=1">https://groups.google.com/g/hic-pro/c/DF0zfZOivsE?pli=1</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/PATH/TO/HiC-Pro/HiC-Pro_2.11.4/bin/utils/hicpro2juicebox.sh -i /PATH/TO//sample1.allValidPairs -g /PATH/TO//chromosome_sizes -j /PATH/TO/juicer_tools_1.22.01.jar -r /PATH/TO//mboi_resfrag_AMgenome.bed -t temp -o /PATH/TO/output</span><br></pre></td></tr></table></figure>
+<p>用上面的命令就得到了 .hic 文件，然后从 Linux 服务器将该文件下载到本地客户端（客户端即我个人电脑用的 windows 系统），直接运行 Juicebox_1.11.08.exe 二进制程序，双击运行，菜单选 open，选择 .hic 文件，就得到下面的图谱，可以 export 成 pdf 或 svg 格式的图片。</p>
+<p><img src="https://gblobscdn.gitbook.com/assets%2F-LijQZQE8sc7HbVdoxEA%2F-Lj2gavu4NTsjkOUMYaT%2F-Lj2js_V0JRQoDXKpVvE%2FScreen%20Shot%202019-07-05%20at%2012.51.13%20PM.png?alt=media&amp;token=fdae559d-237e-45dd-a0dd-a12a22ff7506" alt=".hic文件导入juicebox软件之后的示意图" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/05/Bioinfo-compare-two-genome-sequences-by-mummer/" rel="prev" title="两个基因组序列相互比较：Mummer">
+      <i class="fa fa-chevron-left"></i> 两个基因组序列相互比较：Mummer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/07/Life-initial-demo-page/" rel="next" title="My Fast HexoPages">
+      My Fast HexoPages <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-hic-pro-version-2114"><span class="nav-number">1.</span> <span class="nav-text"> 安装 HiC-Pro VERSION 2.11.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optional-%E5%AE%89%E8%A3%85-hic-pro-version-300"><span class="nav-number">2.</span> <span class="nav-text"> Optional: 安装 HiC-Pro VERSION 3.0.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8hic-pro%E5%AF%B9hic%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E5%88%86%E6%9E%90%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text"> 使用HiC-Pro对HiC数据进行分析的过程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

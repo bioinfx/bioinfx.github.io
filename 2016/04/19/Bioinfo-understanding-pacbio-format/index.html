@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文摘抄&#x2F;参考自：https:&#x2F;&#x2F;github.com&#x2F;PacificBiosciences&#x2F;SMRT-Analysis&#x2F;wiki&#x2F;Data-files-you-received-from-your-service-provider 为什么原始数据中有三个“.bas.h5”文件？原因：实际上在PacBio早期的测序原始数据里，只有一个bas.h5文件，因为后来单个SMRT Cell的数据通量有所提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PacBio测序数据格式释义">
+<meta property="og:url" content="http://example.com/2016/04/19/Bioinfo-understanding-pacbio-format/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="本文摘抄&#x2F;参考自：https:&#x2F;&#x2F;github.com&#x2F;PacificBiosciences&#x2F;SMRT-Analysis&#x2F;wiki&#x2F;Data-files-you-received-from-your-service-provider 为什么原始数据中有三个“.bas.h5”文件？原因：实际上在PacBio早期的测序原始数据里，只有一个bas.h5文件，因为后来单个SMRT Cell的数据通量有所提">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-04-19T08:33:49.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.127Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2016/04/19/Bioinfo-understanding-pacbio-format/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>PacBio测序数据格式释义 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/19/Bioinfo-understanding-pacbio-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PacBio测序数据格式释义
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-04-19 16:33:49" itemprop="dateCreated datePublished" datetime="2016-04-19T16:33:49+08:00">2016-04-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文摘抄/参考自：<a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider">https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider</a> 为什么原始数据中有三个“.bas.h5”文件？原因：实际上在PacBio早期的测序原始数据里，只有一个bas.h5文件，因为后来单个SMRT Cell的数据通量有所提高，从而增加了bas.h5文件用以存储base calling数据。 This page describes some of the data files you received from your service provider.</p>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#primary-analysis-data"></a>Primary Analysis Data</h2>
+<p>This is data <strong>directly</strong> generated by a PacBio RS II run.</p>
+<ul>
+<li>The <code>Primary</code> directory includes one subdirectory for <strong>each</strong> run.</li>
+<li>Each run directory includes a subdirectory for <strong>each</strong> SMRT Cell used in the run.</li>
+<li>Each SMRT Cell directory includes an <code>Analysis_Results</code> subdirectory, which contains output files of interest. <strong>Example:</strong></li>
+</ul>
+<p>/path/to/secondary/storage/2420294/0011<br />
+├── Analysis_Results<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.bax.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.log<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.subreads.fasta<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.subreads.fastq<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.bas.h5<br />
+│   ├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.sts.csv<br />
+│   └── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.sts.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.1.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.2.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.3.xfer.xml<br />
+├── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.mcd.h5<br />
+└── m140415_143853_42175_c100635972550000001823121909121417_s1_p0.metadata.xml</p>
+<h3 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#pacbio-file-naming-convention"></a>PacBio File Naming Convention</h3>
+<p>Many files and sequences used in primary and secondary analysis contain a long string identifier. Below is a typical ID string from a subread with fields defined:</p>
+<blockquote>
+<p>m140415_143853_42175_c100635972550000001823121909121417_s1_p0/553/3100_11230<br />
+└1┘└────2─────┘ └─3─┘ └────────────────4────────────────┘└5┘└6┘└7┘ └───8────┘</p>
+</blockquote>
+<ol>
+<li>“m” = movie</li>
+<li>Time of Run Start (yymmdd_hhmmss)</li>
+<li>Instrument Serial Number</li>
+<li>SMRT Cell Barcode</li>
+<li>Set Number (a.k.a. “Look Number”. Deprecated field, used in earlier version of RS)</li>
+<li>Part Number (usually “p0”, “X0” when using expired reagents)</li>
+<li>ZMW hole number †</li>
+<li>Subread Region (start_stop using polymerase read coordinates) †</li>
+</ol>
+<blockquote>
+<p>† Note that Fields 7 and 8 are used as sequence IDs in FASTAFASTQ files. They are not used in filenames.</p>
+</blockquote>
+<p>For information on the main files of interest, see:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/2.0.0/bas.h5+Reference+Guide.pdf">bas.h5 Reference Guide</a> <strong>(PDF)</strong>: Describes the main output files produced by the primary analysis pipeline: <code>bas.h5</code>,<code>.1.bax.h5</code>, <code>.2.bax.h5</code>, and <code>.3.bax.h5</code>. The <code>bax.h5</code> files contain base call information from the sequencing run. The <code>bas.h5</code> file is essentially a pointer to the three <code>bax.h5</code> files.</li>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/2.0.0/Metadata+Output+Guide.pdf">Metadata Output Guide</a> <strong>(PDF)</strong>: Describes the file <code>metadata.xml</code>, which contains top-level information about the data, including what sequencing enzyme and chemistry were used, sample name, and other metadata.</li>
+<li><a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/instrument/1.3.1/Statistics+Output+Guide.pdf">Statistics Output Guide</a> <strong>(PDF)</strong>: Describes the file <code>sts.xml</code>, which includes summary statistics from a single movie acquisition.</li>
+</ul>
+<h2 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#secondary-analysis-data"></a>Secondary Analysis Data</h2>
+<p>This is data produced by secondary analysis, which is performed on the primary analysis data generated by the instrument.</p>
+<blockquote>
+<ul>
+<li>
+<p>All files for a specific job reside in <strong>one</strong> directory that is named according to the job ID number</p>
+</li>
+<li>
+<p>Every SMRT Portal job has the following structure. <strong>Example:</strong></p>
+<p>/path/to/smrtanalysis/userdata/jobs/016/016234<br />
+├── data/<br />
+├── results/<br />
+├── log/<br />
+├── workflow/<br />
+├── <a target="_blank" rel="noopener" href="http://job.sh">job.sh</a><br />
+├── input.xml<br />
+└── settings.xml</p>
+<ul>
+<li><code>data</code> is a <strong>directory</strong> that contains intermediate and final data files for the analysis job</li>
+<li><code>results</code> is a <strong>directory</strong> that contains summary statistics and plots for the analysis job</li>
+<li><code>log</code> is a <strong>directory</strong> that contains all log files for the analysis job</li>
+<li><code>workflow</code> is a <strong>directory</strong> that contains all the executables for the analysis job</li>
+<li><code>job.sh</code> is an executable file used by SMRT Portal to run the <code>smrtpipe.py</code> analysis job</li>
+<li><code>input.xml</code> is a .xml file containing a list of input <code>bax.h5</code> files used to run the analysis job</li>
+<li><code>settings.xml</code> is a .xml file containing the parameters needed to perform the analysis job</li>
+</ul>
+</li>
+<li>
+<p>For more detail on specific protocol outputs, see <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Navigating-the-SMRT-Pipe-Job-Directory">Navigating the SMRT Pipe Job Directory</a>.</p>
+</li>
+</ul>
+</blockquote>
+<p>Within the <code>data</code> directory are several types of output files. You can use these data files as input for further downstream processing, pass on to collaborators, or upload to public genome sites. Depending on the protocol being performed, the <code>data</code> directory contain files in the following formats:</p>
+<ul>
+<li><strong>cmp.h5:</strong> The primary sequence alignment file for SMRT sequencing data. (Click <a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/1.4/doc/cmp.h5+Reference+Guide.pdf">here</a> **(PDF)**for further details.)</li>
+<li><strong>H5:</strong> <code>Hierarchical Data Format</code>; a file-system-like data format. (Click <a target="_blank" rel="noopener" href="http://www.hdfgroup.org/HDF5/doc/H5.intro.html">here</a> for further details.)</li>
+<li><strong>SAM:</strong> <code>Sequence Alignment Map</code> is a generic nucleotide alignment format that describes the alignment of query sequences or sequencing reads to a reference sequence or assembly. (Click <a target="_blank" rel="noopener" href="http://samtools.sourceforge.net/">here</a> for further details.)</li>
+<li><strong>BAM:</strong> Binary version of the <code>Sequence Alignment Map (SAM)</code> format. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/goldenPath/help/bam.html">here</a> for further details.)</li>
+<li><strong>BAI:</strong> The index file for a file generated in the BAM format. (This is a non-standard file type.)</li>
+<li><strong>FASTA:</strong> FASTA-formatted sequence files contains either nucleic acid sequence (such as DNA) or protein sequence information. FASTA files store multiple sequences in a single file. (Click <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/FASTA_format">here</a> for further details.)</li>
+<li><strong>GFF:</strong> <code>General Feature Format</code>, used for describing genes and other features associated with DNA, RNA and Protein sequences. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/FAQ/FAQformat#format3">here</a> for further details.)</li>
+<li><strong>VCF:</strong> <code>Variant Call Format</code>, for use with the molecular visualization and analysis program VMD. (Click <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variant_Call_Format">here</a> for further details.)</li>
+<li><strong>BED:</strong> Format that defines the data lines displayed in an annotation track. (Click <a target="_blank" rel="noopener" href="http://genome.ucsc.edu/FAQ/FAQformat#format1">here</a> for further details.)</li>
+<li><strong>CSV:</strong> Comma-Separated Values file. Can be viewed using Microsoft Excel or a text editor.</li>
+<li><strong>GML:</strong> An XML representation of the scaffold graph that results from scaffolding contigs using the AHA hybrid assembly algorithm.</li>
+</ul>
+<h2 id="-4"><a class="markdownIt-Anchor" href="#-4"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#smrt-portal-reports"></a>SMRT Portal Reports</h2>
+<p>Your service provider included secondary analysis reports generated using SMRT Portal.</p>
+<ul>
+<li>For an explanation of the report fields, click <a target="_blank" rel="noopener" href="https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/Reports+-+Terminology.pdf">here</a> <strong>(PDF)</strong>.</li>
+</ul>
+<h2 id="-5"><a class="markdownIt-Anchor" href="#-5"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider#downloading-smrt-analysis-software"></a>Downloading SMRT Analysis Software</h2>
+<ul>
+<li>The latest version of the SMRT Analysis software is available <a target="_blank" rel="noopener" href="http://www.pacb.com/devnet/">here</a>.</li>
+<li>Pacific Biosciences provides a free Amazon Machine Image that you can use to run SMRT Portal in the cloud. See <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/Bioinformatics-Training/wiki/%22Installing%22-SMRT-Portal-the-easy-way---Launching-A-SMRT-Portal-AMI">here</a> for details.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/04/08/Bioinfo-denovo-rna-seq-assembly/" rel="prev" title="多个样品的denovo RNA Seq组装">
+      <i class="fa fa-chevron-left"></i> 多个样品的denovo RNA Seq组装
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/05/26/Bioinfo-dogma-chloroplast-genome-annotation/" rel="next" title="使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank">
+      使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"> Primary Analysis Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">1.1.</span> <span class="nav-text"> PacBio File Naming Convention</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-3"><span class="nav-number">2.</span> <span class="nav-text"> Secondary Analysis Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-4"><span class="nav-number">3.</span> <span class="nav-text"> SMRT Portal Reports</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-5"><span class="nav-number">4.</span> <span class="nav-text"> Downloading SMRT Analysis Software</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

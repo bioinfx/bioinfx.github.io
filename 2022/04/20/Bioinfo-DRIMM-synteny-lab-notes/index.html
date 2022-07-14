@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="重新进行编译 drimm 程序 安装 dotnet 的方法，进入 https:&#x2F;&#x2F;dotnet.microsoft.com&#x2F;zh-cn&#x2F;download&#x2F;dotnet&#x2F;6.0 ，选择 Wondows 10 栏目的 x64 版本，就可以得到名为“dotnet-sdk-6.0.202-win-x64.exe”的一个安装文件，双击之后默认安装在系统即可。 根据 IAGS 作者的建议：drimm 目录为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | DRIMM synteny and ancestor genomes">
+<meta property="og:url" content="http://example.com/2022/04/20/Bioinfo-DRIMM-synteny-lab-notes/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="重新进行编译 drimm 程序 安装 dotnet 的方法，进入 https:&#x2F;&#x2F;dotnet.microsoft.com&#x2F;zh-cn&#x2F;download&#x2F;dotnet&#x2F;6.0 ，选择 Wondows 10 栏目的 x64 版本，就可以得到名为“dotnet-sdk-6.0.202-win-x64.exe”的一个安装文件，双击之后默认安装在系统即可。 根据 IAGS 作者的建议：drimm 目录为">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-20T07:32:13.000Z">
+<meta property="article:modified_time" content="2022-07-14T12:47:40.889Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/04/20/Bioinfo-DRIMM-synteny-lab-notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | DRIMM synteny and ancestor genomes | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/Bioinfo-DRIMM-synteny-lab-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | DRIMM synteny and ancestor genomes
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-20 15:32:13" itemprop="dateCreated datePublished" datetime="2022-04-20T15:32:13+08:00">2022-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-14 20:47:40" itemprop="dateModified" datetime="2022-07-14T20:47:40+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="重新进行编译-drimm-程序"><a class="markdownIt-Anchor" href="#重新进行编译-drimm-程序"></a> 重新进行编译 drimm 程序</h3>
+<p>安装 dotnet 的方法，进入 <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0">https://dotnet.microsoft.com/zh-cn/download/dotnet/6.0</a> ，选择 Wondows 10 栏目的 x64 版本，就可以得到名为“dotnet-sdk-6.0.202-win-x64.exe”的一个安装文件，双击之后默认安装在系统即可。</p>
+<p>根据 IAGS 作者的建议：drimm 目录为 IAGS 团队整理的核心代码，因为各个 PC 的 dotnet 版本可能存在不同，我们建议重新进行编译，生成新的exe文件。<br />
+在 ./drimm 路径下使用：dotnet publish -c Release -r win-x64 进行编译，可以在./drimm/drimm/bin/Release/netcoreapp3.1/win-x64路径下得到drimm.exe</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\processDRIMM\drimm&gt;dotnet publish -c Release -r win-x64</span><br><span class="line"></span><br><span class="line">欢迎使用 .NET 6.0!</span><br><span class="line">---------------------</span><br><span class="line">SDK 版本: 6.0.202</span><br><span class="line"></span><br><span class="line">遥测</span><br><span class="line">---------</span><br><span class="line">.NET 工具会收集用法数据，帮助我们改善你的体验。它由 Microsoft 收集并与社区共享。你可通过使用喜欢的 shell 将 DOTNET_CLI_TELEMETRY_OPTOUT 环境变量设置为 &quot;1&quot; 或 &quot;true&quot; 来选择退出遥测。</span><br><span class="line"></span><br><span class="line">阅读有关 .NET CLI 工具遥测的更多信息: https://aka.ms/dotnet-cli-telemetry</span><br><span class="line"></span><br><span class="line">----------------</span><br><span class="line">已安装 ASP.NET Core HTTPS 开发证书。</span><br><span class="line">若要信任该证书，请运行 &quot;dotnet dev-certs https --trust&quot; (仅限 Windows 和 macOS)。</span><br><span class="line">了解 HTTPS: https://aka.ms/dotnet-https</span><br><span class="line">----------------</span><br><span class="line">编写你的第一个应用: https://aka.ms/dotnet-hello-world</span><br><span class="line">查找新增功能: https://aka.ms/dotnet-whats-new</span><br><span class="line">浏览文档: https://aka.ms/dotnet-docs</span><br><span class="line">在 GitHub 上报告问题和查找源: https://github.com/dotnet/core</span><br><span class="line">使用 &quot;dotnet --help&quot; 查看可用命令或访问: https://aka.ms/dotnet-cli</span><br><span class="line">--------------------------------------------------------------------------------------</span><br><span class="line">用于 .NET 的 Microsoft (R) 生成引擎版本 17.1.1+a02f73656</span><br><span class="line">版权所有(C) Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">  正在确定要还原的项目…</span><br><span class="line">  已还原 D:\Program Files\processDRIMM\drimm\drimm\drimm.csproj (用时 13.61 sec)。</span><br><span class="line">  drimm -&gt; D:\Program Files\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\drimm.dll</span><br><span class="line">  drimm -&gt; D:\Program Files\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\publish\</span><br><span class="line"></span><br><span class="line">D:\Program Files\processDRIMM\drimm&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="orthofinder-的使用"><a class="markdownIt-Anchor" href="#orthofinder-的使用"></a> Orthofinder 的使用</h3>
+<p>OrthoFinder 的使用需要注意几点：<br />
+(1) gff 文件，只包含染色体信息即可，不必包含scaffolds，因为研究对象是染色体进化。染色体的命名要统一规范化，以大豆（Glycine max）为例，数据库自带的命名为Gm01、Gm02 …… 我统一改为：Gmax_chr01、Gmax_chr02 …… 这种“物种名+染色体编号的”格式。<br />
+(2) 蛋白数据集，剔除来自scaffolds和细胞器的蛋白序列，只保留来自染色体的蛋白序列。要注意一个基因可能存在若干转录本的情况，Phytozome 下载的数据会提供 primary transcripts 文件，相当于每个基因只提供一个转录本。对于其他情况就需要自己去甄别并采用一定的脚本来做数据规范化处理。<br />
+(3) OrthoFinder 运行时，input 目录下是各个物种的蛋白序列文件，注意命名为 Mtruncatula.fasta、Gmax.fasta 这样的格式，因为最后生成的 OrthoGroup.tsv 文件中，文件第一行就是 Mtruncatula、Gmax 字样，这对于后续处理是有益的。<br />
+(4) 意外情况，花生的蛋白序列，很多错误，比如蛋白序列中含有点号，这是什么意思？OrthoFinder会报错：Error reading input stream at line 14: Invalid character (.) in sequence\n。</p>
+<h3 id="将-orthofinder-的结果转化成下一步的-drimm-synteny-的输入文件"><a class="markdownIt-Anchor" href="#将-orthofinder-的结果转化成下一步的-drimm-synteny-的输入文件"></a> 将 OrthoFinder 的结果转化成下一步的 DRIMM-synteny 的输入文件</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost processDRIMM]$ ll example_fl</span><br><span class="line">total 10380</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1235362 Apr 22 14:33 Brachy.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1617027 Apr 22 14:33 Maize.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1222139 Apr 22 14:33 Rice.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1367402 Apr 22 14:33 Sorghum.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2717575 Apr 22 14:33 Telongatum.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2458531 Apr 22 14:33 Orthogroups.tsv</span><br></pre></td></tr></table></figure>
+<p>下面运行 <code>./processOrthofinder.py</code> 程序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 在 ./processOrthofinder.py 首行加上“#!/home/fenglei/local/app/anaconda3/envs/python37/bin/python3”</span><br><span class="line">dos2unix ./processOrthofinder.py    ### 作者原来的文档实在win系统撰写的，拿到linux里面运行会出现结尾符为^M的错误警告</span><br><span class="line">python3 ./processOrthofinder.py     ###</span><br></pre></td></tr></table></figure>
+<p>下面检查生成的文件。processOrthofinder 会根据物种目标拷贝数对超过目标拷贝数的同源基因进行过滤，得到用来制备共线块的基因，结果为 *.sequence 文件（Maize.sequence）。之后需要将各个 *.sequence 文件进行合并，得到 drimm.sequence 文件作为 DRIMM 的输入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost processDRIMM]$ ll example_fl/</span><br><span class="line">total 18068</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  418312 Apr 22 14:42 Telongatum.all.sequence.genename</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  142096 Apr 22 14:42 Telongatum.all.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   80934 Apr 22 14:42 Telongatum.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  455606 Apr 22 14:42 Sorghum.all.sequence.genename</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  128955 Apr 22 14:42 Sorghum.all.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   80002 Apr 22 14:42 Sorghum.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  376841 Apr 22 14:42 Rice.all.sequence.genename</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  127914 Apr 22 14:42 Rice.all.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   80069 Apr 22 14:42 Rice.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  488212 Apr 22 14:42 Maize.all.sequence.genename</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  140247 Apr 22 14:42 Maize.all.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   95546 Apr 22 14:42 Maize.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  442444 Apr 22 14:42 Brachy.all.sequence.genename</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  121269 Apr 22 14:42 Brachy.all.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   79332 Apr 22 14:42 Brachy.sequence</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1732515 Apr 22 14:42 filter_group.xls</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2841844 Apr 22 14:42 group.xls</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1235362 Apr 22 14:33 Brachy.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1617027 Apr 22 14:33 Maize.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1222139 Apr 22 14:33 Rice.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1367402 Apr 22 14:33 Sorghum.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2717575 Apr 22 14:33 Telongatum.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2458531 Apr 22 14:33 Orthogroups.tsv</span><br></pre></td></tr></table></figure>
+<p>将上面的drimm.sequence文件拷贝到win系统的工作目录下，如下所示，我放在“D:\Program Files\processDRIMM\example_fl”，随后进入 DOS 界面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\processDRIMM\example_fl&gt; dir</span><br><span class="line"> 驱动器 D 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 7EAB-2AD7</span><br><span class="line"></span><br><span class="line"> D:\Program Files\processDRIMM\example_fl 的目录</span><br><span class="line"></span><br><span class="line">2022/04/22  15:43    &lt;DIR&gt;          .</span><br><span class="line">2022/04/22  15:43    &lt;DIR&gt;          ..</span><br><span class="line">2022/04/22  14:57           415,883 drimm.sequence</span><br><span class="line">               1 个文件        415,883 字节</span><br><span class="line">               2 个目录 444,340,531,200 可用字节</span><br></pre></td></tr></table></figure>
+<p>这一步骤的操作引起问题，原因是路径中有空格。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">### &quot;D:\Program Files\Informed-Proteomics\ProMex.exe&quot;</span><br><span class="line">C:&gt;D</span><br><span class="line">cd &quot;D:\Program Files\processDRIMM\example_fl&quot;</span><br><span class="line">&gt;&quot;D:\Program Files\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\drimm.exe&quot;</span><br><span class="line">&quot;D:\Program Files\processDRIMM\example_fl&quot;</span><br></pre></td></tr></table></figure>
+<p>在 D 盘新建 InferAncestorGenome 目录，将 processDRIMM 文件夹从 “D:\Program Files\processDRIMM” 复制一份到 D:\InferAncestorGenome 目录。<br />
+现在 drimm.sequence 文件存放在 D:\InferAncestorGenome\processDRIMM\example_fl，如下方代码所示，我们在 DOS 界面下进入这个目录，然后执行 <code>dir</code> 命令就可以看到 drimm.sequence 文件；继而调用命令 <code>D:\InferAncestorGenome\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\drimm.exe</code> 即开始运行 DRIMM-synteny，这时候按照程序的提示分别设定如下内容：</p>
+<p>(1) 输入文件：drimm.sequence；<br />
+(2) 输出路径：D:\InferAncestorGenome\processDRIMM\example_fl\drimm；<br />
+(3) cycleLengthThreshold参数控制产生共线块的大小，设置小参数时会考虑到一些小的变异产生共线块比较破碎打断会比较频繁，设置大参数时运行会比较慢会忽略一些小的变异保留更大的特征，DRIMM 原文中测试数据为酵母基因组选择默认参数为 20，IAGS 文章中处理植物基因组时选择参数为 60，这个参数可以根据研究需要进行调整，一般可以选择默认参数 20<br />
+(4) dustThreshold 为最大同源基因多样性，会将同源基因个数中超过这个上限的同源基因组进行过滤，推荐设置为目标拷贝数总和 +1，<br />
+例如 IAGS 文章中禾本科五个物种：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sp_list = [&#x27;Brachy&#x27;,&#x27;Maize&#x27;,&#x27;Rice&#x27;,&#x27;Sorghum&#x27;,&#x27;Telongatum&#x27;]  </span><br><span class="line">target_rate = &#x27;2:4:2:2:2&#x27;  </span><br><span class="line">dustThreshold为13（12+1）</span><br></pre></td></tr></table></figure>
+<p>下面记载了 DOS 界面下运行 drimm.exe 的场景。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">D:\Program Files\processDRIMM\example_fl&gt;cd D:\InferAncestorGenome\processDRIMM\example_fl</span><br><span class="line"></span><br><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl&gt;dir</span><br><span class="line"> 驱动器 D 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 7EAB-2AD7</span><br><span class="line"></span><br><span class="line"> D:\InferAncestorGenome\processDRIMM\example_fl 的目录</span><br><span class="line"></span><br><span class="line">2022/04/22  15:59    &lt;DIR&gt;          .</span><br><span class="line">2022/04/22  15:59    &lt;DIR&gt;          ..</span><br><span class="line">2022/04/22  14:57           415,883 drimm.sequence</span><br><span class="line">               1 个文件        415,883 字节</span><br><span class="line">               2 个目录 444,175,998,976 可用字节</span><br><span class="line"></span><br><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl&gt;D:\InferAncestorGenome\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\drimm.exe</span><br><span class="line">Enter inputfile</span><br><span class="line">drimm.sequence</span><br><span class="line">Enter outdir</span><br><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl</span><br><span class="line">### D:\InferAncestorGenome\processDRIMM\example_fl\drimm</span><br><span class="line">Enter cycleLengthThreshold</span><br><span class="line">20</span><br><span class="line">Enter dustThreshold</span><br><span class="line">13</span><br><span class="line">Padding numb924</span><br><span class="line">Nodes: 14133</span><br><span class="line">Number of edges: 36364</span><br><span class="line">Nodes:14039</span><br><span class="line">Number of edges: 19134</span><br><span class="line">Nodes:13823</span><br><span class="line">Number of edges: 16765</span><br><span class="line">Nodes:13686</span><br><span class="line">Number of edges: 15998</span><br><span class="line">Nodes:13575</span><br><span class="line">Number of edges: 15636</span><br><span class="line">Nodes:13411</span><br><span class="line">Number of edges: 15326</span><br><span class="line">Nodes:13273</span><br><span class="line">Number of edges: 15035</span><br><span class="line">Nodes:12959</span><br><span class="line">Number of edges: 14540</span><br><span class="line">Nodes:12754</span><br><span class="line">Number of edges: 14244</span><br><span class="line">Nodes:12692</span><br><span class="line">Number of edges: 14152</span><br><span class="line">Nodes:12653</span><br><span class="line">Number of edges: 14099</span><br><span class="line">Nodes:12652</span><br><span class="line">Number of edges: 14090</span><br><span class="line">Nodes:12646</span><br><span class="line">Number of edges: 14084</span><br><span class="line">Nodes:12642</span><br><span class="line">Number of edges: 14075</span><br><span class="line">Nodes:12642</span><br><span class="line">Number of edges: 14102</span><br><span class="line">Nodes:13311</span><br></pre></td></tr></table></figure>
+<p>执行 drimm.exe 之后的输出中有两个重要的文件 synteny.txt 以及 blocks.txt 文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl&gt;dir</span><br><span class="line"> 驱动器 D 中的卷没有标签。</span><br><span class="line"> 卷的序列号是 7EAB-2AD7</span><br><span class="line"></span><br><span class="line"> D:\InferAncestorGenome\processDRIMM\example_fl 的目录</span><br><span class="line"></span><br><span class="line">2022/04/22  16:03    &lt;DIR&gt;          .</span><br><span class="line">2022/04/22  16:03    &lt;DIR&gt;          ..</span><br><span class="line">2022/04/22  16:03            33,056 blocks.txt</span><br><span class="line">2022/04/22  14:57           415,883 drimm.sequence</span><br><span class="line">2022/04/22  16:03           474,580 modifiedSequence.txt</span><br><span class="line">2022/04/22  16:03           766,866 sequenceColor.txt</span><br><span class="line">2022/04/22  16:03             4,010 split.txt</span><br><span class="line">2022/04/22  16:03            97,352 synteny.txt</span><br><span class="line">               6 个文件      1,791,747 字节</span><br><span class="line">               2 个目录 444,174,614,528 可用字节</span><br></pre></td></tr></table></figure>
+<p>其中 synteny.txt 文件截取展示如下，第一列为 block 的 ID，冒号后为在全部物种中出现次数，之后的若干个数字为 block 内部同源基因的 ID。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">1534:11 7400 14370 14369 </span><br><span class="line">1535:11 9549 9548 </span><br><span class="line">1536:12 7957 </span><br><span class="line">1537:12 1306 1305 </span><br><span class="line">1538:12 3698 1612 5338 2860 1611 1610 </span><br><span class="line">1539:12 2336 </span><br><span class="line">1540:12 1320 </span><br><span class="line">1541:12 3089 6660 6659 12584 1800 6658 6657 12583 12582 6656 6655 12581 1799 </span><br><span class="line">1542:12 1782 6228 3674 6229 1783 6592 12460 12461 12462 12463 12464 6593 12465 12466 1784 2349 </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>blocks.txt 文件为全部物种的共线块信息，其中负号表示方向。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">-666 -736 -1441 -781 -1435 -657 -1372 395 -607 -928 1461 -1333 ...</span><br><span class="line">-1003 1173 -1004 -990 -1271 1019 -897 1390 1033 671 1070 -1429 -1629</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>把 synteny.txt 以及 blocks.txt 文件拷贝到 Linux 服务器，同时修改 <a target="_blank" rel="noopener" href="http://processDrimm.py">processDrimm.py</a> 程序，然后运行就可以得到 IAGS 要求的 input files。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost processDRIMM]$ ./processDrimm.py</span><br><span class="line">-bash: ./processDrimm.py: /home/fenglei/local/app/anaconda3/envs/python37/bin/python3^M: bad interpreter: No such file or directory</span><br><span class="line">(python37) [fenglei@localhost processDRIMM]$ dos2unix processDrimm.py </span><br><span class="line">dos2unix: converting file processDrimm.py to Unix format ...</span><br><span class="line">(python37) [fenglei@localhost processDRIMM]$ ./processDrimm.py </span><br><span class="line">98</span><br><span class="line">98</span><br><span class="line"></span><br><span class="line">(python37) [fenglei@localhost processDRIMM]$ ll example_fl/drimm</span><br><span class="line">total 152</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  1094 Apr 22 16:09 Telongatum.block</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  1107 Apr 22 16:09 Sorghum.block</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  1101 Apr 22 16:09 Rice.block</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  2176 Apr 22 16:09 Maize.block</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  1111 Apr 22 16:09 Brachy.block</span><br><span class="line">-rw-r--r-- 1 fenglei fenglei 33056 Apr 22 16:03 blocks.txt</span><br><span class="line">-rw-r--r-- 1 fenglei fenglei 97352 Apr 22 16:03 synteny.txt</span><br></pre></td></tr></table></figure>
+<p>此时打开 Rice.block，就是我们期望得到的格式！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost drimm]$ cat Rice.block</span><br><span class="line">s -1629 -1628 1590 1591 1671 -1613 1648 -1657 -1660 -1659 -1654 -1550 -1566 -1577 -1582 -1583 1542 1578 -1558 1544 -1568 -1541 -1581 -1571 1631 1633 </span><br><span class="line">s 1553 1543 -1672 -1554 -1573 -1569 -1538 -1679 1625 -1697 -1684 1682 -1685 1658 -1696 1691 1627 1622 -1694 1592 -1677 1678 -1662 -1668 -1675 -1673 -1667 1666 -1664 -1655 -1551 </span><br><span class="line">s -1630 1632 1634 1636 1639 1643 1644 1572 1645 -1615 -1651 1623 -1602 1562 1580 1600 -1593 1621 1586 1609 1687 </span><br><span class="line">s 1625 -1697 -1684 1682 -1685 1658 -1696 1691 1627 1622 -1694 1592 -1677 1678 </span><br><span class="line">s 1631 1633 -1617 -1629 -1628 -1571 1581 1541 1568 -1544 1558 -1578 -1542 1583 1582 1577 1566 1550 1654 1659 1660 1657 -1648 1613 -1671 -1591 -1590 </span><br><span class="line">s 1551 1655 1664 -1666 1667 1673 1675 1668 1662 1679 1538 1569 1573 1554 1672 -1543 -1553 -1572 </span><br><span class="line">s 1586 1609 1687 1651 1615 </span><br><span class="line">s 1617 1595 -1603 1619 -1604 1656 -1607 -1608 -1610 1624 1606 1611 -1612 </span><br><span class="line">s 1595 -1603 1619 -1604 1656 -1607 -1608 -1610 1624 1606 1611 -1612 </span><br><span class="line">s 1634 1636 1639 -1644 -1643 1645 -1632 1630 </span><br><span class="line">s -1557 1560 1616 1597 -1559 1605 1601 </span><br><span class="line">s -1557 1560 1616 1597 -1559 1605 -1601 1623 -1602 1562 1580 1600 -1593 1621 </span><br></pre></td></tr></table></figure>
+<h3 id="一个需要注意的地方"><a class="markdownIt-Anchor" href="#一个需要注意的地方"></a> 一个需要注意的地方</h3>
+<p>drimm.sequence 一共 44 行，每行都是一个数列，所有物种的染色体数目加起来刚好是 44 行。但是这里文件里面是没有描述物种顺序的内容的。<br />
+所以一定要注意，<a target="_blank" rel="noopener" href="http://processOrthofinder.py">processOrthofinder.py</a> 运行之后，有一个合并所有物种 xxx.sequence 文件的操作，一定要跟脚本中保持一致。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">### 下面内容摘取自：processOrthofinder.py</span><br><span class="line">sp = [&#x27;Brachy&#x27;,&#x27;Maize&#x27;,&#x27;Rice&#x27;,&#x27;Sorghum&#x27;,&#x27;Telongatum&#x27;]</span><br><span class="line">gff_list = [&#x27;Brachy.gff&#x27;,&#x27;Maize.gff&#x27;,&#x27;Rice.gff&#x27;,&#x27;Sorghum.gff&#x27;,&#x27;Telongatum.gff&#x27;]</span><br><span class="line">sp_ratio = [2,4,2,2,2]</span><br><span class="line"></span><br><span class="line">### 注意这里物种的顺序，需要跟上一步骤保持一致</span><br><span class="line">cat Brachy.sequence Maize.sequence Rice.sequence Sorghum.sequence Telongatum.sequence &gt; drimm.sequence</span><br><span class="line"></span><br><span class="line">### 下面内容摘取自：processDrimm.py</span><br><span class="line">chr_number = [5,10,12,10,7]</span><br><span class="line">sp_list = [&#x27;Brachy&#x27;,&#x27;Maize&#x27;,&#x27;Rice&#x27;,&#x27;Sorghum&#x27;,&#x27;Telongatum&#x27;]   ### 注意这里物种的顺序，需要跟上一步骤保持一致</span><br><span class="line">target_rate = &#x27;2:4:2:2:2&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="cyclelengththreshold-参数测试"><a class="markdownIt-Anchor" href="#cyclelengththreshold-参数测试"></a> cycleLengthThreshold 参数测试</h3>
+<p>之前将 cycleLengthThreshold 设置为 20，这次设定为 60 试试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl&gt;D:\InferAncestorGenome\processDRIMM\drimm\drimm\bin\Release\netcoreapp3.1\win-x64\drimm.exe</span><br><span class="line">Enter inputfile</span><br><span class="line">drimm.sequence</span><br><span class="line">Enter outdir</span><br><span class="line">D:\InferAncestorGenome\processDRIMM\example_fl\drimm</span><br><span class="line">Enter cycleLengthThreshold</span><br><span class="line">60</span><br><span class="line">Enter dustThreshold</span><br><span class="line">13</span><br><span class="line">Padding numb2684</span><br><span class="line">Nodes: 15893</span><br><span class="line">Number of edges: 38124</span><br><span class="line">Nodes:15757</span><br><span class="line">Number of edges: 21030</span><br><span class="line">Nodes:15446</span><br><span class="line">Number of edges: 18309</span><br><span class="line">Nodes:15106</span><br><span class="line">Number of edges: 17037</span><br><span class="line">Nodes:14781</span><br><span class="line">Number of edges: 16338</span><br><span class="line">Nodes:14416</span><br><span class="line">Number of edges: 15723</span><br><span class="line">Nodes:13923</span><br><span class="line">Number of edges: 15033</span><br><span class="line">Nodes:13519</span><br><span class="line">Number of edges: 14462</span><br><span class="line">Nodes:12991</span><br><span class="line">Number of edges: 13799</span><br><span class="line">Nodes:12805</span><br><span class="line">Number of edges: 13575</span><br><span class="line">Nodes:12713</span><br><span class="line">Number of edges: 13456</span><br><span class="line">Nodes:12635</span><br><span class="line">Number of edges: 13358</span><br><span class="line">Nodes:12624</span><br><span class="line">Number of edges: 13330</span><br><span class="line">Nodes:12609</span><br><span class="line">Number of edges: 13310</span><br><span class="line">Nodes:12599</span><br><span class="line">Number of edges: 13319</span><br><span class="line">Nodes:12801</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost processDRIMM]$ ./processDrimm.py</span><br><span class="line">27</span><br><span class="line">27</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/31/Bioinfo-MCScanX-genome-synteny-blocks/" rel="prev" title="Bioinfo | MCScanX genome synteny blocks and 4dtv of paralogous genes">
+      <i class="fa fa-chevron-left"></i> Bioinfo | MCScanX genome synteny blocks and 4dtv of paralogous genes
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/05/DOS-usual-commands/" rel="next" title="Bioinfo | DOS 界面下的基本操作命令">
+      Bioinfo | DOS 界面下的基本操作命令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91-drimm-%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text"> 重新进行编译 drimm 程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orthofinder-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> Orthofinder 的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86-orthofinder-%E7%9A%84%E7%BB%93%E6%9E%9C%E8%BD%AC%E5%8C%96%E6%88%90%E4%B8%8B%E4%B8%80%E6%AD%A5%E7%9A%84-drimm-synteny-%E7%9A%84%E8%BE%93%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text"> 将 OrthoFinder 的结果转化成下一步的 DRIMM-synteny 的输入文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">4.</span> <span class="nav-text"> 一个需要注意的地方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cyclelengththreshold-%E5%8F%82%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text"> cycleLengthThreshold 参数测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

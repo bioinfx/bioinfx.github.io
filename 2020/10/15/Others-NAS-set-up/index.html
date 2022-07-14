@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="我主要用NAS做数据存储和备份，一些生物实验的原始数据比较大。 一 组装 NAS型号：群晖 DS918+，有四个硬盘卡槽，底部还有一个内存卡插槽。买了两块IronWolf的NAS专用硬盘，各8 TB，一起16 TB。网络上有大量教程参考，组装完毕就是下图。   二 系统安装与配置 在官网下载相应的系统安装文件 https:&#x2F;&#x2F;www.synology.com&#x2F;zh-tw&#x2F;support&#x2F;downl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS 安装与使用">
+<meta property="og:url" content="http://example.com/2020/10/15/Others-NAS-set-up/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="我主要用NAS做数据存储和备份，一些生物实验的原始数据比较大。 一 组装 NAS型号：群晖 DS918+，有四个硬盘卡槽，底部还有一个内存卡插槽。买了两块IronWolf的NAS专用硬盘，各8 TB，一起16 TB。网络上有大量教程参考，组装完毕就是下图。   二 系统安装与配置 在官网下载相应的系统安装文件 https:&#x2F;&#x2F;www.synology.com&#x2F;zh-tw&#x2F;support&#x2F;downl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg?w=1024">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/10/synology-ds918-installing-hard-drive.jpg?w=800">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201015112922.png?w=702">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026162623.png?w=831">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026160121.png?w=1024">
+<meta property="article:published_time" content="2020-10-15T03:38:06.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.462Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg?w=1024">
+
+<link rel="canonical" href="http://example.com/2020/10/15/Others-NAS-set-up/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>NAS 安装与使用 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/15/Others-NAS-set-up/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NAS 安装与使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-15 11:38:06" itemprop="dateCreated datePublished" datetime="2020-10-15T11:38:06+08:00">2020-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>我主要用NAS做数据存储和备份，一些生物实验的原始数据比较大。<br />
+<strong>一 组装</strong><br />
+NAS型号：群晖 DS918+，有四个硬盘卡槽，底部还有一个内存卡插槽。买了两块IronWolf的NAS专用硬盘，各8 TB，一起16 TB。网络上有大量教程参考，组装完毕就是下图。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg"><img src="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg?w=1024" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/synology-ds918-installing-hard-drive.jpg"><img src="https://genehub.files.wordpress.com/2020/10/synology-ds918-installing-hard-drive.jpg?w=800" alt="" /></a></p>
+<p><strong>二 系统安装与配置</strong></p>
+<p>在官网下载相应的系统安装文件 <a target="_blank" rel="noopener" href="https://www.synology.com/zh-tw/support/download/DS918+#firmware">https://www.synology.com/zh-tw/support/download/DS918+#firmware</a> 。安裝 DSM （DiskStation Manager）。</p>
+<p>[安装过程：<a target="_blank" rel="noopener" href="https://ningselect.com/11397/40/%5C">https://ningselect.com/11397/40/\</a>]</p>
+<p><strong>三 使用</strong></p>
+<p>1 在任意位置使用web登入NAS服务器</p>
+<p>2 在内网web浏览器输入IP即可登录使用</p>
+<p>3 FTP连接。在FTP客户端（FileZilla）输入 sftp://admin@192.168.x.y 即可，后面不用加端口号。</p>
+<p>4 将NAS挂载到本地网络的一个个人电脑下。这样相当于将NAS作为个人电脑的硬盘使用。先在NAS管理界面设置NFS，参考：<a target="_blank" rel="noopener" href="https://www.synology.com/zh-cn/knowledgebase/DSM/tutorial/File%5C_Sharing/How%5C_to%5C_access%5C_files%5C_on%5C_Synology%5C_NAS%5C_within%5C_the%5C_local%5C_network%5C_NFS%E3%80%82%E7%84%B6%E5%90%8E%E5%9C%A8%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%EF%BC%88%E6%88%91%E7%94%A8%E7%9A%84windows">https://www.synology.com/zh-cn/knowledgebase/DSM/tutorial/File\_Sharing/How\_to\_access\_files\_on\_Synology\_NAS\_within\_the\_local\_network\_NFS。然后在个人电脑（我用的windows</a> 10）设置，将群晖NAS映射为网络驱动器。在“我的电脑”右键，选择“映射网络驱动器”，驱动器选“Y”（随便选都可，一般考虑Z-&gt;A的顺序），文件夹地址输入“\\192.168.x.x\share_name”（192.168.x.x是NAS的IP地址，视具体情况而定；share_name就是NAS里面盘阵的名称，视具体情况而定），点击“完成”并输入账户名和密码。依次映射了两个硬盘，我得到了下面的界面，可见“网络位置”下方出现了相应的磁盘，这样就像使用本机硬盘一样的，很方便。</p>
+<p>参考 <a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/e75057f22d7901ebc81a8966.html">https://jingyan.baidu.com/article/e75057f22d7901ebc81a8966.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201015112922.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201015112922.png?w=702" alt="" /></a></p>
+<p><strong>四 空间清理</strong></p>
+<p>收到系统提醒说存储空间将满，删除了一部分文件，并清空回收站，但是空间还是没有释放。查询资料之后发现是 Synology Drive 这个应用的缘故，它会将已删除的文件保留备份，所以占用大量空间，将其卸载可以释放哪些空间。</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026162623.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026162623.png?w=831" alt="" /></a></p>
+<p>Use a terminal (eg. Putty, SecureCRT) to connect Synology through SSH.<br />
+ie: 192.168.x.x port 22<br />
+Login ID: admin; Password: admin password.<br />
+Switch to ROOT by “sudo -i”, type a new password for root user. Then detect space usage by “du -h -d 1”</p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026160121.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026160121.png?w=1024" alt="" /></a></p>
+<p>进入 Synology Drive Sever，选择“版本资源管理器”，勾选“显示已删除文件”，可见到那些被删除的文件实际上还保存在硬盘里，所以占用大量空间。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/03/Bioinfo-Genome-Browser-jbrowse-based-on-nginx-web-server/" rel="prev" title="基因组浏览器 JBrowse 安装（基于 Nginx 的 Web 服务器）">
+      <i class="fa fa-chevron-left"></i> 基因组浏览器 JBrowse 安装（基于 Nginx 的 Web 服务器）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/28/Linux-Run-windows-programs-inlinux-mono/" rel="next" title="在Linux平台运行windows程序：mono">
+      在Linux平台运行windows程序：mono <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

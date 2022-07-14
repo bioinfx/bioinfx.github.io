@@ -1,11 +1,1638 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2019/04/01/%E8%BD%AC%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E8%A1%8Corthomcl/">转：自动化运行OrthoMCL</a></h1><div class="post-meta">2019-04-01</div><div class="post-content"><p>OrthoMCL (<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://orthomcl.org/orthomcl/">http://orthomcl.org/orthomcl/</a>) 是现在用的最多的一款来找直系同源基因（Orthologs）以及旁系同源基因 (Paralog) 的软件。</p></div><p class="readmore"><a href="/2019/04/01/%E8%BD%AC%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E8%A1%8Corthomcl/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2019/03/30/linux%E5%AE%89%E8%A3%85mysql-5-7-25/">Linux安装mysql-5.7.25</a></h1><div class="post-meta">2019-03-30</div><div class="post-content"><p>下面的操作完全是照搬其他人的经验（<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012703513%EF%BC%89%EF%BC%8C%E6%AD%A4%E5%A4%84%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E7%94%A8%E3%80%82%E4%B9%9F%E5%8F%AF%E5%8F%82%E8%80%83%EF%BC%9Ahttps://www.jellythink.com/archives/14">https://segmentfault.com/a/1190000012703513），此处记录备份用。也可参考：https://www.jellythink.com/archives/14</a> ———————————- 由于mysql 5.7.17版本以后 support_files文件夹中无 <strong>my_default.cnf</strong> 文件，所以今天给大家详细描述一下 mysql 5.7.20版本(目前官方最新版)的安装步骤。 第一步：下载mysql最新版</p></div><p class="readmore"><a href="/2019/03/30/linux%E5%AE%89%E8%A3%85mysql-5-7-25/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2019/02/28/%E5%AE%89%E8%A3%85lastz/">安装LASTZ</a></h1><div class="post-meta">2019-02-28</div><div class="post-content"><p>LASTZ是序列比对工具，可以生成AXT格式的比对文件。 安装LASTZ方法如下 下载地址：<a target="_blank" rel="noopener" href="http://www.bx.psu.edu/~rsharris/lastz/">http://www.bx.psu.edu/~rsharris/lastz/</a> If you have received the distribution as a packed archive, unpack it by whatever means are appropriate for your computer. The result should be a directory <code>/lastz‑distrib‑X.XX.XX</code> that contains a <code>src</code> subdirectory (and some others). You may find it convenient to remove the revision number (<code>‑X.XX.XX</code>) from the directory name. Before building or installing any of the programs, you will need to tell the installer where to put the executable, either by setting the shell variable<code>$LASTZ_INSTALL</code>, or by editing the <code>make‑include.mak</code> file to set the definition of <code>installDir</code>. Also, be sure to add the directory you choose to your <code>$PATH</code>. Then to build the LASTZ executable, enter the following commands from bash or a similar command-line shell (Solaris users should substitute <code>gmake</code> for <code>make</code>). This will build two executables (<code>lastz</code> and <code>lastz_D</code>) and copy them into your <code>installDir</code>.</p></div><p class="readmore"><a href="/2019/02/28/%E5%AE%89%E8%A3%85lastz/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/11/27/Python%EF%BC%9Apython3%E4%B8%8Epython2%E5%85%B1%E5%AD%98/">Python：python3与python2共存</a></h1><div class="post-meta">2018-11-27</div><div class="post-content"><p><strong>20201208更新：本文已过期。</strong></p>
-<p>Linux系统自带了Python2.6，自己又安装了Python2.7和Anaconda3（Python3.6） 今天运行python3.6报错：</p>
-<p>[fenglei@localhost lib64]$ /home/fenglei/local/app/anaconda3/bin/python3<br>Failed to import the site module<br>Traceback (most recent call last):<br>File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br>__boot()<br>File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br>import imp # Avoid import loop in Python &gt;= 3.3<br>File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br>import tokenize<br>File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br>import re<br>File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br>class RegexFlag(enum.IntFlag):<br>AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p></div><p class="readmore"><a href="/2018/11/27/Python%EF%BC%9Apython3%E4%B8%8Epython2%E5%85%B1%E5%AD%98/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/07/09/diamond-%E6%AF%94blast%E6%9B%B4%E5%BF%AB%E9%80%9F%E7%9A%84%E6%AF%94%E5%AF%B9%E5%B7%A5%E5%85%B7/">Diamond: 比BLAST更快速的比对工具</a></h1><div class="post-meta">2018-07-09</div><div class="post-content"><p><strong>Diamond简介</strong> 序列比对软件，能输出与BLAST类似的结果，但是速度快了数百倍。 <strong>安装</strong> 二进制可以直接解压使用：</p>
-<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz">http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz</a><br>tar xzf diamond-linux64.tar.gz</p></div><p class="readmore"><a href="/2018/07/09/diamond-%E6%AF%94blast%E6%9B%B4%E5%BF%AB%E9%80%9F%E7%9A%84%E6%AF%94%E5%AF%B9%E5%B7%A5%E5%85%B7/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/05/16/augustus-3-3%E7%9A%84%E5%AE%89%E8%A3%85/">Augustus-3.3的安装</a></h1><div class="post-meta">2018-05-16</div><div class="post-content"><p>Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 iamphioxus.org 。 Augustus is a very popular tool for gene annotation, however its installation process can be a bit tricky. For example, if we just download and install <em>Augustus</em> like below, it will not work.</p></div><p class="readmore"><a href="/2018/05/16/augustus-3-3%E7%9A%84%E5%AE%89%E8%A3%85/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/04/25/R%EF%BC%9A%E7%81%AB%E5%B1%B1%E5%9B%BE-volcano-plot-/">R：火山图 volcano plot</a></h1><div class="post-meta">2018-04-25</div><div class="post-content"><p>两个实验组之间的若干个基因的差异倍数比较，可以通过 Volcano Plot 图形化展示。 <img src="https://genehub.files.wordpress.com/2018/04/qqe688aae59bbe20180425163433.jpg" alt="QQ截图20180425163433"> 例如 DEseq2 对转录组测序的样品做差异基因分析之后，会得到一个基因表达差异的表格的。案例使用数据的来源是 GitHub：<a target="_blank" rel="noopener" href="https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29/_fabio-newlines/summary/control-vs-e7107-deseq2.csv">https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29\_fabio-newlines/summary/control-vs-e7107-deseq2.csv</a> 下载上述数据之后，运行下面的命令即可得到文章起始的图。</p></div><p class="readmore"><a href="/2018/04/25/R%EF%BC%9A%E7%81%AB%E5%B1%B1%E5%9B%BE-volcano-plot-/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/03/28/mitogenome-unfinished/">mitogenome (unfinished)</a></h1><div class="post-meta">2018-03-28</div><div class="post-content"><p>  tRNA tRNA sequences  整理成 fasta 格式 通过 blastn mapping  到 mitogenome，输出 format=6。 编程序转换成 features table 格式的文件。 注意： 1）部分 tRNA 有多个 copies，例如 trnC(gca) 与 trnfM(cat) 各有两个copies； 2）部分 tRNA 具有同样的 anticodon，但是其名称和序列不同，例如 trnI(cat) 和 trnM(cat)； 3）tRNA都没有内含子，所以可以较为简单的转换格式； 4）anticodon 如何自动注释？</p></div><p class="readmore"><a href="/2018/03/28/mitogenome-unfinished/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/02/08/R%EF%BC%9A%E8%B6%85%E5%87%A0%E4%BD%95%E5%88%86%E5%B8%83%E4%B8%8E%E5%9F%BA%E5%9B%A0%E5%8A%9F%E8%83%BD%E5%AF%8C%E9%9B%86%E5%88%86%E6%9E%90-/">R：超几何分布与基因功能富集分析</a></h1><div class="post-meta">2018-02-08</div><div class="post-content"><p>GO功能显著性富集分析给出与基因组背景相比，在差异表达基因中显著富集的GO功能条目，从而给出差异表达基因与哪些生物学功能显著相关。该分析首先把所有差异表达基因向Gene Ontology数据库（<a target="_blank" rel="noopener" href="http://www.geneontology.org/">http://www.geneontology.org/</a>）的各个term映射，计算每个term的基因数目，然后应用超几何检验，找出与整个基因组背景相比，在差异表达基因中显著富集的GO条目，其计算公式为 <img src="https://genehub.files.wordpress.com/2018/02/hypergeometric.jpg" alt="hypergeometric"> 其中，N为所有基因中具有GO注释的基因数目；n为N中差异表达基因的数目；M为所有基因中注释为某特定GO term的基因数目；m为注释为某特定GO term的差异表达基因数目。计算得到的p-value通过Bonferroni校正之后，以corrected p-value≤0.05为阈值，满足此条件的GO term定义为在差异表达基因中显著富集的GO term。通过GO功能显著性富集分析能确定差异表达基因行使的主要生物学功能。 例如，如下的结果： <img src="https://genehub.files.wordpress.com/2018/02/qqe688aae59bbe20180208115638.jpg" alt="QQ截图20180208115638"> P值计算方法为（在R语言程序中调用phyper命令）：</p></div><p class="readmore"><a href="/2018/02/08/R%EF%BC%9A%E8%B6%85%E5%87%A0%E4%BD%95%E5%88%86%E5%B8%83%E4%B8%8E%E5%9F%BA%E5%9B%A0%E5%8A%9F%E8%83%BD%E5%AF%8C%E9%9B%86%E5%88%86%E6%9E%90-/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2018/01/09/%E5%AE%89%E8%A3%85vcftools/">安装vcftools</a></h1><div class="post-meta">2018-01-09</div><div class="post-content"><p>configure的过程报错：Zlib找不到。 实际上已经安装zlib。 解决办法</p>
-<p>export ZLIB_LIBS=’-L/home/fenglei/local/lib -lz’<br>export ZLIB_CFLAGS=-I/home/fenglei/local/include<br>echo $ZLIB_LIBS $ZLIB_CFLAGS<br>./configure –prefix=/home/fenglei/local/<br>make<br>make install</p></div><p class="readmore"><a href="/2018/01/09/%E5%AE%89%E8%A3%85vcftools/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/6/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/7/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/21/Python-Anaconda-python2-python3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/21/Python-Anaconda-python2-python3/" class="post-title-link" itemprop="url">Python：通过Anaconda管理python2和python3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-21 13:01:38" itemprop="dateCreated datePublished" datetime="2020-04-21T13:01:38+08:00">2020-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 16:41:58" itemprop="dateModified" datetime="2020-12-08T16:41:58+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="一-安装anaconda3"><a class="markdownIt-Anchor" href="#一-安装anaconda3"></a> 一、安装anaconda3</h3>
+<p>anaconda3 的下载页面：<a target="_blank" rel="noopener" href="https://www.anaconda.com/distribution/#download-section">https://www.anaconda.com/distribution/#download-section</a> 我在 Linux 系统里下载的版本：<a target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86%5C_64.sh">https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86\_64.sh</a> 用sh命令安装即可，安装路径可以自定义，比如<code>/home/username/xxx/yyy</code> 此时输入 <code>conda</code> 命令没有反应。 安装完毕之后，将 bin 目录加入到 <code>.bashrc</code>，并执行 <code>source ~/.bashrc</code>，马上看到命令行前面出现<code>(base)</code>的字符，说明现在已经在 conda 的环境中了。这时候输入<code>conda list</code> 命令就有反应了。</p>
+<h3 id="二-通过conda安装python3和python2"><a class="markdownIt-Anchor" href="#二-通过conda安装python3和python2"></a> 二、通过conda安装python3和python2</h3>
+<p>查看当前使用的Python：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(base) fenglei@localhost:~/local/app/anaconda3/bin$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base \* /home/fenglei/local/app/anaconda3</span><br></pre></td></tr></table></figure>
+<p>创建新的Python版本环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ conda create --name python37 python=3.7</span><br><span class="line">$ conda create --name python27 python=2.7</span><br><span class="line">\#</span><br><span class="line">$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base \* /home/fenglei/local/app/anaconda3</span><br><span class="line">python27 /home/fenglei/local/app/anaconda3/envs/python27</span><br><span class="line">python37 /home/fenglei/local/app/anaconda3/envs/python37</span><br></pre></td></tr></table></figure>
+<p>其中 * 号表示当前使用的 Python 环境。</p>
+<p><strong>切换 Python 环境</strong>，用 <code>source activate</code> 命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ python -V</span><br><span class="line">Python 3.7.6</span><br><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ source active python27</span><br><span class="line">-bash: active: No such file or directory</span><br><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ source activate python27</span><br><span class="line">(python27) fenglei@localhost:~/local/app/anaconda3$ python -V</span><br><span class="line">Python 2.7.17 :: Anaconda, Inc.</span><br><span class="line">(python27) fenglei@localhost:~/local/app/anaconda3$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base                     /home/fenglei/local/app/anaconda3</span><br><span class="line">python27              *  /home/fenglei/local/app/anaconda3/envs/python27</span><br><span class="line">python37                 /home/fenglei/local/app/anaconda3/envs/python37</span><br></pre></td></tr></table></figure>
+<p>注意上面的“*”位置相应变动了，另一个是命令行前面的(base)变成了(python27)。 如果不想使用当前版本，而想恢复到默认版面，那么</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">source</span> deactivate</span></span><br></pre></td></tr></table></figure>
+<p><strong>删除 Python 环境</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda remove --name python26 --all</span></span><br></pre></td></tr></table></figure>
+<p><strong>管理包</strong><br />
+查看当前已经安装的包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda list</span></span><br><span class="line">\# packages in environment at /apps/anaconda2/envs/python35:</span><br><span class="line">\#</span><br><span class="line">ca-certificates           2017.08.26           h1d4fec5_0</span><br><span class="line">certifi                   2017.7.27.1      py35h19f42a1_0</span><br><span class="line">libedit                   3.1                  heed3624_0</span><br><span class="line">libffi                    3.2.1                h4deb6c0_3</span><br><span class="line">libgcc-ng                 7.2.0                h7cc24e2_2</span><br><span class="line">libstdcxx-ng              7.2.0                h7a57d05_2</span><br><span class="line">ncurses                   6.0                  h06874d7_1</span><br><span class="line">openssl                   1.0.2l               h077ae2c_5</span><br><span class="line">pip                       9.0.1            py35haa8ec2a_3</span><br><span class="line">python                    3.5.4               he2c66cf_20</span><br><span class="line">readline                  7.0                  hac23ff0_3</span><br><span class="line">setuptools                36.5.0           py35ha8c1747_0</span><br><span class="line">sqlite                    3.20.1               h6d8b0f3_1</span><br><span class="line">tk                        8.6.7                h5979e9b_1</span><br><span class="line">wheel                     0.29.0           py35h601ca99_1</span><br><span class="line">xz                        5.2.3                h2bcbf08_1</span><br><span class="line">zlib                      1.2.11               hfbfcf68_1</span><br></pre></td></tr></table></figure>
+<p><strong>安装包</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -n python35 psutil</span><br></pre></td></tr></table></figure>
+<p><strong>删除包</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda uninstall -n python35 psutil</span></span><br></pre></td></tr></table></figure>
+<p>下面是一些conda的常见命令： 对conda的基本掌握：<br />
+1：基本操作：<br />
+升级全部库：  conda upgrade --all<br />
+升级一个包  conda update packagename<br />
+安装包：conda install packagename<br />
+也可以安装多个包：   conda installl numpy pandas scipy<br />
+安装固定版本的包：conda install numpy =1.10<br />
+移除一个包：conda remove packagename <br />
+查看所有包：conda list</p>
+<p>2：管理python环境：<br />
+创建虚拟环境：conda create -n env_name<br />
+list of packagenaem eg:  conda create -n env_name pandas <br />
+指定python版本：conda create -n env_name python2 = 2.7 pandas <br />
+激活环境： activate env_name （前面加source才可以吧）<br />
+退出环境 :  deactivate  env_name<br />
+删除虚拟环境：conda env remove -n env_name<br />
+显示所有虚拟环境：conda env list  <br />
+conda 创建的虚拟环境是在anaconda安装目录下的evens下，所以使用pycharm，只要在特定项目配置运行环境就可以了</p>
+<h3 id="利用conda安装生物信息软件"><a class="markdownIt-Anchor" href="#利用conda安装生物信息软件"></a> 利用conda安装生物信息软件</h3>
+<p>安装命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install gatk</span><br></pre></td></tr></table></figure>
+<p>搜索需要的安装包: 提供一个网址,用于事先查找想安装的软件存不存在 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fbioconda.github.io%2Frecipes">conda available packages</a> 当然, 也可以用这个命令进行搜索</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda search gatk</span><br></pre></td></tr></table></figure>
+<p>安装完成后，可以用“which 软件名”来查看该软件安装的位置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> gatk</span><br></pre></td></tr></table></figure>
+<p>如需要安装特定的版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install 软件名=版本号</span><br><span class="line">conda install gatk=3.7</span><br></pre></td></tr></table></figure>
+<p>这时conda会先卸载已安装版本，然后重新安装指定版本。 查看已安装软件:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda list</span><br></pre></td></tr></table></figure>
+<p>更新指定软件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda update gatk</span><br></pre></td></tr></table></figure>
+<p>卸载指定软件:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="keyword">remove</span> gatk</span><br></pre></td></tr></table></figure>
+<p>退出conda环境 退出也很简单，之前我们是<code>. ./activate 或者 (. ~/miniconda3/bin/activate)</code>现在退出只要:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. ./deactivate</span><br></pre></td></tr></table></figure>
+<p>就退出当前的环境了</p>
+<p>也可以用bioconda：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install -c bioconda bowtie2</span><br><span class="line">conda install -c bioconda hisat2</span><br><span class="line">conda install -c bioconda samtools</span><br></pre></td></tr></table></figure>
+<p><strong>创建软件的软链接</strong></p>
+<p>跟着命令一路敲到这里的小旁友们估计发现了，现在退出conda环境之后之前安装的软件全都GG了，敲命令没法执行了！ 怎么办呢！其实只要把安装好的软件软连接到一个处在环境变量里的位置就可以使用了。三步走：</p>
+<ul>
+<li>第一步，创建一个文件夹 我一般的习惯是在<code>/home</code>目录下创建一个<code>.soft</code>文件夹</li>
+<li>第二步，将这个文件夹添加到环境变量中</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;~/.soft:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>第三步，软链接</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s ~<span class="regexp">/miniconda3/bin</span><span class="regexp">/gatk ~/</span>.soft</span><br></pre></td></tr></table></figure>
+<p>这样就可以运行啦~如果还是不行建议试试初始化一下bashrc：<code>. ./bashrc</code></p>
+<p><strong>创建conda环境</strong></p>
+<p>之前创建的时候显示的是（base）这是conda的基本环境，有些软件依赖的是python2的版本，当你还是使用你的base的时候你的base里的python会被自动降级，有可能会引发别的软件的报错，所以，可以给一些特别的软件一些特别的关照，比如创建一个单独的环境。 在conda环境下，输入<code>conda env list</code>（或者输入<code>conda info --envs</code>也是一样滴）查看当前存在的环境：</p>
+<p><img src="//upload-images.jianshu.io/upload_images/7979561-eeb52438a3dd89dc.png?imageMogr2/auto-orient/stripimageView2/2/w/570/format/webp" alt="" /></p>
+<p>目前的环境</p>
+<p>目前只有一个base</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create -n python2 python=2</span><br><span class="line">\<span class="comment">#-n: 设置新的环境的名字</span></span><br><span class="line">\<span class="comment">#python=2 指定新环境的python的版本</span></span><br></pre></td></tr></table></figure>
+<p>conda会创建一个新的python2的环境，并且会很温馨的提示你只要输入conda activate python2就可以启动这个环境了</p>
+<p><img src="//upload-images.jianshu.io/upload_images/7979561-5d90c4988132d600.png?imageMogr2/auto-orient/stripimageView2/2/w/543/format/webp" alt="" /></p>
+<p>新的环境</p>
+<p><strong>退出环境</strong></p>
+<p>如上面的截图提到的，只要</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<p><code>2019-6-28 update: 如何删除和重命名一个已存在的环境</code></p>
+<p><strong>删除环境</strong></p>
+<p>删除也很容易的</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="keyword">remove</span> -n myenv --all</span><br></pre></td></tr></table></figure>
+<p>就可以退出当前环境。 掌握了创建和删除我们就可以实现重命名的操作了</p>
+<p><strong>重命名环境</strong></p>
+<p>实际上conda并没有提供这样的功能，但是可以曲线救国，原理是先克隆一个原来的环境，命名成想要的名字，再把原来的环境删掉即可 参考自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7265011ba3f2">conda 创建/删除/重命名 环境</a> 接下来演示把一个原来叫做py2的环境重新命名成python2：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n python2 --<span class="built_in">clone</span> py2</span><br><span class="line">conda remove -n py2 --all</span><br></pre></td></tr></table></figure>
+<p><strong>骚操作：allias简化启动</strong></p>
+<p><img src="//upload-images.jianshu.io/upload_images/7979561-e5ec5df4252fcdd0.png?imageMogr2/auto-orient/stripimageView2/2/w/941/format/webp" alt="" /></p>
+<p>image.png</p>
+<p>linux提供了一个给大家偷懒的命令叫alias，只要在你的<code>.bashrc</code>里设置一下就好了，我添加了一条叫做<code>condaup</code>的命令，这样就可以免去每次敲<code>. ~/miniconda/bin/dactivate</code>的麻烦，一步搞定~技术宅改变世界！</p>
+<p><img src="//upload-images.jianshu.io/upload_images/7979561-744e8c59cdf14b19.png?imageMogr2/auto-orient/stripimageView2/2/w/435/format/webp" alt="" /></p>
+<p>image.png</p>
+<p>参考资料： 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/edaa744ea47d">https://www.jianshu.com/p/edaa744ea47d</a> 链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq%5C_18668137/java/article/details/80807829">https://blog.csdn.net/qq\_18668137/java/article/details/80807829</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/05/R-read-multiple-files-by-loop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/05/R-read-multiple-files-by-loop/" class="post-title-link" itemprop="url">R: 批量读入文本文件并循环处理，分别输出统计图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 13:29:32" itemprop="dateCreated datePublished" datetime="2020-03-05T13:29:32+08:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对于高通量测序数据，通常都是数个或数十个样品，有时候要调用R packages对测序分析结果（例如bed格式文本文件）就行统计绘图，如何批量处理？   一、批量文件读取，逐个统计 demo：</p>
+<p>##读取同一目录下的所有文件<br />
+path &lt;- “E:/实验数据/UseData/2013”<br />
+fileNames &lt;- dir(path)<br />
+filePath &lt;- sapply(fileNames, function(x){<br />
+paste(path,x,sep=‘/’)})<br />
+data &lt;- lapply(filePath, function(x){<br />
+read.csv(x, header=T)})<br />
+————————————————<br />
+版权声明：本文为CSDN博主「HuFeiHu-Blog」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br />
+原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">https://blog.csdn.net/u011596455/article/details/79601113</a></p>
+<p>批量读取bed文件之后调用covplot()函数逐个对数据进行统计，但是先不输出：</p>
+<p>path=“/home/xxx/peaks_files” ## 指定输入文件所在路径<br />
+fileNames = list.files(path, pattern=“*.bed$”)  ## 读入输入文件目录下后缀为bed的所有文件，到一个文件列表<br />
+filePath &lt;- sapply(fileNames, function(x){ paste(path,x,sep=‘/’)}) ## 针对fileNames列表里面的文件名，分别加上路径<br />
+data &lt;- lapply(filePath, function(x){ covplot(x, weight=“V4”)}) ### covplot 画图，但是这里不会输出，数据暂时存到列表里面</p>
+<h1 id="下面指定一个输出路径"><a class="markdownIt-Anchor" href="#下面指定一个输出路径"></a> 下面指定一个输出路径</h1>
+<p>outPath &lt;- “/home/yyy/peaks_genome_distribution” ## 指定输出目录#out_filePath &lt;- sapply(out_fileName, function(x){ paste(outPath ,x,sep=‘/’)}) ##输出路径名<br />
+#length(data)</p>
+<p>二、循环处理 Demo</p>
+<p>outPath &lt;- “E:/实验数据/UseData/2013” ##输出路径<br />
+out_fileName &lt;- sapply(names(data),function(x){<br />
+paste(x, “.csv”, sep=‘’)}) ##csv格式<br />
+out_filePath &lt;- sapply(out_fileName, function(x){<br />
+paste(outPath ,x,sep=‘/’)}) ##输出路径名<br />
+##输出文件<br />
+for(i in 1:length(data)){<br />
+write.csv(data[[i]], file=out_filePath[i], row.name=F)<br />
+}<br />
+————————————————<br />
+版权声明：本文为CSDN博主「HuFeiHu-Blog」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br />
+原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">https://blog.csdn.net/u011596455/article/details/79601113</a></p>
+<p>将列表中的统计图逐个输出为pdf格式文件到指定路径，成功在指定目录下得到所有输入文件对应的统计图。</p>
+<p>out_fileName &lt;- sapply(names(data),function(x){ paste(x, “.pdf”, sep=‘’)}) ##设定输出pdf后缀的文件名<br />
+out_filePath &lt;- sapply(out_fileName, function(x){ paste(outPath ,x,sep=‘/’)}) ##设定输出文件及其完整路径名<br />
+for(i in 1:length(data)){ pdf(out_filePath[i]) ; print(data[[i]]); dev.off() } # 依次画图并输出pdf，注意这里的print好重要</p>
+<p>参考资料： 【1】<a target="_blank" rel="noopener" href="https://anjingwd.github.io/AnJingwd.github.io/2017/09/04/R%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5csv%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E4%BB%A5%E6%96%87%E4%BB%B6%E5%90%8D%E4%BD%9C%E4%B8%BA%E5%8F%98%E9%87%8F%E5%90%8D/">R语言之批量导入csv文件，并以文件名作为变量名</a> 【2】<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">R语言–批量读取和写入目录</a> 【3】<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37893266/article/details/91169454">R：拆分文件名</a> 【4】<a target="_blank" rel="noopener" href="https://life2cloud.com/cn/2018/11/pipelines-styles/">生物信息流程构建的几种方案</a> 【5】<a target="_blank" rel="noopener" href="https://blog.csdn.net/yiifaa/article/details/73252980">R：中括号（a[i]）与双中括号（a[[i]]）的区别</a> 【6】<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83125846">R批量循环处理同一格式文件-csv,txt,excel</a> 【7】<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e541fa218294">R语言循环多个文件画图生成一个or批量生成多个pdf文件</a> 【8】<a target="_blank" rel="noopener" href="https://blog.csdn.net/c1z2w3456789/article/details/79546279">R中的高效批量处理函数（lapply sapply apply tapply mapply）</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/05/Linux-zsh-installation-and-oh-my-zsh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/05/Linux-zsh-installation-and-oh-my-zsh/" class="post-title-link" itemprop="url">Linux：zsh的安装与使用（oh-my-zsh）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 11:28:17" itemprop="dateCreated datePublished" datetime="2020-03-05T11:28:17+08:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Mac OS更新系统之后，进入iTerm2收到提示说可以使用zsh，查资料比较了一下它和bash的区别，然后就安装了。 简要过程：在客户端（Mac OS）安装zsh并启动，通过oh-my-zsh配置zsh；随后在服务器（Linux CentOS 7）安装zsh，从bash切换到zsh，同样通过oh-my-zsh配置zsh，由于<sub>/.bashrc和</sub>/.bash_profile里面保存了环境变量和alias等信息，切换成zsh之后也需要在~/.zshrc文件里面做相应设置；还有服务器的Tmux软件也要做设置。 具体操作都是参考网络资料，下面直接转载一篇比较详细的文章。 ==========</p>
+<h3 id="安装zsh"><a class="markdownIt-Anchor" href="#安装zsh"></a> 安装zsh</h3>
+<p>然后开始安装配置 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br></pre></td></tr></table></figure>
+<p>然后把bash的配置文件(<sub>/.bash_prorile或者</sub>/.profile等) 我的是<sub>/.bashrc拷贝到zsh的配置文件</sub>/.zshrc里，因为zsh兼容bash) 每次进入是都使用命令<code>zsh</code>进入, 而输入<code>exit</code>退出 或者直接设置成默认shell（但是这里我并不需要执行，因为我的默认shell其实想设置成tmux，后文再说，然后使用tmux来调用zsh）命令行输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#取代bash，设为默认shell</span><br><span class="line">sudo usermod -s /bin/zsh username</span><br><span class="line">#或者</span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">chsh -s `which zsh`</span><br><span class="line"></span><br><span class="line">#如果要切换回去bash：</span><br><span class="line">chsh -s /bin/bash</span><br></pre></td></tr></table></figure>
+<h3 id="安装oh-my-zsh"><a class="markdownIt-Anchor" href="#安装oh-my-zsh"></a> 安装oh-my-zsh</h3>
+<p>直接用zsh会很难受，因为zsh功能很强大但是太复杂，所以需要oh-my-zsh来将它简单化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"></span><br><span class="line">备份已有的zshrc, 替换zshrc</span><br><span class="line">cp ~/.zshrc ~/.zshrc.orig</span><br><span class="line">cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line"></span><br><span class="line">直接使用脚本安装</span><br><span class="line">cd .oh-my-zsh/tools</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+<p>直接最终的~/.zshrc内容备份一哈： <a target="_blank" rel="noopener" href="https://github.com/YuYuCong/Ubuntu">https://github.com/YuYuCong/Ubuntu</a></p>
+<h3 id="配置主题"><a class="markdownIt-Anchor" href="#配置主题"></a> 配置主题</h3>
+<p>oh-my-zsh 集成了大量的主题, 位于<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/"><code>oh-my-zsh/theme</code></a> 配置主题, 可以通过修改<code>~/.zshrc</code>中的环境变量<code>ZSH_THEME</code>来完成，我最后挑中了bira</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;bira&quot;</span><br></pre></td></tr></table></figure>
+<p>如果觉得主题太多，可以选择使用随机模式, 不过这就比较刺激了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;random&quot; # (...please let it be pie... please be some pie..)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">主题介绍</a></p>
+<h3 id="配置插件"><a class="markdownIt-Anchor" href="#配置插件"></a> 配置插件</h3>
+<p>修改<code>~/.zshrc</code>中<code>plugins</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git bundler osx rake ruby)</span><br></pre></td></tr></table></figure>
+<p>详细的插件信息, 可以参见<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins">zsh插件Plugins介绍</a></p>
+<h3 id="更新oh-my-zsh"><a class="markdownIt-Anchor" href="#更新oh-my-zsh"></a> 更新oh-my-zsh</h3>
+<p>默认情况下, 您将被提示检查每几周的升级. 如果你想我ZSH自动升级本身没有提示你, 修改~/.zshrc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disable_update_prompt = true1</span><br></pre></td></tr></table></figure>
+<p>禁用自动升级, 修改~/.zshrc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disable_auto_update = true1</span><br></pre></td></tr></table></figure>
+<p>当然你也可以选择手动更新 如果你想在任何时间点升级（也许有人刚刚发布了一个新的插件，你不想等待一个星期？)你只需要运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upgrade_oh_my_zsh1</span><br></pre></td></tr></table></figure>
+<h3 id="卸载oh-my-zsh"><a class="markdownIt-Anchor" href="#卸载oh-my-zsh"></a> 卸载oh-my-zsh</h3>
+<p>如果你想卸载<code>oh-my-zsh</code>, 只需要执行<code>uninstall_oh_my_zsh zsh</code>， 从命令行运行. 这将删除本身和恢复你以前的bash或者zsh配置.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uninstall_oh_my_zsh zsh1</span><br></pre></td></tr></table></figure>
+<h3 id="配置tmux默认调用oh-my-zsh"><a class="markdownIt-Anchor" href="#配置tmux默认调用oh-my-zsh"></a> 配置tmux默认调用oh-my-zsh</h3>
+<p>但是感觉装完之后，有一种很不实用的感觉，就只是主题比较多？我想tmux的分屏和zsh的漂亮界面融合起来。 1.在 <strong>~/.tmux.conf</strong>文件中加了 “set -g default-shell /bin/zsh” 设置tmux的默认shell为zsh。 2.然后重新刷新tmux的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<h3 id="终端默认启动tmux"><a class="markdownIt-Anchor" href="#终端默认启动tmux"></a> 终端默认启动tmux</h3>
+<p>到目前为止，我都是启动命令行之后会直接bash，需要输入tmux，才能开启tmux，然而我已经想直接抛弃bash了，所以默认启动tmux吧。 看看我现在都有些什么shell:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<p>结果 /bin/sh /bin/dash /bin/bash /bin/rbash /usr/bin/tmux /bin/zsh /usr/bin/zsh 然后:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /usr/bin/tmux</span><br></pre></td></tr></table></figure>
+<p>重启电脑生效。 结束。</p>
+<hr />
+<h2 id="tmux"><a class="markdownIt-Anchor" href="#tmux"></a> tmux</h2>
+<h3 id="安装配置"><a class="markdownIt-Anchor" href="#安装配置"></a> 安装配置</h3>
+<p>因为很久之前就安装了tmux，当时没有写笔记，今天趁机会备注一下我的博文<a target="_blank" rel="noopener" href="http://blog.csdn.net/williamyuyuyu/article/details/79283374">http://blog.csdn.net/williamyuyuyu/article/details/79283374</a> 主要是tmux的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<p>记得配置完了之后刷新tmux的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<p>我借用了别人的配置,当然也备份到github了:<a target="_blank" rel="noopener" href="https://github.com/YuYuCong/Ubuntu">https://github.com/YuYuCong/Ubuntu</a></p>
+<h3 id="脚本"><a class="markdownIt-Anchor" href="#脚本"></a> 脚本</h3>
+<p>tmux里面的脚本： 写一个脚本在<sub>/.tmux/dev，脚本名字就叫dev，放在</sub>/.tmux/目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">mkdir .tmux</span><br><span class="line">cd .tmux</span><br><span class="line">vim dev</span><br></pre></td></tr></table></figure>
+<p>写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">selectp -t 0 #选择第一个标签</span><br><span class="line">splitw -h -p 50 #分割成两半</span><br><span class="line"></span><br><span class="line">selectp -t 1 # 选择第二个标签</span><br><span class="line">splitw -v -p 50 &#x27;typora&#x27; #分割成两半</span><br><span class="line">selectp -t 0 # 返回第一个标签</span><br></pre></td></tr></table></figure>
+<p>然后tmux的配置文件里面补上 <code>bind b source-file ~/.tmux/dev</code> 使用前缀+b按键调用此脚本。</p>
+<h5 id="q1但是有个问题我的脚本为啥一直不运行脚本没配好啊"><a class="markdownIt-Anchor" href="#q1但是有个问题我的脚本为啥一直不运行脚本没配好啊"></a> 【Q1】但是有个问题：：：我的脚本为啥一直不运行！！！，脚本没配好啊。</h5>
+<p>—————————————第二天————————————-</p>
+<h3 id="继续tmux脚本"><a class="markdownIt-Anchor" href="#继续tmux脚本"></a> 继续tmux脚本</h3>
+<h5 id="a1于是今天早上起床没洗漱继续研究发现重启一遍之后脚本配置都可以用了"><a class="markdownIt-Anchor" href="#a1于是今天早上起床没洗漱继续研究发现重启一遍之后脚本配置都可以用了"></a> 【A1】于是今天早上起床没洗漱继续研究，发现重启一遍之后脚本配置都可以用了。</h5>
+<p>但是又有了新问题：注意一点，因为第三个标签调用的是typora，不是终端程序，运行typora之后，第三个标签会进入一种神奇的状态，不能输入任何命令，当你关闭typora时，它又会立即关闭。 突发奇想在Ctrl+Alt+F1之后的无窗口界面试了试Ctrl+b b的方式，发现typora完全无法运行，只打开了两个标签。——这就是之前所述的X服务未打开的缘故。</p>
+<h5 id="q2所以我打算试试向建立3个标签并向终端输入命令开启typora的方式"><a class="markdownIt-Anchor" href="#q2所以我打算试试向建立3个标签并向终端输入命令开启typora的方式"></a> 【Q2】所以，我打算试试向建立3个标签并向终端输入命令开启typora的方式。</h5>
+<h5 id="a2解决了"><a class="markdownIt-Anchor" href="#a2解决了"></a> 【A2】解决了！</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">selectp -t 0 # 选择第一个标签</span><br><span class="line">splitw -h -p 50 # 竖着分割成两半</span><br><span class="line">selectp -t 1 # 选择第二个标签</span><br><span class="line">splitw -v -p 20 #水平分割成两个,新分割出来的占20%</span><br><span class="line">selectp -t 2 # 选择第三个标签</span><br><span class="line">send-keys -t 2 &#x27;typora ./daily_record/2018.md&#x27; #向标签2输入typora</span><br><span class="line">#send-keys -t 2 &#x27;typora ./daily_record/2018.md&#x27; C-m #向标签2输入命令，并回车确定  </span><br><span class="line">#selectp -t 0 # 返回第一个标签</span><br></pre></td></tr></table></figure>
+<p>然后会自动分割成3个标签，并且向第三个标签输入typora，并且指向我的记录文档，刚好如果我想记录，直接Enter，如果不想开typora，那就重新输入命令即可。嘻嘻 &gt;_&lt; 当然注意，启动typora后的那个标签会进入运行状态，除非typora已经关闭，才能再输入命令。 ###　[注意]tmux比较权威的说明书： 《tmux: Productive Mouse-Free Development》<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">https://www.kancloud.cn/kancloud/tmux/62464</a>， CSDN上很多博客都是在灌水，关乎脚本的只字不提，只说了快捷键部分。但是感觉脚本脚本脚本真的真的真的才是tmux最重要的是部分哇！ 当然这个脚本中所述的方法是用bashl下运行tmux脚本，所以每一条命令前面都有一句tmux，既然我已经设置了tmux为默认shell，已经是tmux环境了，所以我的脚本是不用每一句命令之前加tmux的。以上已经完成了一个快捷键调用我要的脚本 的配置。 【Q3】然后我又想，终端输入命令调用脚本的方式，正如前几行那个<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">文档</a>说讲的方式，输入一个可执行脚本的名字develop，然后执行脚本，运行这个开发环境出来，平时不需要的时候就不调用，而不是tmux快捷按键的方式调用脚本。尤其 ，在我使用ros的时候，那么多的窗口，需要一个集成的界面出来！这个问题待续。</p>
+<h2 id="总结一哈"><a class="markdownIt-Anchor" href="#总结一哈"></a> 总结一哈</h2>
+<p>用了tmux的分割标签，快捷键，脚本运行； 配置文件在 .tmux.conf 其中一个插件 ~/.tmux/dev； 用了zsh的主题； 配置文件在~/.zshrc</p>
+<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://williamyu.top/blog/2018/02/13/shell/">http://williamyu.top/blog/2018/02/13/shell/</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013857738">https://segmentfault.com/a/1190000013857738</a></li>
+<li>《tmux: Productive Mouse-Free Development》<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">https://www.kancloud.cn/kancloud/tmux/62464</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/gatieme/article/details/52741221">http://blog.csdn.net/gatieme/article/details/52741221</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/02/Bioinfo-chipseeker-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/02/Bioinfo-chipseeker-installation/" class="post-title-link" itemprop="url">ChipSeeker的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-02 20:02:42" itemprop="dateCreated datePublished" datetime="2020-03-02T20:02:42+08:00">2020-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我使用Linux CentOS 7系统，在ChipSeeker的安装过程中遇到了许多问题，这里做个记录。 <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d887.59.11.png" alt="截屏2020-03-02下午7.59.11" /> 在R （version 3.6）输入如下命令开始自动安装。安装命令：</p>
+<p>if (!requireNamespace(“BiocManager”, quietly = TRUE))<br />
+install.packages(“BiocManager”)</p>
+<p>BiocManager::install(“ChIPseeker”)</p>
+<p>部分报错信息：</p>
+<p>make：gfortran：命令未找到 │*** moving datasets to lazyload DB<br />
+ERROR: compilation failed for package ‘igraph’<br />
+installation of package ‘igraph’ had non-zero exit status<br />
+installation of package ‘tidygraph’ had non-zero exit status<br />
+installation of package ‘graphlayouts’ had non-zero exit status<br />
+installation of package ‘ggraph’ had non-zero exit status <br />
+installation of package ‘enrichplot’ had non-zero exit status<br />
+installation of package ‘ChIPseeker’ had non-zero exit status</p>
+<p>解决办法，先给centOS 7系统安装gfortran：</p>
+<p>yum install gcc-gfortran</p>
+<p>继续安装R包，遇到 libgfortran.so.4 文件缺失的问题。解决办法：用find命令在linux系统里面找，在anaconda 3.7的安装目录下找到一个，所以就用这个文件，做一个软链接到系统库（我是/home/xxx/local/lib），然后igraph这些包就安装好了。 后续还遇到了R packages无法下载的问题：</p>
+<p>package ‘xxxx-package’ is not available (for R version 3.6.0)</p>
+<p>直接在R的cran里面搜索包，手动下载之后，在R界面用下面的命令即可安装：</p>
+<p>install.packages(“/xxx/yy/xx/xxpackage.1.xx.0.tar.gz”)</p>
+<p>这些包也有可能在编译的过程遇到问题，我尝试过下载旧版本的包，有时候可以解决问题；也有更换不同版本的gcc才能编译成功的情况。 对于功能高级、复杂的R包的安装，有时候真的麻烦，花掉我不止一天时间。一个R包依赖其他多个不同R包，不一定每个R包都能顺利安装；具体到各个R包，他们有不同的版本，不是每个版本都能安装，可能要换不同的gcc来做编译；还有就是linux下面安装软件很多时候都是环境变量的问题，要根据具体情况做修改和调整。 终于安装成功： <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d888.00.55.png" alt="截屏2020-03-02下午8.00.55" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/20/%E8%B4%A8%E7%B2%92dna%E6%B5%8B%E5%BA%8F%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/20/%E8%B4%A8%E7%B2%92dna%E6%B5%8B%E5%BA%8F%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">质粒DNA测序结果分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-20 11:50:30" itemprop="dateCreated datePublished" datetime="2020-01-20T11:50:30+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目的基因的克隆，简要过程如下，构建的阳性克隆需要经过 Sanger 测序验证。对于 Sanger 测序，一般一个反应（一个引物往后延伸）测的比较准确的长度大概是 800 bp，如果大于这个长度，就需要设计多条引物，用多个反应分区段测定。 <img src="https://genehub.files.wordpress.com/2020/01/cloning_dna-_science_learning_hub.jpg" alt="cloning_dna-_Science_Learning_Hub" />   测序结果解压后一般有两个类型的文件：ab1后缀的谱图文件和seq后缀的序列文件。 ab1格式的谱图可以用BioEdit软件打开，界面如下。一般在 20 bp ~ 900 bp 的测序区间是比较准确的。 <img src="https://genehub.files.wordpress.com/2020/01/ab1.png" alt="ab1" /> 以.seq为后缀的序列文件可以直接用 EditPlus、SnapGene 之类的序列编辑软件打开，也可以用电脑自带的记事本和写字板打开，拷贝出来用于序列分析。 可用 DNAstar 软件中的 MegAlign 软件将测序文件和模板序列进行比对，如果没有问题就可以放心就行后面的操作了。依次点击 MegAlign -&gt; File -&gt; Enter Sequences -&gt; 选择seq后缀的文件 -&gt; 打开，即可将测序文件导入软件，再以同样的方式导入fasta格式的参考序列，并选择 Align -&gt; By Clustal W Method，即可看到序列比对结果。注意反向引物的测序序列需要自己先反转（网页工具：<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms/rev%5C_comp.html%EF%BC%89%EF%BC%8C%E5%8F%8D%E8%BD%AC%E5%90%8E%E7%9A%84%E5%BA%8F%E5%88%97%E5%8F%A6%E5%AD%98%E4%B8%80%E4%B8%AA%E6%96%B0%E6%96%87%E4%BB%B6%E6%89%8D%E5%8F%AF%E4%BB%A5%E5%AF%BC%E5%85%A5%EF%BC%8C%E5%90%A6%E5%88%99%E5%8F%8D%E5%90%91%E5%BC%95%E7%89%A9%E6%B5%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%8F%82%E8%80%83%E5%BA%8F%E5%88%97%E6%96%B9%E5%90%91%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E8%BD%AF%E4%BB%B6%E4%B8%8D%E8%83%BD%E6%AF%94%E5%AF%B9%E3%80%82%E9%99%A4%E4%BA%86">http://www.bioinformatics.org/sms/rev\_comp.html），反转后的序列另存一个新文件才可以导入，否则反向引物测序的结果与参考序列方向不一致，软件不能比对。除了</a> MegAlign，还有其他序列比对软件可以做，例如windows系统的ClustalX；或者网页版的 ClustalW（<a target="_blank" rel="noopener" href="https://www.genome.jp/tools-bin/clustalw%EF%BC%89%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%81%9A%E5%8F%8C%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E3%80%82">https://www.genome.jp/tools-bin/clustalw）也可以做双序列比对。</a> <img src="https://genehub.files.wordpress.com/2020/01/e5beaee4bfa1e688aae59bbe_20200120113453.png" alt="微信截图_20200120113453" />   如果要对比对结果进行图形化展示，可以用 Color Align Conservation （<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms2/color%5C_align%5C_cons.html%EF%BC%89%E5%87%BA%E5%9B%BE%E3%80%82%E4%B8%8B%E9%9D%A2%E6%98%AF%E7%BD%91%E9%A1%B5%E6%8F%90%E4%BE%9B%E7%9A%84%E8%9B%8B%E7%99%BD%E8%B4%A8%E5%BA%8F%E5%88%97%E4%BD%9C%E4%B8%BA%E6%A1%88%E4%BE%8B%EF%BC%8C%E5%AF%B9%E4%BA%8EDNA%E5%BA%8F%E5%88%97%E4%B9%9F%E6%98%AF%E7%B1%BB%E4%BC%BC%E7%9A%84%E3%80%82">http://www.bioinformatics.org/sms2/color\_align\_cons.html）出图。下面是网页提供的蛋白质序列作为案例，对于DNA序列也是类似的。</a> <img src="https://genehub.files.wordpress.com/2020/01/e5beaee4bfa1e688aae59bbe_20200120114724.png" alt="微信截图_20200120114724" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/13/Linux-ssh-from-remote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/13/Linux-ssh-from-remote/" class="post-title-link" itemprop="url">SSH远程登录设置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-13 18:15:35" itemprop="dateCreated datePublished" datetime="2019-12-13T18:15:35+08:00">2019-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如图所示，Linux服务器为C，用户客户端电脑为A。如何从A登录到C服务器。之前尝试多次不成功，原来是没有在Linux服务器正确设置参数（即下面步骤二）。   步骤一、在B路由器设定“端口转发”（或端口映射？），比如将端口22转发到服务器C；参考<a target="_blank" rel="noopener" href="https://service.tp-link.com.cn/detail%5C_article%5C_69.html">https://service.tp-link.com.cn/detail\_article\_69.html</a> 步骤二、在Linux服务器上设置远程登录，编辑/etc/ssh/sshd_config，打开22端口，再修改一些设置允许用户远程登录。具体参考：<a target="_blank" rel="noopener" href="http://jianshu.com/p/df83a3b96f64">jianshu.com/p/df83a3b96f64</a> 步骤三、在用户电脑客户端进行ssh操作即可。比如ssh <a href="mailto:user@101.1.1.2">user@101.1.1.2</a>，即可登录到服务器C。参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qiushisoftware/article/details/55258624">https://blog.csdn.net/qiushisoftware/article/details/55258624</a>   <img src="https://genehub.files.wordpress.com/2019/12/790056-20151122112639515-536213849.png" alt="790056-20151122112639515-536213849" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/04/linux-redhat-4-4-7-3-upgrade-to-centos-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/04/linux-redhat-4-4-7-3-upgrade-to-centos-7/" class="post-title-link" itemprop="url">Linux系统从 RedHat 4.4.7-3 升级到 CentOS 7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-04 10:44:44" itemprop="dateCreated datePublished" datetime="2019-09-04T10:44:44+08:00">2019-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由于Redhat附带的GLIBC 2.12版本过低，导致许多应用（jcvi、interproscan）不能正常使用，遂决定升级到新的系统。 一、下载CentOS的iso文件 进入CentOS网站（<a target="_blank" rel="noopener" href="https://www.centos.org/download/%EF%BC%89%EF%BC%8C%E9%80%89%E6%8B%A9DVD">https://www.centos.org/download/），选择DVD</a> ISO按钮，进入下载网站之后点击如下链接即可下载。文件大小约4.3 GB。 <a target="_blank" rel="noopener" href="http://mirror.sunnyvision.com/centos/7.6.1810/isos/x86%5C_64/CentOS-7-x86%5C_64-DVD-1810.iso">http://mirror.sunnyvision.com/centos/7.6.1810/isos/x86\_64/CentOS-7-x86\_64-DVD-1810.iso</a> 二、制作光盘启动盘 我的笔记本电脑自带DVD光盘刻录机，需要安装UltraIso软件用于光盘刻录，同时空白DVD光盘空间要大于CentOS的iso文件。也可以用U盘做启动盘，但是我没有合适的U盘，所以这次用了光盘。将光盘放入刻录机中；打开软件UltraISO；在软件上找到iso文件所在的位置，并双击该iso文件；随后选中DVD；再点击“刻录”按钮即可。 <img src="https://genehub.files.wordpress.com/2019/09/iso-burn-_20190904100355.png" alt="ISO burn _20190904100355" /> 三、安装新系统 旧系统在一个1.8 TB的硬盘，已经做了分区，其中50 GB分区是根目录（/），剩下的空间大部分是/home目录。home目录下我已经有多年的数据，这次安装不用动，但是我还是提前备份了。新系统直接安在原有的根目录下。 安装时候参考资料： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/set-config/p/9040407.html">https://www.cnblogs.com/set-config/p/9040407.html</a> <a target="_blank" rel="noopener" href="https://blog.seisman.info/centos7-setup-1/">https://blog.seisman.info/centos7-setup-1/</a> 1. 往服务器插入光盘，重启系统，开机的时候按F2进入bios，设置光盘优先启动，进入如下界面，光标移动选择第一项Install CentOS 7，进入安装。 <img src="https://genehub.files.wordpress.com/2019/09/1349552-20180515112524220-766717605.png" alt="1349552-20180515112524220-766717605" /> 2. 系统自动提醒进行一些配置 第二个界面是选择安装语言界面，我相信看这个教程的很多童鞋都是新手或者第一次安装Centos的同胞，对于新手而言，最好选择可以看懂的中文语言，往下拉到底就可以看到中文了，选中它。单机Continue/继续 【或者键盘的Tab键选中+回车确定】   <img src="https://genehub.files.wordpress.com/2019/09/1349552-20180515112948570-582636142.png" alt="1349552-20180515112948570-582636142" /> 第三个界面非常关键，这涉及到你系统的基本配置，比如硬盘大小、根分区以及swap分区。 本地化：本地化这一块不需要做过多的配置，按需即可；软件：软件下面的安装源和软件选中，只有特殊需求的童鞋才会用到。这一点从里面的选项描述就可以知道，为了不错误引导新手，这里就不放图了。系统：重点是系统。先说KDUMP，对于新手来说，这个在新手阶段无使用价值，配置启用或者不启用都无关紧要。安装位置，由于安装位置涉及到你自己的磁盘数据以及分区内容，如果原分区包含有数据、有必要先备份数据。 <img src="https://genehub.files.wordpress.com/2019/09/1349552-20180515113632825-1756332663.png" alt="1349552-20180515113632825-1756332663" /> 点击上图的“安装位置”，出现计算机上已有的硬盘，选中系统所在盘，并点击“手动配置分区”。（因为我这块硬盘已经被分区了，旧的home目录数据不用变，所以不必用自动分区。这里忘了拍照。）点击完成按钮之后进入下图界面，左侧显示了“新 CentOS 7 安装”和“Red Hat …”两个栏目，可以看到新的CentOS还没有挂载点，旧的Redhat系统有/home, /boot, / 和 swap 这四个分区。依次点击这四个分区，图中挂载点（P）文字下方的空白栏，就是新的CentOS系统对应的分区，要相应地填入 /home, /boot, / 和 swap；同时注意有个“重新格式化（D）”文字左侧的选择框，/home 不要点这个，其他三个要选重新格式化。设备类型和文件系统我都沿用旧系统的，没做更改，看到资料说新手需记住：除了SWAP分区外，其他分区的文件系统一律选择ext4类型,设备类型默认选LVM。 <img src="https://genehub.files.wordpress.com/2019/09/e9858de7bdaee5898d.jpg" alt="配置前" /> 手动分区之后点击完成就进入了如下界面，可以看到三个挂载区（对应/boot, / 和 swap）将重新格式化，点击“接收更改”。然后新系统将进入自动安装，期间会提醒设置root账户和一个普通用户账户，然后等几分钟就安好了。取出光盘，重启的时候再将bios里面改成原来的硬盘优先启动，就可以进入新系统了。 <img src="https://genehub.files.wordpress.com/2019/09/e9858de7bdaee5908e.jpg" alt="配置后" /> 四、其余配置 对新系统的IP地址等做好设置，即可远程登录了。进入home目录，文件都跟以前的一致，就是所属用户组变成了500（这是啥意思？），我用chown -R username:username ~/ 将文件属性变回了自己的用户名下。   == 20200109 更新== 由于电脑多次经历断电异常关机（没有配置UPS），卡在开机界面无法顺利开机了，进入安全模式下，通过journalctl命令查阅log文件，看到的报错信息如下。</p>
+<p>Warning: /<em>dev</em>/<em>mapper</em>/<em>VolGroup</em>-<em>lv_root contains a file system with errors</em>, check forced.</p>
+<p>查阅资料之后用fsck命令对磁盘进行修复也没有解决问题，也许是我操作不对，于是按照以上步骤重装系统。重装系统之后除系统分区之外的数据盘都完好，以后还是配置UPS和备份数据盘比较保险。新的系统需要做如下设置。 <strong>1 联网</strong> centos 7 启动之后没有联网，需要在/etc/sysconfig/network-scripts/ifcfg-eth0 (确认ONBOOT=yes)，其中eth0是设备名，不同的设备可能不同。ONBOOT是指明在系统启动时是否激活网卡，只有在激活状态的网卡才能去连接网络，进行网络通讯。 <strong>2 设置静态IP地址</strong> 静态IP地址可以方便用户ssh登录。直接修改网卡配置文件。我有两个网卡，分别设定了不同的IP地址，以下仅以一个网卡举例。</p>
+<p>vim /etc/sysconfig/network-scripts/ifcfg-eth0</p>
+<p>修改内容：</p>
+<p>BOOTPROTO=“static” #dhcp改为static<br />
+ONBOOT=“yes” #开机启用本配置<br />
+IPADDR=192.168.7.106 #静态IP<br />
+GATEWAY=192.168.7.1 #默认网关<br />
+NETMASK=255.255.255.0 #子网掩码<br />
+DNS1=192.168.7.1 #DNS 配置</p>
+<p>输入如下命令重启网卡，激活设置。</p>
+<p>service network restart</p>
+<p><strong>3 防火墙设置，允许用户远程登录</strong> 确保已经开启静态IP，安装 openssh-server，然后修改ssh配置文件。</p>
+<p>yum install -y openssl openssh-server<br />
+vim /etc/ssh/sshd_config</p>
+<p>修改参数，打开22端口，并允许root登录，RSSAuthentication 和 PubkeyAuthentication 均设置为 yes。 <img src="https://genehub.files.wordpress.com/2019/09/e5beaee4bfa1e688aae59bbe_20200109144722.jpg" alt="微信截图_20200109144722" /> 启动ssh服务</p>
+<p>systemctl start sshd.service</p>
+<p>重启网络</p>
+<p>service network restart</p>
+<p>设置开机启动ssh服务，即可从外网远程登录（路由器已经设置端口转发）。</p>
+<p>systemctl enable sshd.service</p>
+<p><strong>4 DNS设置</strong> 发现没有设置DNS的话，在用git下载的过程中会报错。编辑如下文件并保存退出vim即可生效。</p>
+<p>vim /etc/resolv.conf # 加入如下格式的内容，可以写多个DNA服务器</p>
+<p>nameserver 8.8.8.8<br />
+nameserver 8.8.4.4</p>
+<p><strong>5 将用户加入sudo列表</strong> 修改etc/sudoers配置文件，在root ALL=(ALL) ALL下一行，添加新用户，如下所示。文字之间的间隔是tab。sudoers的 权限是只读，编辑内容前修改权限，添加内容完毕将权限改回去。</p>
+<p>root   ALL=(ALL)   ALL<br />
+username   ALL=(ALL)   ALL</p>
+<p><strong>6 安装git</strong> 安装 yum install git 验证 [root@localhost ~]# git --version git version 1.8.3.1 [root@localhost ~]# 配置基本信息 //配置基本信息（输入自己的用户名和密码） [root@localhost ~]# git config --global <a target="_blank" rel="noopener" href="http://user.name">user.name</a> “mygitusername” [root@localhost ~]# git config --global user.email <a href="mailto:xxxxx@xx.com">xxxxx@xx.com</a> //查看配置 [root@localhost ~]# git config --list <strong>7 懒人vim配置</strong> 安装spf13，之间安装git里面的教程操作即可：<a target="_blank" rel="noopener" href="https://github.com/spf13/spf13-vim">https://github.com/spf13/spf13-vim</a> 舒适的vim配置，在编辑脚本的时候会舒适很多。 <strong>8 CentOS 7 的桌面（optional）</strong> 新装系统是最小化安装，没有桌面系统，可以在服务器上面安装桌面（其实安装了也没什么实际作用，反正可以用ssh登录服务器）。</p>
+<p>yum groupinstall “X Window System” 　//注意有引号<br />
+yum groupinstall “GNOME Desktop” “Graphical Administration Tools”<br />
+startx  # 进入图形桌面界面</p>
+<p><strong>9 硬盘挂载</strong> 计算机有多块硬盘的情况下，需要挂载。fdisk -l查看硬盘情况，然后用mount命令挂载到/mnt目录下面。</p>
+<p>mount  /dev/sdb1  /mnt/sdb</p>
+<p>-END-</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/" class="post-title-link" itemprop="url">植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-08 15:49:22" itemprop="dateCreated datePublished" datetime="2019-08-08T15:49:22+08:00">2019-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>引用文献 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png" alt="胡杨ncRNA鉴定方法" /></p>
+<h2 id="一-trna"><a class="markdownIt-Anchor" href="#一-trna"></a> 一、tRNA</h2>
+<p>先安装tRNAscan-SE，然后运行如下命令即可。</p>
+<p>/xxx/biosoftwares/tRNAscan-SE-2.0/tRNAscan-SE -G -o gDNA.tRNA.out -f gDNA.tRNA.scdstr -m gDNA.tRNA.stat genome.sm.fa</p>
+<p>结果示意如下</p>
+<p>Sequence tRNA Bounds tRNA Anti Intron Bounds Cove<br />
+Name tRNA # Begin End Type Codon Begin End Score</p>
+<hr />
+<p>ChrM 1 12693 12766 Met CAT 0 0 63.37<br />
+ChrM 2 75688 75758 Cys GCA 0 0 48.76<br />
+ChrM 3 77742 77815 His GTG 0 0 56.52<br />
+ChrM 4 90837 90909 Cys GCA 0 0 59.37<br />
+ChrM 5 102551 102624 Asp GTC 0 0 68.25<br />
+ChrM 6 184436 184507 Gly GCC 0 0 70.59<br />
+ChrM 7 197972 198043 Glu TTC 0 0 65.49<br />
+ChrM 8 198963 199035 Met CAT 0 0 70.15<br />
+ChrM 9 237157 237228 Asn GTT 0 0 71.98<br />
+ChrM 10 238160 238242 Tyr GTA 0 0 62.80<br />
+ChrM 11 261058 261136 Lys TTT 261096 261101 34.22<br />
+ChrM 12 288825 288906 Met CAT 0 0 73.07<br />
+ChrM 13 312625 312696 Gln TTG 0 0 64.58<br />
+ChrM 14 335330 335403 Met CAT 0 0 73.76<br />
+ChrM 15 317035 316963 Phe AAA 0 0 30.83<br />
+ChrM 16 285436 285349 Ser GCT 0 0 55.78<br />
+ChrM 17 284968 284895 Phe GAA 0 0 67.07<br />
+ChrM 18 284630 284556 Pro TGG 0 0 64.26<br />
+ChrM 19 260713 260640 Trp CCA 0 0 76.23<br />
+ChrM 20 3494 3422 Lys TTT 0 0 81.82</p>
+<h2 id="二-rrna"><a class="markdownIt-Anchor" href="#二-rrna"></a> 二、rRNA</h2>
+<p>不同植物中的rRNA序列高度保守，基于blast比对即可预测新物种的rRNA。植物基因组rRNA包含18S、28S、5S和5.8S四种。我下载了大豆或拟南芥的rRNA序列作为比对文件。</p>
+<p>&gt;5S rRNA 556bp X15199.1 Soybean 5S rDNA gene for 5S rRNA</p>
+<blockquote>
+<p>5.8S rRNA Arabidopsis thaliana 15172 AT2G01020.1 Chr2+ 5782-5945<br />
+18S rRNA 1807bp X02623.1 Soybean (Glycine max) 18S ribosomal RNA<br />
+28S rRNA XR_003264281.1 PREDICTED: Glycine max 28S ribosomal RNA (LOC112999102), rRNA</p>
+</blockquote>
+<p>比对方法如下，结果还需要根据实际情况进行过滤，将部分匹配的基因组片段过滤掉即可。</p>
+<p>blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 7 -num_threads 4 -out Glycine_max_rRNA.fa__genome.7<br />
+blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 0 -num_threads 4 -out Glycine_max_rRNA.fa__genome.0</p>
+<p>三、snRNA snRNA是真核细胞核内的一组小分子RNA，分子较小，约含50—200nt，其主要作用是与有关蛋白结合形成小核糖核蛋白体(snRNP)，对RNA的前体进行加工。snRNA在核内转录，但snRNP在胞浆组装，发挥功能则又在核内，所以需要跨核膜转运。 snRNA的特点 ① 高度保守，如人和爪蟾的U1snRNA有90%的序列相同。② 其长度在哺乳动物中约为100-215个核苷酸，共分为7类，由于含U丰富，故编号为U1~U7。③ 分析方法是用rfam数据库（cm格式）作参考，通过cmscan比对程序进行比对预测。 先安装infernal程序（内置cmscan）。</p>
+<p>wget <a target="_blank" rel="noopener" href="http://eddylab.org/infernal/infernal-1.1.2.tar.gz">http://eddylab.org/infernal/infernal-1.1.2.tar.gz</a><br />
+`tar -zxvf infernal-1.1.2.tar.gz <br />
+cd infernal-1.1.2<br />
+./configure  --prefix=/home/user/local<br />
+make<br />
+make install<br />
+cd easel; make install</p>
+<h1 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试`</h1>
+<p>$ cmscan --version<br />
+Failed to parse command line: No such option “–version”.<br />
+Usage: cmscan [-options] <cmdb> <seqfile><br />
+where basic options are:<br />
+-h        : show brief help on version and usage<br />
+-g        : configure CM for glocal alignment [default: local]<br />
+-Z <x>    : set search space size in *Mb* to <x> for E-value calculations  (x&gt;0)<br />
+–devhelp : show list of otherwise hidden developer/expert options<br />
+To see more help on available options, do cmscan -h</p>
+<p>再下载rfam数据库，并将Rfam.cm做成索引文件。</p>
+<p>wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin</a><br />
+wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz</a><br />
+gunzip Rfam.cm.gz<br />
+cmpress <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a></p>
+<h1 id="出现如下文件"><a class="markdownIt-Anchor" href="#出现如下文件"></a> 出现如下文件</h1>
+<p>ls Rfam.*<br />
+Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> Rfam.cm.i1f Rfam.cm.i1i Rfam.cm.i1m Rfam.cm.i1p</p>
+<p>计算基因组大小，后面cmscan要用到-G参数</p>
+<p>esl-seqstat my-genome.fa</p>
+<p>比如基因组1000M，那么-G参数为 1000M*2/1M=2000，这个数据根据实际情况调整。 运行比对程序进行ncRNA预测</p>
+<p># Rfam12.2.claninfo 为下载的claninfo文件，需提供所在路径</p>
+<h1 id="rfamcm"><a class="markdownIt-Anchor" href="#rfamcm"></a> <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> 下载的cm文件</h1>
+<h1 id="my-genomefa-待查询序列"><a class="markdownIt-Anchor" href="#my-genomefa-待查询序列"></a> my-genome.fa 待查询序列</h1>
+<h1 id="my-genomecmscan-输出结果"><a class="markdownIt-Anchor" href="#my-genomecmscan-输出结果"></a> my-genome.cmscan 输出结果</h1>
+<h1 id="my-genometblout-有一个输出结果"><a class="markdownIt-Anchor" href="#my-genometblout-有一个输出结果"></a> my-genome.tblout 有一个输出结果</h1>
+<h1 id="对500m大小的输入序列48线程需要7个小时最好放入后台"><a class="markdownIt-Anchor" href="#对500m大小的输入序列48线程需要7个小时最好放入后台"></a> 对500M大小的输入序列，48线程，需要7个小时，最好放入后台</h1>
+<h1 id="esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"><a class="markdownIt-Anchor" href="#esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"></a> esl-seqstat my-genome.fa  awk ‘{if($0~/^Total/) print int($4*2/1000000);}’ -----&gt; 1751</h1>
+<p>cmscan -Z 1751 --cut_ga --rfam --nohmmonly --tblout my-genome.tblout --fmt 2 --clanin Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> my-genome.fa &gt; my-genome.cmscan</p>
+<p>cmscan结果文件示意如下，包含预测的ncRNA列表和RNA比对结构示意，其实不仅包含了snRNA，还有miRNA、rRNA和tRNA。 另有一个my-genome.tblout文件，就是tab分割的表格，更加简洁。</p>
+<p>Query: scaffold4 [L=2607366]<br />
+Hit scores:<br />
+rank E-value score bias modelname start end mdl trunc gc description</p>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 MIR408 2312792 2312644 - cm no 0.48 microRNA MIR408<br />
+(2) ! 1.9e-17 88.4 0.0 snoZ107_R87 2081687 2081578 - cm no 0.46 Small nucleolar RNA Z107/R87<br />
+(3) ! 2.4e-16 73.0 0.0 MIR164 1105583 1105483 - cm no 0.54 microRNA MIR164<br />
+(4) ! 1.2e-13 71.7 0.0 snoR30 2081522 2081420 - cm no 0.44 Small nucleolar RNA R30/Z108<br />
+(5) ! 1.3e-11 65.1 0.0 tRNA 2140920 2140992 + cm no 0.59 tRNA<br />
+(6) ! 1.3e-11 65.1 0.0 tRNA 2245335 2245407 + cm no 0.59 tRNA<br />
+(7) ! 1.6e-11 64.8 0.0 tRNA 223678 223759 + cm no 0.56 tRNA<br />
+(8) ! 1.7e-11 64.7 0.0 tRNA 374728 374800 + cm no 0.56 tRNA<br />
+(9) ! 4e-11 63.3 0.0 tRNA 482023 481943 - cm no 0.53 tRNA<br />
+(10) ! 7.3e-11 71.3 0.0 snoR41 705999 705902 - cm no 0.40 Small nucleolar RNA R41<br />
+(11) ! 3.2e-10 60.1 0.0 tRNA 624224 624152 - cm no 0.58 tRNA<br />
+(12) ! 4.3e-10 59.6 0.0 tRNA 793379 793309 - cm no 0.59 tRNA<br />
+(13) ! 1.7e-08 53.9 0.0 tRNA 767498 767569 + cm no 0.57 tRNA<br />
+(14) ! 0.00018 43.5 0.1 SNORD34 2081329 2081243 - cm no 0.33 Small nucleolar RNA SNORD34</p>
+<p>Hit alignments:</p>
+<blockquote>
+<blockquote>
+<p>MIR408 microRNA MIR408<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+</blockquote>
+</blockquote>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 cm 1 136 [] 2312792 2312644 - … 0.95 no 0.48</p>
+<p>v NC<br />
+::::::::::::::::&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;-&lt;—&lt;&lt;_____________…______________ CS<br />
+MIR408 1 aauUGGugAugAgAugGAGACaGGGAagAgGCAGaGCAuGaGAUGGaGCUaucAAcaAau…ugUGAgAaaaagaU 74<br />
+A+U G+GA +AGA + AG AGGGAA AGGCAGAGCAUG :AUG AGC AUCAACA A GUGAG +AA++<br />
+scaffold4 2312792 AGUCAGAGACAAGACAAAGGUAGGGAACAGGCAGAGCAUG-GAUGGAGCCAUCAACAGAAuagagucaagaaaccgagAGUGAGGGAAGA-- 2312704<br />
+****************************************.***************88779*************9988777777777766… PP</p>
+<p>v NC<br />
+______________&gt;&gt;----&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;::::::::::::::::: CS<br />
+MIR408 75 GgaauUGUUgUuGCuCcCuCCCaUGCACUGCcUCuUCCCuGGCUCCuuucuCuccucuuUuu 136</p>
+<ul>
+<li>++UGUU +GCU C + :CAUGCACUGCCUCUUCCCU GCU U +U+U+C+ U+U +<br />
+scaffold4 2312703 -AGUCUGUUACGGCUUC-AAUCAUGCACUGCCUCUUCCCUGGCUCUAUCUUUUUCCAUCUCC 2312644<br />
+.8899**********99.999***********************8899999999******** PP</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>snoZ107_R87 Small nucleolar RNA Z107/R87<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+</blockquote>
+</blockquote>
+<hr />
+<p>(2) ! 1.9e-17 88.4 0.0 cm 1 117 [] 2081687 2081578 - … 0.94 no 0.46</p>
+<p>NC<br />
+&lt;&lt;&lt;&lt;&lt;&lt;________________.___________________________________________________________________ CS<br />
+snoZ107_R87 1 GAugGCaGUGAuGACUuGGUAA.uAUUCAAGCUCAACAGACCaaAuuacAGgucUUUCUCuauggcuuuuccuaugGGAUuGaUUUGUaU 89<br />
+GAU::CAGUGAUGAC UAA +AUUCAAGCUCAACAGACC+ AUU CA G +UUUCUCU+U ++U G GAUU UUUG +U<br />
+scaffold4 2081687 GAUCACAGUGAUGACCACAUAAaAAUUCAAGCUCAACAGACCGGAUUGCACGGUUUUCUCUCU-------UUUGGGAGAUUACUUUGCGU 2081605<br />
+***************999987615677*******************************99665…9999**************** PP</p>
+<p>NC<br />
+______________________&gt;&gt;&gt;&gt;&gt;&gt; CS<br />
+snoZ107_R87 90 GcCGAUaaUcCCGCUGAACuGAGCcaUC 117<br />
+G+CGA A CCCGCUGAACUGAG::AUC<br />
+scaffold4 2081604 GUCGAC-ACCCCGCUGAACUGAGUGAUC 2081578<br />
+*****8.799****************** PP</p>
+<p>如何对结果进行分类？首先下载Rfam家族的注释，点击<a target="_blank" rel="noopener" href="http://rfam.xfam.org/search#tabview=tab5">http://rfam.xfam.org/search#tabview=tab5</a>，选择所有复选框，提交，把得到的表格拷贝下来，整理成TAB键分割的格式。并把第三列拆开，取出类型, 存储为 <code>Rfam_anno.txt</code>。</p>
+<p>Accession ID Type Description<br />
+RF00001 5S_rRNA Gene; rRNA 5S ribosomal RNA<br />
+RF00002 5_8S_rRNA Gene; rRNA 5.8S ribosomal RNA<br />
+RF00003 U1 Gene; snRNA; splicing U1 spliceosomal RNA<br />
+RF00004 U2 Gene; snRNA; splicing U2 spliceosomal RNA<br />
+RF00005 tRNA Gene; tRNA tRNA<br />
+RF00006 Vault Gene Vault RNA<br />
+RF00007 U12 Gene; snRNA; splicing U12 minor spliceosomal RNA<br />
+RF00008 Hammerhead_3 Gene; ribozyme Hammerhead ribozyme (type III)<br />
+RF00009 RNaseP_nuc Gene; ribozyme Nuclear RNase P<br />
+RF00010 RNaseP_bact_a Gene; ribozyme Bacterial RNase P class A<br />
+RF00011 RNaseP_bact_b Gene; ribozyme Bacterial RNase P class B<br />
+RF00012 U3 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA U3<br />
+RF00013 6S Gene 6S / SsrS RNA<br />
+RF00014 DsrA Gene; sRNA DsrA RNA<br />
+RF00015 U4 Gene; snRNA; splicing U4 spliceosomal RNA<br />
+RF00016 SNORD14 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA SNORD14<br />
+RF00017 Metazoa_SRP Gene Metazoan signal recognition particle RNA</p>
+<p>grep其中snRNA如下</p>
+<p>$ cat xfam_family_types.tab  grep snRNA  awk -F “\t” ‘{print $3}’  sort  uniq<br />
+Cis-reg<br />
+Gene; antisense<br />
+Gene; snRNA<br />
+Gene; snRNA; snoRNA; CD-box<br />
+Gene; snRNA; snoRNA; HACA-box<br />
+Gene; snRNA; snoRNA; scaRNA<br />
+Gene; snRNA; splicing<br />
+Gene; sRNA</p>
+<p>将CD-box、HACA-box和splicing对应的部分统计出来就可以做成如下文献对应的图了。 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae7bb93e69e9c.png" alt="胡杨ncRNA鉴定结果" /></p>
+<h2 id="四-mirna"><a class="markdownIt-Anchor" href="#四-mirna"></a> 四、miRNA</h2>
+<p>可以直接用上面的结果，也可以用miRNA测序的数据。   参考资料： [1] Chen Tong: <a target="_blank" rel="noopener" href="http://blog.genesino.com/2017/06/Rfam/">http://blog.genesino.com/2017/06/Rfam/</a> [2] Chen Lianfu: <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=2185">http://www.chenlianfu.com/?p=2185</a> [3] tiehan: <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_670445240102uxhu.html">http://blog.sina.com.cn/s/blog\_670445240102uxhu.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/31/Linux-how-to-upgrade-git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/31/Linux-how-to-upgrade-git/" class="post-title-link" itemprop="url">Linux更新git</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-07-31 11:46:27" itemprop="dateCreated datePublished" datetime="2019-07-31T11:46:27+08:00">2019-07-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>系统自带的git无法下载：</p>
+<p>error: error:1407742E:SSL routines:SSL23_GET_SERVER_HELLO:tlsv1 alert protocol</p>
+<p>查询之后据说是 GitHub 不再支持TLSv1/TLSv1.1了，公告地址：<a target="_blank" rel="noopener" href="https://githubengineering.com/crypto-removal-notice/">Weak cryptographic standards removal notice</a> 于是安装新版git（<a target="_blank" rel="noopener" href="https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.15.0.tar.gz%EF%BC%89%EF%BC%8Cmake%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%8A%A5%E9%94%99%EF%BC%8C%E6%98%BE%E7%A4%BA%E7%B3%BB%E7%BB%9F%E7%9A%84openssl%E6%9C%89%E9%97%AE%E9%A2%98%E3%80%82">https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.15.0.tar.gz），make的过程中报错，显示系统的openssl有问题。</a></p>
+<p>error OPENSSL_ALGORITHM_DEFINES no longer supported</p>
+<p>重新安装openssl到/usr/local/ 安装openssl到 /usr/local/openssl 目录，安装之后，编译；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./config shared zlib  --prefix=/usr/local/openssl &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>安装openssl就重新编译git，还报错（实际上上面写成<code>--prefix=/usr/local应该就没问题了</code>）</p>
+<p>/usr/local/include/openssl/opensslconf.h  error OPENSSL_ALGORITHM_DEFINES no longer supported</p>
+<p>于是进去这个目录，将opensslconf.h做了个软连接到新安装的文件目录/usr/local/openssl/include/openssl/opensslconf.h</p>
+<p>ln -s /usr/local/openssl/include/openssl/opensslconf.h /usr/local/include/openssl/opensslconf.h</p>
+<p>接下来make的过程还遇到了perl的问题。在将git安装文件里面的Makefile，将里面的/usr/bin/perl修改成自己目录的perl就行了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/01/%E8%BD%AC%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E8%A1%8Corthomcl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/04/01/%E8%BD%AC%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E8%A1%8Corthomcl/" class="post-title-link" itemprop="url">转：自动化运行OrthoMCL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-01 13:05:14" itemprop="dateCreated datePublished" datetime="2019-04-01T13:05:14+08:00">2019-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>OrthoMCL (<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://orthomcl.org/orthomcl/">http://orthomcl.org/orthomcl/</a>) 是现在用的最多的一款来找直系同源基因（Orthologs）以及旁系同源基因 (Paralog) 的软件。</p>
+<p>OrthoMCL 的最新版本是2013年7月公布的v2.0版本，已经很久没更新过了。根据官网的教程至少得十多步才能完成整个运行流程，包括Mysql数据库配置、修改OrthoMCL配置文件、转换序列格式、过滤、比对、解析结果和聚类等步骤，特别麻烦。 OrthoMCL Pipeline (<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=https://github.com/apetkau/orthomcl-pipeline">https://github.com/apetkau/orthomcl-pipeline</a>) 可以很好的帮我们解决这个痛点。Pipeline安装有点复杂，但是安装完成后，使用就方便了。</p>
+<p>作者：亮亮就是亮 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/449a51fa3d18">https://www.jianshu.com/p/449a51fa3d18</a> 来源：简书 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。</p>
+<p>使用OrthoMCL Pipeline 来自动化运行OrthoMCL，简化操作步骤。</p>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<p>1</p>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/apetkau/orthomcl-pipeline.git">https://github.com/apetkau/orthomcl-pipeline.git</a></p>
+<p>或者直接下载：<a target="_blank" rel="noopener" href="https://github.com/apetkau/orthomcl-pipeline">https://github.com/apetkau/orthomcl-pipeline</a></p>
+<h3 id="perl模块"><a class="markdownIt-Anchor" href="#perl模块"></a> Perl模块</h3>
+<p>通过<code>cpanm</code>安装</p>
+<p>1</p>
+<p>cpanm BioPerl DBD::mysql DBI Parallel::ForkManager YAML::Tiny Set::Scalar Text::Table Exception::Class Test::Most Test::Warn Test::Exception Test::Deep Moose SVG Algorithm::Combinatorics</p>
+<p>我是在linux命令行界面输入 perl -MCPAN -e shell ，使用instlall DBI这样的命令安装perl模块的。</p>
+<h3 id="依赖软件"><a class="markdownIt-Anchor" href="#依赖软件"></a> 依赖软件</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://orthomcl.org/common/downloads/software/v2.0/">OrthoMCL</a> 或 <a target="_blank" rel="noopener" href="https://github.com/apetkau/orthomclsoftware-custom">OrthoMCL Custom</a> （能够自定义序列识别符的修改版本）。OrhtoMCL下载并解压之后，bin目录下的Perl程序首行是#!/usr/bin/perl，我将其全部改为用户的perl了，因为我自己安装的perl位置是/home/fenglei/local/bin/perl。</li>
+<li><a target="_blank" rel="noopener" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=Download">BLAST</a> (blastall, formatdb) 注意不是NCBI-blast+, 推荐使用<code>2.2.26</code>版本。由于我之前下载过interproscan，在interproscan安装目录下游blastall和formatdb等程序，直接将其路径加入环境变量即可！</li>
+<li><a target="_blank" rel="noopener" href="http://www.micans.org/mcl/index.html">MCL</a></li>
+</ul>
+<p>依赖环境解决后能够顺利运行设置脚本</p>
+<p>1<br />
+2<br />
+3<br />
+4<br />
+5<br />
+6<br />
+7<br />
+8<br />
+9</p>
+<p>$ perl scripts/orthomcl-pipeline-setup.pl<br />
+Checking for Software dependencies…<br />
+Checking for OthoMCL … OK<br />
+Checking for formatdb … OK<br />
+Checking for blastall … OK<br />
+Checking for mcl … OK<br />
+Wrote new configuration to orthomcl-pipeline/scripts/…/etc/orthomcl-pipeline.conf<br />
+Wrote executable file to orthomcl-pipeline/scripts/…/bin/orthomcl-pipeline<br />
+Please add directory orthomcl-pipeline/scripts/…/bin to PATH</p>
+<h3 id="数据库设置"><a class="markdownIt-Anchor" href="#数据库设置"></a> 数据库设置</h3>
+<h4 id="创建orthomcl用户"><a class="markdownIt-Anchor" href="#创建orthomcl用户"></a> 创建orthomcl用户</h4>
+<p>1<br />
+2<br />
+3<br />
+4<br />
+5</p>
+<p>$ mysql -u root -p<br />
+Enter password:<br />
+mysql&gt; GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, CREATE VIEW, INDEX, DROP on . to orthomcl;  #创建用户并授权<br />
+mysql&gt; set password for orthomcl@localhost = password(‘orthomcl’);  #设置用户密码<br />
+mysql&gt; quit;</p>
+<h4 id="创建数据库并生成配置脚本"><a class="markdownIt-Anchor" href="#创建数据库并生成配置脚本"></a> 创建数据库并生成配置脚本</h4>
+<p>1<br />
+2<br />
+3<br />
+4</p>
+<p>$ perl scripts/orthomcl-setup-database.pl --user orthomcl --password orthomcl --host localhost --database orthomcl --outfile orthomcl.conf<br />
+Connecting to mysql and creating database **orthmcldb** on host orthodb with user orthomcl …OK<br />
+database orthmcl created …OK<br />
+Config file **orthomcl.conf** created.</p>
+<p>若已有orthomcl数据库，则可添加<code>--no-create-database</code>参数，不新建数据库。</p>
+<h2 id="测试数据"><a class="markdownIt-Anchor" href="#测试数据"></a> 测试数据</h2>
+<p>1<br />
+2<br />
+3<br />
+4<br />
+5<br />
+6<br />
+7<br />
+8<br />
+9</p>
+<p>$ perl t/test_pipeline.pl -m orthomcl.conf -s fork -t /tmp<br />
+Test using scheduler fork</p>
+<p>TESTING NON-COMPLIANT INPUT<br />
+TESTING FULL PIPELINE RUN 3<br />
+README:<br />
+Tests case of one gene (in 1.fasta and 2.fasta) not present in other files.<br />
+ok 1 - Expected matched returned groups file<br />
+…</p>
+<h2 id="运行"><a class="markdownIt-Anchor" href="#运行"></a> 运行</h2>
+<p>1<br />
+2<br />
+3<br />
+4</p>
+<p>$ ./bin/orthomcl-pipeline<br />
+Error: no input-dir defined<br />
+Usage: orthomcl-pipeline -i [input dir] -o [output dir] -m [orthmcl config] [Options]<br />
+…</p>
+<p>1</p>
+<p>加上–nocompliant就可以将输入文件中的基因名自动调整为具备唯一性的字符串（and <code>--nocompliant</code> adjusts gene names in fasta files to make them unique.）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./bin/orthomcl-pipeline -i ~/test_data/zbl -o ~/test_data/zbl-out -m orthomcl.conf --nocompliant</span><br></pre></td></tr></table></figure>
+<p>zbl文件夹里面放入fasta格式的蛋白序列文件，一个基因组一个文件，例如genome1.fasta, genome2.fasta, 文件后缀名必需是.fasta。zbl-out文件夹里面是所有的结果，包括聚类完成的groups文件，orthologs文件，inparalogs文件以及coorthologs文件。</p>
+<h2 id="参考来源"><a class="markdownIt-Anchor" href="#参考来源"></a> 参考来源</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/apetkau/orthomcl-pipeline/blob/master/INSTALL.md">https://github.com/apetkau/orthomcl-pipeline/blob/master/INSTALL.md</a> <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/449a51fa3d18">https://www.jianshu.com/p/449a51fa3d18 （亮亮就是亮）</a> <a target="_blank" rel="noopener" href="https://sr-c.github.io/2018/09/18/OrthoMCL-Pipeline/">https://sr-c.github.io/2018/09/18/OrthoMCL-Pipeline/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

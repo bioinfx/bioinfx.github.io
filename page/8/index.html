@@ -1,16 +1,1382 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2018/01/02/gene-ontology-analysis-for-degs-of-arabidopsis/">Gene Ontology analysis for DEGs of Arabidopsis</a></h1><div class="post-meta">2018-01-02</div><div class="post-content"><blockquote>
-<p>try http:// if https:// URLs are not supported<br> source(“<a target="_blank" rel="noopener" href="https://bioconductor.org/biocLite.R&quot;">https://bioconductor.org/biocLite.R&quot;</a>)<br> biocLite(“clusterProfiler”)<br> biocLite(“DOSE”)<br> biocLite(“tibble”)<br> library(clusterProfiler)<br> biocLite(“topGO”)<br> library(topGO)<br> biocLite(“org.At.tair.db”)<br> library(org.At.tair.db)</p></div><p class="readmore"><a href="/2018/01/02/gene-ontology-analysis-for-degs-of-arabidopsis/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/09/20/%E6%A0%B9%E6%8D%AE%E5%8F%82%E8%80%83%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AF%B9contigs%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%88%97/">根据参考基因组对contigs进行排列</a></h1><div class="post-meta">2017-09-20</div><div class="post-content"><p>Multiple programs have been developed for reference-assisted chromosome assembly: Bambus [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR10">10</a>], BACCardI [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR11">11</a>], Projector2 [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR12">12</a>], OSLay [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR13">13</a>], ABACAS [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR14">14</a>], MeDuSa [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR15">15</a>], AlignGraph [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR16">16</a>], Ragout [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR17">17</a>], SyMap [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR18">18</a>] and RACA [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR19">19</a>]. Most of the listed tools were designed for bacterial or small genomes. For example, ABACAS is a convenient bacterial genome contiguation tool that may also be used for small eukaryotic genomes such as <em>Saccharomyces cerevisiae</em> (12.1 mega base pairs). However, ABACAS is not efficiently scaled to use with the large genomes typical of vertebrate species. ABACAS对小型基因组很实用。但是注意：contig连接处是由99个N连接起来的，实际上contig的末端室友重叠关系的。 针对大型基因组，可以使用Chromosomer: a reference-based genome arrangement tool for producing draft chromosome sequences</p></div><p class="readmore"><a href="/2017/09/20/%E6%A0%B9%E6%8D%AE%E5%8F%82%E8%80%83%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AF%B9contigs%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%88%97/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/09/20/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9A%84%E5%85%B1%E7%BA%BF%E6%80%A7%E5%88%86%E6%9E%90/">基因组序列的共线性分析</a></h1><div class="post-meta">2017-09-20</div><div class="post-content"><h3 id="1-MUMMER"><a href="#1-MUMMER" class="headerlink" title="1 MUMMER"></a>1 MUMMER</h3><p>基因组序列直接比较的首选工具。参考资料很多。</p>
-<h3 id="2-LASTZ"><a href="#2-LASTZ" class="headerlink" title="2 LASTZ"></a>2 LASTZ</h3><p><img src="https://genehub.files.wordpress.com/2017/09/13742_2016_141_fig5_html.gif" alt="13742_2016_141_fig5_html"><br>Ref：<a target="_blank" rel="noopener" href="http://www.bx.psu.edu/miller/_lab/dist/README.lastz-1.02.00/README.lastz-1.02.00a.html">http://www.bx.psu.edu/miller\_lab/dist/README.lastz-1.02.00/README.lastz-1.02.00a.html</a><br>Paper：<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6">https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6</a> </p></div><p class="readmore"><a href="/2017/09/20/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9A%84%E5%85%B1%E7%BA%BF%E6%80%A7%E5%88%86%E6%9E%90/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/28/sspace-cant-locate-getopts-pl/">SSPACE: Can't locate getopts.pl</a></h1><div class="post-meta">2017-08-28</div><div class="post-content"><p>问题：运行SSPACE_Standard_v3.0.pl报错。 Can’t locate getopts.pl in @INC (@INC contains: /xxx/SSPACE-STANDARD/dotlib/ /home/fenglei-cuhk/perl5/lib/perl5 /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl .) at /home/xx/SSPACE-STANDARD/SSPACE_Standard_v3.0.pl line 124. 原因： getopts.pl is a Perl 4 core library but no longer included in current Perl 5 distributions. 解决办法： 在Linux命令行模式下输入“perl -MCPAN -e shell”进入perl界面，然后输入“install Perl4::CoreLibs”即可。</p></div><p class="readmore"><a href="/2017/08/28/sspace-cant-locate-getopts-pl/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/23/shell%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%89%8D%E7%BC%80%E5%AD%97%E7%AC%A6%E4%B8%B2/">Shell编程：获取文件前缀字符串</a></h1><div class="post-meta">2017-08-23</div><div class="post-content"><p>比如处理名为 /xxx/yyy/zzz/abc2017.1.fq.gz 的文件，我们需要获取abc2017这个文件名。</p>
-<p>i=/xxx/yyy/zzz/abc2017.1.fq.gz</p>
-<p>IN=$i      </p>
-<h1 id="read1文件绝对路径：-xxx-yyy-zzz-abc2017-1-fq-gz"><a href="#read1文件绝对路径：-xxx-yyy-zzz-abc2017-1-fq-gz" class="headerlink" title="read1文件绝对路径：/xxx/yyy/zzz/abc2017.1.fq.gz"></a>read1文件绝对路径：/xxx/yyy/zzz/abc2017.1.fq.gz</h1><p>path=${IN%/*}        </p></div><p class="readmore"><a href="/2017/08/23/shell%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E5%89%8D%E7%BC%80%E5%AD%97%E7%AC%A6%E4%B8%B2/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/23/shellcheck-%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8Bshell%E8%84%9A%E6%9C%AC%E7%9A%84%E8%AF%AD%E6%B3%95/">shellcheck: 自动检测shell脚本的语法</a></h1><div class="post-meta">2017-08-23</div><div class="post-content"><p>生物信息分析工作中，可以将数据操作命令写入shell脚本，一方面方便自动化运行，另一方面是将操作记录存档，便于日后查阅。 但是shell脚本也会因人为疏忽而存在错误，我想有没有程序可以检测脚本的正确性呢，一查果然有shellcheck之类的程序。shellcheck有在线版：<a target="_blank" rel="noopener" href="http://www.shellcheck.net/">http://www.shellcheck.net/</a> shellcheck也有本地版，安装有多种方法，可参考官方网站：<a target="_blank" rel="noopener" href="https://github.com/koalaman/shellcheck">https://github.com/koalaman/shellcheck</a> 我直接下载了编译好的程序：<a target="_blank" rel="noopener" href="https://storage.googleapis.com/shellcheck/shellcheck-latest.linux.x86/_64.tar.xz">https://storage.googleapis.com/shellcheck/shellcheck-latest.linux.x86\_64.tar.xz</a> 解压之后，即可使用。 使用方法：shellcheck myscript.sh</p></div><p class="readmore"><a href="/2017/08/23/shellcheck-%E8%87%AA%E5%8A%A8%E6%A3%80%E6%B5%8Bshell%E8%84%9A%E6%9C%AC%E7%9A%84%E8%AF%AD%E6%B3%95/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/15/shell%E8%84%9A%E6%9C%AC-set-illegal-option-o-pipefail/">Shell脚本 \&quot;set Illegal option -o pipefail\&quot;</a></h1><div class="post-meta">2017-08-15</div><div class="post-content"><p>在Linux编写Shell 脚本程序的时候，set -o pipefail是很实用的命令。因为Shell脚本中通常有一连串的动作需要执行，一旦某个环节出错，如果设定了pipefail，脚本会立即中断运行；而如果没有设定，脚本将继续执行后续命令，可能造成错误。 然而在Ubuntu中，当使用“set -o pipefail”的时候，一直报错：</p>
-<p>set Illegal option -o pipefail</p>
-<p>经查，原因是Ubuntu的 shell 默认安装的是 dash，而不是 bash。 运行以下命令查看 sh 的详细信息，确认 shell 对应的程序是哪个： $ls -al /bin/sh dash 比 bash 更轻，更快。但 bash 却更常用。 如果一些命令、脚本等总不能正常执行，有可能是 dash 的原因。 比如编译 Android 源代码的时候，如果使用 dash，则有可能编译出错，或者编译的系统不能启动。 通过以下方式可以使 shell 切换回 bash： $sudo dpkg-reconfigure dash 然后选择 no 或者 否 ，并确认。 这样做将重新配置 dash，并使其不作为默认的 shell 工具。 也可以直接修改 /bin/sh 链接文件，将其指定到 /bin/bash： $sudo ln -fs /bin/bash /bin/sh</p></div><p class="readmore"><a href="/2017/08/15/shell%E8%84%9A%E6%9C%AC-set-illegal-option-o-pipefail/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/10/%E6%81%92%E7%94%9F%E9%93%B6%E8%A1%8C%E4%BF%A1%E7%94%A8%E5%8D%A1cash-dollar%E4%BC%98%E6%83%A0%E7%99%BB%E8%AE%B0/">恒生银行信用卡Cash Dollar优惠登记</a></h1><div class="post-meta">2017-08-10</div><div class="post-content"><p>由2017年7月1日至2018年6月30日，憑大學/大專聯營信用卡只需登記1次^，由登記月份起作以下簽賬交易，均可賺取<strong>高達5倍Cash Dollars</strong>:</p>
-<p>1）拨打29986038，选择语言，点3选英语；<br>2）选3，教育优惠Cash Dollar登记；<br>3）输入16位信用卡账户，以“#”（pound）结束;<br>4）收到语音提示之后，按“1”确认；<br>5）收到语音播报七位数Reference Number，然后会提示是否结束服务，按“9”即结束服务。</p></div><p class="readmore"><a href="/2017/08/10/%E6%81%92%E7%94%9F%E9%93%B6%E8%A1%8C%E4%BF%A1%E7%94%A8%E5%8D%A1cash-dollar%E4%BC%98%E6%83%A0%E7%99%BB%E8%AE%B0/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/08/07/infernal%E5%92%8Chmmer%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AE%89%E8%A3%85/">Infernal和hmmer程序的安装</a></h1><div class="post-meta">2017-08-07</div><div class="post-content"><p>再Rfam数据库对small RNA进行注释的过程中需要用到Infernal，但是安装遇到问题。configure之后，make不成功，报错“fatal error: config.h: No such file”，下面是解决方案。 hmmer就是一款比对软件，类似于blast等，它使用马尔可夫概率模型的方法。HMMER的目的是更准确的探测到远程同源序列，它提供的比对结果要比blast更加精确，相应的速度也要慢。在功能基因研究中需要使用到序列搜索，比如从序列数据库中，找同源的序列，或者对一个新的基因功能进行鉴定，使用hmmer比使用blast有着更高的灵敏度以及更高的搜索速度，但其应用还远没有blast普及。 hmmer安装的参考资料是：</p></div><p class="readmore"><a href="/2017/08/07/infernal%E5%92%8Chmmer%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AE%89%E8%A3%85/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/07/18/%E5%9F%BA%E5%9B%A0%E7%BB%84n50%E4%B8%8En90%E7%9A%84%E7%BB%9F%E8%AE%A1/">基因组|N50与N90的统计</a></h1><div class="post-meta">2017-07-18</div><div class="post-content"><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>基因组组装的过程中，N50与N90是常用的评价指标。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>可以使用NGS QC Toolkit实现统计。 下载地址： <a target="_blank" rel="noopener" href="http://59.163.192.90:8080/ngsqctoolkit/">http://59.163.192.90:8080/ngsqctoolkit/</a> <code>perl N50Stat.pl -i in.fa -o out.stat</code> N50Stat.pl</p></div><p class="readmore"><a href="/2017/07/18/%E5%9F%BA%E5%9B%A0%E7%BB%84n50%E4%B8%8En90%E7%9A%84%E7%BB%9F%E8%AE%A1/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/7/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/9/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/8/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/30/Linux-install-mysql-5-7-25/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/30/Linux-install-mysql-5-7-25/" class="post-title-link" itemprop="url">Linux安装mysql-5.7.25</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-30 20:38:24" itemprop="dateCreated datePublished" datetime="2019-03-30T20:38:24+08:00">2019-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>下面的操作完全是照搬其他人的经验（<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012703513%EF%BC%89%EF%BC%8C%E6%AD%A4%E5%A4%84%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E7%94%A8%E3%80%82%E4%B9%9F%E5%8F%AF%E5%8F%82%E8%80%83%EF%BC%9Ahttps://www.jellythink.com/archives/14">https://segmentfault.com/a/1190000012703513），此处记录备份用。也可参考：https://www.jellythink.com/archives/14</a> ---------------------------------- 由于mysql 5.7.17版本以后 support_files文件夹中无 <strong>my_default.cnf</strong> 文件，所以今天给大家详细描述一下 mysql 5.7.20版本(目前官方最新版)的安装步骤。 第一步：下载mysql最新版</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>第二步：在/usr/local/中解压压缩包，并改名为mysql</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line"></span><br><span class="line">tar -xzvf /data/software/mysql-5.7.13-linux-glibc2.5-x86_64.tar.gz (我的下载目录为 data/software)</span><br><span class="line"></span><br><span class="line">mv mysql-5.7.13-linux-glibc2.5-x86_64 mysql</span><br></pre></td></tr></table></figure>
+<p>第三步：创建用户组mysql，创建用户mysql并将其添加到用户组mysql中，并赋予读写权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">groupadd mysql</span><br><span class="line"></span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"></span><br><span class="line">chown -R mysql mysql/</span><br><span class="line"></span><br><span class="line">chgrp -R mysql mysql/</span><br></pre></td></tr></table></figure>
+<p>第四步：创建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">#复制以下内容</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">port = 3306</span><br><span class="line">socket = /tmp/mysql.sock</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br><span class="line">#不区分大小写</span><br><span class="line">lower_case_table_names = 1</span><br><span class="line"></span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br><span class="line"></span><br><span class="line">max_connections=5000</span><br><span class="line"></span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+<p>按ESC保存并关闭，输入如下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq!</span><br></pre></td></tr></table></figure>
+<p>第五步：初始化数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#先安装一下这个东东，要不然初始化有可能会报错</span><br><span class="line">yum install libaio</span><br><span class="line">#手动编辑一下日志文件，什么也不用写，直接保存退出</span><br><span class="line">cd /var/log/</span><br><span class="line"></span><br><span class="line">vim mysqld.log</span><br><span class="line">：wq</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld.log</span><br><span class="line">chown mysql:mysql mysqld.log</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --lc_messages_dir=/usr/local/mysql/share --lc_messages=en_US</span><br></pre></td></tr></table></figure>
+<p>第六步：查看初始密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<p>执行后关注最后一点：root@localhost: 这里就是初始密码 第七步：启动服务，进入mysql，修改初始密码，运行远程连接（这里执行完后，密码将变成：你设置的新密码）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#如果提示必须要修改密码才可以进行操作的话则执行下面操作</span><br><span class="line">set password=password(&#x27;新密码&#x27;);</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">UPDATE `mysql`.`user` SET `Host` = &#x27;%&#x27;,  `User` = &#x27;root&#x27;  WHERE (`Host` = &#x27;localhost&#x27;) AND (`User` = &#x27;root&#x27;);</span><br><span class="line"></span><br><span class="line">#然后执行如下操作开启mysql服务，以及设置相关权限</span><br><span class="line">cd /var/run/</span><br><span class="line"></span><br><span class="line">mkdir mysqld</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld</span><br><span class="line"></span><br><span class="line">cd mysqld</span><br><span class="line"></span><br><span class="line">touch mysqld.pid</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld.pid</span><br><span class="line"></span><br><span class="line">chown mysql:mysql mysqld.pid </span><br><span class="line"></span><br><span class="line">/usr/local/mysql/support-files/mysql.server start</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/bin/mysql -uroot -p 你在上面看到的初始密码</span><br><span class="line"></span><br><span class="line"># 以下是进入数据库之后的sql语句</span><br><span class="line"> use mysql;</span><br><span class="line"></span><br><span class="line"> UPDATE `mysql`.`user` SET `Host`=&#x27;%&#x27;, `User`=&#x27;root&#x27;, `Select_priv`=&#x27;Y&#x27;, `Insert_priv`=&#x27;Y&#x27;, `Update_priv`=&#x27;Y&#x27;, `Delete_priv`=&#x27;Y&#x27;, `Create_priv`=&#x27;Y&#x27;, `Drop_priv`=&#x27;Y&#x27;, `Reload_priv`=&#x27;Y&#x27;, `Shutdown_priv`=&#x27;Y&#x27;, `Process_priv`=&#x27;Y&#x27;, `File_priv`=&#x27;Y&#x27;, `Grant_priv`=&#x27;Y&#x27;, `References_priv`=&#x27;Y&#x27;, `Index_priv`=&#x27;Y&#x27;, `Alter_priv`=&#x27;Y&#x27;, `Show_db_priv`=&#x27;Y&#x27;, `Super_priv`=&#x27;Y&#x27;, `Create_tmp_table_priv`=&#x27;Y&#x27;, `Lock_tables_priv`=&#x27;Y&#x27;, `Execute_priv`=&#x27;Y&#x27;, `Repl_slave_priv`=&#x27;Y&#x27;, `Repl_client_priv`=&#x27;Y&#x27;, `Create_view_priv`=&#x27;Y&#x27;, `Show_view_priv`=&#x27;Y&#x27;, `Create_routine_priv`=&#x27;Y&#x27;, `Alter_routine_priv`=&#x27;Y&#x27;, `Create_user_priv`=&#x27;Y&#x27;, `Event_priv`=&#x27;Y&#x27;, `Trigger_priv`=&#x27;Y&#x27;, `Create_tablespace_priv`=&#x27;Y&#x27;, `ssl_type`=&#x27;&#x27;, `ssl_cipher`=&#x27;&#x27;, `x509_issuer`=&#x27;&#x27;, `x509_subject`=&#x27;&#x27;, `max_questions`=&#x27;0&#x27;, `max_updates`=&#x27;0&#x27;, `max_connections`=&#x27;0&#x27;, `max_user_connections`=&#x27;0&#x27;, `plugin`=&#x27;mysql_native_password&#x27;, `authentication_string`=&#x27;*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9&#x27;, `password_expired`=&#x27;N&#x27;, `password_last_changed`=&#x27;2017-11-20 12:41:07&#x27;, `password_lifetime`=NULL, `account_locked`=&#x27;N&#x27; WHERE  (`User`=&#x27;root&#x27;);</span><br><span class="line"></span><br><span class="line"> flush privileges;</span><br></pre></td></tr></table></figure>
+<p>第八步：开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/support-files</span><br><span class="line"></span><br><span class="line">cp mysql.server /etc/init.d/mysqld</span><br><span class="line"></span><br><span class="line">chkconfig --add mysqld</span><br></pre></td></tr></table></figure>
+<p>第九步：使用service mysqld命令启动/停止服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - mysql</span><br><span class="line"></span><br><span class="line">service mysqld start/stop/restart</span><br></pre></td></tr></table></figure>
+<p>登陆，修改密码 root密码是123456</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 登陆mysql</span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line"># 修改root用户密码</span><br><span class="line">set password for root@localhost=password(&quot;123456&quot;);</span><br></pre></td></tr></table></figure>
+<p>远程用户建立</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on *.* to &#x27;新用户名&#x27;@&#x27;%&#x27; identified by &#x27;新密码&#x27;;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<p><img src="https://genehub.files.wordpress.com/2019/03/e5beaee4bfa1e688aae59bbe_20190330204936.png" alt="微信截图_20190330204936" /> 添加系统路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">export PATH=/usr/local/mysql/bin:$PATH</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>以上步骤都执行完毕后，大吉大利，今晚吃鸡！！！！！！ 如果可以使用navicat 使用你刚才设置的用户名和密码访问，那么你的mysql就已经安装成功啦！ ===== 20190814 更新 增加pasa用户，设置只读权限。用于基因预测pasa软件流程。参考 <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1133">http://www.chenlianfu.com/?p=1133</a></p>
+<p>$ mysql -uroot -p<br />
+Enter password: ******** [# 输入root用户的密码]<br />
+Welcome to the MySQL monitor. Commands end with ; or \g.<br />
+Your MySQL connection id is 6<br />
+Server version: 5.7.25 MySQL Community Server (GPL)</p>
+<p>Copyright © 2000, 2019, Oracle and/or its affiliates. All rights reserved.</p>
+<p>Oracle is a registered trademark of Oracle Corporation and/or its<br />
+affiliates. Other names may be trademarks of their respective<br />
+owners.</p>
+<p>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.</p>
+<h2 id="新建pasa用户只设置可读权限"><a class="markdownIt-Anchor" href="#新建pasa用户只设置可读权限"></a> 新建pasa用户，只设置可读权限</h2>
+<p>mysql&gt; CREATE USER ‘pasa’@‘localhost’ IDENTIFIED BY ‘123456’;<br />
+Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; GRANT SELECT ON *.* TO ‘pasa’@‘%’ IDENTIFIED BY ‘123456’;<br />
+Query OK, 0 rows affected, 1 warning (0.00 sec)</p>
+<p>mysql&gt; FLUSH PRIVILEGES;<br />
+Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/28/Bioinfo-install-lastz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/02/28/Bioinfo-install-lastz/" class="post-title-link" itemprop="url">安装LASTZ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-02-28 17:45:24" itemprop="dateCreated datePublished" datetime="2019-02-28T17:45:24+08:00">2019-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>LASTZ是序列比对工具，可以生成AXT格式的比对文件。 安装LASTZ方法如下 下载地址：<a target="_blank" rel="noopener" href="http://www.bx.psu.edu/~rsharris/lastz/">http://www.bx.psu.edu/~rsharris/lastz/</a> If you have received the distribution as a packed archive, unpack it by whatever means are appropriate for your computer. The result should be a directory <code>/lastz‑distrib‑X.XX.XX</code> that contains a <code>src</code> subdirectory (and some others). You may find it convenient to remove the revision number (<code>‑X.XX.XX</code>) from the directory name. Before building or installing any of the programs, you will need to tell the installer where to put the executable, either by setting the shell variable<code>$LASTZ_INSTALL</code>, or by editing the <code>make‑include.mak</code> file to set the definition of <code>installDir</code>. Also, be sure to add the directory you choose to your <code>$PATH</code>. Then to build the LASTZ executable, enter the following commands from bash or a similar command-line shell (Solaris users should substitute <code>gmake</code> for <code>make</code>). This will build two executables (<code>lastz</code> and <code>lastz_D</code>) and copy them into your <code>installDir</code>.</p>
+<pre><code>cd /lastz-distrib-X.XX.XX/src
+make
+make install
+</code></pre>
+<p>The two executables are basically the same program; the only difference is that <code>lastz</code> uses integer scores, while <code>lastz_D</code> uses floating-point scores. The build process should not report any warnings or errors. Because of this, the Makefile is set up so that warnings are considered errors and will stop the build. If you encounter this situation, you can modify the Makefile, removing “-Werror” from the variable definedForAll. This should allow the build to complete, while still reporting the warnings. You’ll need to decide whether the warnings indicate something is really wrong. Usually they don’t, but please report them to the author regardless. A simple self test is included so you can test whether the build succeeded. To run it, enter the following command:</p>
+<pre><code>make test
+</code></pre>
+<p>If the test is successful, you will see no output from this command. Otherwise, you will see the differences between the expected output and the output of your build, plus a line that looks like this:</p>
+<pre><code>make: \*\*\* \[test\] Error 1
+</code></pre>
+<p>我在安装的过程中遇到下面的问题</p>
+<p>cd src &amp;&amp; make lastz lastz_D<br />
+make[1]: Entering directory ‘/home/david/src/lastz/src’<br />
+gcc -c -O3 -Wall -Wextra -Werror -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DVERSION_MAJOR=“\“1”\” -DVERSION_MINOR=“\“04”\” -DVERSION_SUBMINOR=“\“00”\” -DREVISION_DATE=“\“20170312”\” -DSUBVERSION_REV=“\“1881:1893M”\” -Dscore_type=\‘I\’ lastz.c -o lastz.o<br />
+lastz.c: In function ‘parse_options_loop’:<br />
+lastz.c:6525:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~<br />
+lastz.c:6525:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~~~<br />
+lastz.c:6585:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~<br />
+lastz.c:6585:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~~~<br />
+lastz.c:6644:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~<br />
+lastz.c:6644:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
+if (*scan != ‘.’) goto cant_understand; scan++;<br />
+^~~~<br />
+cc1: all warnings being treated as errors<br />
+Makefile:94: recipe for target ‘lastz.o’ failed<br />
+make[1]: *** [lastz.o] Error 1<br />
+make[1]: Leaving directory ‘/home/david/src/lastz/src’<br />
+Makefile:14: recipe for target ‘build_lastz’ failed<br />
+make: *** [build_lastz] Error 2</p>
+<p>解决办法 You can get around this by deleting “<em>-Werror</em>” from the CFLAGS listed in <em>definedForAll</em> in src/Makefile (overriding CFLAGS from the command line just causing new errors). 参考资料 <a target="_blank" rel="noopener" href="https://github.com/lastz/lastz/issues/5">https://github.com/lastz/lastz/issues/5</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/27/Python-python3-python2-in-a-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/11/27/Python-python3-python2-in-a-system/" class="post-title-link" itemprop="url">Python：python3与python2共存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-11-27 21:53:40" itemprop="dateCreated datePublished" datetime="2018-11-27T21:53:40+08:00">2018-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 16:56:42" itemprop="dateModified" datetime="2020-12-08T16:56:42+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>20201208更新：本文已过期。</strong></p>
+<p>Linux系统自带了Python2.6，自己又安装了Python2.7和Anaconda3（Python3.6） 今天运行python3.6报错：</p>
+<p>[fenglei@localhost lib64]$ /home/fenglei/local/app/anaconda3/bin/python3<br />
+Failed to import the site module<br />
+Traceback (most recent call last):<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br />
+__boot()<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br />
+import imp # Avoid import loop in Python &gt;= 3.3<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br />
+import tokenize<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br />
+import re<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br />
+class RegexFlag(enum.IntFlag):<br />
+AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
+<p>通过vim进入~/.bashrc文件进行编辑：</p>
+<p>export PYTHONPATH=/home/fenglei/local/app/anaconda3/lib/python3.6/site-packages</p>
+<p>即可运行 python3.6了。 如果需要运行python2.7，则做下修改：</p>
+<p>export PYTHONPATH=/usr/local/lib/python2.7/site-packages</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/09/Bioinfo-diamond-vs-blast/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/09/Bioinfo-diamond-vs-blast/" class="post-title-link" itemprop="url">Diamond: 比BLAST更快速的比对工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-09 13:36:29" itemprop="dateCreated datePublished" datetime="2018-07-09T13:36:29+08:00">2018-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>Diamond简介</strong> 序列比对软件，能输出与BLAST类似的结果，但是速度快了数百倍。 <strong>安装</strong> 二进制可以直接解压使用：</p>
+<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz">http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz</a><br />
+tar xzf diamond-linux64.tar.gz</p>
+<p>源码则用cmake安装：</p>
+<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz">http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz</a><br />
+tar xzf v0.9.22.tar.gz<br />
+cd diamond-0.9.22<br />
+mkdir bin<br />
+cd bin<br />
+cmake …<br />
+make install</p>
+<p><strong>使用</strong> 1 建立index</p>
+<p>diamond makedb --in swissprot.fasta -d swissprot</p>
+<p>2 比对</p>
+<p>diamond blastp --db ./index/swissprot --query putative_proteins.fa --threads 10 --out proteins-BLASTP-swissprot.m8 -e 0.00001 --max-target-seqs 1</p>
+<p>建立index的过程就6秒钟（Processed 557491 sequences, 199978344 letters. Total time = 6.64576s）。比对过程也极快，几分钟跑完了。 <strong>与其他软件的比较</strong> “生信技能树”论坛有人讲Diamond与BLAST进行比较，26740个蛋白序列与NR的蛋白库（animal）作比对，运行DIAMOND仅需要3小时，运行BLASTP则需要2周。存在的问题是同一个蛋白序列在两个比对软件下得到的最高分比对结果通常不一样（可能跟参数设置有关？）。第二个问题是输出的tabular格式结果不能被blast2go识别（可能需要调整输出格式的参数）。 <strong>参考资料</strong> [1] <a target="_blank" rel="noopener" href="https://github.com/bbuchfink/diamond/releases/">https://github.com/bbuchfink/diamond/releases/</a> [2] <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-1465-1-1.html">http://www.biotrainee.com/thread-1465-1-1.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/16/Bioinfo-augustus-3-3-installation/" class="post-title-link" itemprop="url">Augustus-3.3的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-16 21:09:09" itemprop="dateCreated datePublished" datetime="2018-05-16T21:09:09+08:00">2018-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 <a target="_blank" rel="noopener" href="http://iamphioxus.org">iamphioxus.org</a> 。 Augustus is a very popular tool for gene annotation, however its installation process can be a bit tricky. For example, if we just download and install <em>Augustus</em> like below, it will not work.</p>
+<p>wget <a target="_blank" rel="noopener" href="http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz">http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz</a><br />
+tar xvzf augustus-3.3.1.tar.gz<br />
+cd augustus-3.3.1<br />
+make</p>
+<p>You will probably get these errors:</p>
+<p>cd auxprogs &amp;&amp; make<br />
+make[1]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
+cd bam2hints; make;<br />
+make[2]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
+g++ -Wall -O2 -c <a target="_blank" rel="noopener" href="http://bam2hints.cc">bam2hints.cc</a> -o bam2hints.o -I/usr/include/bamtools<br />
+bam2hints.cc:16:27: fatal error: api/BamReader.h: No such file or directory<br />
+#include &lt;api/BamReader.h&gt;<br />
+^<br />
+compilation terminated.<br />
+Makefile:29: recipe for target ‘bam2hints.o’ failed<br />
+make[2]: *** [bam2hints.o] Error 1<br />
+make[2]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
+Makefile:7: recipe for target ‘all’ failed<br />
+make[1]: *** [all] Error 2<br />
+make[1]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
+Makefile:7: recipe for target ‘all’ failed<br />
+make: *** [all] Error 2<br />
+This is because the auxiliary tools, bam2hints and filterBam, depend on the pre-installation of bamtools with proper library path configured.</p>
+<p>Therefore, let’s install bamtools first. It will be much easier if we just do system-wide installation like: 首先安装 bamtools，我在使用 redhat 系统，安装 bamtools-2.4.1 要用到 cmake 3.0以上版本。我尝试安装了 cmake 3.0 的源码，但是编译失败，于是下载了二进制文件，cmake 可以运行，随后顺利编译 bamtools 2.4.1。</p>
+<p>tar -zxvf bamtools-2.4.1.tar.gz<br />
+cd bamtools-2.4.1<br />
+mkdir build<br />
+cd build<br />
+cmake -DCMAKE_INSTALL_PREFIX=/home/fenglei/local …<br />
+make<br />
+make install</p>
+<h1 id="此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"><a class="markdownIt-Anchor" href="#此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"></a> 此时运行 bamtools 发现报错，提示无法用 libbamtools.so.2.4.1，于是在下载目录把该文件拷贝到了安装目录下的 lib 和 lib64 中，再运行bamtools就成了。</h1>
+<h1 id="find-~local-name-libbamtoolsso241"><a class="markdownIt-Anchor" href="#find-~local-name-libbamtoolsso241"></a> find ~/local -name libbamtools.so.2.4.1</h1>
+<p>cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1 /home/fenglei/local/lib/<br />
+cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1  /home/fenglei/local/lib64</p>
+<p>Now bamtools should have been correctly installed. Next, we need to modify the Makefiles of bam2hints and filterBam to adapt them with our manually installed bamtools.</p>
+<p>First, go to the “./auxprogs/bam2hints” directory and make the following changes for the Makefile:</p>
+<p>Add:<br />
+BAMTOOLS = /home/fenglei/local</p>
+<p>Replace:<br />
+INCLUDES = /usr/include/bamtools<br />
+By:<br />
+INCLUDES = $(BAMTOOLS)/include</p>
+<p>Replace:<br />
+LIBS = -lbamtools -lz<br />
+By:<br />
+LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
+<h1 id="注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"><a class="markdownIt-Anchor" href="#注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"></a> 注意 LIBS 中 lib64 也可能是 lib，要通过搜索 libbamtools.a 查看其实际位置。</h1>
+<p>Then, go to the “augustus-3.2.3/auxprogs/filterBam/src” directory and make the following changes for the Makefile:</p>
+<p>Replace:</p>
+<p>BAMTOOLS = /usr/include/bamtools<br />
+By:<br />
+BAMTOOLS = /home/fenglei/local</p>
+<p>Replace:<br />
+INCLUDES = -I<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>B</mi><mi>A</mi><mi>M</mi><mi>T</mi><mi>O</mi><mi>O</mi><mi>L</mi><mi>S</mi><mo stretchy="false">)</mo><mo>−</mo><mi>I</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>−</mo><mi>I</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi>a</mi><mi>m</mi><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mi>s</mi><mi>B</mi><mi>y</mi><mo>:</mo><mi>I</mi><mi>N</mi><mi>C</mi><mi>L</mi><mi>U</mi><mi>D</mi><mi>E</mi><mi>S</mi><mo>=</mo><mo>−</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">(BAMTOOLS) -Iheaders -I./bamtools
+By:
+INCLUDES = -I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord">.</span><span class="mord">/</span><span class="mord mathnormal">b</span><span class="mord mathnormal">a</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>(BAMTOOLS)/include -Iheaders -I./bamtools</p>
+<p>Replace:<br />
+LIBS = -lbamtools -lz<br />
+By:<br />
+LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
+<p>进入 augustus-3.3.1/auxprogs/bam2wig，编辑 Makefile。</p>
+<p># SAMTOOLS=$(TOOLDIR)/samtools/<br />
+SAMTOOLS=/home/fenglei/local/app/samtools</p>
+<p>#HTSLIB=$(TOOLDIR)/htslib/<br />
+HTSLIB=/home/fenglei/local/app/htslib</p>
+<h1 id="bcftoolstooldirbcftools"><a class="markdownIt-Anchor" href="#bcftoolstooldirbcftools"></a> BCFTOOLS=$(TOOLDIR)/bcftools/</h1>
+<p>BCFTOOLS=/home/fenglei/local/app/bcftools</p>
+<h1 id="tabixtooldirtabix"><a class="markdownIt-Anchor" href="#tabixtooldirtabix"></a> TABIX=$(TOOLDIR)/tabix/</h1>
+<p>TABIX=/home/fenglei/local/app/htslib</p>
+<h2 id="上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"><a class="markdownIt-Anchor" href="#上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"></a> 上述注释掉的内容是 Makefile 中的原始设置，分别改一下就行了。tabix 是 htslib 下的一程序。</h2>
+<p>[20201027 update] 在新的机器上重新安装Augustus，虽然按照上述步骤修改MakeFile，但是bam2wig还是无法make成功。于是将这个文件夹改掉，单独下载bam2wig程序（<a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig%EF%BC%89%EF%BC%8C%E5%B7%B2%E7%BB%8F%E6%98%AF%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E7%BC%96%E8%AF%91%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%EF%BC%81%E7%84%B6%E5%90%8E%E8%BF%9B%E5%85%A5auxprogs%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%BF%AE%E6%94%B9MakeFile%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B0%B1%E5%B0%86bam2wig%E5%AD%97%E7%AC%A6%E9%82%A3%E4%B8%A4%E8%A1%8C%E6%B3%A8%E9%87%8A%E6%8E%89%E3%80%82%E7%84%B6%E5%90%8E%E5%9B%9E%E5%88%B0Augustus%E7%9B%AE%E5%BD%95%E4%B8%8BMake%E5%B0%B1OK%E4%BA%86%E3%80%82">https://github.com/MikeAxtell/bam2wig），已经是二进制文件，不需要编译，可以直接使用！然后进入auxprogs目录，修改MakeFile文件，就将bam2wig字符那两行注释掉。然后回到Augustus目录下Make就OK了。</a> Now, we are finally ready to compile Augustus. Get back to the “augustus-3.3.1” directory and type “make”, 成功! References <a target="_blank" rel="noopener" href="https://github.com/pezmaster31/bamtools/wiki/Building-and-installing">https://github.com/pezmaster31/bamtools/wiki/Building-and-installing</a> <a target="_blank" rel="noopener" href="https://www.biostars.org/p/189048/">https://www.biostars.org/p/189048/</a> <a target="_blank" rel="noopener" href="http://tiramisutes.github.io/2017/01/06/GLIBC.html">http://tiramisutes.github.io/2017/01/06/GLIBC.html</a> <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/25/R-volcano-plot-in-R/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/25/R-volcano-plot-in-R/" class="post-title-link" itemprop="url">R：火山图 volcano plot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-25 16:54:11" itemprop="dateCreated datePublished" datetime="2018-04-25T16:54:11+08:00">2018-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:44:04" itemprop="dateModified" datetime="2020-12-08T11:44:04+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>两个实验组之间的若干个基因的差异倍数比较，可以通过 Volcano Plot 图形化展示。 <img src="https://genehub.files.wordpress.com/2018/04/qqe688aae59bbe20180425163433.jpg" alt="QQ截图20180425163433" /> 例如 DEseq2 对转录组测序的样品做差异基因分析之后，会得到一个基因表达差异的表格的。案例使用数据的来源是 GitHub：<a target="_blank" rel="noopener" href="https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29%5C_fabio-newlines/summary/control-vs-e7107-deseq2.csv">https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29\_fabio-newlines/summary/control-vs-e7107-deseq2.csv</a> 下载上述数据之后，运行下面的命令即可得到文章起始的图。</p>
+<p>setwd(“C:\\Users\\FengLei\\Desktop\\scatter-plot”)<br />
+library(ggplot2)<br />
+library(ggthemes)<br />
+library(Cairo)</p>
+<p>data=read.csv(“control-vs-e7107-deseq2.csv”, head=T)</p>
+<h3 id="火山图"><a class="markdownIt-Anchor" href="#火山图"></a> 火山图</h3>
+<p>data<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>h</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mo>=</mo><mi>a</mi><mi>s</mi><mi mathvariant="normal">.</mi><mi>f</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo stretchy="false">(</mo><mi>i</mi><mi>f</mi><mi>e</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo stretchy="false">(</mo><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">threshold = as.factor(ifelse(data</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">e</span><span class="mord mathnormal">s</span><span class="mord mathnormal">h</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">s</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>pvalue =1, ‘Up’, ifelse(data<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;&amp;&#039; at position 15: pvalue &lt; 0.05 &amp;̲ data'>pvalue &lt; 0.05 &amp; data</span>log2FoldChange &lt;= -1, ‘Down’, ‘Not’)))<br />
+ggplot(data=data, aes(x=log2FoldChange, y=-log10(pvalue), colour=threshold, fill=threshold)) +<br />
+scale_color_manual(values=c(“blue”, “grey”,“red”))+<br />
+geom_point(alpha=0.4, size=1.2) +</p>
+<h1 id="xlimc-4-4"><a class="markdownIt-Anchor" href="#xlimc-4-4"></a> xlim(c(-4, 4)) +</h1>
+<h1 id="ylimc0-75"><a class="markdownIt-Anchor" href="#ylimc0-75"></a> ylim(c(0, 7.5)) +</h1>
+<p>theme_bw(base_size = 12, base_family = “Times”) +<br />
+geom_vline(xintercept=c(-1,1),lty=4,col=“grey”,lwd=0.6)+<br />
+geom_hline(yintercept = -log10(0.05),lty=4,col=“grey”,lwd=0.6)+<br />
+theme(legend.position=“right”,<br />
+panel.grid=element_blank(),<br />
+legend.title = element_blank(),<br />
+legend.text= element_text(face=“bold”, color=“black”,family = “Times”, size=8),<br />
+plot.title = element_text(hjust = 0.5),<br />
+axis.text.x = element_text(face=“bold”, color=“black”, size=12),<br />
+axis.text.y = element_text(face=“bold”, color=“black”, size=12),<br />
+axis.title.x = element_text(face=“bold”, color=“black”, size=12),<br />
+axis.title.y = element_text(face=“bold”,color=“black”, size=12))+<br />
+labs(x=“log2 (Fold Change)”,y=“-log10 (P-value)”,title=“Volcano Plot”)</p>
+<p>注意 R 语言中 ifelse() 函数的使用方法。其基本语法格式如下： if(con,statement1,statement2) con 是逻辑条件，当逻辑条件的值为 TRUE 时，则输出 statement1 的值，否则输出 statement2 的值。 也就是说 ifelse() 函数只能输出两个类型的值，然而本文使用的转录组案例中，组间基因变化有三种情况，分别为上调、下调与无明显变化，这里可以使用 ifelse() 的嵌套结构来实现三种判断值的输出。</p>
+<blockquote>
+<p># ifelse() 函数使用例1</p>
+<blockquote>
+<p>x y # 如果向量 x 中的元素值非0，就输出0，否则输出1<br />
+y<br />
+[1] 0 1 0 1 0 0 1 1</p>
+<h1 id="ifelse-函数使用例2-嵌套结构的应用"><a class="markdownIt-Anchor" href="#ifelse-函数使用例2-嵌套结构的应用"></a> ifelse() 函数使用例2: 嵌套结构的应用</h1>
+<p>x y0, 2*x-1, ifelse(x==0,0,3*x-10))</p>
+<h1 id="如向量-x-中元素值大于0等于0和小于0分三种情况做转换"><a class="markdownIt-Anchor" href="#如向量-x-中元素值大于0等于0和小于0分三种情况做转换"></a> 如向量 x 中元素值大于0，等于0和小于0，分三种情况做转换</h1>
+<p>y<br />
+[1] 5 19 0 -13 -40</p>
+</blockquote>
+</blockquote>
+<p>参考资料 [1] ggplot 与火山图：<a target="_blank" rel="noopener" href="https://www.tanboyu.com/ggplot2-for-volcano.html">https://www.tanboyu.com/ggplot2-for-volcano.html</a> [2] R 语言 ifelse() 函数使用：<a target="_blank" rel="noopener" href="http://www.biye5u.com/article/R/2017/6352.html">http://www.biye5u.com/article/R/2017/6352.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/03/28/mitogenome-unfinished/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/28/mitogenome-unfinished/" class="post-title-link" itemprop="url">mitogenome (unfinished)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-28 00:37:16" itemprop="dateCreated datePublished" datetime="2018-03-28T00:37:16+08:00">2018-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>tRNA tRNA sequences  整理成 fasta 格式 通过 blastn mapping  到 mitogenome，输出 format=6。 编程序转换成 features table 格式的文件。 注意： 1）部分 tRNA 有多个 copies，例如 trnC(gca) 与 trnfM(cat) 各有两个copies； 2）部分 tRNA 具有同样的 anticodon，但是其名称和序列不同，例如 trnI(cat) 和 trnM(cat)； 3）tRNA都没有内含子，所以可以较为简单的转换格式； 4）anticodon 如何自动注释？</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/08/R-Gene-Ontology-hypergeometric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/08/R-Gene-Ontology-hypergeometric/" class="post-title-link" itemprop="url">R：超几何分布与基因功能富集分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-08 14:56:49" itemprop="dateCreated datePublished" datetime="2018-02-08T14:56:49+08:00">2018-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:47:19" itemprop="dateModified" datetime="2020-12-08T11:47:19+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GO功能显著性富集分析给出与基因组背景相比，在差异表达基因中显著富集的GO功能条目，从而给出差异表达基因与哪些生物学功能显著相关。该分析首先把所有差异表达基因向Gene Ontology数据库（<a target="_blank" rel="noopener" href="http://www.geneontology.org/">http://www.geneontology.org/</a>）的各个term映射，计算每个term的基因数目，然后应用超几何检验，找出与整个基因组背景相比，在差异表达基因中显著富集的GO条目，其计算公式为 <img src="https://genehub.files.wordpress.com/2018/02/hypergeometric.jpg" alt="hypergeometric" /> 其中，N为所有基因中具有GO注释的基因数目；n为N中差异表达基因的数目；M为所有基因中注释为某特定GO term的基因数目；m为注释为某特定GO term的差异表达基因数目。计算得到的p-value通过Bonferroni校正之后，以corrected p-value≤0.05为阈值，满足此条件的GO term定义为在差异表达基因中显著富集的GO term。通过GO功能显著性富集分析能确定差异表达基因行使的主要生物学功能。 例如，如下的结果： <img src="https://genehub.files.wordpress.com/2018/02/qqe688aae59bbe20180208115638.jpg" alt="QQ截图20180208115638" /> P值计算方法为（在R语言程序中调用phyper命令）：</p>
+<p>phyper(66-1, 2775, 20269-2775, 249, lower.tail=F)<br />
+[1] 5.546399e-08</p>
+<p>Q值计算方法： Q值则需要考虑到全部差异表达基因的P值。引用他人的解释：设总共有m个候选基因，每个基因对应的p值从小到大排列分别是p(1),p(2),…,p(m),则若想控制fdr不能超过q，则只需找到最大的正整数 i，使得 p(i)&lt;= (i*q)/m.然后，挑选对应p(1),p(2),…,p(i)的基因做为差异表达基因，这样就能从统计学上保证fdr不超过q。 例如</p>
+<p>&gt; p&lt;-c(0.0003,0.0001,0.02)</p>
+<blockquote>
+<p>p.adjust(p,method=“fdr”,length(p))<br />
+[1] 0.00045 0.00030 0.02000</p>
+</blockquote>
+<p>注： 一、什么是超几何分布 超几何分布的公式为：</p>
+<p>p(x) = choose(m, x) choose(n, k-x) / choose(m+n, k)<br />
+for x = 0, …, k.<br />
+其中, m 是桶里面白球的个数, n 是黑球的个数, k 是从桶中随机取出的球数, x 是取出球<br />
+中白球的个数.</p>
+<p>Fisher‘s Exact Test就是依据超几何概率分布得到的。 二、计算公式 公式：计算P值的代码也可以自己写：C(k,M)*C(n-k,N-M)/C(n,N) R语言的代码：</p>
+<p>dhyper(x, m, n, k, log = FALSE)<br />
+计算某一个点的p值<br />
+phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
+计算一个分布的p值，默认下计算P(X&lt;=x)<br />
+qhyper(p, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
+计算某一个p值对应的分位数<br />
+rhyper(nn, m, n, k)<br />
+按超几何分布给出nn的可能的模拟结果值</p>
+<p>三、运用案例 （见前文） 四、编程 参考： <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1122">http://www.chenlianfu.com/?p=1122</a> <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-749-1-1.html">http://www.biotrainee.com/thread-749-1-1.html</a> <a target="_blank" rel="noopener" href="http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814">http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814</a> <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_73e6125c01012412.html">http://blog.sina.com.cn/s/blog\_73e6125c01012412.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/09/Bioinfo-install-vcftools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/01/09/Bioinfo-install-vcftools/" class="post-title-link" itemprop="url">安装vcftools</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-01-09 16:26:11" itemprop="dateCreated datePublished" datetime="2018-01-09T16:26:11+08:00">2018-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>configure的过程报错：Zlib找不到。 实际上已经安装zlib。 解决办法</p>
+<p>export ZLIB_LIBS=‘-L/home/fenglei/local/lib -lz’<br />
+export ZLIB_CFLAGS=-I/home/fenglei/local/include<br />
+echo $ZLIB_LIBS $ZLIB_CFLAGS<br />
+./configure --prefix=/home/fenglei/local/<br />
+make<br />
+make install</p>
+<p>成功安装。 参考资料：<a target="_blank" rel="noopener" href="https://github.com/vcftools/vcftools/issues/29">https://github.com/vcftools/vcftools/issues/29</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/02/Bioinfo-gene-ontology-analysis-for-degs-of-arabidopsis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/01/02/Bioinfo-gene-ontology-analysis-for-degs-of-arabidopsis/" class="post-title-link" itemprop="url">Gene Ontology analysis for DEGs of Arabidopsis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-01-02 21:11:30" itemprop="dateCreated datePublished" datetime="2018-01-02T21:11:30+08:00">2018-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>try http:// if https:// URLs are not supported<br />
+source(“<a target="_blank" rel="noopener" href="https://bioconductor.org/biocLite.R">https://bioconductor.org/biocLite.R</a>”)<br />
+biocLite(“clusterProfiler”)<br />
+biocLite(“DOSE”)<br />
+biocLite(“tibble”)<br />
+library(clusterProfiler)<br />
+biocLite(“topGO”)<br />
+library(topGO)<br />
+biocLite(“org.At.tair.db”)<br />
+library(org.At.tair.db)</p>
+<p>a=read.table(“diff.gene.table”, head=T, sep=“\t”)a=read.table(“diff.gene.table”, head=T, sep=“\t”)b=a[,1]<br />
+keytypes(org.At.tair.db)  ## 看该数据库支持哪些基因名称类型，例如拟南芥支持AT1G01110 就是keytype=“TAIR”<br />
+ego &lt;- enrichGO(gene          = b, keyType = “TAIR”,                OrgDb         = org.At.tair.db,                ont           = “CC”,                pAdjustMethod = “BH”,                pvalueCutoff  = 0.05,                qvalueCutoff  = 0.05, readable      = TRUE)<br />
+barplot(ggo, drop=TRUE, showCategory=12)dotplot(ego)<br />
+write.table(as.data.frame( ego@result), file=“test_CC.txt”)</p>
+<h1 id="kegg-over-representation-testkk-enrichkegggene-b-organism-ath-pvaluecutoff-005"><a class="markdownIt-Anchor" href="#kegg-over-representation-testkk-enrichkegggene-b-organism-ath-pvaluecutoff-005"></a> KEGG over-representation testkk &lt;- enrichKEGG(gene         = b,                 organism     = ‘ath’,                 pvalueCutoff = 0.05)</h1>
+<p>write.table(as.data.frame(kk@result), file=“test_kk.txt”)</p>
+<h1 id="kegg-gene-set-enrichment-analysiskk2-gsekegggenelist-b-organism-ath-nperm-1000-mingssize-120-pvaluecutoff-005-verbose-falseheadkk2"><a class="markdownIt-Anchor" href="#kegg-gene-set-enrichment-analysiskk2-gsekegggenelist-b-organism-ath-nperm-1000-mingssize-120-pvaluecutoff-005-verbose-falseheadkk2"></a> KEGG Gene Set Enrichment Analysiskk2 &lt;- gseKEGG(geneList     = b,               organism     = ‘ath’,               nPerm        = 1000,               minGSSize    = 120,               pvalueCutoff = 0.05,               verbose      = FALSE)head(kk2)</h1>
+<p>mkk &lt;- enrichMKEGG(gene = b,                   organism = ‘ath’)</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="以内置的 iris 数据集为例。Iris 鸢尾花数据集是一个经典数据集，在统计学习和机器学习领域都经常被用作示例。数据集内包含 3 类共 150 条记录，每类各 50 个数据，每条记录都有 4 项特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度，可以通过这4个特征预测鸢尾花卉属于（iris-setosa, iris-versicolour, iris-virginica）中的哪一品种。在博文 http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R | 如何用RStudio绘制适合投稿的图片">
+<meta property="og:url" content="http://example.com/2022/07/10/R-draw-high-quality-figure-in-RStudio/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="以内置的 iris 数据集为例。Iris 鸢尾花数据集是一个经典数据集，在统计学习和机器学习领域都经常被用作示例。数据集内包含 3 类共 150 条记录，每类各 50 个数据，每条记录都有 4 项特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度，可以通过这4个特征预测鸢尾花卉属于（iris-setosa, iris-versicolour, iris-virginica）中的哪一品种。在博文 http">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/4pwGYUW.jpeg">
+<meta property="og:image" content="https://i.imgur.com/Nl6NDlZ.jpeg">
+<meta property="article:published_time" content="2022-07-10T07:32:13.000Z">
+<meta property="article:modified_time" content="2022-07-14T12:54:50.312Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/4pwGYUW.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/07/10/R-draw-high-quality-figure-in-RStudio/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>R | 如何用RStudio绘制适合投稿的图片 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/10/R-draw-high-quality-figure-in-RStudio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          R | 如何用RStudio绘制适合投稿的图片
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-10 15:32:13" itemprop="dateCreated datePublished" datetime="2022-07-10T15:32:13+08:00">2022-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-14 20:54:50" itemprop="dateModified" datetime="2022-07-14T20:54:50+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以内置的 iris 数据集为例。Iris 鸢尾花数据集是一个经典数据集，在统计学习和机器学习领域都经常被用作示例。数据集内包含 3 类共 150 条记录，每类各 50 个数据，每条记录都有 4 项特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度，可以通过这4个特征预测鸢尾花卉属于（iris-setosa, iris-versicolour, iris-virginica）中的哪一品种。在博文 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/52b86c774b0b">https://www.jianshu.com/p/52b86c774b0b</a> 有对 Iris 数据集进行统计分析以及机器学习的总结。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&gt; iris</span><br><span class="line">    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span><br><span class="line">1            5.1         3.5          1.4         0.2     setosa</span><br><span class="line">2            4.9         3.0          1.4         0.2     setosa</span><br><span class="line">3            4.7         3.2          1.3         0.2     setosa</span><br><span class="line">4            4.6         3.1          1.5         0.2     setosa</span><br><span class="line">5            5.0         3.6          1.4         0.2     setosa</span><br><span class="line">6            5.4         3.9          1.7         0.4     setosa</span><br><span class="line">7            4.6         3.4          1.4         0.3     setosa</span><br><span class="line">8            5.0         3.4          1.5         0.2     setosa</span><br><span class="line">9            4.4         2.9          1.4         0.2     setosa</span><br><span class="line">51           7.0         3.2          4.7         1.4 versicolor</span><br><span class="line">52           6.4         3.2          4.5         1.5 versicolor</span><br><span class="line">53           6.9         3.1          4.9         1.5 versicolor</span><br><span class="line">54           5.5         2.3          4.0         1.3 versicolor</span><br><span class="line">55           6.5         2.8          4.6         1.5 versicolor</span><br><span class="line">56           5.7         2.8          4.5         1.3 versicolor</span><br><span class="line">57           6.3         3.3          4.7         1.6 versicolor</span><br><span class="line">58           4.9         2.4          3.3         1.0 versicolor</span><br><span class="line">59           6.6         2.9          4.6         1.3 versicolor</span><br><span class="line">100          5.7         2.8          4.1         1.3 versicolor</span><br><span class="line">101          6.3         3.3          6.0         2.5  virginica</span><br><span class="line">102          5.8         2.7          5.1         1.9  virginica</span><br><span class="line">103          7.1         3.0          5.9         2.1  virginica</span><br><span class="line">104          6.3         2.9          5.6         1.8  virginica</span><br><span class="line">105          6.5         3.0          5.8         2.2  virginica</span><br><span class="line">106          7.6         3.0          6.6         2.1  virginica</span><br><span class="line">107          4.9         2.5          4.5         1.7  virginica</span><br></pre></td></tr></table></figure>
+<p>柱状图是生物学文献中最常见的一类图形，下面基于 Iris 数据做一个柱状图（展示 MEAN、SE 等信息）。首先想到了 dplyr 函数来进行统计。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 对三个植物品种的花萼 (Sepal)进行平均值和标准差统计</span><br><span class="line">iris %&gt;%</span><br><span class="line">  group_by(Species) %&gt;%</span><br><span class="line">  summarise(</span><br><span class="line">    mean.Sepal.Length = mean(Sepal.Length),</span><br><span class="line">    sd.Sepal.Length = sd(Sepal.Length)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"># A tibble: 3 × 3</span><br><span class="line">#Species    mean.Sepal.Length sd.Sepal.Length</span><br><span class="line">#&lt;fct&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span><br><span class="line">#1 setosa                  5.01           0.352</span><br><span class="line">#2 versicolor              5.94           0.516</span><br><span class="line">#3 virginica               6.59           0.636</span><br><span class="line"></span><br><span class="line"># 如果要对所有数值型变量计算某些统计量， 可以用summarize_if(is.numeric, list(变量后缀=~统计函数名&lt;, ...&gt;))</span><br><span class="line">a &lt;- iris %&gt;%</span><br><span class="line">  group_by(Species) %&gt;%</span><br><span class="line">  summarise_if(</span><br><span class="line">    is.numeric,</span><br><span class="line">    list(avg = ~mean(.), std = ~sd(.))</span><br><span class="line">  )</span><br><span class="line"># A tibble: 3 × 9</span><br><span class="line">#Species    Sepal.Length_avg Sepal.Width_avg Petal.Length_avg Petal.Width_avg Sepal.Length_std Sepal.Width_std Petal.Length_std</span><br><span class="line">#&lt;fct&gt;                 &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;</span><br><span class="line">#1 setosa                 5.01            3.43             1.46           0.246            0.352           0.379            0.174</span><br><span class="line">#2 versicolor             5.94            2.77             4.26           1.33             0.516           0.314            0.470</span><br><span class="line">#3 virginica              6.59            2.97             5.55           2.03             0.636           0.322            0.552</span><br><span class="line"># … with 1 more variable: Petal.Width_std &lt;dbl&gt;</span><br></pre></td></tr></table></figure>
+<p>下面将三个不同植物品种各自花萼平均值来做柱状图。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot() +</span><br><span class="line">  geom_col(data=a, aes(x=Species, y=Sepal.Length_avg)) +</span><br><span class="line">  geom_errorbar(data=a, aes(x=Species, ymin=Sepal.Length_avg-Sepal.Length_std, ymax=Sepal.Length_avg+Sepal.Length_std))</span><br></pre></td></tr></table></figure>
+<p>下面是生成的图，可看到灰色网格背景，以及柱子的宽度都不够美观。</p>
+<p><img src="https://i.imgur.com/4pwGYUW.jpeg" alt="" /></p>
+<p>下面通过 theme_bw() 函数去掉灰色背景；再通过 theme() 函数去掉网格背景，设置坐标轴字体大小；通过 ylab 和 xlab 函数设置坐标轴标签文字；通过 xlim 和 ylim 设置坐标轴展示区间；通过scale_fill_manual 函数来控制柱状图颜色；通过guides 函数控制是否显示 legend。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pdf(&quot;Sepal_length_barplot.pdf&quot;, width = 2, height = 2)</span><br><span class="line">ggplot() +</span><br><span class="line">  geom_col(data=a, aes(x=Species, y=Sepal.Length_avg, fill=Species), width=.5) +</span><br><span class="line">  geom_errorbar(data=a, aes(x=Species, ymin=Sepal.Length_avg-Sepal.Length_std, ymax=Sepal.Length_avg+Sepal.Length_std), width=.3) +</span><br><span class="line">  geom_jitter(data=iris, size=.3, alpha=.5, color=&quot;darkgrey&quot;, aes(x=Species, y=Sepal.Length), width=.3) +</span><br><span class="line">  scale_fill_manual(values=c(&#x27;#90c9e7&#x27;, &#x27;#219ebc&#x27;, &#x27;#136783&#x27;)) +</span><br><span class="line">  theme_bw() +</span><br><span class="line">  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = &quot;black&quot;)) +</span><br><span class="line">  theme(axis.text.x = element_text(size = 6, color = &quot;black&quot;)) +</span><br><span class="line">  #theme(axis.text.x = element_text(size = 6, color = &quot;black&quot;, hjust = 0.1, vjust = 0.4, angle = 70)) +</span><br><span class="line">  theme(axis.text.y = element_text(size = 6, color = &quot;black&quot;)) +</span><br><span class="line">  ylab(&quot;Sepal Length&quot;) +</span><br><span class="line">  xlab(&quot;Species&quot;) +</span><br><span class="line">  #xlim(-7, 7) +</span><br><span class="line">  ylim(0, 9) +</span><br><span class="line">  theme(axis.title.x = element_text(size = 8)) +</span><br><span class="line">  theme(axis.title.y = element_text(size = 8)) +</span><br><span class="line">  guides(fill = FALSE)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
+<p>用pdf函数将图片存储为PDF格式，打开就是下面的效果。</p>
+<p><img src="https://i.imgur.com/Nl6NDlZ.jpeg" alt="" /></p>
+<p>小结：为了制作适合投稿的图片，需要选择合适的背景色、图片尺寸、字体大小。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/26/Linux-add-new-harddisk/" rel="prev" title="Linux | 给Linux工作站更换新硬盘">
+      <i class="fa fa-chevron-left"></i> Linux | 给Linux工作站更换新硬盘
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/14/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

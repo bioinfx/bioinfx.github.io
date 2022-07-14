@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="序列分析的常见操作包括：序列长度统计（包括总长度、N50 length等），序列提取（根据序列名称或ID、根据序列坐标范围），序列格式转换（fasta-&gt;tab，调整fasta每行碱基数，序列翻转），序列重新命名，序列重新排序，序列切割与重新组合。下面的几个工具就像瑞士军刀一样灵活，基本能满足这些分析需求。  1. seqtk Seqtk is a fast and lightweight">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些FASTA&#x2F;FASTQ序列处理工具">
+<meta property="og:url" content="http://example.com/2020/12/15/Bioinfo-FASTA-FASTQ-tools/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="序列分析的常见操作包括：序列长度统计（包括总长度、N50 length等），序列提取（根据序列名称或ID、根据序列坐标范围），序列格式转换（fasta-&gt;tab，调整fasta每行碱基数，序列翻转），序列重新命名，序列重新排序，序列切割与重新组合。下面的几个工具就像瑞士军刀一样灵活，基本能满足这些分析需求。  1. seqtk Seqtk is a fast and lightweight">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-15T03:47:04.000Z">
+<meta property="article:modified_time" content="2020-12-15T05:20:23.620Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/12/15/Bioinfo-FASTA-FASTQ-tools/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>一些FASTA/FASTQ序列处理工具 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/15/Bioinfo-FASTA-FASTQ-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一些FASTA/FASTQ序列处理工具
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-15 11:47:04 / Modified: 13:20:23" itemprop="dateCreated datePublished" datetime="2020-12-15T11:47:04+08:00">2020-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>序列分析的常见操作包括：序列长度统计（包括总长度、N50 length等），序列提取（根据序列名称或ID、根据序列坐标范围），序列格式转换（fasta-&gt;tab，调整fasta每行碱基数，序列翻转），序列重新命名，序列重新排序，序列切割与重新组合。下面的几个工具就像瑞士军刀一样灵活，基本能满足这些分析需求。</p>
+<h3 id="1-seqtk"><a class="markdownIt-Anchor" href="#1-seqtk"></a> 1. seqtk</h3>
+<p>Seqtk is a fast and lightweight tool for processing sequences in the FASTA or FASTQ format.<br />
+It seamlessly parses both FASTA and FASTQ files which can also be optionally compressed by gzip.<br />
+To install seqtk,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/lh3/seqtk.git;</span><br><span class="line">cd seqtk; make</span><br></pre></td></tr></table></figure>
+<p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Usage:   seqtk &lt;command&gt; &lt;arguments&gt;</span><br><span class="line">Version: 1.3-r114-dirty</span><br><span class="line"></span><br><span class="line">Command: seq       common transformation of FASTA/Q</span><br><span class="line">         comp      get the nucleotide composition of FASTA/Q</span><br><span class="line">         sample    subsample sequences</span><br><span class="line">         subseq    extract subsequences from FASTA/Q</span><br><span class="line">         fqchk     fastq QC (base/quality summary)</span><br><span class="line">         mergepe   interleave two PE FASTA/Q files</span><br><span class="line">         trimfq    trim FASTQ using the Phred algorithm</span><br><span class="line"></span><br><span class="line">         hety      regional heterozygosity</span><br><span class="line">         gc        identify high- or low-GC regions</span><br><span class="line">         mutfa     point mutate FASTA at specified positions</span><br><span class="line">         mergefa   merge two FASTA/Q files</span><br><span class="line">         famask    apply a X-coded FASTA to a source FASTA</span><br><span class="line">         dropse    drop unpaired from interleaved PE FASTA/Q</span><br><span class="line">         rename    rename sequence names</span><br><span class="line">         randbase  choose a random base from hets</span><br><span class="line">         cutN      cut sequence at long N</span><br><span class="line">         gap       get the gap locations</span><br><span class="line">         listhet   extract the position of each het</span><br></pre></td></tr></table></figure>
+<h3 id="2-seqkit"><a class="markdownIt-Anchor" href="#2-seqkit"></a> 2. seqkit</h3>
+<p>To install, type <code>conda install -c bioconda seqkit</code>.<br />
+Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">SeqKit -- a cross-platform and ultrafast toolkit for FASTA/Q file manipulation</span><br><span class="line"></span><br><span class="line">Version: 0.14.0</span><br><span class="line"></span><br><span class="line">Author: Wei Shen &lt;shenwei356&gt;</span><br><span class="line"></span><br><span class="line">Documents  : http://bioinf.shenwei.me/seqkit</span><br><span class="line">Source code: https://github.com/shenwei356/seqkit</span><br><span class="line">Please cite: https://doi.org/10.1371/journal.pone.0163962</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">  seqkit [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">  amplicon        retrieve amplicon (or specific region around it) via primer(s)</span><br><span class="line">  bam             monitoring and online histograms of BAM record features</span><br><span class="line">  common          find common sequences of multiple files by id/name/sequence</span><br><span class="line">  concat          concatenate sequences with same ID from multiple files</span><br><span class="line">  convert         convert FASTQ quality encoding between Sanger, Solexa and Illumina</span><br><span class="line">  duplicate       duplicate sequences N times</span><br><span class="line">  faidx           create FASTA index file and extract subsequence</span><br><span class="line">  fish            look for short sequences in larger sequences using local alignment</span><br><span class="line">  fq2fa           convert FASTQ to FASTA</span><br><span class="line">  fx2tab          convert FASTA/Q to tabular format (with length/GC content/GC skew)</span><br><span class="line">  genautocomplete generate shell autocompletion script</span><br><span class="line">  grep            search sequences by ID/name/sequence/sequence motifs, mismatch allowed</span><br><span class="line">  head            print first N FASTA/Q records</span><br><span class="line">  help            Help about any command</span><br><span class="line">  locate          locate subsequences/motifs, mismatch allowed</span><br><span class="line">  mutate          edit sequence (point mutation, insertion, deletion)</span><br><span class="line">  pair            match up paired-end reads from two fastq files</span><br><span class="line">  range           print FASTA/Q records in a range (start:end)</span><br><span class="line">  rename          rename duplicated IDs</span><br><span class="line">  replace         replace name/sequence by regular expression</span><br><span class="line">  restart         reset start position for circular genome</span><br><span class="line">  rmdup           remove duplicated sequences by id/name/sequence</span><br><span class="line">  sample          sample sequences by number or proportion</span><br><span class="line">  sana            sanitize broken single line fastq files</span><br><span class="line">  scat            real time recursive concatenation and streaming of fastx files</span><br><span class="line">  seq             transform sequences (revserse, complement, extract ID...)</span><br><span class="line">  shuffle         shuffle sequences</span><br><span class="line">  sliding         sliding sequences, circular genome supported</span><br><span class="line">  sort            sort sequences by id/name/sequence/length</span><br><span class="line">  split           split sequences into files by id/seq region/size/parts (mainly for FASTA)</span><br><span class="line">  split2          split sequences into files by size/parts (FASTA, PE/SE FASTQ)</span><br><span class="line">  stats           simple statistics of FASTA/Q files</span><br><span class="line">  subseq          get subsequences by region/gtf/bed, including flanking sequences</span><br><span class="line">  tab2fx          convert tabular format to FASTA/Q format</span><br><span class="line">  translate       translate DNA/RNA to protein sequence (supporting ambiguous bases)</span><br><span class="line">  version         print version information and check for update</span><br><span class="line">  watch           monitoring and online histograms of sequence features</span><br></pre></td></tr></table></figure>
+<h3 id="3-itools-reseqtools"><a class="markdownIt-Anchor" href="#3-itools-reseqtools"></a> 3. iTools (Reseqtools)</h3>
+<p>To install, use <code>git clone git@github.com:BGI-shenzhen/Reseqtools.git</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Program: iTools (ReSeqtools)</span><br><span class="line">Version: 0.25   author:hewm2008      Oct 23 2018</span><br><span class="line"></span><br><span class="line">        Usage:</span><br><span class="line"></span><br><span class="line">                Fatools        Tools For Fasta</span><br><span class="line">                Fqtools        Tools For Fastq</span><br><span class="line">                SOAPtools      Tools For SOAP </span><br><span class="line">                Vartools       Tools For SOAP Variant</span><br><span class="line">                CNStools       Tools For CNS</span><br><span class="line">                Xamtools       Tools For Sam/Bam</span><br><span class="line">                Gfftools       Tools For Gff</span><br><span class="line">                Formtools      Tools For Form convert</span><br><span class="line">                Filetools      Tools For Specified File</span><br><span class="line">                Othertools     Tools For Other</span><br><span class="line">                Gametools      Tools For Game</span><br></pre></td></tr></table></figure>
+<h3 id="4-ngsqctoolkit"><a class="markdownIt-Anchor" href="#4-ngsqctoolkit"></a> 4. NGSQCToolkit</h3>
+<p>A toolkit for the quality control (QC) of next generation sequencing (NGS) data. The toolkit comprises of user-friendly stand alone tools for quality control of the sequence data generated using Illumina and Roche 454 platforms with detailed results in the form of tables and graphs, and filtering of high-quality sequence data. It also includes few other tools, which are helpful in NGS data quality control and analysis.<br />
+原下载链接已经失效：<a target="_blank" rel="noopener" href="http://www.nipgr.ac.in/ngsqctoolkit.html">http://www.nipgr.ac.in/ngsqctoolkit.html</a><br />
+我把它上传到GitHub了：<code>git clone git@github.com:bioinfx/NGSQCToolkit.git</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl   </span><br><span class="line">Usage: perl /home/fenglei/local/app/NGSQCToolkit/Statistics/N50Stat.pl &lt;options&gt;</span><br><span class="line"></span><br><span class="line">\### Input reads/sequences (FASTA) (Required)</span><br><span class="line">  -i &lt;Read/Sequence file&gt;</span><br><span class="line">    Read/Sequence in fasta format</span><br><span class="line">\### Other options [Optional]</span><br><span class="line">  -h | -help</span><br><span class="line">    Prints this help</span><br><span class="line">  -o | -outputFile &lt;Output file name&gt;</span><br><span class="line">    Output will be stored in the given file</span><br><span class="line">    default: By default, N50 statistics file will be stored where the input file is</span><br></pre></td></tr></table></figure>
+<h3 id="5-fastx-toolkit"><a class="markdownIt-Anchor" href="#5-fastx-toolkit"></a> 5. FASTX-Toolkit</h3>
+<p><a target="_blank" rel="noopener" href="http://hannonlab.cshl.edu/fastx_toolkit/">http://hannonlab.cshl.edu/fastx_toolkit/</a><br />
+Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">FASTQ-to-FASTA converter</span><br><span class="line">	Convert FASTQ files to FASTA files.</span><br><span class="line">FASTQ Information</span><br><span class="line">	Chart Quality Statistics and Nucleotide Distribution</span><br><span class="line">FASTQ/A Collapser</span><br><span class="line">	Collapsing identical sequences in a FASTQ/A file into a single sequence (while maintaining reads counts)</span><br><span class="line">FASTQ/A Trimmer</span><br><span class="line">	Shortening reads in a FASTQ or FASTQ files (removing barcodes or noise).</span><br><span class="line">FASTQ/A Renamer</span><br><span class="line">	Renames the sequence identifiers in FASTQ/A file.</span><br><span class="line">FASTQ/A Clipper</span><br><span class="line">	Removing sequencing adapters / linkers</span><br><span class="line">FASTQ/A Reverse-Complement</span><br><span class="line">	Producing the Reverse-complement of each sequence in a FASTQ/FASTA file.</span><br><span class="line">FASTQ/A Barcode splitter</span><br><span class="line">	Splitting a FASTQ/FASTA files containning multiple samples</span><br><span class="line">FASTA Formatter</span><br><span class="line">	changes the width of sequences line in a FASTA file</span><br><span class="line">FASTA Nucleotide Changer</span><br><span class="line">	Convets FASTA sequences from/to RNA/DNA</span><br><span class="line">FASTQ Quality Filter</span><br><span class="line">	Filters sequences based on quality</span><br><span class="line">FASTQ Quality Trimmer</span><br><span class="line">	Trims (cuts) sequences based on quality</span><br><span class="line">FASTQ Masker</span><br><span class="line">	Masks nucleotides with &#x27;N&#x27; (or other character) based on quality</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/12/Plant-Soybean-introduction/" rel="prev" title="大豆产业现状">
+      <i class="fa fa-chevron-left"></i> 大豆产业现状
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/15/Bioinfo-HiC-3d-dna-for-chromosome-assembly/" rel="next" title="Hi-C：3d-dna挂载染色体">
+      Hi-C：3d-dna挂载染色体 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-seqtk"><span class="nav-number">1.</span> <span class="nav-text"> 1. seqtk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-seqkit"><span class="nav-number">2.</span> <span class="nav-text"> 2. seqkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-itools-reseqtools"><span class="nav-number">3.</span> <span class="nav-text"> 3. iTools (Reseqtools)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-ngsqctoolkit"><span class="nav-number">4.</span> <span class="nav-text"> 4. NGSQCToolkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-fastx-toolkit"><span class="nav-number">5.</span> <span class="nav-text"> 5. FASTX-Toolkit</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

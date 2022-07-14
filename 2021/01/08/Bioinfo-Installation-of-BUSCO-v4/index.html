@@ -1,41 +1,479 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Bioinfo | Installation of BUSCO v4 | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Bioinfo | Installation of BUSCO v4</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Bioinfo | Installation of BUSCO v4</h1><div class="post-meta">2021-01-08<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br></pre></td></tr></table></figure>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<h3 id="Third-party-components"><a href="#Third-party-components" class="headerlink" title="Third-party components"></a>Third-party components</h3><p>A full installation of BUSCO requires Python 3.3+ (2.7 is not supported from v4 onwards), BioPython, tBLASTn 2.2+, Augustus 3.2, Prodigal, Metaeuk, HMMER3.1+, SEPP, and R + ggplot2 for the plotting companion script. Some of these tools are necessary only for analysing certain type of organisms and input data, or for specific run modes.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># https:&#x2F;&#x2F;biopython.org&#x2F;</span><br><span class="line">conda install -c biopython</span><br><span class="line"></span><br><span class="line"># https:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;executables&#x2F;blast+&#x2F;LATEST</span><br><span class="line"># WARNING:        You are using BLAST version 2.11.0+. This is known to yield inconsistent results when multithreading. BLAST will run on a single core as a result. </span><br><span class="line"># For performance improvement, please upgrade to BLAST 2.10.1+</span><br><span class="line">cd ~&#x2F;local&#x2F;app</span><br><span class="line">wget https:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;executables&#x2F;blast+&#x2F;LATEST&#x2F;ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">mv ncbi-blast-2.11.0+ blast-2.11.0</span><br><span class="line">export PATH&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;blast-2.11.0&#x2F;bin:$PATH</span><br><span class="line"></span><br><span class="line"># http:&#x2F;&#x2F;bioinf.uni-greifswald.de&#x2F;augustus&#x2F;</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># augustus    bioconda&#x2F;linux-64::augustus-3.2.2-0</span><br><span class="line"># conda install -c bioconda augustus   # ERROR when running it</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;Gaius-Augustus&#x2F;Augustus</span><br><span class="line">sudo yum install boost-devel          # libboost-all-dev</span><br><span class="line">sudo yum install -y zlib zlib-devel   # zlib1g-dev</span><br><span class="line">sudo yum install gsl-devel            # libgsl-dev</span><br><span class="line">sudo yum install suitesparse-devel    # libsuitesparse-dev</span><br><span class="line">sudo yum install lpsolve              # liblpsolve55-dev</span><br><span class="line">sudo yum install sqlite-devel         # sqlite-devel - Development tools for the sqlite3 embeddable SQL database engine</span><br><span class="line"># sudo yum whatprovides libmysqlclient*</span><br><span class="line"># sudo yum install mariadb-libs-5.5.56-2.el7.i686</span><br><span class="line"></span><br><span class="line"># https:&#x2F;&#x2F;github.com&#x2F;soedinglab&#x2F;metaeuk</span><br><span class="line"># conda install -c bioconda Metaeuk # ERROR -- Package openssl conflicts</span><br><span class="line"># git clone git@github.com:soedinglab&#x2F;metaeuk.git</span><br><span class="line"># downloading a statically compiled version:</span><br><span class="line">wget https:&#x2F;&#x2F;mmseqs.com&#x2F;metaeuk&#x2F;metaeuk-linux-sse41.tar.gz</span><br><span class="line">tar -zxvf metaeuk-linux-sse41.tar.gz</span><br><span class="line">export PATH&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;metaeuk&#x2F;bin:$PATH</span><br><span class="line"></span><br><span class="line"># https:&#x2F;&#x2F;github.com&#x2F;hyattpd&#x2F;Prodigal</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># prodigal    bioconda&#x2F;linux-64::prodigal-2.6.3-h516909a_2</span><br><span class="line">conda install -c bioconda Prodigal</span><br><span class="line"></span><br><span class="line"># http:&#x2F;&#x2F;hmmer.org&#x2F;</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># hmmer    bioconda&#x2F;linux-64::hmmer-3.3.1-he1b5a44_0</span><br><span class="line"># conda install -c bioconda hmmer  # X</span><br><span class="line">wget http:&#x2F;&#x2F;eddylab.org&#x2F;software&#x2F;hmmer&#x2F;hmmer.tar.gz</span><br><span class="line">tar -zxvf hmmer.tar.gz</span><br><span class="line">cd hmmer-3.3.2</span><br><span class="line">.&#x2F;configure --prefix&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"># https:&#x2F;&#x2F;github.com&#x2F;smirarab&#x2F;sepp&#x2F;</span><br><span class="line"># Successfully installed sepp-0.9.0</span><br><span class="line"># git clone git@github.com:smirarab&#x2F;sepp.git</span><br><span class="line"># cd sepp</span><br><span class="line"># python setup.py  install</span><br><span class="line"># Error was reported when running setup.py</span><br><span class="line">conda install -c bioconda sepp</span><br><span class="line"># sepp  bioconda&#x2F;linux-64::sepp-4.3.10-py37hef7ab6a_2</span><br><span class="line"></span><br><span class="line">#https:&#x2F;&#x2F;www.r-project.org&#x2F;</span><br><span class="line"># R version 3.5.1 (2018-07-02) -- &quot;Feather Spray&quot;</span><br><span class="line">conda install R</span><br></pre></td></tr></table></figure>
+<link rel="stylesheet" href="/css/main.css">
 
-<p><strong>samtools, bcftools, htslib</strong><br>Download below files from <a target="_blank" rel="noopener" href="http://www.htslib.org/download/">http://www.htslib.org/download/</a>: <a target="_blank" rel="noopener" href="https://github.com/samtools/samtools/releases/download/1.11/samtools-1.11.tar.bz2">samtools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/bcftools/releases/download/1.11/bcftools-1.11.tar.bz2">bcftools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/htslib/releases/download/1.11/htslib-1.11.tar.bz2">htslib-1.10.2.tar.bz2</a></p>
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Environment BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3. 1source activate python37  Third-party components A full installation of BUSCO requires Python 3.3+ (2.7 is not support">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | Installation of BUSCO v4">
+<meta property="og:url" content="http://example.com/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="Environment BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3. 1source activate python37  Third-party components A full installation of BUSCO requires Python 3.3+ (2.7 is not support">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-08T02:25:45.000Z">
+<meta property="article:modified_time" content="2021-03-03T15:10:18.280Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | Installation of BUSCO v4 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | Installation of BUSCO v4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-08 10:25:45" itemprop="dateCreated datePublished" datetime="2021-01-08T10:25:45+08:00">2021-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-03 23:10:18" itemprop="dateModified" datetime="2021-03-03T23:10:18+08:00">2021-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="environment"><a class="markdownIt-Anchor" href="#environment"></a> Environment</h3>
+<p>BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br></pre></td></tr></table></figure>
+<h3 id="third-party-components"><a class="markdownIt-Anchor" href="#third-party-components"></a> Third-party components</h3>
+<p>A full installation of BUSCO requires Python 3.3+ (2.7 is not supported from v4 onwards), BioPython, tBLASTn 2.2+, Augustus 3.2, Prodigal, Metaeuk, HMMER3.1+, SEPP, and R + ggplot2 for the plotting companion script. Some of these tools are necessary only for analysing certain type of organisms and input data, or for specific run modes.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># https://biopython.org/</span><br><span class="line">conda install -c biopython</span><br><span class="line"></span><br><span class="line"># https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST</span><br><span class="line"># WARNING:        You are using BLAST version 2.11.0+. This is known to yield inconsistent results when multithreading. BLAST will run on a single core as a result. </span><br><span class="line"># For performance improvement, please upgrade to BLAST 2.10.1+</span><br><span class="line">cd ~/local/app</span><br><span class="line">wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">mv ncbi-blast-2.11.0+ blast-2.11.0</span><br><span class="line">export PATH=/home/fenglei/local/app/blast-2.11.0/bin:$PATH</span><br><span class="line"></span><br><span class="line"># http://bioinf.uni-greifswald.de/augustus/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># augustus    bioconda/linux-64::augustus-3.2.2-0</span><br><span class="line"># conda install -c bioconda augustus   # ERROR when running it</span><br><span class="line">git clone https://github.com/Gaius-Augustus/Augustus</span><br><span class="line">sudo yum install boost-devel          # libboost-all-dev</span><br><span class="line">sudo yum install -y zlib zlib-devel   # zlib1g-dev</span><br><span class="line">sudo yum install gsl-devel            # libgsl-dev</span><br><span class="line">sudo yum install suitesparse-devel    # libsuitesparse-dev</span><br><span class="line">sudo yum install lpsolve              # liblpsolve55-dev</span><br><span class="line">sudo yum install sqlite-devel         # sqlite-devel - Development tools for the sqlite3 embeddable SQL database engine</span><br><span class="line"># sudo yum whatprovides libmysqlclient*</span><br><span class="line"># sudo yum install mariadb-libs-5.5.56-2.el7.i686</span><br><span class="line"></span><br><span class="line"># https://github.com/soedinglab/metaeuk</span><br><span class="line"># conda install -c bioconda Metaeuk # ERROR -- Package openssl conflicts</span><br><span class="line"># git clone git@github.com:soedinglab/metaeuk.git</span><br><span class="line"># downloading a statically compiled version:</span><br><span class="line">wget https://mmseqs.com/metaeuk/metaeuk-linux-sse41.tar.gz</span><br><span class="line">tar -zxvf metaeuk-linux-sse41.tar.gz</span><br><span class="line">export PATH=/home/fenglei/local/app/metaeuk/bin:$PATH</span><br><span class="line"></span><br><span class="line"># https://github.com/hyattpd/Prodigal</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># prodigal    bioconda/linux-64::prodigal-2.6.3-h516909a_2</span><br><span class="line">conda install -c bioconda Prodigal</span><br><span class="line"></span><br><span class="line"># http://hmmer.org/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># hmmer    bioconda/linux-64::hmmer-3.3.1-he1b5a44_0</span><br><span class="line"># conda install -c bioconda hmmer  # X</span><br><span class="line">wget http://eddylab.org/software/hmmer/hmmer.tar.gz</span><br><span class="line">tar -zxvf hmmer.tar.gz</span><br><span class="line">cd hmmer-3.3.2</span><br><span class="line">./configure --prefix=/home/fenglei/local</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"># https://github.com/smirarab/sepp/</span><br><span class="line"># Successfully installed sepp-0.9.0</span><br><span class="line"># git clone git@github.com:smirarab/sepp.git</span><br><span class="line"># cd sepp</span><br><span class="line"># python setup.py  install</span><br><span class="line"># Error was reported when running setup.py</span><br><span class="line">conda install -c bioconda sepp</span><br><span class="line"># sepp  bioconda/linux-64::sepp-4.3.10-py37hef7ab6a_2</span><br><span class="line"></span><br><span class="line">#https://www.r-project.org/</span><br><span class="line"># R version 3.5.1 (2018-07-02) -- &quot;Feather Spray&quot;</span><br><span class="line">conda install R</span><br></pre></td></tr></table></figure>
+<p><strong>samtools, bcftools, htslib</strong><br />
+Download below files from <a target="_blank" rel="noopener" href="http://www.htslib.org/download/">http://www.htslib.org/download/</a>: <a target="_blank" rel="noopener" href="https://github.com/samtools/samtools/releases/download/1.11/samtools-1.11.tar.bz2">samtools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/bcftools/releases/download/1.11/bcftools-1.11.tar.bz2">bcftools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/htslib/releases/download/1.11/htslib-1.11.tar.bz2">htslib-1.10.2.tar.bz2</a></p>
 <p><strong>cmake 3.19.2</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https:&#x2F;&#x2F;github.com&#x2F;Kitware&#x2F;CMake&#x2F;releases&#x2F;download&#x2F;v3.19.2&#x2F;cmake-3.19.2.tar.gz</span><br><span class="line">tar -zxvf cmake-3.19.2.tar.gz</span><br><span class="line">cd cmake-3.19.2</span><br><span class="line">sudo yum install gcc g++</span><br><span class="line">.&#x2F;bootstrap --prefix&#x3D;&#x2F;home&#x2F;fenglei&#x2F;local</span><br><span class="line">gmake &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz</span><br><span class="line">tar -zxvf cmake-3.19.2.tar.gz</span><br><span class="line">cd cmake-3.19.2</span><br><span class="line">sudo yum install gcc g++</span><br><span class="line">./bootstrap --prefix=/home/fenglei/local</span><br><span class="line">gmake &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <p><strong>bamtools</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git:&#x2F;&#x2F;github.com&#x2F;pezmaster31&#x2F;bamtools.git</span><br><span class="line">mkdir build ； cd build</span><br><span class="line">cmake -DCMAKE_INSTALL_PREFIX&#x3D;&#x2F;your&#x2F;path&#x2F;to&#x2F;bamtools ..</span><br><span class="line">#cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make  install</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/pezmaster31/bamtools.git</span><br><span class="line">mkdir build ； cd build</span><br><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/your/path/to/bamtools ..</span><br><span class="line">#cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make  install</span><br></pre></td></tr></table></figure>
 <p><strong>augustus 3.3.1</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http:&#x2F;&#x2F;bioinf.uni-greifswald.de&#x2F;augustus&#x2F;binaries&#x2F;old&#x2F;augustus-3.3.1.tar.gz</span><br><span class="line">tar -zxvf augustus-3.3.1.tar.gz</span><br><span class="line">cd augustus-3.3.1</span><br><span class="line"># edit some make files as below</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://bioinf.uni-greifswald.de/augustus/binaries/old/augustus-3.3.1.tar.gz</span><br><span class="line">tar -zxvf augustus-3.3.1.tar.gz</span><br><span class="line">cd augustus-3.3.1</span><br><span class="line"># edit some make files as below</span><br></pre></td></tr></table></figure>
 <p>Edit make files of <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">bam2hints, and filterBam.</a> Download binary <a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig">bam2wig</a> to replace source file of bam2wig. Then we can run <code>make</code> for Augustus. Augustus requires environment variables to be declared as follows:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;AUGUSTUS&#x2F;augustus-3.2.3&#x2F;bin:$PATH&quot;</span><br><span class="line">export PATH&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;AUGUSTUS&#x2F;augustus-3.2.3&#x2F;scripts:$PATH&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH&#x3D;&quot;&#x2F;path&#x2F;to&#x2F;AUGUSTUS&#x2F;augustus-3.2.3&#x2F;config&#x2F;&quot;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Edit-config-file-of-BUSCO"><a href="#Edit-config-file-of-BUSCO" class="headerlink" title="Edit config file of BUSCO"></a>Edit config file of BUSCO</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;gitlab.com&#x2F;ezlab&#x2F;busco.git</span><br><span class="line">cd busco&#x2F;</span><br><span class="line">#Note: v4.1.4 is the latest stable release. To access v5.beta clone this repository and checkout the v5 branch with git checkout v5.beta</span><br><span class="line">sudo python3 setup.py</span><br><span class="line"># or</span><br><span class="line">python3 setup.py install --user</span><br><span class="line"># or: If you are running BUSCO in a Python virtual environment, the following should suffice:</span><br><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/bin:$PATH&quot;</span><br><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/scripts:$PATH&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/config/&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="edit-config-file-of-busco"><a class="markdownIt-Anchor" href="#edit-config-file-of-busco"></a> Edit config file of BUSCO</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitlab.com/ezlab/busco.git</span><br><span class="line">cd busco/</span><br><span class="line">#Note: v4.1.4 is the latest stable release. To access v5.beta clone this repository and checkout the v5 branch with git checkout v5.beta</span><br><span class="line">sudo python3 setup.py</span><br><span class="line"># or</span><br><span class="line">python3 setup.py install --user</span><br><span class="line"># or: If you are running BUSCO in a Python virtual environment, the following should suffice:</span><br><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure>
 <p>Edit <code>config.ini</code> as below.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># some words were not shown here due to space limitation</span><br><span class="line"></span><br><span class="line">[tblastn]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;blast-2.10.1&#x2F;bin</span><br><span class="line">command &#x3D; tblastn</span><br><span class="line"></span><br><span class="line">[makeblastdb]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;blast-2.10.1&#x2F;bin</span><br><span class="line">command &#x3D; makeblastdb</span><br><span class="line"></span><br><span class="line">[augustus]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;bin</span><br><span class="line">command &#x3D; augustus</span><br><span class="line"></span><br><span class="line">[etraining]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;bin</span><br><span class="line">command &#x3D; etraining</span><br><span class="line"></span><br><span class="line">[gff2gbSmallDNA.pl]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;scripts</span><br><span class="line">command &#x3D; gff2gbSmallDNA.pl</span><br><span class="line"></span><br><span class="line">[new_species.pl]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;scripts</span><br><span class="line">command &#x3D; new_species.pl</span><br><span class="line"></span><br><span class="line">[optimize_augustus.pl]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;scripts</span><br><span class="line">command &#x3D; optimize_augustus.pl</span><br><span class="line"></span><br><span class="line">[hmmsearch]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;bin</span><br><span class="line">command &#x3D; hmmsearch</span><br><span class="line"></span><br><span class="line">[sepp]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;anaconda3&#x2F;envs&#x2F;python37&#x2F;bin</span><br><span class="line">command &#x3D; run_sepp.py</span><br><span class="line"></span><br><span class="line">[prodigal]</span><br><span class="line">path &#x3D; &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;anaconda3&#x2F;envs&#x2F;python37&#x2F;bin</span><br><span class="line">command &#x3D; prodigal</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># some words were not shown here due to space limitation</span><br><span class="line"></span><br><span class="line">[tblastn]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = tblastn</span><br><span class="line"></span><br><span class="line">[makeblastdb]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = makeblastdb</span><br><span class="line"></span><br><span class="line">[augustus]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = augustus</span><br><span class="line"></span><br><span class="line">[etraining]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = etraining</span><br><span class="line"></span><br><span class="line">[gff2gbSmallDNA.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = gff2gbSmallDNA.pl</span><br><span class="line"></span><br><span class="line">[new_species.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = new_species.pl</span><br><span class="line"></span><br><span class="line">[optimize_augustus.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = optimize_augustus.pl</span><br><span class="line"></span><br><span class="line">[hmmsearch]</span><br><span class="line">path = /home/fenglei/local/bin</span><br><span class="line">command = hmmsearch</span><br><span class="line"></span><br><span class="line">[sepp]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = run_sepp.py</span><br><span class="line"></span><br><span class="line">[prodigal]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = prodigal</span><br></pre></td></tr></table></figure>
 <p>Test run of BUSCO.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost config]$ which busco</span><br><span class="line">~&#x2F;.local&#x2F;bin&#x2F;busco</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --version</span><br><span class="line">BUSCO 4.1.4</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --help</span><br><span class="line">usage: busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br><span class="line"></span><br><span class="line">Welcome to BUSCO 4.1.4: the Benchmarking Universal Single-Copy Ortholog assessment tool.</span><br><span class="line">For more detailed usage information, please review the README file provided with this distribution and the BUSCO user guide.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -i FASTA FILE, --in FASTA FILE</span><br><span class="line">                        Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set.</span><br><span class="line">  -c N, --cpu N         Specify the number (N&#x3D;integer) of threads&#x2F;cores to use.</span><br><span class="line">  -o OUTPUT, --out OUTPUT</span><br><span class="line">                        Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. WARNING: do not provide a path</span><br><span class="line">  --out_path OUTPUT_PATH</span><br><span class="line">                        Optional location for results folder, excluding results folder name. Default is current working directory.</span><br><span class="line">  -e N, --evalue N      E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)</span><br><span class="line">  -m MODE, --mode MODE  Specify which BUSCO analysis mode to run.</span><br><span class="line">                        There are three valid modes:</span><br><span class="line">                        - geno or genome, for genome assemblies (DNA)</span><br><span class="line">                        - tran or transcriptome, for transcriptome assemblies (DNA)</span><br><span class="line">                        - prot or proteins, for annotated gene sets (protein)</span><br><span class="line">  -l LINEAGE, --lineage_dataset LINEAGE</span><br><span class="line">                        Specify the name of the BUSCO lineage to be used.</span><br><span class="line">  -f, --force           Force rewriting of existing files. Must be used when output files with the provided name already exist.</span><br><span class="line">  -r, --restart         Continue a run that had already partially completed.</span><br><span class="line">  --limit REGION_LIMIT  How many candidate regions (contig or transcript) to consider per BUSCO (default: 3)</span><br><span class="line">  --long                Optimization mode Augustus self-training (Default: Off) adds considerably to the run time, but can improve results for some non-model organisms</span><br><span class="line">  -q, --quiet           Disable the info logs, displays only errors</span><br><span class="line">  --augustus_parameters AUGUSTUS_PARAMETERS</span><br><span class="line">                        Pass additional arguments to Augustus. All arguments should be contained within a single pair of quotation marks, separated by commas. E.g. &#39;--param1&#x3D;1,--param2&#x3D;2&#39;</span><br><span class="line">  --augustus_species AUGUSTUS_SPECIES</span><br><span class="line">                        Specify a species for Augustus training.</span><br><span class="line">  --auto-lineage        Run auto-lineage to find optimum lineage path</span><br><span class="line">  --auto-lineage-prok   Run auto-lineage just on non-eukaryote trees to find optimum lineage path</span><br><span class="line">  --auto-lineage-euk    Run auto-placement just on eukaryote tree to find optimum lineage path</span><br><span class="line">  --update-data         Download and replace with last versions all lineages datasets and files necessary to their automated selection</span><br><span class="line">  --offline             To indicate that BUSCO cannot attempt to download files</span><br><span class="line">  --config CONFIG_FILE  Provide a config file</span><br><span class="line">  -v, --version         Show this version and exit</span><br><span class="line">  -h, --help            Show this help message and exit</span><br><span class="line">  --list-datasets       Print the list of available BUSCO datasets</span><br></pre></td></tr></table></figure>
-
-<h3 id="Running-BUSCO"><a href="#Running-BUSCO" class="headerlink" title="Running BUSCO"></a>Running BUSCO</h3><p>The munnual is <a target="_blank" rel="noopener" href="https://busco.ezlab.org/busco_userguide.html#manual-installation"><em><u>busco_userguide.html</u></em></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost config]$ which busco</span><br><span class="line">~/.local/bin/busco</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --version</span><br><span class="line">BUSCO 4.1.4</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --help</span><br><span class="line">usage: busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br><span class="line"></span><br><span class="line">Welcome to BUSCO 4.1.4: the Benchmarking Universal Single-Copy Ortholog assessment tool.</span><br><span class="line">For more detailed usage information, please review the README file provided with this distribution and the BUSCO user guide.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -i FASTA FILE, --in FASTA FILE</span><br><span class="line">                        Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set.</span><br><span class="line">  -c N, --cpu N         Specify the number (N=integer) of threads/cores to use.</span><br><span class="line">  -o OUTPUT, --out OUTPUT</span><br><span class="line">                        Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. WARNING: do not provide a path</span><br><span class="line">  --out_path OUTPUT_PATH</span><br><span class="line">                        Optional location for results folder, excluding results folder name. Default is current working directory.</span><br><span class="line">  -e N, --evalue N      E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)</span><br><span class="line">  -m MODE, --mode MODE  Specify which BUSCO analysis mode to run.</span><br><span class="line">                        There are three valid modes:</span><br><span class="line">                        - geno or genome, for genome assemblies (DNA)</span><br><span class="line">                        - tran or transcriptome, for transcriptome assemblies (DNA)</span><br><span class="line">                        - prot or proteins, for annotated gene sets (protein)</span><br><span class="line">  -l LINEAGE, --lineage_dataset LINEAGE</span><br><span class="line">                        Specify the name of the BUSCO lineage to be used.</span><br><span class="line">  -f, --force           Force rewriting of existing files. Must be used when output files with the provided name already exist.</span><br><span class="line">  -r, --restart         Continue a run that had already partially completed.</span><br><span class="line">  --limit REGION_LIMIT  How many candidate regions (contig or transcript) to consider per BUSCO (default: 3)</span><br><span class="line">  --long                Optimization mode Augustus self-training (Default: Off) adds considerably to the run time, but can improve results for some non-model organisms</span><br><span class="line">  -q, --quiet           Disable the info logs, displays only errors</span><br><span class="line">  --augustus_parameters AUGUSTUS_PARAMETERS</span><br><span class="line">                        Pass additional arguments to Augustus. All arguments should be contained within a single pair of quotation marks, separated by commas. E.g. &#x27;--param1=1,--param2=2&#x27;</span><br><span class="line">  --augustus_species AUGUSTUS_SPECIES</span><br><span class="line">                        Specify a species for Augustus training.</span><br><span class="line">  --auto-lineage        Run auto-lineage to find optimum lineage path</span><br><span class="line">  --auto-lineage-prok   Run auto-lineage just on non-eukaryote trees to find optimum lineage path</span><br><span class="line">  --auto-lineage-euk    Run auto-placement just on eukaryote tree to find optimum lineage path</span><br><span class="line">  --update-data         Download and replace with last versions all lineages datasets and files necessary to their automated selection</span><br><span class="line">  --offline             To indicate that BUSCO cannot attempt to download files</span><br><span class="line">  --config CONFIG_FILE  Provide a config file</span><br><span class="line">  -v, --version         Show this version and exit</span><br><span class="line">  -h, --help            Show this help message and exit</span><br><span class="line">  --list-datasets       Print the list of available BUSCO datasets</span><br></pre></td></tr></table></figure>
+<h3 id="running-busco"><a class="markdownIt-Anchor" href="#running-busco"></a> Running BUSCO</h3>
+<p>The munnual is <a target="_blank" rel="noopener" href="https://busco.ezlab.org/busco_userguide.html#manual-installation"><em><u>busco_userguide.html</u></em></a></p>
 <p>You have to set the environment variable <code>BUSCO_CONFIG_FILE</code> with the path to the file, for BUSCO to be able to locate it.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BUSCO_CONFIG_FILE&#x3D;&quot;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;busco-4&#x2F;config&#x2F;config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH&#x3D;&quot;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;config&#x2F;&quot;</span><br><span class="line"></span><br><span class="line">busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line"></span><br><span class="line">busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">cd /home/fenglei/local/app/busco-4/test_data/eukaryota</span><br><span class="line"></span><br><span class="line">busco -i genome.fna -c 8 -m geno -f --out test_eukaryota</span><br><span class="line"></span><br><span class="line">####   BUSCO result   ####</span><br><span class="line">INFO:</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:18.8%[S:18.8%,D:0.0%],F:0.4%,M:80.8%,n:255     |</span><br><span class="line">        |48     Complete BUSCOs (C)                       |</span><br><span class="line">        |48     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |1      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |206    Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset saccharomycetes_odb10       |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:2.0%[S:2.0%,D:0.0%],F:0.1%,M:97.9%,n:2137      |</span><br><span class="line">        |42     Complete BUSCOs (C)                       |</span><br><span class="line">        |42     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2092   Missing BUSCOs (M)                        |</span><br><span class="line">        |2137   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done with WARNING(s). Total running time: 570 seconds</span><br><span class="line"></span><br><span class="line">#### files generated ####</span><br><span class="line">(python37) [fenglei@localhost eukaryota]$ tree -L 1</span><br><span class="line">.</span><br><span class="line">├── busco_1816363720.log</span><br><span class="line">├── busco_3672791891.log</span><br><span class="line">├── busco_downloads</span><br><span class="line">├── expected_log.txt</span><br><span class="line">├── genome.fna</span><br><span class="line">├── info.txt</span><br><span class="line">└── test_eukaryota</span><br><span class="line"></span><br><span class="line">2 directories, 5 files</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="case-study-soybean"><a class="markdownIt-Anchor" href="#case-study-soybean"></a> Case study: soybean</h3>
+<p>The genome sequence of Glycine max v4.0 <code>Gmax_508_v4.0.softmasked.fa</code> was downloaded from Phytozome database.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line">busco -i Gmax_508_v4.0.softmasked.fa -m genome -o BUSCO_soybean -c 16 --auto-lineage-euk</span><br><span class="line"></span><br><span class="line"># Running time: 10 hours. Below is the result:</span><br><span class="line"></span><br><span class="line">INFO:   </span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:98.1%[S:22.0%,D:76.1%],F:1.2%,M:0.7%,n:255     |</span><br><span class="line">        |250    Complete BUSCOs (C)                       |</span><br><span class="line">        |56     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |194    Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2      Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset fabales_odb10               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:97.7%[S:48.7%,D:49.0%],F:0.4%,M:1.9%,n:5366    |</span><br><span class="line">        |5245   Complete BUSCOs (C)                       |</span><br><span class="line">        |2615   Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |2630   Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |19     Fragmented BUSCOs (F)                     |</span><br><span class="line">        |102    Missing BUSCOs (M)                        |</span><br><span class="line">        |5366   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done. Total running time: 34378 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;busco-4&#x2F;test_data&#x2F;eukaryota</span><br><span class="line"></span><br><span class="line">busco -i genome.fna -c 8 -m geno -f --out test_eukaryota</span><br><span class="line"></span><br><span class="line">####   BUSCO result   ####</span><br><span class="line">INFO:</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:18.8%[S:18.8%,D:0.0%],F:0.4%,M:80.8%,n:255     |</span><br><span class="line">        |48     Complete BUSCOs (C)                       |</span><br><span class="line">        |48     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |1      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |206    Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset saccharomycetes_odb10       |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:2.0%[S:2.0%,D:0.0%],F:0.1%,M:97.9%,n:2137      |</span><br><span class="line">        |42     Complete BUSCOs (C)                       |</span><br><span class="line">        |42     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2092   Missing BUSCOs (M)                        |</span><br><span class="line">        |2137   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done with WARNING(s). Total running time: 570 seconds</span><br><span class="line"></span><br><span class="line">#### files generated ####</span><br><span class="line">(python37) [fenglei@localhost eukaryota]$ tree -L 1</span><br><span class="line">.</span><br><span class="line">├── busco_1816363720.log</span><br><span class="line">├── busco_3672791891.log</span><br><span class="line">├── busco_downloads</span><br><span class="line">├── expected_log.txt</span><br><span class="line">├── genome.fna</span><br><span class="line">├── info.txt</span><br><span class="line">└── test_eukaryota</span><br><span class="line"></span><br><span class="line">2 directories, 5 files</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
 
-<h3 id="Case-study-soybean"><a href="#Case-study-soybean" class="headerlink" title="Case study: soybean"></a>Case study: soybean</h3><p>The genome sequence of Glycine max v4.0 <code>Gmax_508_v4.0.softmasked.fa</code> was downloaded from Phytozome database.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">export BUSCO_CONFIG_FILE&#x3D;&quot;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;busco-4&#x2F;config&#x2F;config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH&#x3D;&quot;&#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;augustus-3.3.1&#x2F;config&#x2F;&quot;</span><br><span class="line">busco -i Gmax_508_v4.0.softmasked.fa -m genome -o BUSCO_soybean -c 16 --auto-lineage-euk</span><br><span class="line"></span><br><span class="line"># Running time: 10 hours. Below is the result:</span><br><span class="line"></span><br><span class="line">INFO:   </span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:98.1%[S:22.0%,D:76.1%],F:1.2%,M:0.7%,n:255     |</span><br><span class="line">        |250    Complete BUSCOs (C)                       |</span><br><span class="line">        |56     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |194    Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2      Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset fabales_odb10               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:97.7%[S:48.7%,D:49.0%],F:0.4%,M:1.9%,n:5366    |</span><br><span class="line">        |5245   Complete BUSCOs (C)                       |</span><br><span class="line">        |2615   Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |2630   Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |19     Fragmented BUSCOs (F)                     |</span><br><span class="line">        |102    Missing BUSCOs (M)                        |</span><br><span class="line">        |5366   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done. Total running time: 34378 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    
+    
+    
 
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/">R | Using ggrepel to repel overlapping text labels in ggplot2</a><a class="next" href="/2021/01/05/Linux-Installation-of-Tomcat-9/">Linux | Installation of Tomcat 9, Java 8, and MySQL 5.7.20</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/05/Linux-Installation-of-Tomcat-9/" rel="prev" title="Linux | Installation of Tomcat 9, Java 8, and MySQL 5.7.20">
+      <i class="fa fa-chevron-left"></i> Linux | Installation of Tomcat 9, Java 8, and MySQL 5.7.20
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/" rel="next" title="R | Using ggrepel to repel overlapping text labels in ggplot2">
+      R | Using ggrepel to repel overlapping text labels in ggplot2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#environment"><span class="nav-number">1.</span> <span class="nav-text"> Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#third-party-components"><span class="nav-number">2.</span> <span class="nav-text"> Third-party components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edit-config-file-of-busco"><span class="nav-number">3.</span> <span class="nav-text"> Edit config file of BUSCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#running-busco"><span class="nav-number">4.</span> <span class="nav-text"> Running BUSCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-study-soybean"><span class="nav-number">5.</span> <span class="nav-text"> Case study: soybean</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

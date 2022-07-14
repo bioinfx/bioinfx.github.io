@@ -1,7 +1,1162 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2014/12/12/importerror-no-module-named-toolz/">Python报错：ImportError: No module named toolz</a></h1><div class="post-meta">2014-12-12</div><div class="post-content"><p>seq_crumbs中的pair_matcher是fastq数据分析中一个小工具，依赖Python和biopython。初次运行报错： [fenglei@localhost new]$ pair_matcher -h Traceback (most recent call last): File “/usr/local/bin/pair_matcher”, line 26, in <module> from crumbs.pairs import match_pairs File “/usr/local/lib/python2.7/site-packages/crumbs/pairs.py”, line 18, in <module> from toolz import first ImportError: No module named toolz</p></div><p class="readmore"><a href="/2014/12/12/importerror-no-module-named-toolz/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/10/14/rna-fasta-dna/">如何将RNA格式的fasta文件转换为DNA格式</a></h1><div class="post-meta">2014-10-14</div><div class="post-content"><p>从miRBase数据库下载的pre-miRNA序列是RNA格式的，如下所示。 &gt;cel-mir-37 MI0000008 Caenorhabditis elegans miR-37 stem-loop UUCUAGAAACCCUUGGACCAGUGUGGGUGUCCGUUGCGGUGCUACAUUCUCUAAUCUGUA UCACCGGGUGAACACUUGCAGUGGUCCUCGUGGUUUCU 因数据分析的需要将其转换为DNA格式。</p></div><p class="readmore"><a href="/2014/10/14/rna-fasta-dna/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/09/15/tophat-attributeerror-nonetype-object-has-no-attribute-group/">Tophat: AttributeError: 'NoneType' object has no attribute 'group'</a></h1><div class="post-meta">2014-09-15</div><div class="post-content"><p>I have installed boost (version 1.38), Eigen (eigen-eigen-1306d75b4a21.tar.gz) and Samtools(version 1.0). [Ref:<a target="_blank" rel="noopener" href="http://ccb.jhu.edu/software/tophat/tutorial.shtml/]">http://ccb.jhu.edu/software/tophat/tutorial.shtml\]</a> Then I downlaod Tophat 2.0.12 (binary), But error occured when I test the pipeline on a simple test data set. tophat -r 20 test_ref reads_1.fq reads_2.fq</p></div><p class="readmore"><a href="/2014/09/15/tophat-attributeerror-nonetype-object-has-no-attribute-group/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/09/12/vim-error-while-loading-shared-libraries-libperl-so/">vim: error while loading shared libraries: libperl.so</a></h1><div class="post-meta">2014-09-12</div><div class="post-content"><p>[fenglei@localhost ~]$ <strong>vi .bashrc</strong> vim: error while loading shared libraries: libperl.so: cannot open shared object file: No such file or directory 出现类似错误是由于缺少相关的库文件（*.so文件）造成的 可能的原因是版本不匹配或者没有安装相应的rpm文件首先要执行的文件在那里，用which命令</p></div><p class="readmore"><a href="/2014/09/12/vim-error-while-loading-shared-libraries-libperl-so/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/09/08/cufflinks%E5%AE%89%E8%A3%85%E5%89%8D%E6%8F%90%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85boost/">cufflinks安装前提之一：安装boost</a></h1><div class="post-meta">2014-09-08</div><div class="post-content"><p>转录组数据分析软件cufflinks的安装，前提是linux平台必须装有boost 1.47以上的版本！安装步骤如下：</p></div><p class="readmore"><a href="/2014/09/08/cufflinks%E5%AE%89%E8%A3%85%E5%89%8D%E6%8F%90%E4%B9%8B%E4%B8%80%EF%BC%9A%E5%AE%89%E8%A3%85boost/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/09/02/linux%E5%AE%89%E8%A3%85mysql/">linux安装mysql</a></h1><div class="post-meta">2014-09-02</div><div class="post-content"><p>本文转自shenwei.me</p></div><p class="readmore"><a href="/2014/09/02/linux%E5%AE%89%E8%A3%85mysql/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/08/30/cant-locate-iozlib-pm/">解决Can't locate CPAN.pm in @INC的问题</a></h1><div class="post-meta">2014-08-30</div><div class="post-content"><p>Linux <strong>RedHat</strong> 的系统，解决“Can’t locate CPAN.pm in @INC”的问题。 参考博文：<a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog/_645e2f0b01012npz.html">http://blog.sina.com.cn/s/blog\_645e2f0b01012npz.html</a> 实际步骤： $ wget <a href="ftp://ftp.muug.mb.ca/mirror/redhat/redhat/linux/6.2/cpan/i386/perl-CPAN-1.52-6.i386.rpm">ftp://ftp.muug.mb.ca/mirror/redhat/redhat/linux/6.2/cpan/i386/perl-CPAN-1.52-6.i386.rpm</a> $ su root # rpm -ivh perl-CPAN-1.52-6.i386.rpm 至此，CPAN模块就安装好了。 可运行 $ rpm -q perl-CPAN 命令进行检验。</p></div><p class="readmore"><a href="/2014/08/30/cant-locate-iozlib-pm/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/08/22/linux-ntfs/">Linux系统无法挂载格式为ntfs格式的移动硬盘的解决办法</a></h1><div class="post-meta">2014-08-22</div><div class="post-content"><p><strong>Linux**</strong>系统无法挂载格式为**<strong>ntfs**</strong>格式的移动硬盘的解决办法** 今天想把网上下载下来的一些软件包用移动硬盘挂载到Red Hat Enterprise Workstation系统计算机器上，可是怎么也挂载不上去，网上查了资料，原来默认 只识别 win 下的 vfat ，不识别 ntfs 格式的。我的移动硬盘就是ntfs格式的。再查了一些资料并结合自己的实际操作，最终解决了不能挂载ntfs移动硬盘的问题。具体步骤如下：</p></div><p class="readmore"><a href="/2014/08/22/linux-ntfs/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/08/22/linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%A7%A3%E5%8E%8B-tgz-%E6%96%87%E4%BB%B6/">linux系统下解压 tgz 文件</a></h1><div class="post-meta">2014-08-22</div><div class="post-content"><h3 id="解压-tgz-文件"><a href="#解压-tgz-文件" class="headerlink" title="解压 tgz 文件"></a>解压 tgz 文件</h3></div><p class="readmore"><a href="/2014/08/22/linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%A7%A3%E5%8E%8B-tgz-%E6%96%87%E4%BB%B6/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2014/08/22/%E4%BF%AE%E6%94%B9linux%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/">修改linux用户密码</a></h1><div class="post-meta">2014-08-22</div><div class="post-content"><p>对于初学者来说,如何修改linux用户密码也不是件容易的事,其实非常简单,下面举例说明:</p></div><p class="readmore"><a href="/2014/08/22/%E4%BF%AE%E6%94%B9linux%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/15/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/17/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/16/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/16/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/02/05/could-not-find-function-sqlitequicksql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/02/05/could-not-find-function-sqlitequicksql/" class="post-title-link" itemprop="url">could not find function \"sqliteQuickSQL\"</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-02-05 22:41:23" itemprop="dateCreated datePublished" datetime="2015-02-05T22:41:23+08:00">2015-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题描述：转录组测序数据分析，使用cummeRbund的过程中报错： &gt; library(cummeRbund) Loading required package: BiocGenerics Loading required package: parallel Attaching package: ‘BiocGenerics’ The following objects are masked from ‘package:parallel’: clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap, parApply, parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB The following object is masked from ‘package:stats’: xtabs The following objects are masked from ‘package:base’: anyDuplicated, append, as.data.frame, as.vector, cbind, colnames, do.call, duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames, sapply, setdiff, sort, table, tapply, union, unique, unlist Loading required package: RSQLite Loading required package: DBI Loading required package: ggplot2 Loading required package: reshape2 Loading required package: fastcluster Attaching package: ‘fastcluster’ The following object is masked from ‘package:stats’: hclust Loading required package: rtracklayer Loading required package: GenomicRanges Loading required package: IRanges Loading required package: GenomeInfoDb Loading required package: Gviz Loading required package: grid Attaching package: ‘cummeRbund’ The following object is masked from ‘package:GenomicRanges’: promoters The following object is masked from ‘package:IRanges’: promoters &gt; cuff_data &lt;- readCufflinks(‘diff_out_CM_c.vs.m’) Creating database diff_out_CM_c.vs.m/cuffData.db Error in FUN(c(“n-- Creator: MySQL Workbench 5.2.33/ExportSQLite plugin 2009.12.02n-- Author: Loyal Goffn-- Caption: New Modeln-- Project: Name of the projectn-- Changed: 2012-04-30 22:21n-- Created: 2011-05-02 12:52nPRAGMA foreign_keys = OFF”, : could not find function “sqliteQuickSQL” ======================================= 失败的解决方法： &gt; remove.packages(“RSQLite”) &gt;install.packages(“/home/fenglei/Downloads/RSQLite_0.9-0.tar.gz”) &gt; library(RSQLite) Loading required package: DBI &gt; install.packages(“DBI”) 成功解决方法 First, upgrade biocLite: &gt;source(“<a target="_blank" rel="noopener" href="http://www.bioconductor.org/biocLite.R">http://www.bioconductor.org/biocLite.R</a>”) &gt;biocLite(“BiocUpgrade”) Then, install “cummeRbund” &gt;biocLite(“cummeRbund”) Last, install or reinstall “RSQLite” &gt;biocLite(“RSQLite”) I hope it works for you.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/" class="post-title-link" itemprop="url">使用ReSeqTools/iTools进行fastq数据统计、质检、过滤</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-01-02 12:48:36" itemprop="dateCreated datePublished" datetime="2015-01-02T12:48:36+08:00">2015-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>重测序分析集成工具包 linux 64位平台 静态编译 chmod 便可以直接运行了。 （ReSeqTools/iTools） 即在linux64机上只须</p>
+<blockquote>
+<ul>
+<li>tar -zxvf ReSeqTools_XXX.tar.gz ;</li>
+<li>cd iTools_Code; chmod 775 iTools ;</li>
+<li>./ iTools -h ;</li>
+<li>无须重新make</li>
+</ul>
+</blockquote>
+<p>QQ交流群 群名称是Reseqtools QQ群号： 125293663</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/31/%E4%BD%BF%E7%94%A8scp%E5%91%BD%E4%BB%A4%E4%BB%8Elinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E8%AE%A1%E7%AE%97%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/31/%E4%BD%BF%E7%94%A8scp%E5%91%BD%E4%BB%A4%E4%BB%8Elinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="post-title-link" itemprop="url">使用scp命令从linux服务器传输文件到本地计算机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-31 12:58:26" itemprop="dateCreated datePublished" datetime="2014-12-31T12:58:26+08:00">2014-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、对于Mac OS：</p>
+<p>进入终端，输入</p>
+<p>$ scp <a href="mailto:usrname@192.168.1.111">usrname@192.168.1.111</a>:/home/usrname/file.name ./Desktop</p>
+<p>然后输入用户密码，文件就传输到了本地桌面。</p>
+<p>二、对于windows系统</p>
+<p>使用SecureCRT软件，登录之后，使用sz命令即可。（s是send的意思。）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/23/trinity-need-java-1-6-or-java-1-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/23/trinity-need-java-1-6-or-java-1-7/" class="post-title-link" itemprop="url">Trinity need java 1.6 or Java 1.7</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-23 22:52:42" itemprop="dateCreated datePublished" datetime="2014-12-23T22:52:42+08:00">2014-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>原来安装了java 1.8，但是trinity 软件需要java 1.6 or Java 1.7。 解决办法：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2014/12/23/trinity-need-java-1-6-or-java-1-7/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/18/soap-denovo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/18/soap-denovo/" class="post-title-link" itemprop="url">基因组组装软件：SOAP denovo与ALLPATHS-LG</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-18 20:51:02" itemprop="dateCreated datePublished" datetime="2014-12-18T20:51:02+08:00">2014-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2009年12月，华大基因公司李瑞强等人开发的SOAP denovo第一个版本发表在《Genome Research》，题为“De novo assembly of human genomes with massively parallel short read sequencing”，截至2014年12月18日，引用次数达到1090次；（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）SOAP denovo算法利用kmer构建De Brujin Graph。   2010年12月，<a target="_blank" rel="noopener" href="http://www.broadinstitute.org/software/allpaths-lg/blog/">ALLPATHS-LG</a>由Broad Institue发布，适合于组装short reads数据，由Computational Research and Development group at the Broad Institute开发，2008年推出ALLPATHS，适用小型基因组，截至目前引用次数分别450；2011年升级版发布，可用于大型基因组，“High-quality draft assemblies of mammalian genomes from massively parallel sequence data”发布在《PNAS》，截至目前引用次数380。ALLPATHS-LG是现在行业内公认进行基因组_De novo_组装效果最好的软件。（<a target="_blank" rel="noopener" href="https://www.broadinstitute.org/software/allpaths-lg/blog/">https://www.broadinstitute.org/software/allpaths-lg/blog/</a>）   2011年12月，Steven L. Salzberg开发GAGE对8个组装软件对4个物种分别进行基因组组装，发布在《genome research》，标题“<a target="_blank" rel="noopener" href="http://genome.cshlp.org/content/early/2012/01/12/gr.131383.111">GAGE: A critical evaluation of genome assemblies and assembly algorithms</a>.”。评估发现，allpaths-lg综合性能最优，SOAP denovo虽然得到N50最高，但是准确率也很高。主要结论是数据质量非常重要，因此作者使用quake等软件进行数据纠错。Three overarching conclusions are apparent: first, that data quality, rather than the assembler itself, has a dramatic effect on the quality of an assembled genome; second, that the degree of contiguity of an assembly varies enormously among different assemblers and different genomes; and third, that the correctness of an assembly also varies widely and is not well correlated with statistics on contiguity. （<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/index.html">http://gage.cbcb.umd.edu/index.html</a>）   2012年，华大基因公司罗锐邦升级SOAP denovo到SOAP denovo2，发表在《BMC Giga Science》，题为“SOAPdenovo2: an empirically improved memory-efficient short-read de novo assembler”，SOAP denovo2有哪些升级？为了解决序列连续性、准确性、覆盖度，尤其是重复序列问题。优化之后的软件，reduces memory consumption in graph construction, resolves more repeat regions in contig assembly, increases coverage and length in scaffold construction, improves gap closing, and optimizes for large genome. 截至2014年12月18日，引用次数达到243次。（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）   2014年12月，冷泉港Michael C Schatz教授对水稻3个品种分别进行测序，即pan-genome研究，发布在《genome biology》，标题“Whole genome <em>de novo</em> assemblies of three divergent strains of rice, <em>Oryza sativa</em>, document novel gene space of <em>aus</em> and <em>indica</em>”，使用ALLPATHS-LG组装，然后将quake矫正的数据分别使用SOAP denovo和SGA进行组装，最后发现ALLPATHS-LG的组装效果最好。作者认为We hypothesize that ALLPATHS-LG achieved superior results because the algorithm automatically measures many of the properties of the sequencing data, and could therefore self-adjust the various cutoffs used by the algorithm for error correction, contigging, and scaffolding.   <em>fenglei</em> <em>2014-12-18</em></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">戴尔PowerEdge服务器命名规则和型号分类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-18 16:53:28" itemprop="dateCreated datePublished" datetime="2014-12-18T16:53:28+08:00">2014-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>从第十代服务器开始，戴尔重新规范了服务器的名字，以现在的第十二代主流PowerEdge R620服务器为例： <strong>第一位是字母，R代表机架式服务器，其它有：</strong></p>
+<ol>
+<li>R：Rack，机架式服务器</li>
+<li>T：Tower，塔式服务器</li>
+<li>M：Modular，模块化的意思，实际上就是刀片服务器</li>
+<li>C：比较特别的一个系列，为数据中心解决方案部门提出的高密度服务器，也称之为微服务器，命名方式也与其它系列不同。</li>
+</ol>
+<p><strong>第二位是数字：代表此服务器在整个产品线中的位置。6说明是主流机型，其它包括：</strong></p>
+<ol>
+<li>1和2系列是基础入门级的单路CPU服务器，是小型企业首台服务器的理想之选；</li>
+<li>3、4、5系列为中高端的单路CPU和入门级的双路CPU服务器，可选的高级系统管理功能，能满足一般业务的需求，适合远程站点和较大公司部门使用，也可作为中小型企业的核心业务应用程序服务器；</li>
+<li>6、7、8系列是主流的双路CPU和入门级的四路CPU服务器，拥有强大的性能，能够满足大部分企业级应用需求，适合需要卓越的虚拟化、系统管理能源效率的服务器机房、企业数据中心和远程站点使用；</li>
+<li>9系列是最高端的四路CPU服务器。拥有强大的计算能力，支持超大内存。适合需要最高性能、可靠性和I/O可扩展性的关键任务应用程序。至于8路 CPU的服务器，戴尔曾经在第4代PowerEdge服务器中推出过对应产品。后续由于处理器超线程以及多核技术在服务器产品上的普及，戴尔逐步将其8路 服务器产品线过渡到4路多核服务器上，因此不再开发新的8路服务器产品。</li>
+</ol>
+<p><strong>第三位是数字：代表此服务器是第几代的服务器。</strong> 目前戴尔最新的服务器是第十二代，因此这个数字是2 <strong>最后一位数字，0代表是Intel的CPU，5代表是AMD的CPU</strong> 除此以外，对于某些特别的服务器，在最后还会标注几个字母来区分。例如R720xd代表此服务器能配置超高密度的磁盘（2U中配置高达26块2.5寸盘），M1000e则代表这是刀片服务器的机箱，等等。 怎么样，下次看到戴尔服务器的名字就知道服务器大概的性能和类型了吧？ 原文地址:  <a target="_blank" rel="noopener" href="http://zh.community.dell.com/techcenter/w/techcenter%5C_wiki/180.poweredge.aspx">http://zh.community.dell.com/techcenter/w/techcenter\_wiki/180.poweredge.aspx</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/17/the-lander-waterman-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/17/the-lander-waterman-model/" class="post-title-link" itemprop="url">The Lander-Waterman model</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-17 22:22:09" itemprop="dateCreated datePublished" datetime="2014-12-17T22:22:09+08:00">2014-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="lander-waterman-theory"><a class="markdownIt-Anchor" href="#lander-waterman-theory"></a> Lander-Waterman theory</h3>
+<p>In 1988, <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Eric_Lander" title="Eric Lander">Eric Lander</a> and <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Michael_Waterman" title="Michael Waterman">Michael Waterman</a> published an important paper<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/DNA_sequencing_theory#cite_note-landerwaterman-6">[6]</a> examining the covering problem from the standpoint of gaps. Although they focused on the so-called <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Gene_mapping" title="Gene mapping">mapping problem</a>, the abstraction to sequencing is much the same. They furnished a number of useful results that were adopted as the standard theory from the earliest days of “large-scale” genome sequencing.<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/DNA_sequencing_theory#cite_note-fleischmann-7">[7]</a> Their model was also used in designing the <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Human_Genome_Project" title="Human Genome Project">Human Genome Project</a> and continues to play an important role in DNA sequencing.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/" class="post-title-link" itemprop="url">基于illumina测序数据，使用Jellyfish估计基因组大小</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-17 12:09:33" itemprop="dateCreated datePublished" datetime="2014-12-17T12:09:33+08:00">2014-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、数据 ① illumina测序数据：（细菌**<em>Staphylococcus aureus，</em>**基因组约3M，180bp文库，101PE测序，1294104条reads，测序碱基数据量约为130Mb，即基因组覆盖度45X。） <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus/Data.original/frag%5C_1.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_1.fastq.gz</a> <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus/Data.original/frag%5C_2.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_2.fastq.gz</a> ②  jellyfish 软件：（用来统计kmer频数。） <a href="ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz">ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz</a> ③jellyplot.pl软件：（用来画kmer图，以及估计基因组大小。） <a target="_blank" rel="noopener" href="https://github.com/josephryan/estimate%5C_genome%5C_size.pl">https://github.com/josephryan/estimate\_genome\_size.pl</a> ④fastx toolkit：（用来转换fastq和fasta格式文件。） <a target="_blank" rel="noopener" href="http://hannonlab.cshl.edu/">hannonlab.cshl.edu/</a><strong>fastx</strong>_<strong>toolkit</strong>/   ------------------ 下面是实际运行代码： cat frag_1.fastq frag_2.fastq &gt; all.fastq fastq_to_fasta -i all.fastq -o all.fasta jellyfish count -m 17 -s 100M -t 10 -C all.fasta jellyfish histo mer_counts.jf -o out.2.txt <a target="_blank" rel="noopener" href="http://jellyplot.pl">jellyplot.pl</a> out.2.txt estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz   结果：（预估基因组为7M，比实际大了一倍。可能是原始reads没有校正和过滤的原因。） $ estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz # running version 0.04 of estimate_genome_size.pl # run with this command: estimate_genome_size.pl TOTAL_NTS: 131998608 Estimated Coverage: 17.7906976744186 Estimated Genome Size: 7419529.6 <a target="_blank" rel="noopener" href="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg"><img src="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg?w=300" alt="QQ截圖20141217130925" /></a> 使用校正之后的数据，（使用quake.py进行校正<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus%EF%BC%89">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus）</a> 估计基因组大小为： # running version 0.04 of estimate_genome_size.pl # run with this command: /home/fenglei/perl5/bin/estimate_genome_size.pl TOTAL_NTS: 59609610 Estimated Coverage: 15.3684210526316 Estimated Genome Size: 3878707.5 这次距离实际情况比较近。     =================== 附：jellyfish 参数意义 jellyfish count -m 17 -s 100M -t 10 -C all.fasta -m是kmer长度； -s是预估哈希表的大小，即G+G*c*e*k。G是Genome Size；c是coverage（genome survey测序通常低于100x）；e是测序错误率（illumina为1%）；k是kmer大小。 -C表示考虑DNA正义与反义链，遇到反义kmer时，计入正义kmer频数中。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/16/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E8%AF%84%E4%BC%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/16/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E8%AF%84%E4%BC%B0/" class="post-title-link" itemprop="url">基因组组装软件评估</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-16 21:17:13" itemprop="dateCreated datePublished" datetime="2014-12-16T21:17:13+08:00">2014-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>比较下面8个软件，结论：AllPATHS-LG性能最优，组装的contig和scaffold比较长，错误率低；SOAP denovo组装得到的contig和scaffold几乎是几个软件里最长的，但是错误率也相对较高！   ABySS (Simpson et al. 2009) • ALLPATHS-LG (Gnerre et al. 2011) • Bambus2 (Koren et al. 2011) (<a target="_blank" rel="noopener" href="http://www.cbcb.umd.edu/software/">http://www.cbcb.umd.edu/software/</a> bambus). • CABOG (Miller et al. 2008) • MSR-CA (<a target="_blank" rel="noopener" href="http://www.genome.umd.edu/MSR%5C_CA%5C_MANUAL.htm">http://www.genome.umd.edu/MSR\_CA\_MANUAL.htm</a>) • SGA (Simpson and Durbin 2012) • SOAPdenovo (Li et al. 2010b) • Velvet (Zerbino and Birney 2008) ------------------------------------ <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/index.html">http://gage.cbcb.umd.edu/index.html</a></p>
+<h2 id="what-is-gage"><a class="markdownIt-Anchor" href="#what-is-gage"></a> What is GAGE?</h2>
+<p>GAGE is an evaluation of the very latest large-scale genome assembly algorithms. We have organized this “bake-off” as an attempt to produce a realistic assessment of genome assembly software in a rapidly changing field of next-generation sequencing. The main results of GAGE have now been published in the journal Genome Research: <a target="_blank" rel="noopener" href="http://genome.cshlp.org/content/early/2012/01/12/gr.131383.111">GAGE: A critical evaluation of genome assemblies and assembly algorithms</a>.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/12/importerror-no-module-named-toolz/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/12/importerror-no-module-named-toolz/" class="post-title-link" itemprop="url">Python报错：ImportError: No module named toolz</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-12 15:18:46" itemprop="dateCreated datePublished" datetime="2014-12-12T15:18:46+08:00">2014-12-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>seq_crumbs中的pair_matcher是fastq数据分析中一个小工具，依赖Python和biopython。初次运行报错： [fenglei@localhost new]$ pair_matcher -h Traceback (most recent call last): File “/usr/local/bin/pair_matcher”, line 26, in <module> from crumbs.pairs import match_pairs File “/usr/local/lib/python2.7/site-packages/crumbs/pairs.py”, line 18, in <module> from toolz import first ImportError: No module named toolz</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2014/12/12/importerror-no-module-named-toolz/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

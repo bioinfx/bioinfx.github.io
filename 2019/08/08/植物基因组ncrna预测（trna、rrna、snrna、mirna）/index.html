@@ -1,64 +1,622 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA） | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）</h1><div class="post-meta">2019-08-08<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><p>引用文献 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png" alt="胡杨ncRNA鉴定方法">    </p>
-<h2 id="一、tRNA"><a href="#一、tRNA" class="headerlink" title="一、tRNA"></a>一、tRNA</h2><p>先安装tRNAscan-SE，然后运行如下命令即可。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="引用文献   一、tRNA 先安装tRNAscan-SE，然后运行如下命令即可。 &#x2F;xxx&#x2F;biosoftwares&#x2F;tRNAscan-SE-2.0&#x2F;tRNAscan-SE -G -o gDNA.tRNA.out -f gDNA.tRNA.scdstr -m gDNA.tRNA.stat genome.sm.fa 结果示意如下 Sequence tRNA Bounds tRNA Anti Intr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）">
+<meta property="og:url" content="http://example.com/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="引用文献   一、tRNA 先安装tRNAscan-SE，然后运行如下命令即可。 &#x2F;xxx&#x2F;biosoftwares&#x2F;tRNAscan-SE-2.0&#x2F;tRNAscan-SE -G -o gDNA.tRNA.out -f gDNA.tRNA.scdstr -m gDNA.tRNA.stat genome.sm.fa 结果示意如下 Sequence tRNA Bounds tRNA Anti Intr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png">
+<meta property="og:image" content="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae7bb93e69e9c.png">
+<meta property="article:published_time" content="2019-08-08T07:49:22.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.383Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png">
+
+<link rel="canonical" href="http://example.com/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA） | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-08 15:49:22" itemprop="dateCreated datePublished" datetime="2019-08-08T15:49:22+08:00">2019-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>引用文献 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png" alt="胡杨ncRNA鉴定方法" /></p>
+<h2 id="一-trna"><a class="markdownIt-Anchor" href="#一-trna"></a> 一、tRNA</h2>
+<p>先安装tRNAscan-SE，然后运行如下命令即可。</p>
 <p>/xxx/biosoftwares/tRNAscan-SE-2.0/tRNAscan-SE -G -o gDNA.tRNA.out -f gDNA.tRNA.scdstr -m gDNA.tRNA.stat genome.sm.fa</p>
 <p>结果示意如下</p>
-<p>Sequence tRNA Bounds tRNA Anti Intron Bounds Cove<br>Name tRNA # Begin End Type Codon Begin End Score</p>
-<hr>
-<p>ChrM 1 12693 12766 Met CAT 0 0 63.37<br>ChrM 2 75688 75758 Cys GCA 0 0 48.76<br>ChrM 3 77742 77815 His GTG 0 0 56.52<br>ChrM 4 90837 90909 Cys GCA 0 0 59.37<br>ChrM 5 102551 102624 Asp GTC 0 0 68.25<br>ChrM 6 184436 184507 Gly GCC 0 0 70.59<br>ChrM 7 197972 198043 Glu TTC 0 0 65.49<br>ChrM 8 198963 199035 Met CAT 0 0 70.15<br>ChrM 9 237157 237228 Asn GTT 0 0 71.98<br>ChrM 10 238160 238242 Tyr GTA 0 0 62.80<br>ChrM 11 261058 261136 Lys TTT 261096 261101 34.22<br>ChrM 12 288825 288906 Met CAT 0 0 73.07<br>ChrM 13 312625 312696 Gln TTG 0 0 64.58<br>ChrM 14 335330 335403 Met CAT 0 0 73.76<br>ChrM 15 317035 316963 Phe AAA 0 0 30.83<br>ChrM 16 285436 285349 Ser GCT 0 0 55.78<br>ChrM 17 284968 284895 Phe GAA 0 0 67.07<br>ChrM 18 284630 284556 Pro TGG 0 0 64.26<br>ChrM 19 260713 260640 Trp CCA 0 0 76.23<br>ChrM 20 3494 3422 Lys TTT 0 0 81.82</p>
-<h2 id="二、rRNA"><a href="#二、rRNA" class="headerlink" title="二、rRNA"></a>二、rRNA</h2><p>不同植物中的rRNA序列高度保守，基于blast比对即可预测新物种的rRNA。植物基因组rRNA包含18S、28S、5S和5.8S四种。我下载了大豆或拟南芥的rRNA序列作为比对文件。</p>
+<p>Sequence tRNA Bounds tRNA Anti Intron Bounds Cove<br />
+Name tRNA # Begin End Type Codon Begin End Score</p>
+<hr />
+<p>ChrM 1 12693 12766 Met CAT 0 0 63.37<br />
+ChrM 2 75688 75758 Cys GCA 0 0 48.76<br />
+ChrM 3 77742 77815 His GTG 0 0 56.52<br />
+ChrM 4 90837 90909 Cys GCA 0 0 59.37<br />
+ChrM 5 102551 102624 Asp GTC 0 0 68.25<br />
+ChrM 6 184436 184507 Gly GCC 0 0 70.59<br />
+ChrM 7 197972 198043 Glu TTC 0 0 65.49<br />
+ChrM 8 198963 199035 Met CAT 0 0 70.15<br />
+ChrM 9 237157 237228 Asn GTT 0 0 71.98<br />
+ChrM 10 238160 238242 Tyr GTA 0 0 62.80<br />
+ChrM 11 261058 261136 Lys TTT 261096 261101 34.22<br />
+ChrM 12 288825 288906 Met CAT 0 0 73.07<br />
+ChrM 13 312625 312696 Gln TTG 0 0 64.58<br />
+ChrM 14 335330 335403 Met CAT 0 0 73.76<br />
+ChrM 15 317035 316963 Phe AAA 0 0 30.83<br />
+ChrM 16 285436 285349 Ser GCT 0 0 55.78<br />
+ChrM 17 284968 284895 Phe GAA 0 0 67.07<br />
+ChrM 18 284630 284556 Pro TGG 0 0 64.26<br />
+ChrM 19 260713 260640 Trp CCA 0 0 76.23<br />
+ChrM 20 3494 3422 Lys TTT 0 0 81.82</p>
+<h2 id="二-rrna"><a class="markdownIt-Anchor" href="#二-rrna"></a> 二、rRNA</h2>
+<p>不同植物中的rRNA序列高度保守，基于blast比对即可预测新物种的rRNA。植物基因组rRNA包含18S、28S、5S和5.8S四种。我下载了大豆或拟南芥的rRNA序列作为比对文件。</p>
 <p>&gt;5S rRNA 556bp X15199.1 Soybean 5S rDNA gene for 5S rRNA</p>
 <blockquote>
-<p>5.8S rRNA Arabidopsis thaliana 15172 AT2G01020.1 Chr2+ 5782-5945<br>18S rRNA 1807bp X02623.1 Soybean (Glycine max) 18S ribosomal RNA<br>28S rRNA XR_003264281.1 PREDICTED: Glycine max 28S ribosomal RNA (LOC112999102), rRNA</p>
+<p>5.8S rRNA Arabidopsis thaliana 15172 AT2G01020.1 Chr2+ 5782-5945<br />
+18S rRNA 1807bp X02623.1 Soybean (Glycine max) 18S ribosomal RNA<br />
+28S rRNA XR_003264281.1 PREDICTED: Glycine max 28S ribosomal RNA (LOC112999102), rRNA</p>
 </blockquote>
 <p>比对方法如下，结果还需要根据实际情况进行过滤，将部分匹配的基因组片段过滤掉即可。</p>
-<p>blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 7 -num_threads 4 -out Glycine_max_rRNA.fa__genome.7<br>blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 0 -num_threads 4 -out Glycine_max_rRNA.fa__genome.0</p>
-<p>    三、snRNA snRNA是真核细胞核内的一组小分子RNA，分子较小，约含50—200nt，其主要作用是与有关蛋白结合形成小核糖核蛋白体(snRNP)，对RNA的前体进行加工。snRNA在核内转录，但snRNP在胞浆组装，发挥功能则又在核内，所以需要跨核膜转运。 snRNA的特点 ① 高度保守，如人和爪蟾的U1snRNA有90%的序列相同。② 其长度在哺乳动物中约为100-215个核苷酸，共分为7类，由于含U丰富，故编号为U1~U7。③ 分析方法是用rfam数据库（cm格式）作参考，通过cmscan比对程序进行比对预测。 先安装infernal程序（内置cmscan）。</p>
-<p>wget <a target="_blank" rel="noopener" href="http://eddylab.org/infernal/infernal-1.1.2.tar.gz">http://eddylab.org/infernal/infernal-1.1.2.tar.gz</a><br>`tar -zxvf infernal-1.1.2.tar.gz <br>cd infernal-1.1.2<br>./configure  –prefix=/home/user/local<br>make<br>make install<br>cd easel; make install</p>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试`"></a>测试`</h1><p>$ cmscan –version<br>Failed to parse command line: No such option “–version”.<br>Usage: cmscan [-options] <cmdb> <seqfile><br>where basic options are:<br>  -h        : show brief help on version and usage<br>  -g        : configure CM for glocal alignment [default: local]<br>  -Z <x>    : set search space size in *Mb* to <x> for E-value calculations  (x&gt;0)<br>  –devhelp : show list of otherwise hidden developer/expert options<br>To see more help on available options, do cmscan -h</p>
+<p>blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 7 -num_threads 4 -out Glycine_max_rRNA.fa__genome.7<br />
+blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 0 -num_threads 4 -out Glycine_max_rRNA.fa__genome.0</p>
+<p>三、snRNA snRNA是真核细胞核内的一组小分子RNA，分子较小，约含50—200nt，其主要作用是与有关蛋白结合形成小核糖核蛋白体(snRNP)，对RNA的前体进行加工。snRNA在核内转录，但snRNP在胞浆组装，发挥功能则又在核内，所以需要跨核膜转运。 snRNA的特点 ① 高度保守，如人和爪蟾的U1snRNA有90%的序列相同。② 其长度在哺乳动物中约为100-215个核苷酸，共分为7类，由于含U丰富，故编号为U1~U7。③ 分析方法是用rfam数据库（cm格式）作参考，通过cmscan比对程序进行比对预测。 先安装infernal程序（内置cmscan）。</p>
+<p>wget <a target="_blank" rel="noopener" href="http://eddylab.org/infernal/infernal-1.1.2.tar.gz">http://eddylab.org/infernal/infernal-1.1.2.tar.gz</a><br />
+`tar -zxvf infernal-1.1.2.tar.gz <br />
+cd infernal-1.1.2<br />
+./configure  --prefix=/home/user/local<br />
+make<br />
+make install<br />
+cd easel; make install</p>
+<h1 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试`</h1>
+<p>$ cmscan --version<br />
+Failed to parse command line: No such option “–version”.<br />
+Usage: cmscan [-options] <cmdb> <seqfile><br />
+where basic options are:<br />
+-h        : show brief help on version and usage<br />
+-g        : configure CM for glocal alignment [default: local]<br />
+-Z <x>    : set search space size in *Mb* to <x> for E-value calculations  (x&gt;0)<br />
+–devhelp : show list of otherwise hidden developer/expert options<br />
+To see more help on available options, do cmscan -h</p>
 <p>再下载rfam数据库，并将Rfam.cm做成索引文件。</p>
-<p>wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin</a><br>wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz</a><br>gunzip Rfam.cm.gz<br>cmpress Rfam.cm</p>
-<h1 id="出现如下文件"><a href="#出现如下文件" class="headerlink" title="出现如下文件"></a>出现如下文件</h1><p>ls Rfam.*<br>Rfam.clanin Rfam.cm Rfam.cm.i1f Rfam.cm.i1i Rfam.cm.i1m Rfam.cm.i1p</p>
+<p>wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin</a><br />
+wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz</a><br />
+gunzip Rfam.cm.gz<br />
+cmpress <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a></p>
+<h1 id="出现如下文件"><a class="markdownIt-Anchor" href="#出现如下文件"></a> 出现如下文件</h1>
+<p>ls Rfam.*<br />
+Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> Rfam.cm.i1f Rfam.cm.i1i Rfam.cm.i1m Rfam.cm.i1p</p>
 <p>计算基因组大小，后面cmscan要用到-G参数</p>
 <p>esl-seqstat my-genome.fa</p>
 <p>比如基因组1000M，那么-G参数为 1000M*2/1M=2000，这个数据根据实际情况调整。 运行比对程序进行ncRNA预测</p>
 <p># Rfam12.2.claninfo 为下载的claninfo文件，需提供所在路径</p>
-<h1 id="Rfam-cm-下载的cm文件"><a href="#Rfam-cm-下载的cm文件" class="headerlink" title="Rfam.cm 下载的cm文件"></a>Rfam.cm 下载的cm文件</h1><h1 id="my-genome-fa-待查询序列"><a href="#my-genome-fa-待查询序列" class="headerlink" title="my-genome.fa 待查询序列"></a>my-genome.fa 待查询序列</h1><h1 id="my-genome-cmscan-输出结果"><a href="#my-genome-cmscan-输出结果" class="headerlink" title="my-genome.cmscan 输出结果"></a>my-genome.cmscan 输出结果</h1><h1 id="my-genome-tblout-有一个输出结果"><a href="#my-genome-tblout-有一个输出结果" class="headerlink" title="my-genome.tblout 有一个输出结果"></a>my-genome.tblout 有一个输出结果</h1><h1 id="对500M大小的输入序列，48线程，需要7个小时，最好放入后台"><a href="#对500M大小的输入序列，48线程，需要7个小时，最好放入后台" class="headerlink" title="对500M大小的输入序列，48线程，需要7个小时，最好放入后台"></a>对500M大小的输入序列，48线程，需要7个小时，最好放入后台</h1><h1 id="esl-seqstat-my-genome-fa-awk-‘-if-0-Total-print-int-4-2-1000000-’-—–-gt-1751"><a href="#esl-seqstat-my-genome-fa-awk-‘-if-0-Total-print-int-4-2-1000000-’-—–-gt-1751" class="headerlink" title="esl-seqstat my-genome.fa  awk ‘{if($0~/^Total/) print int($4*2/1000000);}’ —–&gt; 1751"></a>esl-seqstat my-genome.fa  awk ‘{if($0~/^Total/) print int($4*2/1000000);}’ —–&gt; 1751</h1><p>cmscan -Z 1751 –cut_ga –rfam –nohmmonly –tblout my-genome.tblout –fmt 2 –clanin Rfam.clanin Rfam.cm my-genome.fa &gt; my-genome.cmscan</p>
+<h1 id="rfamcm"><a class="markdownIt-Anchor" href="#rfamcm"></a> <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> 下载的cm文件</h1>
+<h1 id="my-genomefa-待查询序列"><a class="markdownIt-Anchor" href="#my-genomefa-待查询序列"></a> my-genome.fa 待查询序列</h1>
+<h1 id="my-genomecmscan-输出结果"><a class="markdownIt-Anchor" href="#my-genomecmscan-输出结果"></a> my-genome.cmscan 输出结果</h1>
+<h1 id="my-genometblout-有一个输出结果"><a class="markdownIt-Anchor" href="#my-genometblout-有一个输出结果"></a> my-genome.tblout 有一个输出结果</h1>
+<h1 id="对500m大小的输入序列48线程需要7个小时最好放入后台"><a class="markdownIt-Anchor" href="#对500m大小的输入序列48线程需要7个小时最好放入后台"></a> 对500M大小的输入序列，48线程，需要7个小时，最好放入后台</h1>
+<h1 id="esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"><a class="markdownIt-Anchor" href="#esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"></a> esl-seqstat my-genome.fa  awk ‘{if($0~/^Total/) print int($4*2/1000000);}’ -----&gt; 1751</h1>
+<p>cmscan -Z 1751 --cut_ga --rfam --nohmmonly --tblout my-genome.tblout --fmt 2 --clanin Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> my-genome.fa &gt; my-genome.cmscan</p>
 <p>cmscan结果文件示意如下，包含预测的ncRNA列表和RNA比对结构示意，其实不仅包含了snRNA，还有miRNA、rRNA和tRNA。 另有一个my-genome.tblout文件，就是tab分割的表格，更加简洁。</p>
-<p>Query: scaffold4 [L=2607366]<br>Hit scores:<br>rank E-value score bias modelname start end mdl trunc gc description</p>
-<hr>
-<p>(1) ! 6.3e-19 81.7 0.0 MIR408 2312792 2312644 - cm no 0.48 microRNA MIR408<br>(2) ! 1.9e-17 88.4 0.0 snoZ107_R87 2081687 2081578 - cm no 0.46 Small nucleolar RNA Z107/R87<br>(3) ! 2.4e-16 73.0 0.0 MIR164 1105583 1105483 - cm no 0.54 microRNA MIR164<br>(4) ! 1.2e-13 71.7 0.0 snoR30 2081522 2081420 - cm no 0.44 Small nucleolar RNA R30/Z108<br>(5) ! 1.3e-11 65.1 0.0 tRNA 2140920 2140992 + cm no 0.59 tRNA<br>(6) ! 1.3e-11 65.1 0.0 tRNA 2245335 2245407 + cm no 0.59 tRNA<br>(7) ! 1.6e-11 64.8 0.0 tRNA 223678 223759 + cm no 0.56 tRNA<br>(8) ! 1.7e-11 64.7 0.0 tRNA 374728 374800 + cm no 0.56 tRNA<br>(9) ! 4e-11 63.3 0.0 tRNA 482023 481943 - cm no 0.53 tRNA<br>(10) ! 7.3e-11 71.3 0.0 snoR41 705999 705902 - cm no 0.40 Small nucleolar RNA R41<br>(11) ! 3.2e-10 60.1 0.0 tRNA 624224 624152 - cm no 0.58 tRNA<br>(12) ! 4.3e-10 59.6 0.0 tRNA 793379 793309 - cm no 0.59 tRNA<br>(13) ! 1.7e-08 53.9 0.0 tRNA 767498 767569 + cm no 0.57 tRNA<br>(14) ! 0.00018 43.5 0.1 SNORD34 2081329 2081243 - cm no 0.33 Small nucleolar RNA SNORD34</p>
+<p>Query: scaffold4 [L=2607366]<br />
+Hit scores:<br />
+rank E-value score bias modelname start end mdl trunc gc description</p>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 MIR408 2312792 2312644 - cm no 0.48 microRNA MIR408<br />
+(2) ! 1.9e-17 88.4 0.0 snoZ107_R87 2081687 2081578 - cm no 0.46 Small nucleolar RNA Z107/R87<br />
+(3) ! 2.4e-16 73.0 0.0 MIR164 1105583 1105483 - cm no 0.54 microRNA MIR164<br />
+(4) ! 1.2e-13 71.7 0.0 snoR30 2081522 2081420 - cm no 0.44 Small nucleolar RNA R30/Z108<br />
+(5) ! 1.3e-11 65.1 0.0 tRNA 2140920 2140992 + cm no 0.59 tRNA<br />
+(6) ! 1.3e-11 65.1 0.0 tRNA 2245335 2245407 + cm no 0.59 tRNA<br />
+(7) ! 1.6e-11 64.8 0.0 tRNA 223678 223759 + cm no 0.56 tRNA<br />
+(8) ! 1.7e-11 64.7 0.0 tRNA 374728 374800 + cm no 0.56 tRNA<br />
+(9) ! 4e-11 63.3 0.0 tRNA 482023 481943 - cm no 0.53 tRNA<br />
+(10) ! 7.3e-11 71.3 0.0 snoR41 705999 705902 - cm no 0.40 Small nucleolar RNA R41<br />
+(11) ! 3.2e-10 60.1 0.0 tRNA 624224 624152 - cm no 0.58 tRNA<br />
+(12) ! 4.3e-10 59.6 0.0 tRNA 793379 793309 - cm no 0.59 tRNA<br />
+(13) ! 1.7e-08 53.9 0.0 tRNA 767498 767569 + cm no 0.57 tRNA<br />
+(14) ! 0.00018 43.5 0.1 SNORD34 2081329 2081243 - cm no 0.33 Small nucleolar RNA SNORD34</p>
 <p>Hit alignments:</p>
 <blockquote>
 <blockquote>
-<p>MIR408 microRNA MIR408<br>rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+<p>MIR408 microRNA MIR408<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
 </blockquote>
 </blockquote>
-<hr>
-<p>(1) ! 6.3e-19 81.7 0.0 cm 1 136 [] 2312792 2312644 - .. 0.95 no 0.48</p>
-<p>v NC<br>::::::::::::::::&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;-&lt;—&lt;&lt;_____________………………______________ CS<br>MIR408 1 aauUGGugAugAgAugGAGACaGGGAagAgGCAGaGCAuGaGAUGGaGCUaucAAcaAau………………ugUGAgAaaaagaU 74<br>A+U G+GA +AGA + AG AGGGAA AGGCAGAGCAUG :AUG AGC AUCAACA A GUGAG +AA++<br>scaffold4 2312792 AGUCAGAGACAAGACAAAGGUAGGGAACAGGCAGAGCAUG-GAUGGAGCCAUCAACAGAAuagagucaagaaaccgagAGUGAGGGAAGA– 2312704<br>****************************************.***************88779*************9988777777777766.. PP</p>
-<p>v NC<br>______________&gt;&gt;—-&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;::::::::::::::::: CS<br>MIR408 75 GgaauUGUUgUuGCuCcCuCCCaUGCACUGCcUCuUCCCuGGCUCCuuucuCuccucuuUuu 136 </p>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 cm 1 136 [] 2312792 2312644 - … 0.95 no 0.48</p>
+<p>v NC<br />
+::::::::::::::::&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;-&lt;—&lt;&lt;_____________…______________ CS<br />
+MIR408 1 aauUGGugAugAgAugGAGACaGGGAagAgGCAGaGCAuGaGAUGGaGCUaucAAcaAau…ugUGAgAaaaagaU 74<br />
+A+U G+GA +AGA + AG AGGGAA AGGCAGAGCAUG :AUG AGC AUCAACA A GUGAG +AA++<br />
+scaffold4 2312792 AGUCAGAGACAAGACAAAGGUAGGGAACAGGCAGAGCAUG-GAUGGAGCCAUCAACAGAAuagagucaagaaaccgagAGUGAGGGAAGA-- 2312704<br />
+****************************************.***************88779*************9988777777777766… PP</p>
+<p>v NC<br />
+______________&gt;&gt;----&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;::::::::::::::::: CS<br />
+MIR408 75 GgaauUGUUgUuGCuCcCuCCCaUGCACUGCcUCuUCCCuGGCUCCuuucuCuccucuuUuu 136</p>
 <ul>
-<li>++UGUU +GCU C + :CAUGCACUGCCUCUUCCCU GCU U +U+U+C+ U+U +<br>scaffold4 2312703 -AGUCUGUUACGGCUUC-AAUCAUGCACUGCCUCUUCCCUGGCUCUAUCUUUUUCCAUCUCC 2312644<br>.8899**********99.999***********************8899999999******** PP</li>
+<li>++UGUU +GCU C + :CAUGCACUGCCUCUUCCCU GCU U +U+U+C+ U+U +<br />
+scaffold4 2312703 -AGUCUGUUACGGCUUC-AAUCAUGCACUGCCUCUUCCCUGGCUCUAUCUUUUUCCAUCUCC 2312644<br />
+.8899**********99.999***********************8899999999******** PP</li>
 </ul>
 <blockquote>
 <blockquote>
-<p>snoZ107_R87 Small nucleolar RNA Z107/R87<br>rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+<p>snoZ107_R87 Small nucleolar RNA Z107/R87<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
 </blockquote>
 </blockquote>
-<hr>
-<p>(2) ! 1.9e-17 88.4 0.0 cm 1 117 [] 2081687 2081578 - .. 0.94 no 0.46</p>
-<p>NC<br>&lt;&lt;&lt;&lt;&lt;&lt;________________.___________________________________________________________________ CS<br>snoZ107_R87 1 GAugGCaGUGAuGACUuGGUAA.uAUUCAAGCUCAACAGACCaaAuuacAGgucUUUCUCuauggcuuuuccuaugGGAUuGaUUUGUaU 89<br>GAU::CAGUGAUGAC UAA +AUUCAAGCUCAACAGACC+ AUU CA G +UUUCUCU+U ++U G GAUU UUUG +U<br>scaffold4 2081687 GAUCACAGUGAUGACCACAUAAaAAUUCAAGCUCAACAGACCGGAUUGCACGGUUUUCUCUCU——-UUUGGGAGAUUACUUUGCGU 2081605<br>***************999987615677*******************************99665…….9999**************** PP</p>
-<p>NC<br>______________________&gt;&gt;&gt;&gt;&gt;&gt; CS<br>snoZ107_R87 90 GcCGAUaaUcCCGCUGAACuGAGCcaUC 117<br>G+CGA A CCCGCUGAACUGAG::AUC<br>scaffold4 2081604 GUCGAC-ACCCCGCUGAACUGAGUGAUC 2081578<br>*****8.799****************** PP</p>
-<p>  如何对结果进行分类？首先下载Rfam家族的注释，点击<a target="_blank" rel="noopener" href="http://rfam.xfam.org/search#tabview=tab5">http://rfam.xfam.org/search#tabview=tab5</a>，选择所有复选框，提交，把得到的表格拷贝下来，整理成TAB键分割的格式。并把第三列拆开，取出类型, 存储为 <code>Rfam_anno.txt</code>。</p>
-<p>Accession ID Type Description<br>RF00001 5S_rRNA Gene; rRNA 5S ribosomal RNA<br>RF00002 5_8S_rRNA Gene; rRNA 5.8S ribosomal RNA<br>RF00003 U1 Gene; snRNA; splicing U1 spliceosomal RNA<br>RF00004 U2 Gene; snRNA; splicing U2 spliceosomal RNA<br>RF00005 tRNA Gene; tRNA tRNA<br>RF00006 Vault Gene Vault RNA<br>RF00007 U12 Gene; snRNA; splicing U12 minor spliceosomal RNA<br>RF00008 Hammerhead_3 Gene; ribozyme Hammerhead ribozyme (type III)<br>RF00009 RNaseP_nuc Gene; ribozyme Nuclear RNase P<br>RF00010 RNaseP_bact_a Gene; ribozyme Bacterial RNase P class A<br>RF00011 RNaseP_bact_b Gene; ribozyme Bacterial RNase P class B<br>RF00012 U3 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA U3<br>RF00013 6S Gene 6S / SsrS RNA<br>RF00014 DsrA Gene; sRNA DsrA RNA<br>RF00015 U4 Gene; snRNA; splicing U4 spliceosomal RNA<br>RF00016 SNORD14 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA SNORD14<br>RF00017 Metazoa_SRP Gene Metazoan signal recognition particle RNA</p>
+<hr />
+<p>(2) ! 1.9e-17 88.4 0.0 cm 1 117 [] 2081687 2081578 - … 0.94 no 0.46</p>
+<p>NC<br />
+&lt;&lt;&lt;&lt;&lt;&lt;________________.___________________________________________________________________ CS<br />
+snoZ107_R87 1 GAugGCaGUGAuGACUuGGUAA.uAUUCAAGCUCAACAGACCaaAuuacAGgucUUUCUCuauggcuuuuccuaugGGAUuGaUUUGUaU 89<br />
+GAU::CAGUGAUGAC UAA +AUUCAAGCUCAACAGACC+ AUU CA G +UUUCUCU+U ++U G GAUU UUUG +U<br />
+scaffold4 2081687 GAUCACAGUGAUGACCACAUAAaAAUUCAAGCUCAACAGACCGGAUUGCACGGUUUUCUCUCU-------UUUGGGAGAUUACUUUGCGU 2081605<br />
+***************999987615677*******************************99665…9999**************** PP</p>
+<p>NC<br />
+______________________&gt;&gt;&gt;&gt;&gt;&gt; CS<br />
+snoZ107_R87 90 GcCGAUaaUcCCGCUGAACuGAGCcaUC 117<br />
+G+CGA A CCCGCUGAACUGAG::AUC<br />
+scaffold4 2081604 GUCGAC-ACCCCGCUGAACUGAGUGAUC 2081578<br />
+*****8.799****************** PP</p>
+<p>如何对结果进行分类？首先下载Rfam家族的注释，点击<a target="_blank" rel="noopener" href="http://rfam.xfam.org/search#tabview=tab5">http://rfam.xfam.org/search#tabview=tab5</a>，选择所有复选框，提交，把得到的表格拷贝下来，整理成TAB键分割的格式。并把第三列拆开，取出类型, 存储为 <code>Rfam_anno.txt</code>。</p>
+<p>Accession ID Type Description<br />
+RF00001 5S_rRNA Gene; rRNA 5S ribosomal RNA<br />
+RF00002 5_8S_rRNA Gene; rRNA 5.8S ribosomal RNA<br />
+RF00003 U1 Gene; snRNA; splicing U1 spliceosomal RNA<br />
+RF00004 U2 Gene; snRNA; splicing U2 spliceosomal RNA<br />
+RF00005 tRNA Gene; tRNA tRNA<br />
+RF00006 Vault Gene Vault RNA<br />
+RF00007 U12 Gene; snRNA; splicing U12 minor spliceosomal RNA<br />
+RF00008 Hammerhead_3 Gene; ribozyme Hammerhead ribozyme (type III)<br />
+RF00009 RNaseP_nuc Gene; ribozyme Nuclear RNase P<br />
+RF00010 RNaseP_bact_a Gene; ribozyme Bacterial RNase P class A<br />
+RF00011 RNaseP_bact_b Gene; ribozyme Bacterial RNase P class B<br />
+RF00012 U3 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA U3<br />
+RF00013 6S Gene 6S / SsrS RNA<br />
+RF00014 DsrA Gene; sRNA DsrA RNA<br />
+RF00015 U4 Gene; snRNA; splicing U4 spliceosomal RNA<br />
+RF00016 SNORD14 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA SNORD14<br />
+RF00017 Metazoa_SRP Gene Metazoan signal recognition particle RNA</p>
 <p>grep其中snRNA如下</p>
-<p>$ cat xfam_family_types.tab  grep snRNA  awk -F “\t” ‘{print $3}’  sort  uniq<br>Cis-reg<br>Gene; antisense<br>Gene; snRNA<br>Gene; snRNA; snoRNA; CD-box<br>Gene; snRNA; snoRNA; HACA-box<br>Gene; snRNA; snoRNA; scaRNA<br>Gene; snRNA; splicing<br>Gene; sRNA</p>
-<p>将CD-box、HACA-box和splicing对应的部分统计出来就可以做成如下文献对应的图了。 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae7bb93e69e9c.png" alt="胡杨ncRNA鉴定结果"></p>
-<h2 id="四、miRNA"><a href="#四、miRNA" class="headerlink" title="四、miRNA"></a>四、miRNA</h2><p>可以直接用上面的结果，也可以用miRNA测序的数据。   参考资料： [1] Chen Tong: <a target="_blank" rel="noopener" href="http://blog.genesino.com/2017/06/Rfam/">http://blog.genesino.com/2017/06/Rfam/</a> [2] Chen Lianfu: <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=2185">http://www.chenlianfu.com/?p=2185</a> [3] tiehan: <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog/_670445240102uxhu.html">http://blog.sina.com.cn/s/blog\_670445240102uxhu.html</a></p>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2019/09/04/linux%E7%B3%BB%E7%BB%9F%E4%BB%8E-redhat-4-4-7-3-%E5%8D%87%E7%BA%A7%E5%88%B0-centos-7/">Linux系统从 RedHat 4.4.7-3 升级到 CentOS 7</a><a class="next" href="/2019/07/31/linux%E6%9B%B4%E6%96%B0git/">Linux更新git</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p>$ cat xfam_family_types.tab  grep snRNA  awk -F “\t” ‘{print $3}’  sort  uniq<br />
+Cis-reg<br />
+Gene; antisense<br />
+Gene; snRNA<br />
+Gene; snRNA; snoRNA; CD-box<br />
+Gene; snRNA; snoRNA; HACA-box<br />
+Gene; snRNA; snoRNA; scaRNA<br />
+Gene; snRNA; splicing<br />
+Gene; sRNA</p>
+<p>将CD-box、HACA-box和splicing对应的部分统计出来就可以做成如下文献对应的图了。 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae7bb93e69e9c.png" alt="胡杨ncRNA鉴定结果" /></p>
+<h2 id="四-mirna"><a class="markdownIt-Anchor" href="#四-mirna"></a> 四、miRNA</h2>
+<p>可以直接用上面的结果，也可以用miRNA测序的数据。   参考资料： [1] Chen Tong: <a target="_blank" rel="noopener" href="http://blog.genesino.com/2017/06/Rfam/">http://blog.genesino.com/2017/06/Rfam/</a> [2] Chen Lianfu: <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=2185">http://www.chenlianfu.com/?p=2185</a> [3] tiehan: <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_670445240102uxhu.html">http://blog.sina.com.cn/s/blog\_670445240102uxhu.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/07/31/Linux-how-to-upgrade-git/" rel="prev" title="Linux更新git">
+      <i class="fa fa-chevron-left"></i> Linux更新git
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/04/linux-redhat-4-4-7-3-upgrade-to-centos-7/" rel="next" title="Linux系统从 RedHat 4.4.7-3 升级到 CentOS 7">
+      Linux系统从 RedHat 4.4.7-3 升级到 CentOS 7 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-trna"><span class="nav-number">1.</span> <span class="nav-text"> 一、tRNA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-rrna"><span class="nav-number">2.</span> <span class="nav-text"> 二、rRNA</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number"></span> <span class="nav-text"> 测试&#96;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E5%A6%82%E4%B8%8B%E6%96%87%E4%BB%B6"><span class="nav-number"></span> <span class="nav-text"> 出现如下文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rfamcm"><span class="nav-number"></span> <span class="nav-text"> Rfam.cm 下载的cm文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-genomefa-%E5%BE%85%E6%9F%A5%E8%AF%A2%E5%BA%8F%E5%88%97"><span class="nav-number"></span> <span class="nav-text"> my-genome.fa 待查询序列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-genomecmscan-%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="nav-number"></span> <span class="nav-text"> my-genome.cmscan 输出结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-genometblout-%E6%9C%89%E4%B8%80%E4%B8%AA%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C"><span class="nav-number"></span> <span class="nav-text"> my-genome.tblout 有一个输出结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9500m%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%BE%93%E5%85%A5%E5%BA%8F%E5%88%9748%E7%BA%BF%E7%A8%8B%E9%9C%80%E8%A6%817%E4%B8%AA%E5%B0%8F%E6%97%B6%E6%9C%80%E5%A5%BD%E6%94%BE%E5%85%A5%E5%90%8E%E5%8F%B0"><span class="nav-number"></span> <span class="nav-text"> 对500M大小的输入序列，48线程，需要7个小时，最好放入后台</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"><span class="nav-number"></span> <span class="nav-text"> esl-seqstat my-genome.fa  awk ‘{if($0~&#x2F;^Total&#x2F;) print int($4*2&#x2F;1000000);}’ -----&gt; 1751</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-mirna"><span class="nav-number">1.</span> <span class="nav-text"> 四、miRNA</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

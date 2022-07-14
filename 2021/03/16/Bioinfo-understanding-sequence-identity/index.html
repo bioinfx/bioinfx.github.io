@@ -1,33 +1,472 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Bioinfo | 怎么理解序列一致性（Sequence identity） | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Bioinfo | 怎么理解序列一致性（Sequence identity）</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Bioinfo | 怎么理解序列一致性（Sequence identity）</h1><div class="post-meta">2021-03-16<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><p>序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 <a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">Heng Li’s blog</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGC</span><br><span class="line">CCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 Heng Li’s blog 12CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGCCCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC 经典的方法是先对两个序列做比对，并且设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | 怎么理解序列一致性（Sequence identity）">
+<meta property="og:url" content="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 Heng Li’s blog 12CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGCCCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC 经典的方法是先对两个序列做比对，并且设置">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-16T04:06:40.000Z">
+<meta property="article:modified_time" content="2021-03-18T01:38:48.601Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | 怎么理解序列一致性（Sequence identity） | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | 怎么理解序列一致性（Sequence identity）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-16 12:06:40" itemprop="dateCreated datePublished" datetime="2021-03-16T12:06:40+08:00">2021-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-18 09:38:48" itemprop="dateModified" datetime="2021-03-18T09:38:48+08:00">2021-03-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 <a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">Heng Li’s blog</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGC</span><br><span class="line">CCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
 <p>经典的方法是先对两个序列做比对，并且设置打分规则：匹配 match=1，错配 mismatch=-2，缺失 gapOpen=-2，缺失延伸 gapExt=-1。依据这个打分规则，上述两条序列的最佳比对结果如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  1 CCAGTGTGGCCGATaCCCcagGTtgGC-ACGCATCGTTGCCTTGGTAAGC 49</span><br><span class="line">         |||||||||||||| |||   ||  || ||||||||||||||||||||||</span><br><span class="line">Qry+:  1 CCAGTGTGGCCGATgCCC---GT--GCtACGCATCGTTGCCTTGGTAAGC 45</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  1 CCAGTGTGGCCGATaCCCcagGTtgGC-ACGCATCGTTGCCTTGGTAAGC 49</span><br><span class="line">         |||||||||||||| |||   ||  || ||||||||||||||||||||||</span><br><span class="line">Qry+:  1 CCAGTGTGGCCGATgCCC---GT--GCtACGCATCGTTGCCTTGGTAAGC 45</span><br></pre></td></tr></table></figure>
 <p>Here we have 43 matching bases, 1 mismatch, 5 deletions and 1 insertion to the first/Ref sequence. The <a target="_blank" rel="noopener" href="https://www.drive5.com/usearch/manual/cigar.html">CIGAR</a> is 18M3D2M2D2M1I22M. CIGAR 的定义： Concise Idiosyncratic Gapped Alignment Report，上面的CIGAR值可翻译为：18 matches，3 deletions，2 matches，2 matches，1 deletions，22 mathces。</p>
-<h3 id="不考虑-Gap-的“序列一致性”"><a href="#不考虑-Gap-的“序列一致性”" class="headerlink" title="不考虑 Gap 的“序列一致性”"></a>不考虑 Gap 的“序列一致性”</h3><p>如果不考虑 Gap，则只考虑匹配 Match 和错配 Mismatch。序列一致性等于 “#matches / (#matches + #mismatches)” = 43/(43+1) = 97.7%。这里的序列一致性并没有考虑 Gap，有一定局限性，早期基因组相关报道中提到的“大猩猩基因组与人类基因组的相似程度为98%”应该就是这种情况。摘抄：An obvious problem with this definition is that it doesn’t count gaps. However, it is an often used definition. We may hear that the chimpanzee and human genome differ by a couple of percent. Here we are referring to such gap-excluded identity. The exact sentence in the first chimpanzee genome paper is “Single-nucleotide substitutions occur at a mean rate of 1.23% between copies of the human and chimpanzee genome”.</p>
-<h3 id="考虑-Gap-的“序列一致性”（以-BLAST-为例）"><a href="#考虑-Gap-的“序列一致性”（以-BLAST-为例）" class="headerlink" title="考虑 Gap 的“序列一致性”（以 BLAST 为例）"></a>考虑 Gap 的“序列一致性”（以 BLAST 为例）</h3><p>BLAST 中对序列一致性的算法是最常见的算法，序列一致性等于匹配数 43（matchings bases）除以比对区间总长度 50，得到 86%。需要指出，虽然 Ref 序列的长度是 49，但是总比对长度却是 50（就是要多加 1 个插入碱基的长度）。局限在于，虽然考虑的 Gap 的存在，但是没有考虑 Gap 是否连续。一个连续的 Gap，与若干个分散的 Gap，如果总长度一样，计算得到的序列一致性也一样，这种计算方法就有不够科学的地方。原作者举例，如果一个 query 序列长度为 1000bp，比对到参考序列上面发现中间有连续 300bp 是 insertion 导致的 Gap，这个情况下序列一致性为 (1000-300)/1000 = 70%，这个结果会被过滤掉，而在进化（evolution）的过程中，这个连续的 300bp 可能只是一次序列插入事件，而非 300 次独立的单碱基插入事件。BLAST identity is defined as the number of matching bases over the number of alignment columns. In this example, there are 50 columns, so the identity is 43/50=86%. In a SAM file, the number of columns can be calculated by summing over the lengths of M/I/D CIGAR operators. The number of matching bases equals the column length minus the NM tag. Here is a Perl one-liner to calculate BLAST identity:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#39;if(&#x2F;NM:i:(\d+)&#x2F;)&#123;$n&#x3D;$1; $l&#x3D;0; $l+&#x3D;$1 while&#x2F;(\d+)[MID]&#x2F;g; print(($l-$n)&#x2F;$l,&quot;\n&quot;)&#125;&#39;</span><br><span class="line"># Where variable $n is the sum of mismatches and gaps and $l is the alignment length. </span><br><span class="line">#In the PAF format, column 10 divived by column 11 gives the BLAST identity.</span><br></pre></td></tr></table></figure>
+<h3 id="不考虑-gap-的序列一致性"><a class="markdownIt-Anchor" href="#不考虑-gap-的序列一致性"></a> 不考虑 Gap 的“序列一致性”</h3>
+<p>如果不考虑 Gap，则只考虑匹配 Match 和错配 Mismatch。序列一致性等于 “#matches / (#matches + #mismatches)” = 43/(43+1) = 97.7%。这里的序列一致性并没有考虑 Gap，有一定局限性，早期基因组相关报道中提到的“大猩猩基因组与人类基因组的相似程度为98%”应该就是这种情况。摘抄：An obvious problem with this definition is that it doesn’t count gaps. However, it is an often used definition. We may hear that the chimpanzee and human genome differ by a couple of percent. Here we are referring to such gap-excluded identity. The exact sentence in the first chimpanzee genome paper is “Single-nucleotide substitutions occur at a mean rate of 1.23% between copies of the human and chimpanzee genome”.</p>
+<h3 id="考虑-gap-的序列一致性以-blast-为例"><a class="markdownIt-Anchor" href="#考虑-gap-的序列一致性以-blast-为例"></a> 考虑 Gap 的“序列一致性”（以 BLAST 为例）</h3>
+<p>BLAST 中对序列一致性的算法是最常见的算法，序列一致性等于匹配数 43（matchings bases）除以比对区间总长度 50，得到 86%。需要指出，虽然 Ref 序列的长度是 49，但是总比对长度却是 50（就是要多加 1 个插入碱基的长度）。局限在于，虽然考虑的 Gap 的存在，但是没有考虑 Gap 是否连续。一个连续的 Gap，与若干个分散的 Gap，如果总长度一样，计算得到的序列一致性也一样，这种计算方法就有不够科学的地方。原作者举例，如果一个 query 序列长度为 1000bp，比对到参考序列上面发现中间有连续 300bp 是 insertion 导致的 Gap，这个情况下序列一致性为 (1000-300)/1000 = 70%，这个结果会被过滤掉，而在进化（evolution）的过程中，这个连续的 300bp 可能只是一次序列插入事件，而非 300 次独立的单碱基插入事件。BLAST identity is defined as the number of matching bases over the number of alignment columns. In this example, there are 50 columns, so the identity is 43/50=86%. In a SAM file, the number of columns can be calculated by summing over the lengths of M/I/D CIGAR operators. The number of matching bases equals the column length minus the NM tag. Here is a Perl one-liner to calculate BLAST identity:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $l=0; $l+=$1 while/(\d+)[MID]/g; print(($l-$n)/$l,&quot;\n&quot;)&#125;&#x27;</span><br><span class="line"># Where variable $n is the sum of mismatches and gaps and $l is the alignment length. </span><br><span class="line">#In the PAF format, column 10 divived by column 11 gives the BLAST identity.</span><br></pre></td></tr></table></figure>
 <p>核酸序列比对程序 BLASTN 可以输出 SAM 格式结果，如下所示。上面的 Perl 命令行即可以读取包含“NM:i:[\d+]”的行，NM即$1=17；识别M、I、D 字符对应的数字，相同字母对应的数值分别累加，累加之后分别为 match，M=551；insertion，I=5；deletion，D=9。那么序列一致性等于 (M+I+D-NM)/(M+I+D)=(565-17)/565=97%。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@HD     VN:1.2  SO:coordinate   GO:reference</span><br><span class="line">@SQ     SN:Query_1      LN:916</span><br><span class="line">@PG     ID:0    VN:2.9.0+       CL:blastn -db &#x2F;home&#x2F;fenglei&#x2F;database&#x2F;Glycine_max&#x2F;Gmax_275_Wm82_a2.v1&#x2F;index&#x2F;genome.fa -query GNAT_mutate.fa -out GNAT_mutate.fa-BLASTN-Wm82-275.m17 -outfmt 17 -window_size 10 -word_size 10     PN:blastn</span><br><span class="line">Chr02   0       Query_1 1       255     2929886H24M3D83M3D83M3D83M3D291M3I13M2I57M45646980H     *       0       0       *       *       AS:i:591        EV:f:0  NM:i:17 PI:f:100.00     BS:f:1092.49</span><br></pre></td></tr></table></figure>
-
-<h3 id="压缩-Gap-的“序列一致性”（以-minimap2-为例）"><a href="#压缩-Gap-的“序列一致性”（以-minimap2-为例）" class="headerlink" title="压缩 Gap 的“序列一致性”（以 minimap2 为例）"></a>压缩 Gap 的“序列一致性”（以 minimap2 为例）</h3><p>上文提到，连续若干个碱基的 Gap 可能是进化过程中单次插入导致的，那么可以通过压缩 Gap 将上述序列比对转化成下面的情形。Gap 的数目没有变化，但是长度全部变为 1，这样总长度也发生了变化。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  CCAGTGTGGCCGATaCCCcGTtGCTACGCATC-TTGCCTTGGTAAGC</span><br><span class="line">       |||||||||||||| ||| || |||||||||| ||||||||||||||</span><br><span class="line">Qry+:  CCAGTGTGGCCGATgCCC-GT-GCTACGCATCgTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@HD     VN:1.2  SO:coordinate   GO:reference</span><br><span class="line">@SQ     SN:Query_1      LN:916</span><br><span class="line">@PG     ID:0    VN:2.9.0+       CL:blastn -db /home/fenglei/database/Glycine_max/Gmax_275_Wm82_a2.v1/index/genome.fa -query GNAT_mutate.fa -out GNAT_mutate.fa-BLASTN-Wm82-275.m17 -outfmt 17 -window_size 10 -word_size 10     PN:blastn</span><br><span class="line">Chr02   0       Query_1 1       255     2929886H24M3D83M3D83M3D83M3D291M3I13M2I57M45646980H     *       0       0       *       *       AS:i:591        EV:f:0  NM:i:17 PI:f:100.00     BS:f:1092.49</span><br></pre></td></tr></table></figure>
+<h3 id="压缩-gap-的序列一致性以-minimap2-为例"><a class="markdownIt-Anchor" href="#压缩-gap-的序列一致性以-minimap2-为例"></a> 压缩 Gap 的“序列一致性”（以 minimap2 为例）</h3>
+<p>上文提到，连续若干个碱基的 Gap 可能是进化过程中单次插入导致的，那么可以通过压缩 Gap 将上述序列比对转化成下面的情形。Gap 的数目没有变化，但是长度全部变为 1，这样总长度也发生了变化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  CCAGTGTGGCCGATaCCCcGTtGCTACGCATC-TTGCCTTGGTAAGC</span><br><span class="line">       |||||||||||||| ||| || |||||||||| ||||||||||||||</span><br><span class="line">Qry+:  CCAGTGTGGCCGATgCCC-GT-GCTACGCATCgTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
 <p>Gap 压缩之后的序列一致性为 43/(50-2-1)=91.5%。对于比对软件 minimap2，即是采用这种算法。下面是Perl 命令计算一致性数值的例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#39;if(&#x2F;NM:i:(\d+)&#x2F;)&#123;$n&#x3D;$1; $m&#x3D;$g&#x3D;$o&#x3D;0; $m+&#x3D;$1 while&#x2F;(\d+)M&#x2F;g; $g+&#x3D;$1,++$o while&#x2F;(\d+)[ID]&#x2F;g; print(1-($n-$g+$o)&#x2F;($m+$o),&quot;\n&quot;)&#125;&#39;</span><br><span class="line">#where $m is the sum of M operations, $g the sum of I and D operations and $o the number of gap opens.</span><br></pre></td></tr></table></figure>
-
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $m=$g=$o=0; $m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; print(1-($n-$g+$o)/($m+$o),&quot;\n&quot;)&#125;&#x27;</span><br><span class="line">#where $m is the sum of M operations, $g the sum of I and D operations and $o the number of gap opens.</span><br></pre></td></tr></table></figure>
 <p>参考资料</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">On the definition of sequence identity</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9539f44ecf61">怎样定义 sequences 比对的相似度</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55324279">知乎专栏：序列一致性</a></li>
 </ol>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/04/08/Bioinfo-RepeatModeler/">Bioinfo | 重复序列预测工具 RepeatModeler</a><a class="next" href="/2021/03/10/Bioinfo-Extracting-sequence-by-names/">Bioinfo | 依据序列名字列表从 fasta 文件提取序列</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/10/Bioinfo-Extracting-sequence-by-names/" rel="prev" title="Bioinfo | 依据序列名字列表从 fasta 文件提取序列">
+      <i class="fa fa-chevron-left"></i> Bioinfo | 依据序列名字列表从 fasta 文件提取序列
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/08/Bioinfo-RepeatModeler/" rel="next" title="Bioinfo | 重复序列预测工具 RepeatModeler">
+      Bioinfo | 重复序列预测工具 RepeatModeler <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%80%83%E8%99%91-gap-%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text"> 不考虑 Gap 的“序列一致性”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E8%99%91-gap-%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%80%E8%87%B4%E6%80%A7%E4%BB%A5-blast-%E4%B8%BA%E4%BE%8B"><span class="nav-number">2.</span> <span class="nav-text"> 考虑 Gap 的“序列一致性”（以 BLAST 为例）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9-gap-%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%80%E8%87%B4%E6%80%A7%E4%BB%A5-minimap2-%E4%B8%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text"> 压缩 Gap 的“序列一致性”（以 minimap2 为例）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

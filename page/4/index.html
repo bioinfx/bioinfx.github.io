@@ -1,13 +1,1545 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2020/12/15/Hi-C%EF%BC%9A3d-dna%E6%8C%82%E8%BD%BD%E6%9F%93%E8%89%B2%E4%BD%93/">Hi-C：3d-dna挂载染色体</a></h1><div class="post-meta">2020-12-15</div><div class="post-content"><p>使用二代数据或三代数据得到contig后，下一步就是将contig提升到染色体水平。有很多策略可以做到这一点，比如说遗传图谱，BioNano, HiC, 参考近源物种。如果利用HiC进行准染色体水平，那么目前常见的组装软件有下面几个。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/4/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Proteomics-Protein-Persulfidation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/04/Proteomics-Protein-Persulfidation/" class="post-title-link" itemprop="url">Proteomics | 蛋白质硫巯基化修饰</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-03-04 17:02:00 / Modified: 17:14:19" itemprop="dateCreated datePublished" datetime="2021-03-04T17:02:00+08:00">2021-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>随着对硫化氢（hydrogen sulfide，H<sub>2</sub>S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H<sub>2</sub>S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的一种新的蛋白质翻译后修饰方式。对动物的研究表明，蛋白质硫巯基化修饰通过影响蛋白质活性和功能，从而在细胞内信号通路中发挥重要的调控作用。最近的研究结果提示，硫巯基化修饰还参与调节植物新陈代谢和形态建成。硫巯基化修饰也可能参与植物细胞信号转导。</p>
+<p>硫化氢（hydrogen sulfide, H<sub>2</sub>S）是一种无色、具有臭鸡蛋气味的气体。在人们的传统观念中，硫化氢一直被认为是一种有毒有害的气体。然而随着科技发展，关于生物体内产生硫化氢的现象被陆续报道，这暗示着硫化氢在某些生理代谢过程中可能发挥着重要作用。硫化氢可自由通过生物膜，以信号分子的角色参与信号传递。最近的发现表明，H<sub>2</sub>S 具有促使蛋白质 Cys 残基的硫醇基团（R-SH）转变为过硫化基团（R-SSH）的能力，这种翻译后修饰作用被称为 蛋白质过硫化/硫巯基化修饰（persulfidation）。蛋白质过硫化修饰是一种基于氧化还原状态的修饰，然而在高等植物中这一翻译后修饰的机制仍然知之甚少。</p>
+<p>当植物受到干旱、高低温、高盐、重金属等非生物胁迫刺激时，体内的硫化氢含量会显著提高，暗示硫化氢参与植物非生物胁迫响应过程。研究表明，在这一过程中硫化氢与多种信号分子，如活性氧（ROS）、一氧化氮（NO）、脱落酸（ABA）、乙烯等信号交叉对话，共同调节植物对胁迫的耐受性。</p>
+<p>脱落酸（ABA）作为一种重要的植物激素，在种子的成熟和休眠，气孔关闭和植物生长中起关键作用。同时，ABA也是增强植物对非生物胁迫如干旱，盐碱和寒冷的适应性的核心调节因子，而这些非生物胁迫是导致全球农作物减产的主要原因，因此研究植物体内ABA信号转导途径具有重要的实践意义。ABA促进气孔关闭并抑制气孔开放，从而在植物缺水时保留水分。SnRK2.6蛋白在植物气孔的保卫细胞中表达，是ABA信号通路中调节植物气孔开合的关键调节因子。硫化氢（H2S）是一种水溶性的气体信号分子，在调节植物对环境胁迫和生长的适应性方面发挥重要功能。Cys残基的翻译后修饰（Cys-SH基团转换为Cys-SSH基团）引起的过硫基团的形成直接受硫化氢调节，被称为S-硫巯基化修饰作用。研究首先在SnRK2.6中发现了两个S-硫巯基化修饰位点，并且发现这两个Cys残基暴露在SnRK2.6表面并且与激酶的催化环和关键的磷酸化位点相邻。研究表明当这两个Cys残基被S-硫巯基化修饰后，促进了SnRK2.6的活性及其与ABA信号下游的转录因子的相互作用。当将SnRK2.6中的Cys131，Cys137或两者均被丝氨酸部分或者全部取代时：SnRK2.6C131S和SnRK2.6C137S或SnRK2.6C131SC137S突变基因转入到ost1-3突变体中，这些点突变的基因无法恢复ost1-3突变体表型，显示出对ABA和H2S诱导的气孔关闭和Ca2+流入的敏感性降低，并增加了水分流失和抗旱性下降。此外，该研究还表明ABA诱导保卫细胞中的DES1酶催化产生硫化氢，随后硫化氢又通过SnRK2.6的过硫化反应过来正调控ABA信号传导，并影响钙离子流，最终调控气孔运动。因此该研究提出了一种新的调控ABA信号通路的机制，其中硫化氢通过S-硫巯基化SnRK2.6在保卫细胞中正调控ABA信号传导。</p>
+<p><img src="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png" alt="" /></p>
+<p>参考资料</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/426629232_732029">2020 南农综述：气体信号分子——硫化氢在植物适应非生物胁迫中的生理功能及作用机制 </a></li>
+<li><a target="_blank" rel="noopener" href="https://news.nwafu.edu.cn/xnxw/95411.htm">2020 西农文章：硫化氢介导的S-硫巯基化修饰促进气孔闭合关键调控蛋白SnRK2.6/OST1的活性从而参与调控脱落酸信号诱导植物气孔闭合的分子机制</a></li>
+<li><a target="_blank" rel="noopener" href="http://cjbmb.bjmu.edu.cn/CN/abstract/abstract24425.shtml">2018 生物化学与分子生物学报：《硫巯基化：一种新的蛋白质翻译后修饰》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/" class="post-title-link" itemprop="url">Proteomics | Common reagents and their functions in LC-MS/MS proteomics</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-03 23:08:17" itemprop="dateCreated datePublished" datetime="2021-03-03T23:08:17+08:00">2021-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-04 14:04:42" itemprop="dateModified" datetime="2021-03-04T14:04:42+08:00">2021-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>蛋白质组学实验 LC-MS/MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？</p>
+<h3 id="acetone-丙酮"><a class="markdownIt-Anchor" href="#acetone-丙酮"></a> Acetone 丙酮</h3>
+<p>使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。</p>
+<p>丙酮是最简单的酮，化学式 CH<sub>3</sub>COCH<sub>3</sub>。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化水，破坏蛋白质胶体分子表面的水化层而使分子聚集沉淀。当蛋白沉淀后，立即分离蛋白和丙酮并复溶蛋白完成提取。丙酮在提取蛋白质中的主要作用是通过有机溶剂破坏蛋白质的水化层，降低介电常数 增强带电蛋白质分子的相互作用，促进蛋白颗粒的聚集沉淀。<br />
+丙酮要求低温操作且尽量缩短时间，避免蛋白变性。丙酮容易挥发。在提取大分子蛋白质时，TCA使蛋白沉淀之后，使用丙酮尽量将TCA抽提干净，</p>
+<h3 id="acetonitrile-乙腈"><a class="markdownIt-Anchor" href="#acetonitrile-乙腈"></a> Acetonitrile 乙腈</h3>
+<p>使用场景一：HPLC 实验中，ACN 可以与水分别作为流动相 B 与 A，用来洗脱不同种类的蛋白分子。<br />
+使用场景二：SDS-PAGE 胶，切下目的条带之后，加入ACN，无色透明的胶块会迅速失水，皱缩成白色不透明状。</p>
+<p>乙腈（英语：Acetonitrile，又称氰基甲烷），化学式 CH<sub>3</sub>CN，英文缩写：ACN 或 AeCN。乙腈是无色的液体，是最简单的有机腈，并广泛用作极性非质子溶剂。对于 HPLC 级溶剂（我们在 HPLC 分析中应始终使用 HPLC 级溶液），<u>乙腈的吸光度在这两种溶剂中最低</u>，非常适合低紫外光分析。作为比较，甲醇在 205–210 nm 左右有较高的紫外光吸收值，在非常低的紫外光范围内略有限制。注意乙腈可以燃烧，并且有毒性。</p>
+<h3 id="ammonium-acetate"><a class="markdownIt-Anchor" href="#ammonium-acetate"></a> Ammonium acetate</h3>
+<p>乙酸铵是一个有机盐，分子式为CH<sub>3</sub>COONH<sub>4</sub>。</p>
+<h3 id="ammonium-sulfate"><a class="markdownIt-Anchor" href="#ammonium-sulfate"></a> Ammonium sulfate</h3>
+<p>使用场景：在配制考马斯亮蓝染色液的时候，需要准备2% (wt/vol) phosphoric acid and 20% (wt/vol) ammonium sulfate 溶液。</p>
+<p>硫酸铵，简称硫铵，又称硫酸铔，化学式为(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>，无色斜方晶体，易溶于水，水溶液为酸性。</p>
+<h3 id="ammonium-hydrogen-carbonate-abc"><a class="markdownIt-Anchor" href="#ammonium-hydrogen-carbonate-abc"></a> Ammonium hydrogen carbonate （ABC）</h3>
+<p>使用场景： In-gel digestion 的 buffer，即 100 mM ABC</p>
+<p>碳酸氢铵 (Ammonium bicarbonate), 碳酸氢铵是氨的碳酸盐，分子式为NH<sub>4</sub>HCO<sub>3</sub>。用 Trypsin 酶解蛋白质时，碳酸氢氨的浓度应该是多少？酶解时碳酸氢氨的浓度一般在 10 ～ 50 mM 之间。碳酸氢氨的作用主要是提供一个碱性的水解环境，因为 Typsin 的活力在 pH8 ～ 9 之间最高。最常用的碳酸氢氨浓度有 20 mM ， 40 mM 。盐浓度过大时，后续的冻干过程中会有较多的盐析出；盐浓度过小时，则不能有效的提供碱性 pH 的水解环境（尤其是在样品的 pH 值低，而且体积大时）。</p>
+<h3 id="ammonium-persulfate"><a class="markdownIt-Anchor" href="#ammonium-persulfate"></a> Ammonium persulfate</h3>
+<p>过硫酸铵（APS）是一种白色晶体，分子式为(NH<sub>4</sub>)<sub>2</sub>S<sub>2</sub>O<sub>8</sub>，具有强氧化性和腐蚀性，易溶于水。其干品具有良好的稳定性，保存在防潮箱中。聚丙烯酰胺（PAGE）是由丙烯酰胺聚合形成的高分子，这个聚合反应是自由基聚合，需要有引发剂产生自由基将反应引发过硫酸铵就是引发剂，而 TEMED 可以催化过硫酸铵产生自由基，从而加速丙烯酰胺凝胶的聚合。过硫酸铵配制成 10%溶液后，应当-20℃保存。同时应尽量减少室温存放时间，以防失效。保存不能超过两周。最好现配现用。</p>
+<h3 id="tca-三氯乙酸"><a class="markdownIt-Anchor" href="#tca-三氯乙酸"></a> TCA 三氯乙酸</h3>
+<p>使用场景：用硫酸溶液破裂细胞核，释放组蛋白之后，加入 TCA 使组蛋白沉淀，为什么用 TCA 呢？</p>
+<p>TCA 化学式 CCl<sub>3</sub>COOH，其作用主要是在酸性条件下可与蛋白质形成不溶性盐。同时作为蛋白质变性剂使蛋白质构象发生改变，暴露出较多的疏水性基团，使之聚集沉淀。但是 TCA 可能渗入蛋白质分子内部而使之较难被完全除去，在电泳前样品加热处理时可能使蛋白质结构发生酸水解而形成碎片，所以在提取大分子蛋白质时要使用丙酮（Acetone）尽量将 TCA 抽提干净。</p>
+<h3 id="acetic-acid-乙酸"><a class="markdownIt-Anchor" href="#acetic-acid-乙酸"></a> Acetic acid 乙酸</h3>
+<p>使用场景：SDS-PAGE胶脱色液，即考马斯亮蓝染色脱色液，配方为：40%乙醇，10%乙酸，50%蒸馏水。也可以使用其它适当的脱色液。</p>
+<p>乙酸也叫做醋酸，化学式 CH<sub>3</sub>COOH，甲醇是为了更容易洗脱考马斯亮蓝，加得越多洗脱越容易，结合在蛋白上的染料也容易洗下来。冰乙酸是固定蛋白的，防止蛋白扩散。两者作用完全不同。</p>
+<h3 id="tfa-trifluoroacetic-acid-三氟乙酸"><a class="markdownIt-Anchor" href="#tfa-trifluoroacetic-acid-三氟乙酸"></a> TFA (trifluoroacetic acid ) 三氟乙酸</h3>
+<p>使用场景：组蛋白的 HPLC 纯化过程中，流动相 A 和 B 里面都会添加 0.1% TFA。</p>
+<p>三氟乙酸化学式 CF<sub>3</sub>COOH，在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸 (TFA) 作为离子对试剂是常见的手段。流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。三氟乙酸与多肽上的正电荷及极性基团相结合以减少极性保留，并把多肽带回到疏水的反相表面。以同样的方式，三氟乙酸屏蔽了固定相上残留的极性表面。三氟乙酸的行为可以理解为它滞留在反相固定相的表面，同时与多肽及柱床作用。三氟乙酸优于其他离子修饰剂的原因是它容易挥发，可以方便地从制备样品中除去。另一方面，三氟乙酸的紫外最大吸收峰低于 200 nm，对多肽在低波长处的检测干扰很小。改变三氟乙酸的浓度，可以细微地调整多肽在反相色谱上的选择性。这一影响对于优化分离条件、增大复杂色谱分析（如多肽的指纹图谱）的信息量是非常有益的。三氟乙酸添加在流动相中的浓度一般为 0.1%，在这个浓度下，大部分的反相色谱柱都可以产生良好的峰形，当三氟乙酸浓度大大低于这个水平时，峰的展宽和拖尾就变得十分明显。</p>
+<h3 id="fa-formic-acid-甲酸"><a class="markdownIt-Anchor" href="#fa-formic-acid-甲酸"></a> FA (Formic acid) 甲酸</h3>
+<p>使用场景：经过酶解和纯化的短肽，溶解于 0.1% FA 然后在 Orbitrap 质谱仪进行 LC-MS/MS 分析。</p>
+<p>甲酸又称作蚁酸，化学式为HCOOH。在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸(TFA) 作为离子对试剂是常见的手段，流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。同时反相色谱与电喷雾质谱联用已成为多肽和蛋白质的分子量测定和结构分析的重要工具，但是含有三氟乙酸的流动相对质谱离子的产生具有抑制作用，一定程度上降低了液质联用技术的灵敏性和分析可靠性。目前常用的方法是降低流动相中 TFA 浓度， 达到降低这种抑制作用，但是也会造成色谱分析质量的降低；而如果用甲酸代替 TFA, 会造成色谱分离柱效降低，达不到理想的分离效果。本文采用双三元液相色谱系统 (DGLC)，充分利用双泵的优势，将两个泵分别作为流动相的输液泵和柱后溶液的传输泵，实现与质谱的全自动连接。采用 TFA-Fix 技术或者抑制器技术降低流动相中 TFA 对 MS 的离子产生的抑制作用，尤其是柱后抑制器技术大大提高了多肽样品在质谱上的灵敏度。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/" class="post-title-link" itemprop="url">R | Using ggrepel to repel overlapping text labels in ggplot2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-03 16:33:13" itemprop="dateCreated datePublished" datetime="2021-03-03T16:33:13+08:00">2021-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-04 16:57:18" itemprop="dateModified" datetime="2021-03-04T16:57:18+08:00">2021-03-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在使用ggplot画图的过程中，如果加上文字标签，比较常见的现象是文字标签之间会出现重叠，影响展示效果。如下图所示。</p>
+<p><img src="https://miro.medium.com/max/875/1*CRx8s9NXxVLQG5xXP1Z_gQ.png" alt="" /></p>
+<p>通过ggrepel则可以对文字标签进行优化。<br />
+如下方案例中使用的 geom_text_repel 和 geom_text_repel 两个函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">#使用数据集mtcars演示</span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;red&quot;)+ </span><br><span class="line">  geom_text(aes(wt, mpg, label=rownames(mtcars)))+ </span><br><span class="line">  theme_classic(base_size = 16)</span><br><span class="line"></span><br><span class="line">install.packages(&#x27;ggrepel&#x27;)</span><br><span class="line">library(ggrepel)</span><br><span class="line"></span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;red&quot;)+ </span><br><span class="line">  geom_text_repel(aes(wt, mpg, label=rownames(mtcars)))+</span><br><span class="line">  theme_classic(base_size = 16)</span><br><span class="line">head(mtcars)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;grey&quot;, size=5)+</span><br><span class="line">geom_label_repel(aes(wt, mpg, fill=factor(cyl), </span><br><span class="line">   label=rownames(mtcars)), fontface=&quot;bold&quot;, color=&quot;white&quot;, </span><br><span class="line">   box.padding=unit(0.35, &quot;lines&quot;), point.padding=unit(0.5, &quot;lines&quot;), </span><br><span class="line">   segment.colour = &quot;grey50&quot;)+ theme_classic(base_size = 16)</span><br></pre></td></tr></table></figure>
+<p><img src="https://exts.ggplot2.tidyverse.org/ggrepel_files/figure-html/unnamed-chunk-1-1.png" alt="" /></p>
+<p><img src="https://exts.ggplot2.tidyverse.org/ggrepel_files/figure-html/unnamed-chunk-1-2.png" alt="" /></p>
+<p>资料来源：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/84e7e0e029cd">https://www.jianshu.com/p/84e7e0e029cd</a></li>
+<li><a target="_blank" rel="noopener" href="https://exts.ggplot2.tidyverse.org/ggrepel.html">https://exts.ggplot2.tidyverse.org/ggrepel.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.exploratory.io/ggrepel-when-things-get-too-crowded-ffefd845665f">https://blog.exploratory.io/ggrepel-when-things-get-too-crowded-ffefd845665f</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/" class="post-title-link" itemprop="url">Bioinfo | Installation of BUSCO v4</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-08 10:25:45" itemprop="dateCreated datePublished" datetime="2021-01-08T10:25:45+08:00">2021-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-03 23:10:18" itemprop="dateModified" datetime="2021-03-03T23:10:18+08:00">2021-03-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="environment"><a class="markdownIt-Anchor" href="#environment"></a> Environment</h3>
+<p>BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br></pre></td></tr></table></figure>
+<h3 id="third-party-components"><a class="markdownIt-Anchor" href="#third-party-components"></a> Third-party components</h3>
+<p>A full installation of BUSCO requires Python 3.3+ (2.7 is not supported from v4 onwards), BioPython, tBLASTn 2.2+, Augustus 3.2, Prodigal, Metaeuk, HMMER3.1+, SEPP, and R + ggplot2 for the plotting companion script. Some of these tools are necessary only for analysing certain type of organisms and input data, or for specific run modes.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># https://biopython.org/</span><br><span class="line">conda install -c biopython</span><br><span class="line"></span><br><span class="line"># https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST</span><br><span class="line"># WARNING:        You are using BLAST version 2.11.0+. This is known to yield inconsistent results when multithreading. BLAST will run on a single core as a result. </span><br><span class="line"># For performance improvement, please upgrade to BLAST 2.10.1+</span><br><span class="line">cd ~/local/app</span><br><span class="line">wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">mv ncbi-blast-2.11.0+ blast-2.11.0</span><br><span class="line">export PATH=/home/fenglei/local/app/blast-2.11.0/bin:$PATH</span><br><span class="line"></span><br><span class="line"># http://bioinf.uni-greifswald.de/augustus/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># augustus    bioconda/linux-64::augustus-3.2.2-0</span><br><span class="line"># conda install -c bioconda augustus   # ERROR when running it</span><br><span class="line">git clone https://github.com/Gaius-Augustus/Augustus</span><br><span class="line">sudo yum install boost-devel          # libboost-all-dev</span><br><span class="line">sudo yum install -y zlib zlib-devel   # zlib1g-dev</span><br><span class="line">sudo yum install gsl-devel            # libgsl-dev</span><br><span class="line">sudo yum install suitesparse-devel    # libsuitesparse-dev</span><br><span class="line">sudo yum install lpsolve              # liblpsolve55-dev</span><br><span class="line">sudo yum install sqlite-devel         # sqlite-devel - Development tools for the sqlite3 embeddable SQL database engine</span><br><span class="line"># sudo yum whatprovides libmysqlclient*</span><br><span class="line"># sudo yum install mariadb-libs-5.5.56-2.el7.i686</span><br><span class="line"></span><br><span class="line"># https://github.com/soedinglab/metaeuk</span><br><span class="line"># conda install -c bioconda Metaeuk # ERROR -- Package openssl conflicts</span><br><span class="line"># git clone git@github.com:soedinglab/metaeuk.git</span><br><span class="line"># downloading a statically compiled version:</span><br><span class="line">wget https://mmseqs.com/metaeuk/metaeuk-linux-sse41.tar.gz</span><br><span class="line">tar -zxvf metaeuk-linux-sse41.tar.gz</span><br><span class="line">export PATH=/home/fenglei/local/app/metaeuk/bin:$PATH</span><br><span class="line"></span><br><span class="line"># https://github.com/hyattpd/Prodigal</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># prodigal    bioconda/linux-64::prodigal-2.6.3-h516909a_2</span><br><span class="line">conda install -c bioconda Prodigal</span><br><span class="line"></span><br><span class="line"># http://hmmer.org/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># hmmer    bioconda/linux-64::hmmer-3.3.1-he1b5a44_0</span><br><span class="line"># conda install -c bioconda hmmer  # X</span><br><span class="line">wget http://eddylab.org/software/hmmer/hmmer.tar.gz</span><br><span class="line">tar -zxvf hmmer.tar.gz</span><br><span class="line">cd hmmer-3.3.2</span><br><span class="line">./configure --prefix=/home/fenglei/local</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"># https://github.com/smirarab/sepp/</span><br><span class="line"># Successfully installed sepp-0.9.0</span><br><span class="line"># git clone git@github.com:smirarab/sepp.git</span><br><span class="line"># cd sepp</span><br><span class="line"># python setup.py  install</span><br><span class="line"># Error was reported when running setup.py</span><br><span class="line">conda install -c bioconda sepp</span><br><span class="line"># sepp  bioconda/linux-64::sepp-4.3.10-py37hef7ab6a_2</span><br><span class="line"></span><br><span class="line">#https://www.r-project.org/</span><br><span class="line"># R version 3.5.1 (2018-07-02) -- &quot;Feather Spray&quot;</span><br><span class="line">conda install R</span><br></pre></td></tr></table></figure>
+<p><strong>samtools, bcftools, htslib</strong><br />
+Download below files from <a target="_blank" rel="noopener" href="http://www.htslib.org/download/">http://www.htslib.org/download/</a>: <a target="_blank" rel="noopener" href="https://github.com/samtools/samtools/releases/download/1.11/samtools-1.11.tar.bz2">samtools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/bcftools/releases/download/1.11/bcftools-1.11.tar.bz2">bcftools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/htslib/releases/download/1.11/htslib-1.11.tar.bz2">htslib-1.10.2.tar.bz2</a></p>
+<p><strong>cmake 3.19.2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz</span><br><span class="line">tar -zxvf cmake-3.19.2.tar.gz</span><br><span class="line">cd cmake-3.19.2</span><br><span class="line">sudo yum install gcc g++</span><br><span class="line">./bootstrap --prefix=/home/fenglei/local</span><br><span class="line">gmake &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p><strong>bamtools</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/pezmaster31/bamtools.git</span><br><span class="line">mkdir build ； cd build</span><br><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/your/path/to/bamtools ..</span><br><span class="line">#cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make  install</span><br></pre></td></tr></table></figure>
+<p><strong>augustus 3.3.1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://bioinf.uni-greifswald.de/augustus/binaries/old/augustus-3.3.1.tar.gz</span><br><span class="line">tar -zxvf augustus-3.3.1.tar.gz</span><br><span class="line">cd augustus-3.3.1</span><br><span class="line"># edit some make files as below</span><br></pre></td></tr></table></figure>
+<p>Edit make files of <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">bam2hints, and filterBam.</a> Download binary <a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig">bam2wig</a> to replace source file of bam2wig. Then we can run <code>make</code> for Augustus. Augustus requires environment variables to be declared as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/bin:$PATH&quot;</span><br><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/scripts:$PATH&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/config/&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="edit-config-file-of-busco"><a class="markdownIt-Anchor" href="#edit-config-file-of-busco"></a> Edit config file of BUSCO</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitlab.com/ezlab/busco.git</span><br><span class="line">cd busco/</span><br><span class="line">#Note: v4.1.4 is the latest stable release. To access v5.beta clone this repository and checkout the v5 branch with git checkout v5.beta</span><br><span class="line">sudo python3 setup.py</span><br><span class="line"># or</span><br><span class="line">python3 setup.py install --user</span><br><span class="line"># or: If you are running BUSCO in a Python virtual environment, the following should suffice:</span><br><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure>
+<p>Edit <code>config.ini</code> as below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># some words were not shown here due to space limitation</span><br><span class="line"></span><br><span class="line">[tblastn]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = tblastn</span><br><span class="line"></span><br><span class="line">[makeblastdb]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = makeblastdb</span><br><span class="line"></span><br><span class="line">[augustus]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = augustus</span><br><span class="line"></span><br><span class="line">[etraining]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = etraining</span><br><span class="line"></span><br><span class="line">[gff2gbSmallDNA.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = gff2gbSmallDNA.pl</span><br><span class="line"></span><br><span class="line">[new_species.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = new_species.pl</span><br><span class="line"></span><br><span class="line">[optimize_augustus.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = optimize_augustus.pl</span><br><span class="line"></span><br><span class="line">[hmmsearch]</span><br><span class="line">path = /home/fenglei/local/bin</span><br><span class="line">command = hmmsearch</span><br><span class="line"></span><br><span class="line">[sepp]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = run_sepp.py</span><br><span class="line"></span><br><span class="line">[prodigal]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = prodigal</span><br></pre></td></tr></table></figure>
+<p>Test run of BUSCO.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost config]$ which busco</span><br><span class="line">~/.local/bin/busco</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --version</span><br><span class="line">BUSCO 4.1.4</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --help</span><br><span class="line">usage: busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br><span class="line"></span><br><span class="line">Welcome to BUSCO 4.1.4: the Benchmarking Universal Single-Copy Ortholog assessment tool.</span><br><span class="line">For more detailed usage information, please review the README file provided with this distribution and the BUSCO user guide.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -i FASTA FILE, --in FASTA FILE</span><br><span class="line">                        Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set.</span><br><span class="line">  -c N, --cpu N         Specify the number (N=integer) of threads/cores to use.</span><br><span class="line">  -o OUTPUT, --out OUTPUT</span><br><span class="line">                        Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. WARNING: do not provide a path</span><br><span class="line">  --out_path OUTPUT_PATH</span><br><span class="line">                        Optional location for results folder, excluding results folder name. Default is current working directory.</span><br><span class="line">  -e N, --evalue N      E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)</span><br><span class="line">  -m MODE, --mode MODE  Specify which BUSCO analysis mode to run.</span><br><span class="line">                        There are three valid modes:</span><br><span class="line">                        - geno or genome, for genome assemblies (DNA)</span><br><span class="line">                        - tran or transcriptome, for transcriptome assemblies (DNA)</span><br><span class="line">                        - prot or proteins, for annotated gene sets (protein)</span><br><span class="line">  -l LINEAGE, --lineage_dataset LINEAGE</span><br><span class="line">                        Specify the name of the BUSCO lineage to be used.</span><br><span class="line">  -f, --force           Force rewriting of existing files. Must be used when output files with the provided name already exist.</span><br><span class="line">  -r, --restart         Continue a run that had already partially completed.</span><br><span class="line">  --limit REGION_LIMIT  How many candidate regions (contig or transcript) to consider per BUSCO (default: 3)</span><br><span class="line">  --long                Optimization mode Augustus self-training (Default: Off) adds considerably to the run time, but can improve results for some non-model organisms</span><br><span class="line">  -q, --quiet           Disable the info logs, displays only errors</span><br><span class="line">  --augustus_parameters AUGUSTUS_PARAMETERS</span><br><span class="line">                        Pass additional arguments to Augustus. All arguments should be contained within a single pair of quotation marks, separated by commas. E.g. &#x27;--param1=1,--param2=2&#x27;</span><br><span class="line">  --augustus_species AUGUSTUS_SPECIES</span><br><span class="line">                        Specify a species for Augustus training.</span><br><span class="line">  --auto-lineage        Run auto-lineage to find optimum lineage path</span><br><span class="line">  --auto-lineage-prok   Run auto-lineage just on non-eukaryote trees to find optimum lineage path</span><br><span class="line">  --auto-lineage-euk    Run auto-placement just on eukaryote tree to find optimum lineage path</span><br><span class="line">  --update-data         Download and replace with last versions all lineages datasets and files necessary to their automated selection</span><br><span class="line">  --offline             To indicate that BUSCO cannot attempt to download files</span><br><span class="line">  --config CONFIG_FILE  Provide a config file</span><br><span class="line">  -v, --version         Show this version and exit</span><br><span class="line">  -h, --help            Show this help message and exit</span><br><span class="line">  --list-datasets       Print the list of available BUSCO datasets</span><br></pre></td></tr></table></figure>
+<h3 id="running-busco"><a class="markdownIt-Anchor" href="#running-busco"></a> Running BUSCO</h3>
+<p>The munnual is <a target="_blank" rel="noopener" href="https://busco.ezlab.org/busco_userguide.html#manual-installation"><em><u>busco_userguide.html</u></em></a></p>
+<p>You have to set the environment variable <code>BUSCO_CONFIG_FILE</code> with the path to the file, for BUSCO to be able to locate it.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line"></span><br><span class="line">busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">cd /home/fenglei/local/app/busco-4/test_data/eukaryota</span><br><span class="line"></span><br><span class="line">busco -i genome.fna -c 8 -m geno -f --out test_eukaryota</span><br><span class="line"></span><br><span class="line">####   BUSCO result   ####</span><br><span class="line">INFO:</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:18.8%[S:18.8%,D:0.0%],F:0.4%,M:80.8%,n:255     |</span><br><span class="line">        |48     Complete BUSCOs (C)                       |</span><br><span class="line">        |48     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |1      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |206    Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset saccharomycetes_odb10       |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:2.0%[S:2.0%,D:0.0%],F:0.1%,M:97.9%,n:2137      |</span><br><span class="line">        |42     Complete BUSCOs (C)                       |</span><br><span class="line">        |42     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2092   Missing BUSCOs (M)                        |</span><br><span class="line">        |2137   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done with WARNING(s). Total running time: 570 seconds</span><br><span class="line"></span><br><span class="line">#### files generated ####</span><br><span class="line">(python37) [fenglei@localhost eukaryota]$ tree -L 1</span><br><span class="line">.</span><br><span class="line">├── busco_1816363720.log</span><br><span class="line">├── busco_3672791891.log</span><br><span class="line">├── busco_downloads</span><br><span class="line">├── expected_log.txt</span><br><span class="line">├── genome.fna</span><br><span class="line">├── info.txt</span><br><span class="line">└── test_eukaryota</span><br><span class="line"></span><br><span class="line">2 directories, 5 files</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="case-study-soybean"><a class="markdownIt-Anchor" href="#case-study-soybean"></a> Case study: soybean</h3>
+<p>The genome sequence of Glycine max v4.0 <code>Gmax_508_v4.0.softmasked.fa</code> was downloaded from Phytozome database.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line">busco -i Gmax_508_v4.0.softmasked.fa -m genome -o BUSCO_soybean -c 16 --auto-lineage-euk</span><br><span class="line"></span><br><span class="line"># Running time: 10 hours. Below is the result:</span><br><span class="line"></span><br><span class="line">INFO:   </span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:98.1%[S:22.0%,D:76.1%],F:1.2%,M:0.7%,n:255     |</span><br><span class="line">        |250    Complete BUSCOs (C)                       |</span><br><span class="line">        |56     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |194    Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2      Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset fabales_odb10               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:97.7%[S:48.7%,D:49.0%],F:0.4%,M:1.9%,n:5366    |</span><br><span class="line">        |5245   Complete BUSCOs (C)                       |</span><br><span class="line">        |2615   Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |2630   Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |19     Fragmented BUSCOs (F)                     |</span><br><span class="line">        |102    Missing BUSCOs (M)                        |</span><br><span class="line">        |5366   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done. Total running time: 34378 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/05/Linux-Installation-of-Tomcat-9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/05/Linux-Installation-of-Tomcat-9/" class="post-title-link" itemprop="url">Linux | Installation of Tomcat 9, Java 8, and MySQL 5.7.20</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-05 20:42:21" itemprop="dateCreated datePublished" datetime="2021-01-05T20:42:21+08:00">2021-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-07 09:48:35" itemprop="dateModified" datetime="2021-01-07T09:48:35+08:00">2021-01-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Tomcat 服务器是一个免费的开放源代码的 Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试 JSP 程序的首选。Tomcat 是一个 JSP/Servlet 容器。其作为 Servlet 容器，有三种工作模式：独立的 Servlet 容器、进程内的 Servlet 容器和进程外的 Servlet 容器。</p>
+<p>tomcat 与 nginx、apache的区别是什么？这三者都是 web server，那他们各自有什么特点呢？他们之间的区别是什么呢？Apache Tomcat 是 Apache 基金会下的一个项目，与 Apache HTTP Server 相比，Tomcat 能够动态的生成资源并返回到客户端。Apache HTTP Server 和 Nginx 都能够将某一个文本文件的内容通过 HTTP 协议返回到客户端，但是这个文本文件的内容是固定的——也就是说无论何时、任何人访问它得到的内容都是完全相同的，这样的资源我们称之为静态资源。动态资源则与之相反，在不同的时间、不同的客户端访问得到的内容是不同的，例如：包含显示当前时间的页面显示当前IP地址的页面。（摘抄自：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32212996/answer/87524617">David</a>）</p>
+<h2 id="一-下载安装-java"><a class="markdownIt-Anchor" href="#一-下载安装-java"></a> 一、下载安装 Java</h2>
+<p>Tomcat是应用（Java）服务器，它只是一个Servlet(JSP也翻译成Servlet)容器，可以认为是Apache的扩展，但是可以独立于Apache运行。要安装 Tomcat 9，我们将需要 JAVA 8 或更高版本。 所以首先我们需要在我们的系统上安装和设置 JAVA。 您可以使用以下命令安装 JAVA。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># tomcat 9 版本需要java8以上才能支持</span><br><span class="line">cd /tmp &amp;&amp; wget --no-check-certificate --no-cookies --header &quot;Cookie: oraclelicense=accept-securebackup-cookie&quot; http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm </span><br><span class="line">rpm -ivh jdk-8u131-linux-x64.rpm</span><br><span class="line"></span><br><span class="line"># 修改环境变量：</span><br><span class="line">vi + /etc/profile </span><br><span class="line"></span><br><span class="line"># 加入下列信息</span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_131 </span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib.tools.jar </span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export JAVA_HOME CLASSPATH PATH </span><br><span class="line"></span><br><span class="line"># 保存退出之后加载环境变量</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>Optional:</p>
+<p>CentOS/RHEL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install java-1.8.0</span><br></pre></td></tr></table></figure>
+<p>Ubuntu/Debian</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install openjdk-8*</span><br></pre></td></tr></table></figure>
+<h2 id="二-linux-上安装-apache-tomcat"><a class="markdownIt-Anchor" href="#二-linux-上安装-apache-tomcat"></a> 二、Linux 上安装 Apache Tomcat</h2>
+<p>对于 Apache Tomcat 安装，我们将使用以下命令从<a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-90.cgi">官方网站</a>下载已存档的软件包，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://apache.website-solution.net/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.tar.gz</span><br><span class="line"># 一旦文件完成下载，解压缩/opt目录中的包（我们也可以使用一些其他的目录/数据等）。 在终端中运行以下命令来提取文件，</span><br><span class="line">sudo tar -xvzf pache-tomcat-8.5.23.tar.gz -C /opt</span><br><span class="line">sudo mv /opt/apache-tomcat-8.5.23/ /opt/tomcat</span><br><span class="line"># Optional: 更改tomcat目录的权限</span><br><span class="line">sudo chown -hR fenglei /opt/tomcat</span><br><span class="line">cd /opt/tomcat/bin</span><br><span class="line">sh startup.sh</span><br></pre></td></tr></table></figure>
+<p>如果上面的 startup 成功运行，会收到以下提示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Using CATALINA_BASE:   /opt/tomcat</span><br><span class="line">Using CATALINA_HOME:   /opt/tomcat</span><br><span class="line">Using CATALINA_TMPDIR: /opt/tomcat/temp</span><br><span class="line">Using JRE_HOME:        /usr</span><br><span class="line">Using CLASSPATH:       /opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar</span><br><span class="line">Using CATALINA_OPTS:   </span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
+<p>使用如下命令开放 Linux 的 8080 端口,再访问 <a target="_blank" rel="noopener" href="http://192.168.1.100:8080">http://192.168.1.100:8080</a> 即可打开一个 tomcat 网页。192.168.1.100 是 apache tomcat 服务器的 IP 地址，根据实际情况更改该地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -ptcp --dport 8080 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-1000017/eeqqalywve.jpeg?imageView2/2/w/1620" alt="tomcat初始化页面示意图" /></p>
+<p>此时在这个tomcat初始页面里，点击“Manager App”按钮会显示无法进入，需要设定conf/tomcat-users.xml文件。</p>
+<p>Tomcat 的目录结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin  # 脚本启动目录</span><br><span class="line">conf #配置文件目录</span><br><span class="line">lib  #tomcat运行的依赖包</span><br><span class="line">logs #日志文件目录</span><br><span class="line">temp #临时文件目录</span><br><span class="line">webapps  # 用来存放应用程序</span><br><span class="line">    --docs  # 文档</span><br><span class="line">    --examples # 示例</span><br><span class="line">    --host-manager # 虚拟主机web管理界面</span><br><span class="line">    --manager # 管理界面</span><br><span class="line">    --ROOT # 默认访问的应用程序</span><br><span class="line">work # 部署的Web应用程序的临时工作目录，当我们需要清除缓存的时候可以将该目录删除，然后重启动 tomcat。</span><br></pre></td></tr></table></figure>
+<p>这里有个详细的介绍。包括后面怎么连接的网页：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/operationhome/p/10021645.html">tomcat 安装以及常用配置</a></p>
+<h3 id="tomcat-9-manager-配置"><a class="markdownIt-Anchor" href="#tomcat-9-manager-配置"></a> Tomcat 9 Manager 配置</h3>
+<ol>
+<li>首先配置两种角色：</li>
+</ol>
+<p>找到 tomcat 解压目录下的 conf/tomcat-users.xml 文件，用记事本打开，如下图添加角色，自定义处我都填了 “tomcat”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;role rolename=&quot;manager-gui&quot;/&gt; </span><br><span class="line">&lt;role rolename=&quot;admin-gui&quot;/&gt; </span><br><span class="line">&lt;user username=&quot;自定义&quot; password=&quot;自定义&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190315150949838.png" alt="注意图中蓝色部分不用去掉，否则会出现 401 错误" /></p>
+<ol start="2">
+<li>更改 tomcat 目录下的 webapps\manager\META-INF/context.xml 文件</li>
+</ol>
+<p>如下图，对<Valve  /> 和<Manager  />进行注释</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">  &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;</span><br><span class="line">     allow=&quot;127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1&quot; /&gt;</span><br><span class="line">  &lt;Manager sessionAttributeValueClassNameFilter=&quot;java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap&quot;/&gt;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190315151458443.png" alt="" /></p>
+<p>然后重启 tomcat，从网页端点击 “Manager App”，就可以进入 “Tomcat Web 应用程序管理者”。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1552500/202010/1552500-20201015101304750-1675230814.png" alt="" /></p>
+<h3 id="端口设置与编码配置文件设置"><a class="markdownIt-Anchor" href="#端口设置与编码配置文件设置"></a> 端口设置与编码配置文件设置</h3>
+<p><strong>更改端口</strong></p>
+<p>编辑配置文件 server.xml，大约在第 69 行，可以将 port=“8080” 更改成我们想绑定的端口。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">       connectionTimeout=&quot;20000&quot;</span><br><span class="line">       redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>配置编码</strong></p>
+<p>为了避免程序上的一些请求和返回的中文乱码问题，我们需要配置。编辑配置文件 server.xml。</p>
+<p>大约在69行后,添加 useBodyEncodingForURI=“true” URIEncoding=“UTF-8”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               useBodyEncodingForURI=&quot;true&quot; URIEncoding=&quot;UTF-8&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="tomcat-启动与关闭"><a class="markdownIt-Anchor" href="#tomcat-启动与关闭"></a> Tomcat 启动与关闭</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 启动 tomcat</span><br><span class="line">/opt/tomcat/bin/startup.sh </span><br><span class="line">#或者</span><br><span class="line">/opt/tomcat/bin/catalina.sh start</span><br><span class="line"># </span><br><span class="line"># 关闭tomcat</span><br><span class="line">/opt/tomcat/bin/shutdown.sh</span><br><span class="line">#或者</span><br><span class="line">/opt/tomcat/bin/catalina.sh stop</span><br><span class="line">#还可以直接kill 进程号，当我们的tomcat是有用户进行访问的时候，我们杀死不了这个进程，只能通过强制杀死 kill -9</span><br><span class="line"># 查看当前的版本</span><br><span class="line">/opt/tomcat/bin/version.sh</span><br></pre></td></tr></table></figure>
+<h3 id="tomcat-部署项目"><a class="markdownIt-Anchor" href="#tomcat-部署项目"></a> Tomcat 部署项目</h3>
+<p>方法1：直接将 war 包放在 ./webapps 下，tomcat 会自动将war解压。</p>
+<p><img src="https://djxblog.oss-cn-shenzhen.aliyuncs.com/picture/tomcat%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/tomcat%20%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95%E4%B8%80.png" alt="" /></p>
+<p>方法2：更改配置文件 server.xml(官方不建议使用该方法)</p>
+<p>我们可以在 ./conf/ 目录下找到 server.xml 文件，我们需要在里面添加上我们的项目的访问路径和存放路径配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context  path=&quot;/djx&quot; docBase=&quot;/tmp/djx/&quot; reloadable=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">path 指的是 访问路径  </span><br><span class="line">docBase 指的是项目存放路径</span><br><span class="line">reloadable 设置为true表示Catalina将监视 /WEB-INF/classes/和/WEB-INF/lib的文件，一旦发生更改将自动重新加载Web应用程序。它可以在在开发的时候使用，但需要消耗更多资源，官方文档写到不建议在生产环境上使用，所以它的默认值是false.</span><br><span class="line">8.0版本文档</span><br><span class="line">Set to true if you want Catalina to monitor classes in /WEB-INF/classes/ and /WEB-INF/lib for changes, and automatically reload the web application if a change is detected. This feature is very useful during application development, but it requires significant runtime overhead and is not recommended for use on deployed production applications. That&#x27;s why the default setting for this attribute is false. You can use the Manager web application, however, to trigger reloads of deployed applications on demand.</span><br></pre></td></tr></table></figure>
+<p>配置示例：<br />
+<img src="https://djxblog.oss-cn-shenzhen.aliyuncs.com/picture/tomcat%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/tomcat%20%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95%E4%BA%8C.png" alt="" /></p>
+<p>方法3：使用xml配置文件(建议方法)</p>
+<p>在 ./conf/Catalina/localhost/ 下添加xml配置文件。示例：我要让 /tmp/www/ 里的网站部署在tomcat上 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  djx.xml    # 文件的名称也就是我们后面访问时要在ip端口加的后缀</span><br></pre></td></tr></table></figure>
+<p>编辑 djx.xml 内容如下，docBase 后面填入项目的路径 /var/www/html/jbrowse/，这是我之前安装JBrowser的路径，路径下有 index.html 文件和一堆其他文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context  docBase=&quot;/var/www/html/jbrowse/&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>然后我们重启tomcat，然后在浏览器 192.168.1.198/djx/访问的文件名 即可访问到我们的项目文件了。<br />
+（原来JBrowser放在Tomcat上面也是一样的可以用于浏览。）</p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003184221.jpg?w=1024" alt="" /></p>
+<h3 id="设置开机启动-tomcat"><a class="markdownIt-Anchor" href="#设置开机启动-tomcat"></a> 设置开机启动 Tomcat</h3>
+<p>服务器关机重启的时候，服务不能随计算机的启动而自己启动，那么我们可以将 tomcat 服务设置为开机启动。</p>
+<p>打开 Linux 设置开机启动的文件，将下面的配置文件写入此文件的最后，注意，是文件的最后，以后若还要增加其他开机启动，只能加在这前面，总之一句话，要保持下面这句话一直在文件的最后。</p>
+<p>打开开机启动文件 <code>/etc/rc.d/rc.local</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
+<p>添加如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># java配置 环境变量。根据自己的实际情况修改路径和软件版本号</span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_161</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"># tomcat 配置环境变量，根据自己的实际情况修改路径</span><br><span class="line">export CATALINA_HOME=/usr/local/tomcat7</span><br><span class="line"># tomcat自启动</span><br><span class="line">/opt/tomcat/bin/startup.sh</span><br></pre></td></tr></table></figure>
+<p>Tomcat依赖于Java的jdk，所以jdk也同步导入。完成上面的步骤之后可以将CentOS关机重启检查一下。</p>
+<h2 id="三-安装-mysql"><a class="markdownIt-Anchor" href="#三-安装-mysql"></a> 三、安装 MySQL</h2>
+<p>Linux 系统（CentOS7）安装 mysql (5.7.25)</p>
+<p><strong>卸载centos7自带的 MariaDB</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep mariadb  // 查询出来已安装的mariadb</span><br><span class="line"># 删除查询出来的mariadb</span><br><span class="line">rpm -e --nodeps mariadb-5.5.64-1.el7.x86_64</span><br><span class="line">rpm -e --nodeps mariadb-libs-5.5.64-1.el7.x86_64</span><br><span class="line">rpm -e --nodeps mariadb-server-5.5.64-1.el7.x86_64</span><br><span class="line"># 安装依赖</span><br><span class="line">yum -y install numactl.x86_64</span><br></pre></td></tr></table></figure>
+<p><strong>MySQL依赖libaio，所以安装libaio</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+<p><strong>检查MySQL是否安装</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep mysql</span><br></pre></td></tr></table></figure>
+<p>如果已安装，先卸载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mysql-libs.x86_64</span><br></pre></td></tr></table></figure>
+<p>检查其他方式安装的 mysql</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
+<p>有的话，通过 <code>rpm -e</code> 命令，或者 <code>rpm -e --nodeps</code> 命令来卸载掉。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mysql 检查出的名称　　#普通删除模式</span><br><span class="line">rpm -e --nodeps 检查出的名称　　#强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除</span><br></pre></td></tr></table></figure>
+<p>在删除完以后我们可以通过 <code>rpm -qa | grep mysql</code> 命令来查看 mysql 是否已经卸载成功！！</p>
+<p><strong>安装 MySQL</strong></p>
+<p>进入MySQL下载官网，下载页面：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a>，选择 MySQL Community Server 下的 Linux generic 版本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 下载 mysql </span><br><span class="line">wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line"># 在/usr/local/中解压压缩包，并改名为mysql</span><br><span class="line">cd /usr/local/</span><br><span class="line">tar -xzvf /data/software/mysql-5.7.13-linux-glibc2.5-x86_64.tar.gz (我的下载目录为 data/software)</span><br><span class="line">mv mysql-5.7.13-linux-glibc2.5-x86_64 mysql</span><br><span class="line"></span><br><span class="line"># 创建数据文件存放目录, 进入mysql目录，新建data目录</span><br><span class="line">cd /usr/local/mysql</span><br><span class="line">mkdir data</span><br><span class="line"></span><br><span class="line"># 创建用户组mysql，创建用户mysql并将其添加到用户组mysql中，并赋予读写权限</span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line">chown -R mysql mysql/</span><br><span class="line">chgrp -R mysql mysql/</span><br><span class="line"></span><br><span class="line"># 修改当前目录权限</span><br><span class="line">chown -R mysql:mysql /usr/local/mysql</span><br></pre></td></tr></table></figure>
+<p><strong>初始化数据库</strong></p>
+<p>注：可以先按照下文配置 my.cnf，再初始化数据库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/bin       //进入bin目录</span><br><span class="line">./mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data</span><br></pre></td></tr></table></figure>
+<p>注意屏幕上的输出，包含了密码信息。摘抄如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data</span><br><span class="line">2021-01-06T03:34:49.698565Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).</span><br><span class="line">2021-01-06T03:34:51.569548Z 0 [Warning] InnoDB: New log files created, LSN=45790</span><br><span class="line">2021-01-06T03:34:52.006540Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.</span><br><span class="line">2021-01-06T03:34:52.194069Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 22e1b266-4fd0-11eb-81c9-989096c937ac.</span><br><span class="line">2021-01-06T03:34:52.218950Z 0 [Warning] Gtid table is not ready to be used. Table &#x27;mysql.gtid_executed&#x27; cannot be opened.</span><br><span class="line">2021-01-06T03:34:52.219393Z 1 [Note] A temporary password is generated for root@localhost: /-hyrfM3Huy&lt;</span><br></pre></td></tr></table></figure>
+<p><strong>配置my.cnf</strong><br />
+find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.cnf，写入以下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">#不区分大小写 </span><br><span class="line">lower_case_table_names = 1</span><br><span class="line">#不开启sql严格模式</span><br><span class="line">sql_mode = &quot;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&quot;</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/usr/local/mysql/data/mysqld.pid</span><br></pre></td></tr></table></figure>
+<p><strong>添加开机自启</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/support-files</span><br><span class="line">cp mysql.server /etc/init.d/mysqld</span><br><span class="line">chkconfig --add mysqld</span><br></pre></td></tr></table></figure>
+<p>chkconfig是管理系统服务(service)的命令行工具。所谓系统服务(service)，就是随系统启动而启动，随系统关闭而关闭的程序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br></pre></td></tr></table></figure>
+<p>检查是否添加成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# chkconfig --list mysqld</span><br><span class="line"></span><br><span class="line">Note: This output shows SysV services only and does not include native</span><br><span class="line">      systemd services. SysV configuration data might be overridden by native</span><br><span class="line">      systemd configuration.</span><br><span class="line"></span><br><span class="line">      If you want to list systemd services use &#x27;systemctl list-unit-files&#x27;.</span><br><span class="line">      To see services enabled on particular target use</span><br><span class="line">      &#x27;systemctl list-dependencies [target]&#x27;.</span><br><span class="line"></span><br><span class="line">mysqld          0:off   1:off   2:on    3:on    4:on    5:on    6:off</span><br></pre></td></tr></table></figure>
+<p><strong>关闭与启动 MySQL</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/support-files/mysql.server stop</span><br><span class="line"># 屏幕显示：Shutting down MySQL.. SUCCESS!</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/support-files/mysql.server start</span><br><span class="line"># 屏幕显示：Starting MySQL. SUCCESS!</span><br><span class="line"></span><br><span class="line"># 查看 MySQL 状态</span><br><span class="line">/usr/local/mysql/support-files/mysql.server status</span><br><span class="line"># 屏幕显示：SUCCESS! MySQL running (15291)</span><br></pre></td></tr></table></figure>
+<p>也可以使用 service mysqld 命令启动/停止服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 5.0版本：</span><br><span class="line">service mysqld status</span><br><span class="line">service mysqld start</span><br><span class="line">service mysqld stop</span><br><span class="line">service mysqld restart</span><br></pre></td></tr></table></figure>
+<p><strong>修改root本地登录密码</strong></p>
+<p>上文配置my.cnf操作是在MySQL初始化之后，所以初始化MySQL的时候密码输出在屏幕上。如果配置my.cnf在MySQL初始化之前，密码会保存至 /var/log/mysqld.log 中。</p>
+<p>mysql安装完成之后，在 /var/log/mysqld.log 文件中给root生成了一个默认密码。通过下面的方式找到root默认密码，然后登录mysql进行修改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &#x27;temporary password&#x27; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<p>到这里终于可以登陆进入mysql了，摘抄如下。（备注：一开始没有卸载 Centos 7 自带的 mariadb，运行<code>mysql -uroot -p</code>命令根本不是启动新安装的MySQL，难怪输入密码一直报错。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost support-files]# /usr/local/mysql/bin/mysql -uroot -p     </span><br><span class="line">Enter password: </span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 3</span><br><span class="line">Server version: 5.7.20</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; </span><br></pre></td></tr></table></figure>
+<p>登录之后修改密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/bin/</span><br><span class="line">./mysql -uroot -p</span><br><span class="line"></span><br><span class="line">按照屏幕提示输入默认密码，即可登录。登录后可用下面的命令修改成新密码，以 MyNewPass4! 为例</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;新密码&#x27;;</span><br><span class="line"># e.g. ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;MyNewPass4!&#x27;;</span><br><span class="line">flush privileges; </span><br><span class="line"># 刷新权限，之后退出可用新密码重新登录</span><br></pre></td></tr></table></figure>
+<p>也可以用下面这种方法修改密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set password for &#x27;root&#x27;@&#x27;localhost&#x27;=password(&#x27;MyNewPass4!&#x27;);</span><br></pre></td></tr></table></figure>
+<p><strong>创建用户并授权</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 添加用户允许其在任意地址登录</span><br><span class="line">CREATE USER &#x27;dog&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;; </span><br><span class="line"></span><br><span class="line">#授予所有库的所有权限 </span><br><span class="line">GRANT ALL PRIVILEGES ON  *.* TO &#x27;dog&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line"></span><br><span class="line"># 刷新权限</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<h2 id="四-发布项目"><a class="markdownIt-Anchor" href="#四-发布项目"></a> 四、发布项目</h2>
+<p>将项目文件放到 /usr/local/tomcat7/webapps 文件夹下即可通过 110.120.18.18:8080 访问。</p>
+<p>默认端口是8080，可以在 /usr/local/tomcat7/conf/server.xml 中进行修改。</p>
+<p>找到如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>将8080改为80，即可直接通过 110.120.18.18 访问，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;80&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>参考资料</strong><br />
+1 <a target="_blank" rel="noopener" href="https://blog.csdn.net/dvdstd/article/details/88575025">Tomcat 9 Manager 配置</a><br />
+2 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/operationhome/p/10021645.html">tomcat 安装以及常用配置</a><br />
+3 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/97003">Apache Tomcat 安装</a><br />
+4 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1538210">Linux 安装 JDK+Tomcat+MySQL 及发布项目教程</a><br />
+5 <a target="_blank" rel="noopener" href="https://blog.csdn.net/lanyang123456/article/details/54695567">系统服务管理工具 chkconfig 使用说明</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/04/Visualization-Remove-Background-from-Image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/04/Visualization-Remove-Background-from-Image/" class="post-title-link" itemprop="url">Remove Background from Image</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-04 09:33:30" itemprop="dateCreated datePublished" datetime="2021-01-04T09:33:30+08:00">2021-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-05 21:02:29" itemprop="dateModified" datetime="2021-01-05T21:02:29+08:00">2021-01-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Visualization/" itemprop="url" rel="index"><span itemprop="name">Visualization</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>没有扫描仪的情况下，往往会用手机拍摄文档照片，但是其背景通常是不均匀的灰色，不适合打印/复印。如何通过调整使背景变成白色或接近白色？</p>
+<p>对于背景均匀的情况，在 PS 中用 ctrl+L 调整色阶或者曲线就可以满足要求。但是受到拍照的时候光线的原因，照片的背景颜色一般会深浅不一，而且手机拍摄的照片往往会有畸变。</p>
+<p>下面记录一实用的办法：“高斯模糊”配合“划分”模式做出扫描的效果</p>
+<ol>
+<li>PS 打开图片文件。由于手机拍摄的照片角度可能不够理想，往往使文档有一定畸变，如果需要调整，选中左侧工具栏“剪裁工具”里面有一个“透视剪裁工具”，鼠标左键依次单击文档的四角，按下回车键，就可以把“透视”一定程度上矫正回来。</li>
+<li>crtl+J复制一个图层出来，点击菜单栏：滤镜 -&gt; 模糊 -&gt; 高斯模糊，参数输入100，点击确定。此时视野中的图片变成了模糊的一片。</li>
+<li>软件右下角图层设置区域，“不透明度”字样左边有个“正常”字样，将其重设为“划分”。此时视野中的图片背景变成了白色，文字颜色深灰色。</li>
+<li>按下Ctrl+Alt+Shift+E，盖印一个图层。把之前的图层合并成另一新图层。再将其复制新图层，右下角图层栏目下“正常”模式更改成“颜色加深”，即可看到文字从深灰色变成黑色。</li>
+</ol>
+<p>参考资料：B 站有一个视频教学：<a target="_blank" rel="noopener" href="https://www.bilibili.com/s/video/BV1i7411Z718">https://www.bilibili.com/s/video/BV1i7411Z718</a></p>
+<p><img src="https://199508.com/wp-content/uploads/2016/03/31db1439868311.jpg" alt="复制图层" /><br />
+<img src="https://199508.com/wp-content/uploads/2016/03/be261439868309.jpg" alt="高斯模糊" /><br />
+<img src="https://199508.com/wp-content/uploads/2016/03/ac5a1439868306.jpg" alt="划分" /><br />
+<img src="https://pic2.zhimg.com/80/v2-b7fd16a3ea91d8285cb903aede434689_720w.jpg?source=1940ef5c" alt="效果图（其实可以更好）" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/Linux-Using-Nginx-to-host-Hexo-blog-in-PC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/01/Linux-Using-Nginx-to-host-Hexo-blog-in-PC/" class="post-title-link" itemprop="url">在Linux服务器上使用Nginx部署Hexo站点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-01 14:14:56" itemprop="dateCreated datePublished" datetime="2021-01-01T14:14:56+08:00">2021-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-05 21:04:36" itemprop="dateModified" datetime="2021-01-05T21:04:36+08:00">2021-01-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前，我在内网的 Linux 计算机上通过使用 Nginx（web服务器），然后安装了 JBrowse 基因组浏览器，从而可以使基因组数据以 web 页面形式展示出来。通过内网其他电脑的浏览器访问 Linux 计算机的 IP 地址即可浏览基因组数据。由于没有设置外网IP，外网是不能访问的。</p>
+<p>后来，由于尝试个人博客，我在 github 网站上通过 hexo（一种博客框架）搭建了自己的博客。这个博客可以在互联网访问，但是由于托管在 GitHub 仓库，所以有空间限制，不能上传太多大文件到仓库的。</p>
+<p>最近买了一个虚拟主机（VPS），其实就是一个具有公网 IP 的 Linux 服务器。理论上，这台虚拟主机也可以用来自建一个 web 服务器，并建立个人博客或网站。下面是实践过程。</p>
+<h3 id="一-在虚拟主机上安装-nginx-web服务器"><a class="markdownIt-Anchor" href="#一-在虚拟主机上安装-nginx-web服务器"></a> 一、在虚拟主机上安装 Nginx （web服务器）</h3>
+<p>虚拟主机是在 vultr 购买的。基本配置是 CPU: 1 vCore；RAM: 1024 MB； Storage: 25 GB SSD；Bandwidth: 0.26 GB of 1000 GB；OS: CentOS SELinux 8 x64。</p>
+<p><strong>Nginx安装</strong></p>
+<p>以root用户登陆服务器，新建目录<code>/usr/local/nginx</code>。</p>
+<p>Nginx 安装包下载地址：<a target="_blank" rel="noopener" href="http://nginx.org/download/">http://nginx.org/download/</a>，我选了 <a target="_blank" rel="noopener" href="http://nginx.org/download/nginx-1.19.6.tar.gz">nginx-1.19.6.tar.gz</a>。</p>
+<p>安装步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx</span><br><span class="line">wget http://nginx.org/download/nginx-1.19.6.tar.gz</span><br><span class="line">tar -zxvf nginx-1.19.6.tar.gz</span><br><span class="line">cd nginx-1.19.6</span><br><span class="line">./configure --user=fenglei --group=fenglei --prefix=/usr/local/nginx/</span><br><span class="line"># 或者 ./configure --prefix=/usr/local/nginx/</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>备注：由于是新购买的主机，很多依赖软件没有安装，上面 <code>configure</code> 和 <code>make</code> 的过程中遇到系统报错信息，安装对应的编译工具就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc</span><br><span class="line">yum -y install gcc-c++</span><br><span class="line">yum -y install openssl openssl-devel</span><br><span class="line">yum -y install pcre-devel</span><br><span class="line">#useradd fenglei</span><br><span class="line">yum -y install automake autoconf libtool make</span><br></pre></td></tr></table></figure>
+<p><strong>Nginx启动、关闭、重启</strong></p>
+<p>执行下方的 <code>nginx -s reload</code> 命令，即启动 Nginx web 服务器，理论上就可以在任何位置访问到这个 nginx 的初始网页，比如在其他 PC 或手机浏览器输入 <a href="http://123.456.78.89:80">http://123.456.78.89:80</a>，会看到一个如下图所示的静态网页。Nginx 配置文件中默认端口号是 80，如果 80 端口被其他应用占用，就需要更改 nginx 端口号。</p>
+<p>更改端口号或者其他相关的配置需要修改 nginx 的配置文件：<code>/usr/local/nginx/conf/nginx.conf</code>，root 权限下 vim 这个配置文件，在 http 内容里面加入下面的文字。端口号可以自己设置，比如 8080、8082 等。location 字样则表示指向主页文件，比如我之前的 JBrowse 浏览器就设定为<code>/var/www/html/jbrowse/index.html</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 停止运行 nginx </span><br><span class="line">/usr/local/nginx/sbin/nginx -s stop  </span><br><span class="line"></span><br><span class="line"># 重启（reload）如果报错，就要先输入下面的命令`</span><br><span class="line">/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf  </span><br><span class="line"></span><br><span class="line"># 重启 nginx</span><br><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<p><img src="https://genehub.files.wordpress.com/2020/10/nginx-default-page.jpg?w=834" alt="nginx初始页面示例" /></p>
+<h3 id="二-安装-nodejs"><a class="markdownIt-Anchor" href="#二-安装-nodejs"></a> 二、安装 Node.js</h3>
+<p>Node.js 是什么？<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/33578075/answer/122448279">某网站</a>的解释是：Node.js 是一项服务器技术。我们都知道客户端提出服务请求，而服务器端负责处理请求并提供服务。而对于互联网来说，在Node.js 之前 JavaScript 是一项完全的客户端技术，被用于浏览器中实现各种动画，对 DOM 的操作等等。而后端，即服务端则是由 PHP、Python、Ruby、Java 等等语言来实现。Node.js 的出现，使得前后端使用同一种语言，统一模型的梦想得以实现。</p>
+<p>npm 是随同 Node.js 一起安装的包管理工具，能解决 Node.js 代码部署上的很多问题，常见的使用场景有以下几种：允许用户从NPM服务器下载别人编写的第三方包到本地使用；允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用；允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</p>
+<p>Node.js 软件包下载 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz">https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz</a></p>
+<p>按照下方命令行下载之，直接解压，没有编译步骤。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/local/app</span><br><span class="line">cd /usr/local/app</span><br><span class="line">https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz</span><br><span class="line">tar -xvJf node-v8.11.1-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
+<p>解压目录里面会包含bin目录（node，npm，npx 三个程序），将 bin 目录路径加入环境变量（.bashrc）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/app/node-v12.18.4-linux-x64/bin:$PATH</span><br><span class="line"># source ~/.bashrc 之后即可测试 node -h 与 npm -h，均可以运行。</span><br></pre></td></tr></table></figure>
+<p>测试安装是否成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node --version</span><br><span class="line">npm --version</span><br></pre></td></tr></table></figure>
+<h3 id="三-安装-hexo-博客框架"><a class="markdownIt-Anchor" href="#三-安装-hexo-博客框架"></a> 三、安装 Hexo （博客框架）</h3>
+<p>在虚拟机上直接用 npm 安装 hexo。（什么情况下需要：sudo yum install git-core）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo --version  # 测试是否安装成功</span><br></pre></td></tr></table></figure>
+<p>新建hexo项目</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd  /usr/local/app # 设置新建web项目所在路径</span><br><span class="line">hexo init hexo     # 初始化新建一个项目名称，随便起名 hexo init myname 都可以</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>通过 <code>Hexo g</code> 命令生成的静态站点，Hexo 站点目录中将出现一个 public 文件夹。如下方代码块所示。将新生成的静态站点（也就是 public/ 目录），拷贝至 nginx 目录下的 html 文件夹中。然后修改Nginx配置文件 nginx.conf，只修改 root 字段为 public 目录，其他地方都不变（参考下面的代码块所示例），然后重新加载 nginx，执行 <code>nginx -s reload</code>，重新访问 <a href="http://123.456.78.89:8000">http://123.456.78.89:8000</a>，就可以看到 Hexo 静态站点了。这里要注意浏览器缓存的问题，另外应该也可以不用将 public 拷贝到 <code>/usr/local/nginx/html/</code>，直接将 location 定义成绝对路径（/usr/local/app/hexo/public/）可能也能访问。</p>
+<p>执行 <code>tree -l 1 /usr/local/app/hexo</code> 可见到其目录下包含的文件列表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/app/hexo/</span><br><span class="line">├── _config.landscape.yml</span><br><span class="line">├── _config.yml</span><br><span class="line">├── db.json</span><br><span class="line">├── node_modules</span><br><span class="line">├── package.json</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── public</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+<p><code>/usr/local/nginx/conf/nginx.conf</code> 配置文件中的部分内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       8000;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #charset koi8-r;</span><br><span class="line"></span><br><span class="line">    #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   html/public;</span><br><span class="line">        index  index.html;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>至此就可以看到 Hexo 的静态站点了。就是下图所示的界面。</p>
+<p><img src="https://websiteforstudents.com/wp-content/uploads/2019/02/hexo_ubuntu_install.png" alt="Hexo 初始页面示意图" /></p>
+<p>Hexo 提供 <code>hexo s</code> 命令来实时查看页面，如果在服务器端启动 <code>hexo s</code>，在浏览器中同样也可以通过服务器 IP 来访问站点，并且能实时显示当前状态。但是，<code>hexo s</code> 效率低，只适合在线调试，不适合作为站点访问。更新的时候，需要使用 <code>hexo g</code> 命令重新生成站点，然后将更新后的 public 目录拷贝到 nginx 目录中 html 文件夹下即可。</p>
+<h3 id="四-更改网站主题"><a class="markdownIt-Anchor" href="#四-更改网站主题"></a> 四、更改网站主题</h3>
+<p>Hexo 有大量个性化主题，我在 GitHub 博客用的 ，因为简洁轻便，所以在访问博客的时候加载快速，又因为它自动适应不同设备，在电脑、Pad 或手机访问均能良好展示，我非常中意。这次测试 Academia 主题，是一个学术主题，例如展示实验室课题组，或者研究人员个人主页。该主题网址：<a target="_blank" rel="noopener" href="https://phosphorw.github.io/">https://phosphorw.github.io/</a></p>
+<p>The simplest way to install is to clone the entire repository:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/PhosphorW/hexo-theme-academia.git themes/Academia</span><br></pre></td></tr></table></figure>
+<p>Some required renderers:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure>
+<p>Set theme in hexo work folder’s _config.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: Academia</span><br></pre></td></tr></table></figure>
+<p>以上就是安装 Academia 主题的最基本操作，设置 hexo 的 _config.yml 之后，执行 <code>hexo</code> 更新 public 文件夹，再将 public/ 拷贝到 Nginx 安装目录的 html 下面。就可以看到新主题了（类似下图），内容区域还是个空白的，需要参考 Academia 的说明书进行添加页面。</p>
+<p><img src="https://raw.githubusercontent.com/PhosphorW/phower-img-folder/master/hexo-theme-academia_mockup.jpg" alt="Academia 示意图" /></p>
+<h3 id="五-参考资料"><a class="markdownIt-Anchor" href="#五-参考资料"></a> 五、参考资料</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://bioinfx.github.io/2020/10/03/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8-jbrowse-%E5%AE%89%E8%A3%85%EF%BC%88%E5%9F%BA%E4%BA%8E-nginx-%E7%9A%84-web-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89/">基因组浏览器 JBrowse 安装（基于 Nginx 的 Web 服务器）</a></li>
+<li><a target="_blank" rel="noopener" href="https://genehub.wordpress.com/2020/12/07/%e4%bd%bf%e7%94%a8-github-hexo-%e5%bb%ba%e7%ab%8b%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2/">使用 GitHub + Hexo 建立个人博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/31eb5c754c01">使用Nginx部署Hexo站点</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009723457">使用Nginx+Hexo光速搭建博客并实现服务器自动部署</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/t8116189520/article/details/81909574">LINUX安装nginx详细步骤</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/29/Linux-Using-Modules-to-manage-env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/29/Linux-Using-Modules-to-manage-env/" class="post-title-link" itemprop="url">Linux：使用Environment Modules管理环境变量</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-29 09:28:19 / Modified: 16:28:52" itemprop="dateCreated datePublished" datetime="2020-12-29T09:28:19+08:00">2020-12-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Modules简介：生信分析中需要运用大量分析软件，往往软件有不同版本，如何调用特定版本的软件？比如可以用绝对路径直接调用、设定<code>export PATH</code>、conda（<code>source activate xxx</code>）等方式。在一个博客（<a target="_blank" rel="noopener" href="https://bioinformaticsworkbook.org/dataAnalysis/GenomeAssembly/Hybrid/Juicer_Juicebox_3dDNA_pipeline.html#gsc.tab=0">Genome scaffolding</a>）看到通过 <code>module load</code> 命令调用特定版本的软件的做法，学习记录如下。</p>
+<p>超级计算机的硬件设施和应用软件，分别是整个超算系统的最底层和最顶层，在它们之间，还存在着我们称之为软件栈（software stack）的系统软件：包括编译器、并行运行环境、作业调度系统、性能分析和调试工具等等。一般较为成熟的超算平台，都必备多种版本、不同种类的编译器、MPI 库，以及数学库等；并在此基础之上，进行各类应用软件的编译与环境配置。于普通使用者而言，因使用需求的变化，其所需的使用场景也不尽相同。若用户自行配置，则可能因为对命令行操作生疏等原因，导致环境变量配置出错，学习成本高，影响使用效率。</p>
+<p>Environment module 工具，常用于高性能计算集群（即HPC ：High Perfermance Computing ）的环境配置管理上。它可以将软件编译器，MPI库，数学库、应用软件（计算类软件、分析类软件等）等，以模块的方式，统一到一个框架下，使得用户可以动态切换环境变量，便捷高效。且由于很多资源调度软件，如LSF、PBS、MOAB等，可以通过脚本文件来提交作业。所以，module工具同样可以在shell scripts中使用。</p>
+<p>若要充分发挥Environment module 工具的功用，只需要记住两点即可:</p>
 <ul>
-<li>HiRise: 2015年后的GitHub就不再更新</li></div><p class="readmore"><a href="/2020/12/15/Hi-C%EF%BC%9A3d-dna%E6%8C%82%E8%BD%BD%E6%9F%93%E8%89%B2%E4%BD%93/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/15/%E4%B8%80%E4%BA%9BFASTA-FASTQ%E5%BA%8F%E5%88%97%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/">一些FASTA/FASTQ序列处理工具</a></h1><div class="post-meta">2020-12-15</div><div class="post-content"><p>序列分析的常见操作包括：序列长度统计（包括总长度、N50 length等），序列提取（根据序列名称或ID、根据序列坐标范围），序列格式转换（fasta-&gt;tab，调整fasta每行碱基数，序列翻转），序列重新命名，序列重新排序，序列切割与重新组合。下面的几个工具就像瑞士军刀一样灵活，基本能满足这些分析需求。</p></div><p class="readmore"><a href="/2020/12/15/%E4%B8%80%E4%BA%9BFASTA-FASTQ%E5%BA%8F%E5%88%97%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/12/%E5%A4%A7%E8%B1%86%E4%BA%A7%E4%B8%9A%E7%8E%B0%E7%8A%B6/">大豆产业现状</a></h1><div class="post-meta">2020-12-12</div><div class="post-content"><p>全球大豆年产量 <a target="_blank" rel="noopener" href="http://www.mczx.agri.cn/scts/gxyb/201910/t20191008_7206083.htm">3.42 亿吨</a>，主要为表中的6个国家生产。2019年全年，中国大豆播种面积 <a target="_blank" rel="noopener" href="http://www.stats.gov.cn/tjsj/zxfb/201912/t20191206_1716156.html">1.40 亿亩</a>（约 2300 万英亩，或 9.33 万平方公里，或 933 万公顷），产量 <a target="_blank" rel="noopener" href="http://www.cngrain.com/Publish/1/660407.html">1810 万吨</a>。中国 2019 年进口大豆  <a target="_blank" rel="noopener" href="https://www.thepaper.cn/newsDetail_forward_6206738">8851 万吨</a>，从巴西、美国、阿根廷三国进口大豆比例分别为 <a target="_blank" rel="noopener" href="http://pdf.dfcfw.com/pdf/H3_AP202004121377900207_1.PDF">65.1%、19.1%、9.9%</a>。也就是说，2019年全年中国自产加进口的大豆总量是 10661 万吨，占世界全年产量的 31.17%。</p></div><p class="readmore"><a href="/2020/12/12/%E5%A4%A7%E8%B1%86%E4%BA%A7%E4%B8%9A%E7%8E%B0%E7%8A%B6/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/07/1st_post/">My Fast HexoPages</a></h1><div class="post-meta">2020-12-07</div><div class="post-content"><p>abstract</p></div><p class="readmore"><a href="/2020/12/07/1st_post/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/07/hello-world/">Hello World</a></h1><div class="post-meta">2020-12-07</div><div class="post-content"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p></div><p class="readmore"><a href="/2020/12/07/hello-world/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/06/%E5%AE%89%E8%A3%85hic-pro/">安装HiC-Pro （HiC数据预处理工具）与绘制HiC染色体互作图谱</a></h1><div class="post-meta">2020-12-06</div><div class="post-content"><p>HiC-Pro可以用来处理Hi-C数据，从原始的fastq文件(配对端Illumina数据)到标准化的交互图谱。简单的来说就是将Hi-C数据比对到拼装好的参考基因组上，并形成交互文件去存储Hi-C数据。</p>
-<p>下载 HiC-Pro VERSION 2.11.4 安装包，依赖 Python 2。（后续更新：HiC-Pro version 3.0.0 要求 Python 3）</p></div><p class="readmore"><a href="/2020/12/06/%E5%AE%89%E8%A3%85hic-pro/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/05/%E4%B8%A4%E4%B8%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BA%92%E6%AF%94%E8%BE%83%EF%BC%9Amummer/">两个基因组序列相互比较：Mummer</a></h1><div class="post-meta">2020-12-05</div><div class="post-content"><p>直接对两个基因组进行比较，用Mummer：</p>
-<p>例如，将细菌1（H_pyloriJ99_Eslice.fasta）与细菌2（H_pylori26695_Eslice.fasta）进行比较：</p>
-<p>mummer -mum -b -c H_pylori26695_Eslice.fasta H_pyloriJ99_Eslice.fasta &gt; mummer.mums<br>mummerplot -x [0,275287] -y [0,265111] -postscript -p mummer mummer.mums</p></div><p class="readmore"><a href="/2020/12/05/%E4%B8%A4%E4%B8%AA%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%BA%8F%E5%88%97%E7%9B%B8%E4%BA%92%E6%AF%94%E8%BE%83%EF%BC%9Amummer/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/12/05/shell%E8%84%9A%E6%9C%AC%E5%92%8Cperl%E8%84%9A%E6%9C%AC%E7%9A%84%E6%AE%B5%E6%B3%A8%E9%87%8A/">shell脚本和perl脚本的段注释</a></h1><div class="post-meta">2020-12-05</div><div class="post-content"><p>shell脚本段注释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash </span><br><span class="line">echo &quot;Say Something&quot; </span><br><span class="line">&lt;&lt;COMMENT     </span><br><span class="line">  your comment 1     </span><br><span class="line">  comment 2     </span><br><span class="line">  blah </span><br><span class="line">COMMENT </span><br><span class="line">echo &quot;Do something else&quot;</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2020/12/05/shell%E8%84%9A%E6%9C%AC%E5%92%8Cperl%E8%84%9A%E6%9C%AC%E7%9A%84%E6%AE%B5%E6%B3%A8%E9%87%8A/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/11/16/R%EF%BC%9Acorrplot-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5-/">R：corrplot 相关系数矩阵</a></h1><div class="post-meta">2020-11-16</div><div class="post-content"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">install.packages(&quot;corrplot&quot;)</span><br><span class="line">library(&quot;corrplot&quot;)</span><br><span class="line">M &#x3D; cor(mtcars)</span><br><span class="line">#corrplot(M, order &#x3D; &quot;hclust&quot;, addrect &#x3D; 2)</span><br><span class="line">#head(mtcars)</span><br><span class="line">#</span><br><span class="line">#corrplot(M, order &#x3D; &quot;hclust&quot;, addrect &#x3D; 2)</span><br><span class="line"># 只需要下半部分三角形</span><br><span class="line">corrplot(M, order &#x3D; &quot;hclust&quot;, addrect &#x3D; 2, type&#x3D;&quot;lower&quot;)</span><br></pre></td></tr></table></figure></div><p class="readmore"><a href="/2020/11/16/R%EF%BC%9Acorrplot-%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5-/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2020/11/16/R%EF%BC%9A%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0-/">R：经验分布函数</a></h1><div class="post-meta">2020-11-16</div><div class="post-content"><p>经验分布函数（Empirical cumulative distribution (ECDF)），是统计学中一个与样本<strong>经验</strong>测度有关的<strong>分布函数</strong>。 该累积<strong>分布函数</strong>是在所有n个数据点上都跳跃 1/n的阶跃<strong>函数</strong>。 对被测变量的某个值而言，该值的<strong>分布函数</strong>值表示所有观测样本中小于或等于该值的样本所占的比例。</p></div><p class="readmore"><a href="/2020/11/16/R%EF%BC%9A%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0-/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/3/">Previous</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/5/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<li>编写modulefiles，将应用软件所需的环境变量等写入其中，配置成模块。</li>
+<li>使用module command(s)，动态调用已经配置好的模块。</li>
+</ul>
+<h3 id="安装-modules"><a class="markdownIt-Anchor" href="#安装-modules"></a> 安装 modules</h3>
+<p>操作系统版本 <code>cat /etc/redhat-release</code>可知 <code>CentOS Linux release 7.7.1908 (Core)</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/cea-hpc/modules.git</span><br><span class="line">cd modules</span><br><span class="line">./configure --prefix=/home/fenglei/local</span><br><span class="line"># ./configure --prefix=/opt/modules/modules421 #指定安装目录为/opt/modules/modules421</span><br><span class="line">make </span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">NOTICE: Modules installation is complete.</span><br><span class="line">        Please read the &#x27;Configuration&#x27; section in INSTALL guide to learn</span><br><span class="line">        how to adapt your installation and make it fit your needs.</span><br></pre></td></tr></table></figure>
+<p>备注：一开始编译失败，升级gcc之后可以编译通过，成功安装Modules。</p>
+<p>系统自带的旧版gcc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/bin/gcc --version</span><br><span class="line">gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-44)</span><br><span class="line">Copyright (C) 2015 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+<p>安装在个人目录下的新版gcc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">~/local/gcc-10.2.0/bin/gcc --version</span><br><span class="line">gcc (GCC) 10.2.0</span><br><span class="line">Copyright (C) 2020 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+<p>为了保证用户在登录服务器的时候，能够调用module，你得现将module的初始化脚本（modules.sh和modules.csh，就在上面configure --prefix=xxx命令指定的安装目录位置，不是最初的git clone那个目录）软链接到/etc/profiled.d目录下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 设置软链接，实现登录启动modules工具</span><br><span class="line">sudo ln -s /home/fenglei/local/init/profile.sh /etc/profile.d/modules.sh</span><br><span class="line">sudo ln -s /home/fenglei/local/init/profile.csh /etc/profile.d/modules.csh</span><br><span class="line">#sudo ln -s /home/fenglei/local/app/modules/init/profile.sh /etc/profile.d/modules.sh</span><br><span class="line">#sudo ln -s /home/fenglei/local/app/modules/init/profile.csh /etc/profile.d/modules.csh</span><br><span class="line">source /etc/profile #或重新登录命令行界面之后，则可以使用module 的一系列命令</span><br></pre></td></tr></table></figure>
+<p>这样子每个用户在登录服务器的时候，shell会先执行/etc/profile，而/etc/profile的任务之一就是执行/etc/profile.d/下的所有shell脚本，也就将module的运行环境加入了用户登录的shell环境中。</p>
+<p>在安装 module的过程中，安装目录下除了 bin、share、lib 文件夹，还会生成 init 和 modulefiles 两个文件夹。</p>
+<p>怎么查看默认的 module path（即 modulefiles 所在路径）？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost init]$  echo $MODULEPATH </span><br><span class="line">/home/fenglei/local/modulefiles</span><br><span class="line"># [root@node02 init]#  echo $MODULEPATH   #查看默认的module path</span><br><span class="line"># /home/fenglei/local/modulefiles</span><br><span class="line">(base) [fenglei@localhost init]$ ll /home/fenglei/local/modulefiles</span><br><span class="line">total 24</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  346 Dec 29 11:17 dot</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  558 Dec 29 11:17 module-git</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 2272 Dec 29 11:17 module-info</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  773 Dec 29 11:17 modules</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  340 Dec 29 11:17 null</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 1398 Dec 29 11:17 use.own</span><br></pre></td></tr></table></figure>
+<h3 id="配置-modules"><a class="markdownIt-Anchor" href="#配置-modules"></a> 配置 modules</h3>
+<p>修改modulerc文件，自定义$MODULEPATH变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost local]$ cat ./init/modulerc </span><br><span class="line">#%Module1.0</span><br><span class="line"># This file defines the initial module command configuration, the default</span><br><span class="line"># modulefiles search path and modulefiles you want to load by default for all</span><br><span class="line"># users. It should contains lines of module command like &#x27;module config conf</span><br><span class="line"># val&#x27;, &#x27;module use path&#x27; and &#x27;module load mod&#x27;</span><br><span class="line">module use --append &#123;/home/fenglei/local/modulefiles&#125;</span><br></pre></td></tr></table></figure>
+<p>在${MODULEPATH}/…/init文件夹下的modulerc文件，可以自定义多个modulefiles所在的文件夹。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">cd $MODULEPATH</span><br><span class="line">mkdir  &#123;application,compiler,cuda,mathlib,mpi,python,tool&#125;</span><br><span class="line">更新modulerc文件。</span><br><span class="line">vim $&#123;MODULEPATH&#125;/../init/modulerc</span><br><span class="line"></span><br><span class="line">#%Module1.0</span><br><span class="line"># This file defines  the initial setup for the modulefiles search path</span><br><span class="line"># and modulefiles you  want to load by default for all users. It should</span><br><span class="line"># contains a lines of  module command like &#x27;module use path&#x27; and</span><br><span class="line"># &#x27;module load mod&#x27;</span><br><span class="line"></span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/application&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/compiler&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/cuda&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/mathlib&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/mpi&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/python&#125;</span><br><span class="line">module use --append  &#123;/home/fenglei/local/modulefiles/tool&#125;</span><br><span class="line"></span><br><span class="line">#重新登陆，查看自定义的MODULEPATH。</span><br><span class="line">source /etc/profile</span><br><span class="line">echo $MODULEPATH</span><br><span class="line">/home/fenglei/local/modulefiles/application:/home/fenglei/local/modulefiles/compiler:/home/fenglei/local/modulefiles/cuda:/home/fenglei/local/modulefiles/mathlib:/home/fenglei/local/modulefiles/mpi:/home/fenglei/local/modulefiles/python:/home/fenglei/local/modulefiles/tool</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>之后是配置用户能够调用的模块。需要进入modules安装目录，我是/PATH/TO/local/app/modules/modulefiles，在这文件里增加不同软件的配置信息，才能用module load进行加载。</p>
+<h3 id="通过-modules-调用不同python版本的实例"><a class="markdownIt-Anchor" href="#通过-modules-调用不同python版本的实例"></a> 通过 modules 调用不同python版本的实例</h3>
+<p>例如我希望用多个版本的 python，我的 python 的软件分别安装在 /home/fenglei/local/app/anaconda3/envs/python27/bin, /home/fenglei/local/app/anaconda3/envs/python37/bin。</p>
+<p>那么，进入modulefiles目录，新建python文件夹，在python目录下分别新建2.7.18和3.7.9这两个目录。在两个版本编号目录下，分别建立“modulefile”文件，里面指定软件安装位置。具体目录结构如下代码块所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost local]$ cd modulefiles/</span><br><span class="line">(base) [fenglei@localhost modulefiles]$ pwd</span><br><span class="line">/home/fenglei/local/modulefiles</span><br><span class="line">(base) [fenglei@localhost modulefiles]$ tree python</span><br><span class="line">python</span><br><span class="line">├── 2.7.18</span><br><span class="line">│   └── modulefile</span><br><span class="line">└── 3.7.9</span><br><span class="line">    └── modulefile</span><br><span class="line"></span><br><span class="line">2 directories, 2 files</span><br><span class="line"></span><br><span class="line">(base) [fenglei@localhost modulefiles]$ cat python/2.7.18/modulefile </span><br><span class="line">#%Module1.0#####################################################################</span><br><span class="line">## modules modulefile</span><br><span class="line">module-whatis   &quot;Python 2.7.18&quot;</span><br><span class="line">prepend-path    PATH        /home/fenglei/local/app/anaconda3/envs/python27/bin</span><br><span class="line"></span><br><span class="line">(base) [fenglei@localhost modulefiles]$ cat python/3.7.9/modulefile       </span><br><span class="line">#%Module1.0#####################################################################</span><br><span class="line">## modules modulefile</span><br><span class="line">module-whatis   &quot;Python 3.7.9&quot;</span><br><span class="line">prepend-path    PATH        /home/fenglei/local/app/anaconda3/envs/python37/bin/</span><br></pre></td></tr></table></figure>
+<p>按照上面的方法设置不同版本号的modulefile之后呢，下面演示了如何通过module load命令分别调用 python的不同版本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost ~]$ which python</span><br><span class="line">~/local/app/anaconda3/bin/python</span><br><span class="line">(base) [fenglei@localhost ~]$ module list</span><br><span class="line">No Modulefiles Currently Loaded.</span><br><span class="line">(base) [fenglei@localhost ~]$ module load python/3.7.9</span><br><span class="line">(base) [fenglei@localhost ~]$ which python</span><br><span class="line">~/local/app/anaconda3/envs/python37/bin/python</span><br><span class="line">(base) [fenglei@localhost ~]$ module load python/2.7.18</span><br><span class="line">(base) [fenglei@localhost ~]$ which python             </span><br><span class="line">~/local/app/anaconda3/envs/python27/bin/python</span><br></pre></td></tr></table></figure>
+<p>版本切换：如果想要换个环境，就可以用switch进行切换：<code>module switch blast blast/2.7.1</code></p>
+<p>如果你不需要BLAST了，那么就用 <code>module unload blast/2.7.1</code> 就能在环境变量中移除。</p>
+<p>对于一些依赖工具比较多的生信工具而言，用 conda 安装很方便，那么如何将 module 和 conda 进行整合呢。可以先在 conda 安装，然后在 modules 里面配置。这样可以通过 module load 加载这些程序。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c07820dbdfb4">xuzhougeng</a></li>
+<li><a target="_blank" rel="noopener" href="https://baiyongan.gitee.io/2019/02/23/Engineering-Environment-module/">baiyongan.gitee.io</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/28/Bioinfo-Snakemake-for-bioinfomatics-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/28/Bioinfo-Snakemake-for-bioinfomatics-pipeline/" class="post-title-link" itemprop="url">使用Snakemake搭建生物信息分析流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-28 18:08:56" itemprop="dateCreated datePublished" datetime="2020-12-28T18:08:56+08:00">2020-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-29 17:32:28" itemprop="dateModified" datetime="2020-12-29T17:32:28+08:00">2020-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>snakemake 简介：Snakemake is a workflow engine that provides a readable Python-based workflow definition language and a powerful execution environment that scales from single-core workstations to compute clusters without modifying the workflow. It is the first system to support the use of automatically inferred multiple named wildcards (or variables) in input and output filenames. (Johannes Köster, Sven Rahmann, 2012, Bioinformatics 28, 19:2520–2522)</p>
+<h3 id="snakemake-安装"><a class="markdownIt-Anchor" href="#snakemake-安装"></a> snakemake 安装</h3>
+<p>安装snakemake的方法有多种，snakemake官方推荐的是conda，安装方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c bioconda snakemake</span><br></pre></td></tr></table></figure>
+<p>snakemake对python版本有要求，我用python3.7就不能安装，遇到下面的错误。使用 <code>conda create --name python36 python=3.6</code> 新安装了一个python3.6。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">UnsatisfiableError: The following specifications were found</span><br><span class="line">to be incompatible with the existing python installation in your environment:</span><br><span class="line"></span><br><span class="line">Specifications:</span><br><span class="line">  - snakemake -&gt; python[version=&#x27;3.4.*|3.5.*|3.6.*|&gt;=3.5,&lt;3.6.0a0|&gt;=3.6,&lt;3.7.0a0&#x27;]</span><br><span class="line"></span><br><span class="line">Your python: python=3.7</span><br></pre></td></tr></table></figure>
+<h3 id="一个简单的snakemake脚本"><a class="markdownIt-Anchor" href="#一个简单的snakemake脚本"></a> 一个简单的snakemake脚本</h3>
+<p>虽然snakemake广泛的应用于生物信息方面的流程编写，但是snakemake的应用并不局限于编写生物信息学的流程，这里以一个简单的合并文件的例子开始介绍snakemake的简单使用。</p>
+<p>首先我们建立两个文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo &quot;Here is hello.&quot; &gt; hello.txt</span><br><span class="line">$ echo &quot;Here is world.&quot; &gt; world.txt</span><br></pre></td></tr></table></figure>
+<p>接下来开始编写 <code>Snakefile</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rule concat:  # 这里的rule可视为snakemake定义的关键字，concat使我们自定义的这一步任务的名称</span><br><span class="line">    input:   # input同样是snakemake的关键字，定义了在这个任务中的输入文件 </span><br><span class="line">        expand(&quot;&#123;file&#125;.txt&quot;, file=[&quot;hello&quot;, &quot;world&quot;]) #expand是一个snakemake定义的替换命令</span><br><span class="line">    output:   # output也是snakemake的关键字，定义输出结果的保存文件</span><br><span class="line">        &quot;merged.txt&quot;</span><br><span class="line">    shell:  # 这里表示我们下面的命令将在命令行中执行</span><br><span class="line">        &quot;cat &#123;input&#125; &gt; &#123;output&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>最后就可以在Snakefile的路径执行snakemake命令即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(python36) [fenglei@localhost test]$ snakemake</span><br><span class="line">Provided cores: 1</span><br><span class="line">Rules claiming more threads will be scaled down.</span><br><span class="line">Job counts:</span><br><span class="line">        count   jobs</span><br><span class="line">        1       concat</span><br><span class="line">        1</span><br><span class="line"></span><br><span class="line">rule concat:</span><br><span class="line">    input: hello.txt, world.txt</span><br><span class="line">    output: merged.txt</span><br><span class="line">    jobid: 0</span><br><span class="line"></span><br><span class="line">Finished job 0.</span><br><span class="line">1 of 1 steps (100%) done</span><br><span class="line"></span><br><span class="line">$ cat merge.txt</span><br><span class="line">Here is hello.</span><br><span class="line">Here is world.</span><br></pre></td></tr></table></figure>
+<p>在上面的Snakefile脚本中，rule、input、output、shell、expand均为snakemake中的关键字或者命令。同时Snakefile中的每一个rule其实都可以看作是一个简单的shell脚本，通过Snakefile将多个rule组织在一起并按照我们定义的顺序来执行。另外，在output中的结果文件可以是未存在目录中的文件,这时会自动创建不存在的目录。</p>
+<h3 id="snakemake中的一些命令与规则"><a class="markdownIt-Anchor" href="#snakemake中的一些命令与规则"></a> snakemake中的一些命令与规则</h3>
+<p><em>1、rule</em><br />
+rule是Snakefile中最主要的部分。如上面的例子所说，每一个rule定义了一系列pipe中的一步，每一个rule都可以当作一个shell脚本来处理，一般主要包括input、output、shell3个部分。同时还有许多上面没有列出来的用法：</p>
+<p>rule all。不同于其他的rule，在rule all里面一般不会去定义要执行的命令，他一般用来定义最后的输出结果文件。除了rule all中定义的文件外最后输出结果不会保存任何中间文件。例如将上面的脚本改成如下文件则没有输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rule all:</span><br><span class="line">    input:</span><br><span class="line">         #&quot;merged.txt&quot;  取消注释后，则能正常输出文件</span><br><span class="line">rule concat:</span><br><span class="line">    input:</span><br><span class="line">        expand(&quot;&#123;file&#125;.txt&quot;, file=[&quot;hello&quot;, &quot;world&quot;])</span><br><span class="line">    output:</span><br><span class="line">        &quot;merge.txt&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;cat &#123;input&#125; &gt; &#123;output&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>wildcards。用来获取通配符匹配到的部分，例如对于通配符&quot;{dataset}/file.{group}.txt&quot;匹配到文件101/file.A.txt，则{wildcards.dataset}就是101，{wildcards.group}就是A。<br />
+threads。通过在rule里面指定threads参数来指定分配给程序的线程数，egthreads: 8。<br />
+resources。可用来指定程序运行的内存，eg. resources: mem_mb=800。<br />
+message。使用message参数可以指定每运行到一个rule时，在终端中给出提示信息，eg.message: “starting mapping …”。<br />
+priority。可用来指定程序运行的优先级，默认为0，eg.priority: 20。<br />
+log。用来指定生成的日志文件，eg.log: “logs/concat.log”。<br />
+params。指定程序运行的参数，eg.params: cat=“-n”,调用方法为{params.cat}。<br />
+run。在run的缩进区域里面可以输入并执行python代码。<br />
+scripts。用来执行指定脚本，eg.scripts: “rm_dup.py”<br />
+temp。通过temp方法可以在所有rule运行完后删除指定的中间文件，eg.output: temp(“f1.bam”)。<br />
+protected。用来指定某些中间文件是需要保留的，eg.output: protected(“f1.bam”)。<br />
+ancient。重复运行执行某个Snakefile时，snakemake会通过比较输入文件的时间戳是否更改(比原来的新)来决定是否重新执行程序生成文件，使用ancient方法可以强制使得结果文件一旦生成就不会再次重新生成覆盖，即便输入文件时间戳已经更新，eg.input: ancient(“f1.fastq”)。<br />
+Rule Dependencies。可通过快捷方式指定前一个rule的输出文件为此rule的输入文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rule a:</span><br><span class="line">    input:  &quot;path/to/input&quot;</span><br><span class="line">    output: &quot;path/to/output&quot;</span><br><span class="line">    shell:  ...</span><br><span class="line"></span><br><span class="line">rule b:</span><br><span class="line">    input:  rules.a.output   #直接通过rules.a.output 指定rule a的输出</span><br><span class="line">    output: &quot;path/to/output/of/b&quot;</span><br><span class="line">    shell:  ...</span><br></pre></td></tr></table></figure>
+<p>report。使用snakemake定义的report函数可以方便的将结果嵌入到一个HTML文件中进行查看。</p>
+<p><em>2. configuration</em></p>
+<p>每计算一次数据都要重写一次Snakefile有时可能会显得有些繁琐，我们可以将那些改动写入配置文件，使用相同流程计算时，将输入文件的文件名写入配置文件然后通过Snakefile读入即可。<br />
+配置文件有两种书写格式——json和yaml。在Snakefile中读入配置文件使用如下方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">configfile: &quot;path/to/config.json&quot; </span><br><span class="line">configfile: &quot;path/to/config.yaml&quot;</span><br><span class="line"></span><br><span class="line"># 也可直接在执行snakemake命令时指定配置</span><br><span class="line">$ snakemake --config yourparam=1.5</span><br></pre></td></tr></table></figure>
+<p>在shell命令中直接调用config文件中的内容的话，不需要引号，如config[a]而不是config[“a”]。</p>
+<h3 id="snakemake-的执行"><a class="markdownIt-Anchor" href="#snakemake-的执行"></a> snakemake 的执行</h3>
+<p>一般讲所有的参数配置写入Snakefile后直接在Snakefile所在路径执行snakemake命令即可开始执行流程任务。一些常用的参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">--snakefile, -s 指定Snakefile，否则是当前目录下的Snakefile</span><br><span class="line">--dryrun, -n  不真正执行，一般用来查看Snakefile是否有错</span><br><span class="line">--printshellcmds, -p   输出要执行的shell命令</span><br><span class="line">--reason, -r  输出每条rule执行的原因,默认FALSE</span><br><span class="line">--cores, --jobs, -j  指定运行的核数，若不指定，则使用最大的核数</span><br><span class="line">--force, -f 重新运行第一条rule或指定的rule</span><br><span class="line">--forceall, -F 重新运行所有的rule，不管是否已经有输出结果</span><br><span class="line">--forcerun, -R 重新执行Snakefile，当更新了rule时候使用此命令</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#一些可视化命令</span><br><span class="line">$ snakemake --dag | dot -Tpdf &gt; dag.pdf</span><br><span class="line"></span><br><span class="line">#集群投递</span><br><span class="line">snakemake --cluster &quot;qsub -V -cwd -q 节点队列&quot; -j 10</span><br><span class="line"># --cluster /-c CMD: 集群运行指令</span><br><span class="line"># qusb -V -cwd -q， 表示输出当前环境变量(-V),在当前目录下运行(-cwd), 投递到指定的队列(-q), 如果不指定则使用任何可用队列</span><br><span class="line"># --local-cores N: 在每个集群中最多并行N核</span><br><span class="line"># --cluster-config/-u FILE: 集群配置文件</span><br></pre></td></tr></table></figure>
+<h2 id="u"><a class="markdownIt-Anchor" href="#u"></a> <a target="_blank" rel="noopener" href="https://vidotto.top/post/%E4%BD%BF%E7%94%A8-snakemake-%E7%BC%96%E5%86%99-rna-seq-%E6%B5%81%E7%A8%8B/"><u>使用 snakemake 编写 RNA seq 流程</u></a></h2>
+<p>学习生信两年多了，自己也积累了一些测序数据分析流程，后来数据越来越多就有把流程自动化以方便分析工作。开始是将流程写成 shell 脚本，但是有时候还需要根据不同的数据去更改一些步骤的参数，所以每次用还是要检查一下脚本。后来发现 snakemake 流程管理工具，它完全能够满足我目前的需求。</p>
+<p>我以搭建转录组流程为例子介绍如何使用 snakemake 搭建适合你的流程。</p>
+<h3 id="创建一个单独的文件夹存放测序数据"><a class="markdownIt-Anchor" href="#创建一个单独的文件夹存放测序数据"></a> 创建一个单独的文件夹存放测序数据</h3>
+<p>创建名为 input 的文件夹存放转录组测序数据，我使用的数据如下：</p>
+<p>s1-1_RRL18212-V_1.fq.gz——Control(forward)<br />
+s1-1_RRL18212-V_2.fq.gz——Control(reverse)<br />
+s1-2_RRL18214-V_1.fq.gz——Treated(forward)<br />
+s1-2_RRL18214-V_2.fq.gz——Treated(reverse)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">input</span><br><span class="line">├── s1-1_RRL18212-V_1.fq.gz</span><br><span class="line">├── s1-1_RRL18212-V_2.fq.gz</span><br><span class="line">├── s1-2_RRL18214-V_1.fq.gz</span><br><span class="line">└── s1-2_RRL18214-V_2.fq.gz</span><br></pre></td></tr></table></figure>
+<h3 id="为-star-比对步骤准备-index"><a class="markdownIt-Anchor" href="#为-star-比对步骤准备-index"></a> 为 STAR 比对步骤准备 index</h3>
+<p>我们需要把测序数据比对到小鼠参考基因组上，需要先下载小鼠（GRCm38.p6）参考基因组文件并使用 STAR 的 genomeGenerate 创建 index 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mkdir genome</span><br><span class="line">wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M20/GRCm38.p6.genome.fa.gz</span><br><span class="line">wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M20/gencode.vM20.annotation.gtf.gz</span><br><span class="line">pigz -d GRCm38.p6.genome.fa.gz gencode.vM20.annotation.gtf.gz</span><br><span class="line"></span><br><span class="line">STAR \</span><br><span class="line">--runMode genomeGenerate \</span><br><span class="line">--genomeDir star_index \</span><br><span class="line">--genomeFastaFiles genome/GRCm38.p6.genome.fa \</span><br><span class="line">--sjdbGTFfile annotation/gencode.vM20.annotation.gtf \</span><br><span class="line">--runThreadN 4</span><br></pre></td></tr></table></figure>
+<h3 id="编写-snakefile"><a class="markdownIt-Anchor" href="#编写-snakefile"></a> 编写 snakefile</h3>
+<p>创建一个文件名为 snakefile 的文件，我们的流程主要编写在这个文件里。</p>
+<p>我们先看一个基础 snakefile 是什么样子的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rule bwa_map:</span><br><span class="line">    input:</span><br><span class="line">        &quot;data/genome.fa&quot;,</span><br><span class="line">        &quot;data/samples/A.fastq&quot;</span><br><span class="line">    output:</span><br><span class="line">        &quot;mapped_reads/A.bam&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;bwa mem &#123;input&#125; | samtools view -Sb - &gt; &#123;output&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>每一个 rule 表示不同的任务，需要通过 input 和 output 指定任务需要的输入文件和会产生的输出文件，run 就指明该任务的将要运行的命令行。</p>
+<h3 id="第一个任务fastqc"><a class="markdownIt-Anchor" href="#第一个任务fastqc"></a> 第一个任务：fastqc</h3>
+<p>第一个任务我们检测测序数据质量，按照 snakemake 规则如下写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rule fastqc:</span><br><span class="line">    input:</span><br><span class="line">        &quot;input/&#123;sample&#125;_1.fq.gz&quot;,</span><br><span class="line">        &quot;input/&#123;sample&#125;_2.fq.gz&quot;</span><br><span class="line">    output:</span><br><span class="line">        &quot;results/1_initial_qc/&#123;sample&#125;/&#123;sample&#125;_1_fastqc.zip&quot;,</span><br><span class="line">        &quot;results/1_initial_qc/&#123;sample&#125;/&#123;sample&#125;_2_fastqc.zip&quot;,</span><br><span class="line">        &quot;results/1_initial_qc/&#123;sample&#125;/&#123;sample&#125;_1_fastqc.html&quot;,</span><br><span class="line">        &quot;results/1_initial_qc/&#123;sample&#125;/&#123;sample&#125;_2_fastqc.html&quot;</span><br><span class="line">    log:</span><br><span class="line">        &quot;log/&#123;sample&#125;_fastqc&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        fastqc -o results/1_initial_qc/&#123;wildcards.sample&#125; --noextract &#123;input[0]&#125; &#123;input[1]&#125; 2&gt; &#123;log&#125;</span><br><span class="line">        &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>因为是双端测序数据，我每次运行将一个样品的两端数据同时检测。可以发现在 input 和 output 里我都使用了 {sample} 字样，这是snakemake 中的通配方式，比如 input/{sample}_1.fq.gz 就可以通配到：s1-1_RRL18212-V_1.fq.gz 和 s1-2_RRL18214-V_1.fq.gz 两个文件，这一点是 snakemake 的精髓，这样我们一行命令就能把所以样品都跑完流程。</p>
+<h3 id="第二个任务fastp"><a class="markdownIt-Anchor" href="#第二个任务fastp"></a> 第二个任务：fastp</h3>
+<p>对测序数据进行质量控制步骤，主要修剪一些接头序列和去除低质量 reads 。这里我一般使用 fastp 自动化完成这一步。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rule fastp:</span><br><span class="line">    input:</span><br><span class="line">        &quot;input/&#123;sample&#125;_1.fq.gz&quot;,</span><br><span class="line">        &quot;input/&#123;sample&#125;_2.fq.gz&quot;</span><br><span class="line">    output:</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;_1_good.fq.gz&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;_2_good.fq.gz&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;.html&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;.json&quot;</span><br><span class="line">    log:</span><br><span class="line">        &quot;log/&#123;sample&#125;_fastp&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        fastp -w 10 -h results/2_fastp_output/&#123;wildcards.sample&#125;.html -j results/2_fastp_output/&#123;wildcards.sample&#125;.json -i &#123;input[0]&#125; -I &#123;input[1]&#125; -o &#123;output[0]&#125; -O &#123;output[1]&#125; 2&gt; &#123;log&#125;</span><br><span class="line">        &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>仔细阅读 snakemake 的文档之后就会发现它的语法非常简单，并且有很强的阅读性。这个任务中需要对 shell 部分做一点解释。<br />
+首先，我想每个样品都设置有样品名的结果文件（html 和json），我使用 {wildcards.sample} 获得通配名。<br />
+其二，shell 命令里面需要两个设定两个输入和输出，这里和 python 中的切片类似，或者我们可以在 input 和 output 这一步骤就对文件进行命令，这样可读性更好，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rule fastp:</span><br><span class="line">    input:</span><br><span class="line">        fwd:&quot;input/&#123;sample&#125;_1.fq.gz&quot;,</span><br><span class="line">        rev:&quot;input/&#123;sample&#125;_2.fq.gz&quot;</span><br><span class="line">    output:</span><br><span class="line">        fwwd:&quot;results/2_fastp_output/&#123;sample&#125;_1_good.fq.gz&quot;,</span><br><span class="line">        rev:&quot;results/2_fastp_output/&#123;sample&#125;_2_good.fq.gz&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;.html&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;.json&quot;</span><br><span class="line">    log:</span><br><span class="line">        &quot;log/&#123;sample&#125;_fastp&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        fastp -w 10 -h results/2_fastp_output/&#123;wildcards.sample&#125;.html -j results/2_fastp_output/&#123;wildcards.sample&#125;.json -i &#123;input[fwd]&#125; -I &#123;input[rev]&#125; -o &#123;output[fwd]&#125; -O &#123;output[rev]&#125; 2&gt; &#123;log&#125;</span><br><span class="line">        &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="第三个任务star"><a class="markdownIt-Anchor" href="#第三个任务star"></a> 第三个任务：STAR</h3>
+<p>完成质量控制部分后就可以进行数据比对这一步骤了，上一任务的输出文件是这一任务的输入文件，snakemake 利用不同任务之间文件的关系来自动理顺任务关系。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rule STAR:</span><br><span class="line">    input:</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;_1_good.fq.gz&quot;,</span><br><span class="line">        &quot;results/2_fastp_output/&#123;sample&#125;_2_good.fq.gz&quot;</span><br><span class="line">    output:</span><br><span class="line">        &quot;results/3_aligned_sequences/&#123;sample&#125;Aligned.sortedByCoord.out.bam&quot;,</span><br><span class="line">        &quot;results/3_aligned_sequences/&#123;sample&#125;Log.final.out&quot;,</span><br><span class="line">        &quot;results/3_aligned_sequences/&#123;sample&#125;Log.out&quot;</span><br><span class="line">    params:&quot;&#123;sample&#125;&quot;</span><br><span class="line">    log:</span><br><span class="line">        &quot;log/&#123;sample&#125;_STAR&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        STAR --genomeDir &#123;config[star_index]&#125;  --readFilesCommand zcat --readFilesIn &#123;input[0]&#125; &#123;input[1]&#125; --runThreadN 10 \</span><br><span class="line">        --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --outFileNamePrefix results/3_aligned_sequences/&#123;params&#125; 2&gt; &#123;log&#125;</span><br><span class="line">        &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>我在这个任务中使用了配置文件中的参数，在开始我没有说明这点，我们可以将软件运行参数单独存放在配置文件里，每次使用 snakemake 的时候只需要修改配置文件而不需要对主流程进行修改。<br />
+在snakefile 的开始要对配置文件进行声明configfile:“config.yaml”。<br />
+在这个任务中我还设置了 params ，我们可以将命令中的一些静态参数写在这里以提高易读性。在 rule 中的 params 可以直接在shell 中调用。</p>
+<h3 id="第四个任务featurecounts"><a class="markdownIt-Anchor" href="#第四个任务featurecounts"></a> 第四个任务：featureCounts</h3>
+<p>最后就要对各个样品进行定量了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rule featureCounts:</span><br><span class="line">    input:</span><br><span class="line">        expand(&quot;results/3_aligned_sequences/&#123;sample&#125;Aligned.sortedByCoord.out.bam&quot;, sample=SAMPLES)</span><br><span class="line">    output:</span><br><span class="line">        &quot;results/4_final_counts/final_counts.txt&quot;,</span><br><span class="line">        &quot;results/4_final_counts/final_counts.txt.summary&quot;</span><br><span class="line">    log:</span><br><span class="line">        &quot;log/featurecounts.log&quot;</span><br><span class="line">    shell:</span><br><span class="line">        &quot;&quot;&quot; </span><br><span class="line">        ls results/3_aligned_sequences/*bam | xargs featureCounts -a &#123;config[gtf]&#125; -o &#123;output[0]&#125; \</span><br><span class="line">        -T 5 -t exon -g gene_id 2&gt; &#123;log&#125;</span><br><span class="line">        &quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>snakemake 另外一个很简便的地方就在于它将列表推导式简化为 expand 函数，比如这个任务中的 input 就会生成所有符合条件的 bam 文件。</p>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>这只是使用 snakemake 编写的简单的流程，主要想记录下在学习 snakemake 中的几个知识点，snakemake 还有其他的一些使用技巧我会在日后其他的流程中慢慢总结。如果你有写生信分析流程的需要还是非常推荐这个工具，它还有很多高级技巧有待我细细挖掘。</p>
+<p><strong>全文来源</strong><br />
+<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/14b9eccc0c0e"><u>井底蛙蛙呱呱呱</u></a><br />
+<a target="_blank" rel="noopener" href="https://vidotto.top/post/%E4%BD%BF%E7%94%A8-snakemake-%E7%BC%96%E5%86%99-rna-seq-%E6%B5%81%E7%A8%8B/"><u>Vidotto’s blog：使用 snakemake 编写 RNA seq 流程</u></a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/28/Bioinfo-SAM-BAM-MAPQ-value-in-samtools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/28/Bioinfo-SAM-BAM-MAPQ-value-in-samtools/" class="post-title-link" itemprop="url">基因组比对的SAM/BAM文件中，怎么理解MAPQ值</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-28 11:06:55" itemprop="dateCreated datePublished" datetime="2020-12-28T11:06:55+08:00">2020-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-29 09:29:27" itemprop="dateModified" datetime="2020-12-29T09:29:27+08:00">2020-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关注这个问题的缘由是对转录组进行基因定量分析的过程中，发现 stringtie 和 htseq-count 产生的结果不一致。</p>
+<p>stringtie 程序里面并没有提供 MAPQ 筛选的参数，也就是输入的 bam 文件中，所有 reads 都会被计数。（如果需要干预，需要提前用 samtools view -q 参数筛选 reads）</p>
+<p>而 htseq-cuont 默认会使用 MAPQ&gt;10 来做筛选，即只考虑唯一比对的 reads。</p>
+<p>实际上，在植物转录组测序的 reads 中，multiple mapping 的 reads 会占据很大的比例。比如有的基因会有多个拷贝，而且表达量还特别高，那么分析的时候是需要考虑这些问题的。</p>
+<h3 id="sambam-文件结构简介"><a class="markdownIt-Anchor" href="#sambam-文件结构简介"></a> SAM/BAM 文件结构简介</h3>
+<p><img src="https://miro.medium.com/max/875/0*CePvh8XpBcbC1HjZ.png" alt="Example of the SAM file" /></p>
+<p>sam/bam文件一共12列，每列具体信息如下。第五例为MAPQ值。</p>
+<p>Each alignment line has 11 mandatory fields for essential alignment information such as mapping position, and variable number of optional fields for flexible or aligner specific information:</p>
+<ol>
+<li>Read Name</li>
+<li>SAM flag</li>
+<li>chromosome (if read is has no alignment, there will be a “*” here)</li>
+<li>position (1-based index, “left end of read”)</li>
+<li>MAPQ (mapping quality — describes the uniqueness of the alignment, 0=non-unique, &gt;10 probably unique)</li>
+<li>CIGAR string (describes the position of insertions/deletions/matches in the alignment, encodes splice junctions, for example)</li>
+<li>Name of mate (mate pair information for paired-end sequencing, often “=”)</li>
+<li>Position of mate (mate pair information)</li>
+<li>Template length (always zero for me)</li>
+<li>Read Sequence</li>
+<li>Read Quality</li>
+<li>Program specific Flags (i.e. AS is an alignment score, NH is a number of reported alignments that contains the query in the current record)</li>
+</ol>
+<h3 id="mapq是怎么定义的"><a class="markdownIt-Anchor" href="#mapq是怎么定义的"></a> MAPQ是怎么定义的？</h3>
+<p>Samtools<a target="_blank" rel="noopener" href="https://samtools.github.io/hts-specs/SAMv1.pdf">文档</a>中对MAPQ的定义是：</p>
+<p>MAPQ: MAPping Quality. It equals −10 log10 Pr{mapping position is wrong}, rounded to the nearest<br />
+integer. A value 255 indicates that the mapping quality is not available.</p>
+<p>如果正确比对的可能性为 0, 那么错误率 P = 1 - 0 = 1<br />
+MAPQ = -10*log10(1) = 0</p>
+<p>如果正确比对的可能性为 0.9, 那么错误率 P = 1 - 0.9 = 0.1<br />
+MAPQ = -10*log10(0.1) = 10</p>
+<p>如果正确比对的可能性为 0.99, 那么错误率 P = 1 - 0.99 = 0.01<br />
+MAPQ = -10*log10(0.01) = 20</p>
+<p>如果正确比对的可能性为 0.999，那么错误率 P = 1 - 0.999 = 0.001<br />
+MAPQ = -10*log10(0.001) = 30</p>
+<h3 id="mapq0-的情况到底是指-unmapped-reads-还是指-non-unique-reads"><a class="markdownIt-Anchor" href="#mapq0-的情况到底是指-unmapped-reads-还是指-non-unique-reads"></a> MAPQ=0 的情况到底是指 unmapped reads 还是指 non unique reads？</h3>
+<p>MAPQ=0 表示 non unique reads。我查看了 bowtie2 比对之后的 bam 文件，里面 MAPQ=0 的 reads 就是比对到了基因组的多个位置。</p>
+<h3 id="mapq0-与-mapq1-有什么区别"><a class="markdownIt-Anchor" href="#mapq0-与-mapq1-有什么区别"></a> MAPQ=0 与 MAPQ=1 有什么区别？</h3>
+<p>随机检查了一下 bam 文件中 MAPQ=0 与 MAPQ=1 的两个 PE reads，它们均比对到了基因组的两个不同位置。<br />
+应该是比对区域的mismatch导致的MAPQ值不同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">samtools view File1.bam | grep &#x27;V300018696L3C002R0430736588&#x27;</span><br><span class="line">V300018696L3C002R0430736588     99      Chr01   64085   0       90M     =       66302   331     CCCAGCAGTCTGAGTCCGCAGTATCCACCTTATCGGCGGCTGGACGGAACCCCTTCGCTAAGACATCTTGATACCTTAATTTTTCAATCT      FFFFFFFFFEFF@FFFFFFFFFAFFFFFFFFFFFFFFFF;EB-EC+F%6DDDF7DF&#x27;)DDCD&lt;B@D=@D0&#x27;FE(:@FAC8FF$D&lt;(;C3D     AS:i:-7 ZS:i:-7 XN:i:0  XM:i:3  XO:i:0  XG:i:0  NM:i:3  MD:Z:42A14A24A7 YS:i:-13        YT:Z:CP NH:i:2</span><br><span class="line">V300018696L3C002R0430736588     355     Chr01   66206   0       90M     =       66302   186     CCCAGCAGTCTGAGTCCGCAGTATCCACCTTATCGGCGGCTGGACGGAACCCCTTCGCTAAGACATCTTGATACCTTAATTTTTCAATCT      FFFFFFFFFEFF@FFFFFFFFFAFFFFFFFFFFFFFFFF;EB-EC+F%6DDDF7DF&#x27;)DDCD&lt;B@D=@D0&#x27;FE(:@FAC8FF$D&lt;(;C3D     AS:i:-7 ZS:i:-7 XN:i:0  XM:i:3  XO:i:0  XG:i:0  NM:i:3  MD:Z:42A14A24A7 YS:i:-13        YT:Z:CP NH:i:2</span><br><span class="line">V300018696L3C002R0430736588     147     Chr01   66302   0       19M1007N58M13S  =       64085   -331    CTTCTAGCTGTTATCACTCCATCATCCCTCTCTTGCATCTTCTGCTTTTCCTTTGGTGTGGACTTCAACTGGACAACAGGTCCCATGCTC      EFDEFFFFEFEEFEFFFEFFFBFFDFFFFFDFEEFGEEFFEFFFFDEEFFFFDFFFFFFFEEFFDFFFFFFEFFEEFFFFAFEFEFFFEF     AS:i:-13        XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:77 YS:i:-7 YT:Z:CP XS:A:-  NH:i:2</span><br><span class="line">V300018696L3C002R0430736588     403     Chr01   66302   0       19M1007N58M13S  =       66206   -186    CTTCTAGCTGTTATCACTCCATCATCCCTCTCTTGCATCTTCTGCTTTTCCTTTGGTGTGGACTTCAACTGGACAACAGGTCCCATGCTC      EFDEFFFFEFEEFEFFFEFFFBFFDFFFFFDFEEFGEEFFEFFFFDEEFFFFDFFFFFFFEEFFDFFFFFFEFFEEFFFFAFEFEFFFEF     AS:i:-13        XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:77 YS:i:-7 YT:Z:CP XS:A:-  NH:i:2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">samtools view File1.bam | grep &#x27;V300018696L3C002R0110944536&#x27;</span><br><span class="line">V300018696L3C002R0110944536     99      Chr01   33996   1       90M     =       34061   155     GGAGAGAATTCCTATGCTGCCATATTGTAATAGATAGAGCAATCCACCACATGCCCCGCCTTCTGTGATTACTCGTGGCAACAAATCCAT      FEDFEFFFFEFFFFFDFFFFFFFFFFFCFFFFFEFFFDFEFFFEFFEFFF3FFFFFFEFFFFEFFDFDFE3AE?D6FDEFEEFEFECFFF     AS:i:0  ZS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:90 YS:i:0  YT:Z:CP NH:i:2</span><br><span class="line">V300018696L3C002R0110944536     147     Chr01   34061   1       90M     =       33996   -155    TGATTACTCGTGGCAACAAATCCATCACAGAATTGGATAAAATGGCTAGCCGGATCAGCTGAAAGAGCTCCTATACCCCGGATCCATCTC      DEBFF2E,DFED&gt;FDDFFCFDDFFEFDAFFEEEEBFCFFDEFECEFFEEFDFFFDEDFFFFEEDEFFFCEFFFFDFEBEFFECFFEEFDF     AS:i:0  ZS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:90 YS:i:0  YT:Z:CP NH:i:2</span><br><span class="line">V300018696L3C002R0110944536     355     Chr03   35175098        1       90M     =       35175163        155     GGAGAGAATTCCTATGCTGCCATATTGTAATAGATAGAGCAATCCACCACATGCCCCGCCTTCTGTGATTACTCGTGGCAACAAATCCAT      FEDFEFFFFEFFFFFDFFFFFFFFFFFCFFFFFEFFFDFEFFFEFFEFFF3FFFFFFEFFFFEFFDFDFE3AE?D6FDEFEEFEFECFFF     AS:i:0  ZS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:90 YS:i:0  YT:Z:CP NH:i:2</span><br><span class="line">V300018696L3C002R0110944536     403     Chr03   35175163        1       90M     =       35175098        -155    TGATTACTCGTGGCAACAAATCCATCACAGAATTGGATAAAATGGCTAGCCGGATCAGCTGAAAGAGCTCCTATACCCCGGATCCATCTC      DEBFF2E,DFED&gt;FDDFFCFDDFFEFDAFFEEEEBFCFFDEFECEFFEEFDFFFDEDFFFFEEDEFFFCEFFFFDFEBEFFECFFEEFDF     AS:i:0  ZS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:90 YS:i:0  YT:Z:CP NH:i:2</span><br></pre></td></tr></table></figure>
+<h3 id="为什么bwa和bowtie2生成的结果中mapq不一样"><a class="markdownIt-Anchor" href="#为什么bwa和bowtie2生成的结果中mapq不一样"></a> 为什么BWA和bowtie2生成的结果中MAPQ不一样？</h3>
+<p>In SAM file the quality of mapped reads is defined in by so-called MAPQ values — MAPping Quality. It equals −10 log10 Probability {mapping position is wrong}, rounded to the nearest integer. A value 255 indicates that the mapping quality is not available. Now, it is very important to remember that MAPQ values generated by different aligners (e.g. Bowtie2, TopHat, BBMap, BWA) are not exactly comparable. For example, the maximum value of MAPQ score in Bowtie2 is 42, whereas in BWA — 37. You can read a great piece about why this happens in the ACGT blog post.</p>
+<p>Another important thing not everyone knows is how MAPQ value is actually calculated. In our of our previous tutorial, we mentioned that it defines how “uniquely” a particular read maps to a reference. In reality, of course, it is more complex than that and you should check out great post here here to understand the exact procedure on how score gets calculated.</p>
+<p>Lastly, remember that TopHat outputs only MAPQ scores of 0, 1, 3, or 50. The first three values indicate mappings to 5 or more locations, 3–4 locations, or 2 locations, whereas a value of 50 represents a unique match. Also, in older versions of TopHat unique matches were identified with a value of 255. Therefore, you must understand that values of Bowtie and Bowtie2 (used internally by TopHat to do read mapping) produce a different range of MAPQ scores (0–42).</p>
+<p>Now, as we understand a little bit better MAPQ scores, we can filter BAM/SAM files on the mapping quality. eg. getting all reads with a mapping quality larger than 30 (you could also use 49 if you wanted to:). This will remove all reads mapped the undesirable mapping qualities and will only keep uniquely mapped reads. (<a target="_blank" rel="noopener" href="https://medium.com/@shilparaopradeep/samtools-guide-learning-how-to-filter-and-manipulate-with-sam-bam-files-2c28b25d29e8">source</a>)</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,43 +1,494 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Proteomics | Top-down proteomics analysis of histones | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Proteomics | Top-down proteomics analysis of histones</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Proteomics | Top-down proteomics analysis of histones</h1><div class="post-meta">2021-09-20<span> | </span><span class="category"><a href="/categories/Proteomics/">Proteomics</a></span></div><div class="post-content"><h3 id="1-workflow"><a href="#1-workflow" class="headerlink" title="1 workflow"></a>1 workflow</h3><ol>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 workflow  crude histone isolation from cells or tissues; offline HPLC to separete core histones  (H2, H3.1, H3.2, H4) LC-MS (raw data) MS data analysis  Note: 图见 RGC proposal。   2 Offline HPLC Note">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Proteomics | Top-down proteomics analysis of histones">
+<meta property="og:url" content="http://example.com/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="1 workflow  crude histone isolation from cells or tissues; offline HPLC to separete core histones  (H2, H3.1, H3.2, H4) LC-MS (raw data) MS data analysis  Note: 图见 RGC proposal。   2 Offline HPLC Note">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr1.jpg">
+<meta property="og:image" content="https://www.researchgate.net/profile/Yifan-Liu-41/publication/235775342/figure/fig2/AS:931921148276736@1599198724085/HPLC-and-SDS-PAGE-separation-of-core-histones_W640.jpg">
+<meta property="og:image" content="https://www.researchgate.net/publication/329379093/figure/fig4/AS:699921351049216@1543885662248/Degree-distribution-All-the-networks-show-a-Poisson-distribution-as-corresponds-to_W640.jpg">
+<meta property="og:image" content="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr5.jpg">
+<meta property="og:image" content="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg">
+<meta property="article:published_time" content="2021-09-20T05:31:13.000Z">
+<meta property="article:modified_time" content="2021-09-20T08:28:51.964Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr1.jpg">
+
+<link rel="canonical" href="http://example.com/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Proteomics | Top-down proteomics analysis of histones | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Proteomics | Top-down proteomics analysis of histones
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-20 13:31:13 / Modified: 16:28:51" itemprop="dateCreated datePublished" datetime="2021-09-20T13:31:13+08:00">2021-09-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="1-workflow"><a class="markdownIt-Anchor" href="#1-workflow"></a> 1 workflow</h3>
+<ol>
 <li>crude histone isolation from cells or tissues;</li>
 <li>offline HPLC to separete core histones  (H2, H3.1, H3.2, H4)</li>
 <li>LC-MS (raw data)</li>
 <li>MS data analysis</li>
 </ol>
 <p>Note: 图见 RGC proposal。</p>
-<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr1.jpg" alt="图例"></p>
-<h3 id="2-Offline-HPLC"><a href="#2-Offline-HPLC" class="headerlink" title="2 Offline HPLC"></a>2 Offline HPLC</h3><p>Note：图见 RGC proposal</p>
-<p><img src="https://www.researchgate.net/profile/Yifan-Liu-41/publication/235775342/figure/fig2/AS:931921148276736@1599198724085/HPLC-and-SDS-PAGE-separation-of-core-histones_W640.jpg" alt="图例"></p>
-<h3 id="3-MS1-chromatograph"><a href="#3-MS1-chromatograph" class="headerlink" title="3 MS1 chromatograph"></a>3 MS1 chromatograph</h3><p>首先要安装 Thermo Fisher 的 Xcalibur 软件。安装方法，<a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/login">https://thermo.flexnetoperations.com/control/thmo/login</a> ，使用教育邮箱注册，<a href="mailto:&#120;&#x78;&#64;&#x6c;&#105;&#110;&#107;&#x2e;&#99;&#x75;&#x68;&#x6b;&#x2e;&#101;&#100;&#x75;&#46;&#104;&#x6b;">&#120;&#x78;&#64;&#x6c;&#105;&#110;&#107;&#x2e;&#99;&#x75;&#x68;&#x6b;&#x2e;&#101;&#100;&#x75;&#46;&#104;&#x6b;</a>，注册并登入，即可看到一系列软件的列表，我们选择 Xcalibur <a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT">https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT</a>，可执行文件 exe 格式，将文件下载到windows电脑，再安装，安装的软件里面就包含了 freestype。</p>
+<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr1.jpg" alt="图例" /></p>
+<h3 id="2-offline-hplc"><a class="markdownIt-Anchor" href="#2-offline-hplc"></a> 2 Offline HPLC</h3>
+<p>Note：图见 RGC proposal</p>
+<p><img src="https://www.researchgate.net/profile/Yifan-Liu-41/publication/235775342/figure/fig2/AS:931921148276736@1599198724085/HPLC-and-SDS-PAGE-separation-of-core-histones_W640.jpg" alt="图例" /></p>
+<h3 id="3-ms1-chromatograph"><a class="markdownIt-Anchor" href="#3-ms1-chromatograph"></a> 3 MS1 chromatograph</h3>
+<p>首先要安装 Thermo Fisher 的 Xcalibur 软件。安装方法，<a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/login">https://thermo.flexnetoperations.com/control/thmo/login</a> ，使用教育邮箱注册，xx@link.cuhk.edu.hk，注册并登入，即可看到一系列软件的列表，我们选择 Xcalibur <a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT">https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT</a>，可执行文件 exe 格式，将文件下载到windows电脑，再安装，安装的软件里面就包含了 freestype。</p>
 <p>将 raw data 导入 freestyle 软件，即可浏览 MS1 的图。如何导出高清图片？</p>
-<p><img src="" alt="图例"></p>
-<h3 id="raw-data-to-pbf-和-ms2ft-格式文件。"><a href="#raw-data-to-pbf-和-ms2ft-格式文件。" class="headerlink" title="raw data to pbf 和 ms2ft 格式文件。"></a>raw data to pbf 和 ms2ft 格式文件。</h3><p>使用 ProMex 软件，可以将 raw 格式的质谱文件转换成 pbf 和 ms2ft 格式文件。</p>
-<p>已经有公开的文献报道 top down proteomics 数据的分析方法 <a target="_blank" rel="noopener" href="https://www.nature.com/articles/nmeth.4388">NATURE METHODS: Informed-Proteomics: open-source software package for top-down proteomics</a>，可以去 <a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics">github</a> 下载 Informed Proteomics，软件处于持续更新中，本笔记撰写的 2021 年仍有更新。 </p>
+<p><img src="" alt="图例" /></p>
+<h3 id="raw-data-to-pbf-和-ms2ft-格式文件"><a class="markdownIt-Anchor" href="#raw-data-to-pbf-和-ms2ft-格式文件"></a> raw data to pbf 和 ms2ft 格式文件。</h3>
+<p>使用 ProMex 软件，可以将 raw 格式的质谱文件转换成 pbf 和 ms2ft 格式文件。</p>
+<p>已经有公开的文献报道 top down proteomics 数据的分析方法 <a target="_blank" rel="noopener" href="https://www.nature.com/articles/nmeth.4388">NATURE METHODS: Informed-Proteomics: open-source software package for top-down proteomics</a>，可以去 <a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics">github</a> 下载 Informed Proteomics，软件处于持续更新中，本笔记撰写的 2021 年仍有更新。</p>
 <p>这些格式有什么不同呢？</p>
-<p>raw:<br>pbf: Creates a .pbf file This file contains spectra information and full chromatograms for MS1 and MSn data, allowing fast access to extracted ion chromatograms during the search.<br>ms2ft:</p>
+<p>raw:<br />
+pbf: Creates a .pbf file This file contains spectra information and full chromatograms for MS1 and MSn data, allowing fast access to extracted ion chromatograms during the search.<br />
+ms2ft:</p>
 <p>“插播一句，这些格式转换的软件是 windows 平台的，如果要再 linux 下面跨平台运行，则需要用到 mono 软件，具体可以参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/jessepeng/p/12452276.html">https://www.cnblogs.com/jessepeng/p/12452276.html</a>。mono 的安装并不容易，可能有些普通用户会碰到问题，主要是依赖libgdiplus库，只要这个解决了，源码安装三部曲就行了，这里不加以赘述。”</p>
 <p>转换代码如下（参考：<a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics">https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics</a>）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PbfGen.exe -s MyDataset.raw</span><br><span class="line">ProMex.exe -i MyDataset.pbf -minCharge 2 -maxCharge 60 -minMass 3000 -maxMass 50000 -score n -csv n -maxThreads 0</span><br></pre></td></tr></table></figure>
-
-<h3 id="sequence-alignment-and-idntification-of-PTMs"><a href="#sequence-alignment-and-idntification-of-PTMs" class="headerlink" title="sequence alignment and idntification of PTMs"></a>sequence alignment and idntification of PTMs</h3><p>得到pbf 和 ms2ft 文件之后，就可以检索蛋白序列和可能的修饰情况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSPathFinderT.exe -s MyDataset.pbf -feature MyDataset.ms1ft -d C:\FASTA\ProteinList.fasta -o C:\WorkDir -t 10 -f 10 -m 1 -tda 1 -minLength 21 -maxLength 300 -minCharge 2 -maxCharge 30 -minFragCharge 1 -maxFragCharge 15 -minMass 3000 -maxMass 50000 -mod MSPathFinder_Mods.txt</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PbfGen.exe -s MyDataset.raw</span><br><span class="line">ProMex.exe -i MyDataset.pbf -minCharge 2 -maxCharge 60 -minMass 3000 -maxMass 50000 -score n -csv n -maxThreads 0</span><br></pre></td></tr></table></figure>
+<h3 id="sequence-alignment-and-idntification-of-ptms"><a class="markdownIt-Anchor" href="#sequence-alignment-and-idntification-of-ptms"></a> sequence alignment and idntification of PTMs</h3>
+<p>得到pbf 和 ms2ft 文件之后，就可以检索蛋白序列和可能的修饰情况。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSPathFinderT.exe -s MyDataset.pbf -feature MyDataset.ms1ft -d C:\FASTA\ProteinList.fasta -o C:\WorkDir -t 10 -f 10 -m 1 -tda 1 -minLength 21 -maxLength 300 -minCharge 2 -maxCharge 30 -minFragCharge 1 -maxFragCharge 15 -minMass 3000 -maxMass 50000 -mod MSPathFinder_Mods.txt</span><br></pre></td></tr></table></figure>
 <p>上面的 <code>Mods.txt</code> 文件即是可能的修饰情况，以大豆组蛋白为例，文件内容如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># This file is used to specify modifications for MSPathFinder</span><br><span class="line"></span><br><span class="line"># Max Number of Modifications per peptide</span><br><span class="line">NumMods&#x3D;9</span><br><span class="line"></span><br><span class="line"># Static mods</span><br><span class="line"># None</span><br><span class="line"></span><br><span class="line"># Dynamic mods</span><br><span class="line"># Functional group, Amino acid, opt?, Position, Modification type</span><br><span class="line">O1,MC,opt,any,Oxidation</span><br><span class="line">HO3P,ST,opt,any,Phospho</span><br><span class="line">C2H2O1,K,opt,any,Acetyl</span><br><span class="line">CH2,KR,opt,any,Methyl</span><br><span class="line">C2H4,KR,opt,any,Dimethyl</span><br><span class="line">C3H6,K,opt,any,Trimethyl</span><br><span class="line">C2H2O,*,opt,Prot-N-term,Acetyl     # Acetylation Protein N-term (C2H2O can be replaced with &quot;H(2) C(2) O&quot;)  </span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># This file is used to specify modifications for MSPathFinder</span><br><span class="line"></span><br><span class="line"># Max Number of Modifications per peptide</span><br><span class="line">NumMods=9</span><br><span class="line"></span><br><span class="line"># Static mods</span><br><span class="line"># None</span><br><span class="line"></span><br><span class="line"># Dynamic mods</span><br><span class="line"># Functional group, Amino acid, opt?, Position, Modification type</span><br><span class="line">O1,MC,opt,any,Oxidation</span><br><span class="line">HO3P,ST,opt,any,Phospho</span><br><span class="line">C2H2O1,K,opt,any,Acetyl</span><br><span class="line">CH2,KR,opt,any,Methyl</span><br><span class="line">C2H4,KR,opt,any,Dimethyl</span><br><span class="line">C3H6,K,opt,any,Trimethyl</span><br><span class="line">C2H2O,*,opt,Prot-N-term,Acetyl     # Acetylation Protein N-term (C2H2O can be replaced with &quot;H(2) C(2) O&quot;)  </span><br></pre></td></tr></table></figure>
 <p>运行结果，将得到一个 tsv （表格）文本文件，列出了可能的蛋白序列以及修饰情况，另有一个图片文件 <code>xxx.ms1ft.png</code>，意思？。</p>
-<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><p>上面的分析中，mods 文件中设定了一条蛋白序列上修饰的数目为 9 个，怎么确定这个数字是合理的？我设定为 10 个，跑了一天也没有结果，所以少于这10 会比较合适。另外需要画一个统计图，即从1到9个修饰的密度图，如果类似正态分布，就可以说明我们的设定是合理的。</p>
-<p><img src="https://www.researchgate.net/publication/329379093/figure/fig4/AS:699921351049216@1543885662248/Degree-distribution-All-the-networks-show-a-Poisson-distribution-as-corresponds-to_W640.jpg" alt="图例"></p>
-<h3 id="图片-1"><a href="#图片-1" class="headerlink" title="图片"></a>图片</h3><p>各个位点的修饰情况统计。</p>
+<h3 id="图片"><a class="markdownIt-Anchor" href="#图片"></a> 图片</h3>
+<p>上面的分析中，mods 文件中设定了一条蛋白序列上修饰的数目为 9 个，怎么确定这个数字是合理的？我设定为 10 个，跑了一天也没有结果，所以少于这10 会比较合适。另外需要画一个统计图，即从1到9个修饰的密度图，如果类似正态分布，就可以说明我们的设定是合理的。</p>
+<p><img src="https://www.researchgate.net/publication/329379093/figure/fig4/AS:699921351049216@1543885662248/Degree-distribution-All-the-networks-show-a-Poisson-distribution-as-corresponds-to_W640.jpg" alt="图例" /></p>
+<h3 id="图片-2"><a class="markdownIt-Anchor" href="#图片-2"></a> 图片</h3>
+<p>各个位点的修饰情况统计。</p>
 <p>（D:\博后课题文件\PHD5 project\200831 top-down proteomics in soybean\R代码-冯磊\ptm_freq_diagram\version 2 custom color）</p>
-<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr5.jpg" alt="图例"></p>
-<h3 id="Interplay-Score"><a href="#Interplay-Score" class="headerlink" title="Interplay Score"></a>Interplay Score</h3><p>何谓 interplay score：<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1046202319301732">https://www.sciencedirect.com/science/article/pii/S1046202319301732</a><br>何为 co-existence？<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg</a></p>
+<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr5.jpg" alt="图例" /></p>
+<h3 id="interplay-score"><a class="markdownIt-Anchor" href="#interplay-score"></a> Interplay Score</h3>
+<p>何谓 interplay score：<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1046202319301732">https://www.sciencedirect.com/science/article/pii/S1046202319301732</a><br />
+何为 co-existence？<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg</a></p>
 <p>两个修饰是否存在coexisence？</p>
-<p><img src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg" alt="图例"></p>
-<h3 id="样品之间的比较，定量的问题？"><a href="#样品之间的比较，定量的问题？" class="headerlink" title="样品之间的比较，定量的问题？"></a>样品之间的比较，定量的问题？</h3></div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a><a class="next" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p><img src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg" alt="图例" /></p>
+<h3 id="样品之间的比较定量的问题"><a class="markdownIt-Anchor" href="#样品之间的比较定量的问题"></a> 样品之间的比较，定量的问题？</h3>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/" rel="prev" title="Bioinfo | TCseq Time Course sequencing data analysis">
+      <i class="fa fa-chevron-left"></i> Bioinfo | TCseq Time Course sequencing data analysis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/" rel="next" title="Bioinfo | Positive Selection Ka/Ks calculation">
+      Bioinfo | Positive Selection Ka/Ks calculation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-workflow"><span class="nav-number">1.</span> <span class="nav-text"> 1 workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-offline-hplc"><span class="nav-number">2.</span> <span class="nav-text"> 2 Offline HPLC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-ms1-chromatograph"><span class="nav-number">3.</span> <span class="nav-text"> 3 MS1 chromatograph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raw-data-to-pbf-%E5%92%8C-ms2ft-%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text"> raw data to pbf 和 ms2ft 格式文件。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sequence-alignment-and-idntification-of-ptms"><span class="nav-number">5.</span> <span class="nav-text"> sequence alignment and idntification of PTMs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87"><span class="nav-number">6.</span> <span class="nav-text"> 图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87-2"><span class="nav-number">7.</span> <span class="nav-text"> 图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interplay-score"><span class="nav-number">8.</span> <span class="nav-text"> Interplay Score</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%93%81%E4%B9%8B%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83%E5%AE%9A%E9%87%8F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">9.</span> <span class="nav-text"> 样品之间的比较，定量的问题？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

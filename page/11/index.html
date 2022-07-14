@@ -1,9 +1,1460 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2016/06/01/%E4%BD%BF%E7%94%A8fastq-dump%E4%BB%8Encbi%E7%9A%84sra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE/">使用fastq-dump从NCBI的SRA数据库下载数据</a></h1><div class="post-meta">2016-06-01</div><div class="post-content"><p>测序类的论文，一般需要将原始测序reads数据上传到某个公开的数据库，然后在文章末尾标明数据存储位置和登录号。NCBI的SRA (Sequence Read Archive) 数据库(<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/sra/">http://www.ncbi.nlm.nih.gov/sra/</a>) 是最常用的存储测序数据的数据库。如何从SRA数据库下载他人公开的数据，以作己用呢？</p></div><p class="readmore"><a href="/2016/06/01/%E4%BD%BF%E7%94%A8fastq-dump%E4%BB%8Encbi%E7%9A%84sra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/05/26/dogma-chloroplast-genome-annotation/">使用DOGMA对Chloroplast genome注释并用Sequin提交到GenBank</a></h1><div class="post-meta">2016-05-26</div><div class="post-content"><h2 id="DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。"><a href="#DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。" class="headerlink" title="DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。"></a>DOGMA可以对叶绿体基因组进行注释，并可以生成直接导入sequin软件的注释信息，从而生成Genbank格式的注释，可提交NCBI，也可在OGDRAW进行绘图。</h2><h2 id="DOGMA-Help"><a href="#DOGMA-Help" class="headerlink" title="DOGMA Help"></a>DOGMA Help</h2><ol></div><p class="readmore"><a href="/2016/05/26/dogma-chloroplast-genome-annotation/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/04/19/pacbio%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E9%87%8A%E4%B9%89/">PacBio测序数据格式释义</a></h1><div class="post-meta">2016-04-19</div><div class="post-content"><p>本文摘抄/参考自：<a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider">https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider</a> 为什么原始数据中有三个“.bas.h5”文件？原因：实际上在PacBio早期的测序原始数据里，只有一个bas.h5文件，因为后来单个SMRT Cell的数据通量有所提高，从而增加了bas.h5文件用以存储base calling数据。 This page describes some of the data files you received from your service provider.</p></div><p class="readmore"><a href="/2016/04/19/pacbio%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E9%87%8A%E4%B9%89/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/04/08/%E5%A4%9A%E4%B8%AA%E6%A0%B7%E5%93%81%E7%9A%84denovo-rna-seq%E7%BB%84%E8%A3%85/">多个样品的denovo RNA Seq组装</a></h1><div class="post-meta">2016-04-08</div><div class="post-content"><p>问题：先各自组装，然后合并组装的结果；还是先合并reads，再一起组装？ 应该是合并Reads再进行组装能得到更好的结果。 参考资料：<a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=33452">http://seqanswers.com/forums/showthread.php?t=33452</a> #9： I’ve tried assembling combined reads vs. assembling separate reads for several species, and combining reads has always given a more contiguous and accurate assembly. If you have &gt; 200 million combined reads, I strongly recommend using Trinity In-Silico Normalization, which will give a good assembly in much shorter run time when compared to non-normalized assembly. 也有人分开组装，然后合并。 合并方法： TGICL CAP3 CD-HIT</p></div><p class="readmore"><a href="/2016/04/08/%E5%A4%9A%E4%B8%AA%E6%A0%B7%E5%93%81%E7%9A%84denovo-rna-seq%E7%BB%84%E8%A3%85/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/03/17/%E8%8B%B1%E6%96%87email%E5%86%99%E4%BD%9C%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BC%80%E5%A4%B4/">英文Email写作：如何开头</a></h1><div class="post-meta">2016-03-17</div><div class="post-content"><p><strong>Here are some example opening sentences for emails:</strong> <em>I hope you enjoyed your holiday and are finding it easy to settle back in to work.</em> <em>It was good to meet you in [place]. I hope you had a safe journey home.</em> <em>Thank you very much for your email. I am glad to hear that you and your family are well.</em> <em>Thank you for your prompt reply.</em> <em>I apologise for not replying sooner, but I have been very busy these last few weeks.</em> <em>Thank you for your email of [date]. Please find my reply to your query below.</em> <em>I am writing with regard to XXXX.</em> <em>Thank you for getting in touch with us about XXXX.</em> (Less formal, more friendly) <em>Thank you for contacting us regarding XXXX.</em> (More formal) <em>With reference to your email of [date], I would like to bring the following to your attention.</em> <em>As a follow-up to our phone call this morning, I would like summarise the key issues.</em> <em>Re the question you raised in your previous email, please find my explanation below.</em> <em>Following our meeting on [date] / in [place], please find below a summary of the points we discussed.</em> <em>In reply to your query regarding XXXX, I would like to make the following points.</em> <strong>Phrases best avoided:</strong> <em>I hope this email finds you well.</em> <em>Please be informed that…</em> <em>Please be advised as follows.</em> <em>This email concerns…</em> 参考资料：<a target="_blank" rel="noopener" href="http://blog.harwardcommunications.com/2012/11/06/how-to-start-emails/">http://blog.harwardcommunications.com/2012/11/06/how-to-start-emails/</a></p></div><p class="readmore"><a href="/2016/03/17/%E8%8B%B1%E6%96%87email%E5%86%99%E4%BD%9C%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BC%80%E5%A4%B4/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/03/07/%E5%AE%89%E8%A3%85pacbio%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%8C%85smrt-analysis/">安装PacBio数据分析工具包SMRT Analysis</a></h1><div class="post-meta">2016-03-07</div><div class="post-content"><h2 id="Download-SMRT-Analysis"><a href="#Download-SMRT-Analysis" class="headerlink" title="Download SMRT Analysis"></a>Download SMRT Analysis</h2><p>Download SMRT Analysis from PacBio DevNet (<a target="_blank" rel="noopener" href="http://www.pacbiodevnet.com/">http://www.pacbiodevnet.com</a>):</p></div><p class="readmore"><a href="/2016/03/07/%E5%AE%89%E8%A3%85pacbio%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%8C%85smrt-analysis/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/03/06/python-%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%9Aanaconda/">Python 发行版：Anaconda</a></h1><div class="post-meta">2016-03-06</div><div class="post-content"><p>转自：<a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/">http://liam0205.me/2015/11/21/Python-distribution-Anaconda/</a></p>
-<h1 id="Python-发行版：Anaconda"><a href="#Python-发行版：Anaconda" class="headerlink" title="Python 发行版：Anaconda"></a>Python 发行版：Anaconda</h1><p>发表于 2015 年 11 月 21 日 分类于 <a target="_blank" rel="noopener" href="http://liam0205.me/categories/IT/">IT</a>     本文共被围观 205 次     <a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/#comments">1条评论</a></p></div><p class="readmore"><a href="/2016/03/06/python-%E5%8F%91%E8%A1%8C%E7%89%88%EF%BC%9Aanaconda/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/03/03/R%EF%BC%9A%E6%9D%A1%E5%BD%A2%E5%9B%BEbar-plot%E4%B8%8A%E7%9A%84%E8%AF%AF%E5%B7%AE%E7%BA%BFerror-barsd-se-or-ci-/">R：条形图(bar plot)上的误差线(Error Bar):SD, SE or CI?</a></h1><div class="post-meta">2016-03-03</div><div class="post-content"><p>转载自：<a target="_blank" rel="noopener" href="http://yufree.cn/blogcn/2013/08/18/error-bar.html">http://yufree.cn/blogcn/2013/08/18/error-bar.html</a></p>
-<p>经常会遇到有人问条形图上误差线画什么的问题，有人说标准差（sd），有人说标准误（se），有的直接说置信区间（CI），其实这倒也不是什么大问题，你按什么画就在文章中注明就是了。后来看到JCB上有一篇科普<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2064100/">文章</a>，分析的比较到位，就把里面的干货跳出来翻译一下并对其中的难点进行解读，既是总结也是提高，懒得看过程可直接看文末的规则。</p></div><p class="readmore"><a href="/2016/03/03/R%EF%BC%9A%E6%9D%A1%E5%BD%A2%E5%9B%BEbar-plot%E4%B8%8A%E7%9A%84%E8%AF%AF%E5%B7%AE%E7%BA%BFerror-barsd-se-or-ci-/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/03/01/how-to-use-deseq2-to-analyse-rnaseq-data/">How to use DESeq2 to analyse RNAseq data</a></h1><div class="post-meta">2016-03-01</div><div class="post-content"><h1 id="How-to-use-DESeq2-to-analyse-RNAseq-data"><a href="#How-to-use-DESeq2-to-analyse-RNAseq-data" class="headerlink" title="How to use DESeq2 to analyse RNAseq data"></a>How to use DESeq2 to analyse RNAseq data</h1><p>（<a target="_blank" rel="noopener" href="http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/%EF%BC%89">http://dwheelerau.com/2014/02/17/how-to-use-deseq2-to-analyse-rnaseq-data/）</a></p></div><p class="readmore"><a href="/2016/03/01/how-to-use-deseq2-to-analyse-rnaseq-data/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/">DESeq2: RNAseq pipeline – Alignment to DE analysis</a></h1><div class="post-meta">2016-02-29</div><div class="post-content"><h1 id="RNAseq-pipeline-–-alignment-to-DE-analysis"><a href="#RNAseq-pipeline-–-alignment-to-DE-analysis" class="headerlink" title="RNAseq pipeline – alignment to DE analysis"></a><a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/">RNAseq pipeline – alignment to DE analysis</a></h1><p><a target="_blank" rel="noopener" href="https://benchtobioinformatics.wordpress.com/2014/11/10/rnaseq-pipeline-alignment-to-de-analysis-gsea/#comments">1 Reply</a></p></div><p class="readmore"><a href="/2016/02/29/rnaseq-pipeline-alignment-to-de-analysis/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/10/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/12/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/11/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/09/06/Linux-mysql-install-start-stop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/06/Linux-mysql-install-start-stop/" class="post-title-link" itemprop="url">MYSQL的安装与启动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-06 16:47:40" itemprop="dateCreated datePublished" datetime="2016-09-06T16:47:40+08:00">2016-09-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>备注：<a target="_blank" rel="noopener" href="http://xn--blog-zt9h97fbv9elswnea.shenwei.me">本文转载至blog.shenwei.me</a> 此处仅做备份之用。</p>
+<hr />
+<p>如何在linux中无root权限安装MySQL。 <strong>约定</strong> 我的MySQL将安装在下面的目录，将设置默认端口号为33060（可任意，必须大于1024，且不能其它软件冲突）。</p>
+<p>/db/home/shenwei/local/app/msyql</p>
+<p>下文中的配置文件中，最好使用绝对路径，不要使用相对路径，如“~/”。   <strong>安装编译工具</strong> cmake是必须的，其它基本的编译工具，如gcc等就不说了吧，如果configure过程中提醒缺少编译器，请自行google。 请到<a target="_blank" rel="noopener" href="http://www.cmake.org/files/%E9%80%89%E6%8B%A9%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84cmake%E9%93%BE%E6%8E%A5%EF%BC%8C%E7%84%B6%E5%90%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%EF%BC%9A">http://www.cmake.org/files/选择最新版的cmake链接，然后下载安装：</a></p>
+<p>wget <a target="_blank" rel="noopener" href="http://www.cmake.org/files/v2.8/cmake-2.8.11.1.tar.gz">http://www.cmake.org/files/v2.8/cmake-2.8.11.1.tar.gz</a><br />
+cd cmake-2.8.11.1<br />
+./configure --prefix=/db/home/shenwei/local/app/cmake<br />
+make &amp;&amp; make install</p>
+<p>将cmake目录加入环境变量(或者在~/local/bin下面建立链接cmake可执行程序的软链接, ~/local/bin是我自己的bin目录, 已经加入到环境变量$PATH中)：编辑<sub>/.bashrc或者</sub>/.bash_profile，加入以下内容：</p>
+<p>export PATH=~/local/app/cmake:$PATH</p>
+<p>让其生效</p>
+<p>. ~/.bashrc</p>
+<p><strong>编译、安装MySQL</strong> 下载前请到<a target="_blank" rel="noopener" href="http://dev.mysql.com/downloads/mysql/">http://dev.mysql.com/downloads/mysql/</a>中，选择source code，页面最下端，下载最新版本的源码（mysql-5.6.××.tar.gz）。33060是自定义的端口号。</p>
+<p>tar -zxvf mysql-5.6.19.tar.gz<br />
+cd mysql-5.6.19<br />
+cmake -DCMAKE_INSTALL_PREFIX=/db/home/shenwei/local/app/mysql -DMYSQL_TCP_PORT=33060<br />
+make &amp;&amp; make install</p>
+<p><strong>配置</strong> **1）**将MySQL的bin目录和scripts目录加入环境变量：编辑<sub>/.bashrc或者</sub>/.bash_profile，加入以下内容：</p>
+<p>export PATH=<sub>/local/app/mysql/bin:</sub>/local/app/mysql/scripts:$PATH</p>
+<p>让其生效</p>
+<p>. ~/.bashrc</p>
+<p>**2）**安装数据库。 先再mysql下面创建一个tmp目录。</p>
+<p>mkdir ~/local/app/mysql/tmp</p>
+<p>用mysql_install_db安装数据库。此处设置的–user是mysqld进程所属用户，最好设置为你的linux用户，才不会出现mysqld对文件操作的权限问题。</p>
+<p>mkdir /db/home/shenwei/local/app/mysql/tmp</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts<br />
+./mysql_install_db --basedir=/db/home/shenwei/local/app/mysql --datadir=/db/home/shenwei/local/app/mysql/data --tmpdir=/db/home/shenwei/local/app/mysql/tmp --user=shenwei</p>
+<p><strong>3）</strong> 配置mysql配置文件 创建etc目录，并将my.cnf移入其中。为何放这儿呢？因为这是mysqladmin命令搜索配置文件的路径之一。</p>
+<p>cd /db/home/shenwei/local/app/mysql<br />
+mkdir etc<br />
+mv my.cnf etc</p>
+<p>编辑my.cnf，如下：</p>
+<p>[client]<br />
+port=33060<br />
+socket=/db/home/shenwei/local/app/mysql/my.sock</p>
+<p>[mysqld]<br />
+port=33060<br />
+socket=/db/home/shenwei/local/app/mysql/my.sock<br />
+datadir=/db/home/shenwei/local/app/mysql/data</p>
+<p>[mysql.server]<br />
+user=shenwei<br />
+basedir=/db/home/shenwei/local/app/mysql</p>
+<p>sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</p>
+<p><strong>4)</strong> 创建Mysql启动脚本。 为了方便，在mysql目录scripts下面创建，并增加可执行属性。</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts<br />
+touch my_mysql_start<br />
+chmod a+x my_mysql_start</p>
+<p>my_mysql_start内容为：</p>
+<p>#!/bin/sh<br />
+/db/home/shenwei/local/app/mysql/bin/mysqld_safe --defaults-file=/db/home/shenwei/local/app/mysql/etc/my.cnf --socket=/db/home/shenwei/local/app/mysql/my.sock --pid-file=/db/home/shenwei/local/app/mysql/my.pid &amp;</p>
+<p>**5）**通过mysql_secure_installation进行安全性设置 由于mysql_secure_installation命令无法指定socket文件，无法成功连接mysqld，会出现以下错误，请转到第6）步</p>
+<p>ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ (2)</p>
+<p>**6）**设置root密码 先通过my_mysql_start脚本启动mysqld，由于它所在目录scripts已经被加入环境变量PATH中，可直接运行。</p>
+<p>my_mysql_start</p>
+<p>由于目前root密码为空，可直接进去mysql客户端：</p>
+<p>cd /db/home/shenwei/local/mysql/bin<br />
+./mysql -P 33060 -u root -p</p>
+<p>题外话：也可以不必进入你的mysql/bin目录，而直接用系统的mysql客户端mysql，不过一定要指定端口。 输入上述命令，后出现“Enter password:  ”直接回车即可（密码为空）。 进入mysql命令行后，输入以下命令，设置root密码：</p>
+<p>mysql&gt; use mysql;<br />
+Reading table information for completion of table and column names<br />
+You can turn off this feature to get a quicker startup with -A</p>
+<p>Database changed<br />
+mysql&gt; update user set password=PASSWORD(“mysqlpassword”) where user=“root”;<br />
+Query OK, 0 rows affected (0.00 sec)<br />
+Rows matched: 4  Changed: 0  Warnings: 0</p>
+<p>mysql&gt; flush privileges;<br />
+Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; quit<br />
+Bye</p>
+<p><strong>7）</strong> 创建Mysql关闭脚本。 为了方便，在mysql目录scripts下面创建，并增加可执行属性。</p>
+<p>cd /db/home/shenwei/local/app/mysql/scripts<br />
+touch my_mysql_stop<br />
+chmod a+x my_mysql_stop</p>
+<p>my_mysql_stop内容为：</p>
+<p>#!/bin/sh<br />
+/db/home/shenwei/local/app/mysql/bin/mysqladmin shutdown -P 33060 -u root -p</p>
+<p>今后可以直接通过my_mysq_stop关闭mysql。   <strong>经验</strong> 多Google！出错后，自己看提示信息，看帮助信息（command –help）后仍无法解决，用核心的错误信息去Google!   <strong>参考</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://notes.oneplus.info/Operation/2012/12/03/install-mysql-php-without-root/">http://notes.oneplus.info/Operation/2012/12/03/install-mysql-php-without-root/</a></li>
+<li><a target="_blank" rel="noopener" href="http://san-yun.iteye.com/blog/1493931">http://san-yun.iteye.com/blog/1493931</a></li>
+<li>其它无数google出来的页面</li>
+</ol>
+<p>-EOF-</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/08/26/%E6%8B%9F%E5%8D%97%E8%8A%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/26/%E6%8B%9F%E5%8D%97%E8%8A%A5/" class="post-title-link" itemprop="url">拟南芥</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-08-26 15:01:23" itemprop="dateCreated datePublished" datetime="2016-08-26T15:01:23+08:00">2016-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>神奇的模式植物–拟南芥</p>
+<p>拟南芥与油菜、萝卜、卷心菜等同为十字花科植物，向下细分为鼠耳芥属。拟南芥又名鼠耳芥、阿拉伯芥、阿拉伯草，拉丁文名为Arabidopsis thaliala (L.) Heynh。拟南芥作为一种草本植物广泛分布于欧亚大陆和非洲西北部。在我国的<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E5%86%85%E8%92%99" title="内蒙">内蒙</a>、新疆、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E9%99%95%E8%A5%BF" title="陕西">陕西</a>、甘肃、西藏、山东、江苏、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E5%AE%89%E5%BE%BD" title="安徽">安徽</a>、<a target="_blank" rel="noopener" href="http://www.hudong.com/wiki/%E6%B9%96%E5%8C%97" title="湖北">湖北</a>、四川、云南等省区均有生长。我国古人常将身边的一些卑微、低贱之物“视若草芥”，拟南芥早先也就是一种无声无息、名不见经传的小草。拟南芥既不好吃、也不好看，对人类毫无经济价值。但近一百年来，随着生物学和经典遗传学的蓬勃发展，科学家们逐渐注意到它的研究价值。长期以来，科学家一直希望在植物中找到像动物中的黑腹果蝇（Drosophila melanogaster）那样繁殖快、易于在实验室培养、适于遗传操作的实验材料，进而从根本上改变植物遗传学研究的长期落后状况。   拟南芥植株较小（一个8cm见方的培养钵可种植4-10株）、生长周期短（从发芽到开花约4-6周）、结实多（每株植物可产生数千粒种子）。拟南芥的形态特征分明（图1），莲座叶着生在植株基部，呈倒卵形或匙形；茎生叶无柄，呈批针形或线形。侧枝着生在叶腋基部，主茎及侧枝顶部生有总状花序，四片白色匙形花瓣，四强雄蕊。长角果线形，长约1-1.5cm，每个果荚可着生50-60粒种子。</p>
+<p><img src="http://www.genetics.ac.cn/kxcb/kpwz/201207/W020120709377873711250.jpg" alt="" /></p>
+<p>图1 拟南芥的形态</p>
+<p>这些特点使得拟南芥的突变表型易于观察，为突变体筛选提供了便利。拟南芥是典型的自交繁殖植物，易于保持遗传稳定性。同时，可以方便的进行人工杂交，利于遗传研究。   拟南芥的另一个优点是易于转化。经过不断的实践，浸花法（floral tip）已成为拟南芥转化最常用的方法。对生长5-6周已抽苔的拟南芥打顶来促进侧枝生长（图2A），待花序大量产生时将其在含有转化辅助剂silwet和蔗糖的农杆菌溶液中浸泡几分钟（图2B），3-4周后对转化植株收种子（图2C）。在含有合适抗生素的平板上对种子进行筛选，能够健康生长的幼苗为转基因植株（图2D）。这种转化方法不需要组织培养和再生植株的过程，操作简便、转化效率较高，为研究人员建立突变体库、改变目的基因的表达特征以及开展互补验证等实验提供了便利。   <img src="http://www.genetics.ac.cn/kxcb/kpwz/201207/W020120709377873727422.jpg" alt="" /></p>
+<p>图2 拟南芥转化过程（浸花法）</p>
+<p>拟南芥基因组小，由五对染色体组成。其基因组序列已于2000年由国际拟南芥基因组合作联盟联合完成，这是第一个实现全序列分析的植物基因组。拟南芥基因组约为12,500万碱基对，包含约2.6万个基因，编码约2.5万种蛋白质。通过物理（如辐射处理）、化学（如EMS诱变）及生物（如利用植物内源转座子或者根瘤农杆菌将DNA片段转入拟南芥基因组）的手段，已获得大量的发生在不同基因位点的突变体。研究人员建立了若干种质资源中心，方便了突变体的获取和交流。如今拟南芥已成为全球应用最广泛的模式植物，被誉为“植物中的果蝇”。   <img src="http://www.genetics.ac.cn/kxcb/kpwz/201207/W020120709377873733693.jpg" alt="" /></p>
+<p>图3 微笑的拟南芥</p>
+<p>经过科学家们长期的研究，对拟南芥发育过程的认识取得了长足的进步，其应用价值也逐渐得到认可，下面举两个例子。   增加粮食产量和提高粮食作物对于干旱等灾害天气的耐逆性是植物研究的重要问题。我国水资源短缺，而且水资源时空分布极不均衡，整个北方地区尤其是西北地区干旱缺水十分严重。近年来极端气候事件增加，对粮食生产造成很大威胁。因此，提高作物的抗旱能力对于保障我国农业经济的可持续发展和粮食安全具有重要意义。科学家从拟南芥的功能基因研究出发，在水稻中过量表达拟南芥HARDY（HRD）基因，最终实现了提高水稻的水分利用效率，增强抗旱能力[1]。拟南芥中功能获得性突变体hrd-D叶片深绿、根系发达、多个非生物胁迫相关基因的表达水平提高，抵抗干旱和高盐环境的能力显著增强，突变体中HRD基因表达量升高。HRD在水稻中的超表达可以增加水稻叶片的生物量和维管束鞘细胞的数目，提高光合效率，降低蒸腾，从而增强水分利用效率和抗旱能力。   生长素是一类低分子量的植物激素，它通过调节细胞分裂、伸长和分化对植物生长发育的各个方面发挥重要的调节作用。在拟南芥中生长素通过依赖于泛素分子的蛋白降解途径发挥功能，调控下游基因表达。早在1993年人们鉴定到拟南芥分枝增加的突变体axr1, 发现AXR1蛋白参与依赖于泛素分子的蛋白降解途径[2]。AXR1能够激活泛素样蛋白RUB1，并促进RUB1与SCFTIR1复合体中CUL1蛋白的结合。AXR1蛋白的突变使RUB1与CUL1的结合降低，SCF复合体功能降低，进而带来对生长素响应的降低[3]。随后在动物中鉴定了RUB1的同源物Nedd8，研究表明Nedd8同样是SCF复合体发挥功能所必需的[4]，而SCF功能紊乱与多种人类疾病如癌症、阿尔兹海默症等密切相关[5]。由此可见，拟南芥中生长素信号途径的研究对于认识人类某些疾病的发病机理提供了重要帮助。   模式植物的选择和利用对于开展遗传分析、基因克隆和功能研究意义重大，拟南芥由于其植株小、结实多、生命周期短、基因组简单、遗传操作简便，近四十年来由田野里不起眼的小草成为植物研究领域最耀眼的明星。全世界有超过六千家实验室正在对拟南芥的生长发育及其对环境应答的过程开展深入研究。它在粮食增产、农作物耐逆、环境保护等领域做出了重要贡献，让我们记住这棵小草，记住神奇的模式植物——拟南芥。</p>
+<p>(李家洋研究组供稿)</p>
+<p><strong>参考文献：</strong> 1.Karaba A., Dixit S., Greco R., et al. (2007) Improvement of water use efficiency in rice by expression of HARDY, an Arabidopsis drought and salt tolerance gene. Proc Natl Acad Sci USA 104: 15270-5. 2.Leyser H.M., Lincoln C.A., Timpte C., et al. (1993) Arabidopsis auxin-resistance gene AXR1 encodes a protein related to ubiquitin-activating enzyme E1. Nature 364: 161-4. 3.Parry G. and Estelle M. (2006) Auxin receptors: a new role for F-box proteins. Curr Opin Cell Biol 18: 152-6. 4.Petroski M.D. and Deshaies R.J. (2005) Function and regulation of cullin-RING ubiquitin ligases. Nat Rev Mol Cell Biol 6: 9-20. 5.Jones A.M., Chory J., Dangl J.L., et al. (2008) The impact of Arabidopsis on human health: diversifying our portfolio. Cell 2008. 133: 939-43.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/08/22/Plant-SCI-impact-factors-top50/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/22/Plant-SCI-impact-factors-top50/" class="post-title-link" itemprop="url">2015年度植物学科杂志的影响因子Top50</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-08-22 23:01:43" itemprop="dateCreated datePublished" datetime="2016-08-22T23:01:43+08:00">2016-08-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p></p>
+<p>排名</p>
+<p>期刊名</p>
+<p>IF2015</p>
+<p>IF2015-5Y</p>
+<p>1</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=1&amp;journal=ANNU+REV+PLANT+BIOL">ANNU REV PLANT BIOL</a></p>
+<p>22.131</p>
+<p>25.829</p>
+<p>2</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=2&amp;journal=TRENDS+PLANT+SCI">TRENDS PLANT SCI</a></p>
+<p>10.899</p>
+<p>14.191</p>
+<p>3</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=3&amp;journal=ANNU+REV+PHYTOPATHOL">ANNU REV PHYTOPATHOL</a></p>
+<p>9.308</p>
+<p>11.959</p>
+<p>4</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=4&amp;journal=PLANT+CELL">PLANT CELL</a></p>
+<p>8.538</p>
+<p>9.88</p>
+<p>5</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=5&amp;journal=NEW+PHYTOL">NEW PHYTOL</a></p>
+<p>7.21</p>
+<p>7.554</p>
+<p>6</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=6&amp;journal=MOL+PLANT">MOL PLANT</a></p>
+<p>7.142</p>
+<p>6.885</p>
+<p>7</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=7&amp;journal=CURR+OPIN+PLANT+BIOL">CURR OPIN PLANT BIOL</a></p>
+<p>6.78</p>
+<p>7.843</p>
+<p>8</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=8&amp;journal=PLANT+PHYSIOL">PLANT PHYSIOL</a></p>
+<p>6.28</p>
+<p>7.367</p>
+<p>9</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=9&amp;journal=J+ECOL">J ECOL</a></p>
+<p>6.18</p>
+<p>6.409</p>
+<p>10</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=10&amp;journal=PLANT+CELL+ENVIRON">PLANT CELL ENVIRON</a></p>
+<p>6.169</p>
+<p>6.443</p>
+<p>11</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=11&amp;journal=PLANT+BIOTECHNOL+J">PLANT BIOTECHNOL J</a></p>
+<p>6.09</p>
+<p>5.951</p>
+<p>12</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=12&amp;journal=J+EXP+BOT">J EXP BOT</a></p>
+<p>5.677</p>
+<p>6.229</p>
+<p>13</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=13&amp;journal=PLANT+J">PLANT J</a></p>
+<p>5.468</p>
+<p>6.468</p>
+<p>14</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=14&amp;journal=CRIT+REV+PLANT+SCI">CRIT REV PLANT SCI</a></p>
+<p>4.81</p>
+<p>6.028</p>
+<p>15</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=15&amp;journal=FRONT+PLANT+SCI">FRONT PLANT SCI</a></p>
+<p>4.495</p>
+<p>4.461</p>
+<p>16</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=16&amp;journal=MOL+PLANT+PATHOL">MOL PLANT PATHOL</a></p>
+<p>4.335</p>
+<p>4.819</p>
+<p>17</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=17&amp;journal=PLANT+CELL+PHYSIOL">PLANT CELL PHYSIOL</a></p>
+<p>4.319</p>
+<p>4.847</p>
+<p>18</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=18&amp;journal=MOL+PLANT+MICROBE+IN">MOL PLANT MICROBE IN</a></p>
+<p>4.145</p>
+<p>4.328</p>
+<p>19</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=19&amp;journal=PHOTOSYNTH+RES">PHOTOSYNTH RES</a></p>
+<p>4.122</p>
+<p>3.6</p>
+<p>20</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=20&amp;journal=ANN+BOT-LONDON">ANN BOT-LONDON</a></p>
+<p>3.982</p>
+<p>4.088</p>
+<p>21</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=21&amp;journal=PLANT+MOL+BIOL">PLANT MOL BIOL</a></p>
+<p>3.905</p>
+<p>3.874</p>
+<p>22</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=22&amp;journal=THEOR+APPL+GENET">THEOR APPL GENET</a></p>
+<p>3.9</p>
+<p>4.115</p>
+<p>23</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=23&amp;journal=ENVIRON+EXP+BOT">ENVIRON EXP BOT</a></p>
+<p>3.712</p>
+<p>3.707</p>
+<p>24</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=24&amp;journal=J+INTEGR+PLANT+BIOL">J INTEGR PLANT BIOL</a></p>
+<p>3.67</p>
+<p>3.993</p>
+<p>25</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=25&amp;journal=J+NAT+PROD">J NAT PROD</a></p>
+<p>3.662</p>
+<p>3.644</p>
+<p>26</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=26&amp;journal=BMC+PLANT+BIOL">BMC PLANT BIOL</a></p>
+<p>3.631</p>
+<p>4.604</p>
+<p>27</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=27&amp;journal=PERSPECT+PLANT+ECOL">PERSPECT PLANT ECOL</a></p>
+<p>3.578</p>
+<p>4.619</p>
+<p>28</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=28&amp;journal=PHYSIOL+PLANTARUM">PHYSIOL PLANTARUM</a></p>
+<p>3.52</p>
+<p>3.799</p>
+<p>29</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=29&amp;journal=PLANT+GENOME-US">PLANT GENOME-US</a></p>
+<p>3.509</p>
+<p>5</p>
+<p>30</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=30&amp;journal=PLANT+METHODS">PLANT METHODS</a></p>
+<p>3.449</p>
+<p>3.627</p>
+<p>31</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=31&amp;journal=PLANT+SCI">PLANT SCI</a></p>
+<p>3.362</p>
+<p>3.981</p>
+<p>32</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=32&amp;journal=PLANTA">PLANTA</a></p>
+<p>3.239</p>
+<p>3.593</p>
+<p>33</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=33&amp;journal=PLANT+DIS">PLANT DIS</a></p>
+<p>3.192</p>
+<p>3.268</p>
+<p>34</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=34&amp;journal=J+VEG+SCI">J VEG SCI</a></p>
+<p>3.151</p>
+<p>3.31</p>
+<p>35</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=35&amp;journal=PLANT+CELL+REP">PLANT CELL REP</a></p>
+<p>3.088</p>
+<p>3.187</p>
+<p>36</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=36&amp;journal=J+ETHNOPHARMACOL">J ETHNOPHARMACOL</a></p>
+<p>3.055</p>
+<p>3.333</p>
+<p>37</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=37&amp;journal=PHYTOPATHOLOGY">PHYTOPATHOLOGY</a></p>
+<p>3.011</p>
+<p>3.248</p>
+<p>38</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=38&amp;journal=J+PLANT+PHYSIOL">J PLANT PHYSIOL</a></p>
+<p>2.971</p>
+<p>3.241</p>
+<p>39</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=39&amp;journal=PLANT+SOIL">PLANT SOIL</a></p>
+<p>2.969</p>
+<p>3.581</p>
+<p>40</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=40&amp;journal=PHYTOMEDICINE">PHYTOMEDICINE</a></p>
+<p>2.937</p>
+<p>3.343</p>
+<p>41</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=41&amp;journal=PLANT+PHYSIOL+BIOCH">PLANT PHYSIOL BIOCH</a></p>
+<p>2.928</p>
+<p>3.434</p>
+<p>42</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=42&amp;journal=TAXON">TAXON</a></p>
+<p>2.907</p>
+<p>2.926</p>
+<p>43</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=43&amp;journal=AM+J+BOT">AM J BOT</a></p>
+<p>2.811</p>
+<p>2.794</p>
+<p>44</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=44&amp;journal=PHYTOCHEMISTRY">PHYTOCHEMISTRY</a></p>
+<p>2.779</p>
+<p>3.218</p>
+<p>45</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=45&amp;journal=PRESLIA">PRESLIA</a></p>
+<p>2.711</p>
+<p>3.285</p>
+<p>46</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=46&amp;journal=PHYTOCHEM+REV">PHYTOCHEM REV</a></p>
+<p>2.686</p>
+<p>3.883</p>
+<p>47</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=47&amp;journal=J+PHYCOL">J PHYCOL</a></p>
+<p>2.536</p>
+<p>2.747</p>
+<p>48</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=48&amp;journal=BOT+J+LINN+SOC">BOT J LINN SOC</a></p>
+<p>2.523</p>
+<p>2.333</p>
+<p>49</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=49&amp;journal=PHYTOCHEM+ANALYSIS">PHYTOCHEM ANALYSIS</a></p>
+<p>2.497</p>
+<p>2.479</p>
+<p>50</p>
+<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=50&amp;journal=FUNCT+PLANT+BIOL">FUNCT PLANT BIOL</a></p>
+<p>2.491</p>
+<p>3.015</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/07/29/%E5%B1%95%E7%A4%BAdna%E5%BA%8F%E5%88%97%E5%A4%9A%E7%A7%8D%E6%AF%94%E5%AF%B9%EF%BC%88color-align-conservation%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/29/%E5%B1%95%E7%A4%BAdna%E5%BA%8F%E5%88%97%E5%A4%9A%E7%A7%8D%E6%AF%94%E5%AF%B9%EF%BC%88color-align-conservation%EF%BC%89/" class="post-title-link" itemprop="url">展示DNA序列多种比对（Color Align Conservation）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-07-29 08:54:02" itemprop="dateCreated datePublished" datetime="2016-07-29T08:54:02+08:00">2016-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://genehub.files.wordpress.com/2016/07/qq20160729-0.png" alt="QQ20160729-0" /> 方法一、clustalx比对之后输出*.aln格式的比对序列，导入DNAman进行画图。 方法二、clustalx比对之后输出*.fasta格式的比对序列，导入在线网站进行画图：<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms2/color%5C_align%5C_cons.html">http://www.bioinformatics.org/sms2/color\_align\_cons.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/" class="post-title-link" itemprop="url">学习笔记：使用MEGA构建进化树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-07-25 22:10:03" itemprop="dateCreated datePublished" datetime="2016-07-25T22:10:03+08:00">2016-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考资料： <a target="_blank" rel="noopener" href="http://mbe.oxfordjournals.org/content/early/2013/03/13/molbev.mst012.full">Building Phylogenetic Trees from Molecular Data with MEGA</a> 如果需要对某个基因做进化树，首先需要得到其homologues，MEGA自带的blast可以做，提取fasta格式文件并作整理，序列名称遵循一定的规范，去掉其中多余字符。 导入序列之后，MEGA的菜单里alignment选项下有两个工具可以选择：clustal和muscle。推荐muscle，我经过实验测试发现muscle速度更快。如果比对的是编码基因的核酸序列，可见两个选项：<strong>Align DNA</strong> and **Align Codons，**就必须选择后者，即以氨基酸编码的顺序进行比对。 比对完毕的序列，缺口处会以“-”显示，可另存为*.meg格式的文件，或导出为新的fasta文件。随后在file选项下点击phylogenetic analysis，进入进化分析界面。在phylogeny选项下，有各种树选择：NJ、ML、MP等。 文中例子：构建MP树时候，有一个选项是是否选择删除所有的含有gap的column，文章作者认为不必要全部删除，有的可以留下。原文表述：<strong>Gaps/Missing Data Treatment</strong> determines how gaps are handled.<strong>Complete deletion</strong> means that MEGA5 ignores all columns in which there is a gap in any sequence. Unless there are very few gaps, that option can lose a lot of information because it removes a lot of sites from consideration. I prefer the <strong>Partial Deletion</strong> option in which sites with missing data are removed only as the need arises because that option retains more information.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/27/Bioinfo-preqc-of-sga/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/27/Bioinfo-preqc-of-sga/" class="post-title-link" itemprop="url">Preqc of SGA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-27 09:47:15" itemprop="dateCreated datePublished" datetime="2016-06-27T09:47:15+08:00">2016-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[Copied from <a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ%5C">https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ\</a>]</p>
+<p>For the past few months I (jtsimpson) have been working on a new component of SGA to assist users with their assembly. This program, called ‘preqc’, attempts to measure the quality of the input data and how easy or difficult assembling it will be. The output of the pipeline is a PDF containing plots. I’ve uploaded an example report here: <a target="_blank" rel="noopener" href="https://dl.dropboxusercontent.com/u/8813551/preqc_report.pdf">https://dl.dropboxusercontent.com/u/8813551/preqc_report.pdf</a> My hope is that this report will help you explore your data, select an assembly strategy (ie a program and its parameters) and troubleshoot when things go wrong. The report contains plots that attempt to capture the structure of the underlying genome (for example how repetitive it is) and also capture data quality (for example the sequencing error rate). At the end of this email is a brief description of each plot. I hope to get the manuscript up on arXiv this week which contains much more information. Feel free to ask questions if anything is unclear. Here are the instructions to run this on your data: 1) update to latest sga on github 2) preprocess the data: sga preprocess --pe-mode 1 input_1.fastq input_2.fastq &gt; my_genome.fastq 3) index the data sga index -a ropebwt -t 8 --no-reverse my_genome.fastq 4) run preqc sga preqc -t 8 my_genome.fastq &gt; my_genome.preqc 5) make the report /path/to/sga/src/bin/sga-preqc-report.py my_genome.preqc /path/to/sga/src/examples/preqc/*.preqc The preqc step only takes a few hours to run on very large genomes so it should not be a burden to generate this report at the start of a project. The goal of this project is to make assembly an easier and more predictable process. I hope you all find this to be useful, even if you prefer to use a different assembler. Please let me know if you have any comments or suggestions! Cheers, Jared Description of plots in the report: - Genome Size This plot contains an estimate of the genome size based on k-mer count statistics - Frequency of Variant Branches in the k-de Bruijn graph This shows how often a de Bruijn graph branches due to sequence variation (ie a SNP or indel) as a function of k. Most assemblers contain ‘bubble popping’ algorithms to resolve sequence variants in the graph. These algorithms often work well but a high branch rate makes assembly more difficult. The oyster data branches very frequently due to variants making it difficult to assemble. - Frequency of Repeat Branches in the k-de Bruijn graph This measures how often a de Bruijn graph branches due to repeats in the genome. Repeat branches tend to be difficult to resolve. This is a key indicator of how difficult the assembly will be. - Frequency of Error Branches in the k-de Bruijn graph Like the above two plots, except it measures how often branches caused by sequencing errors are encountered. These branches tend to be easier to get handle during assembly. - Mean quality score by position - Fraction of bases at least Q30 These plots measure quality scores along the length of the read. The first plot calculates the mean quality score at each base. The second calculates the fraction of reads with quality &gt;= Q30 at the base position. - k-mer position of first error This measures sequencing error rate by looking for rare k-mers in the reads. It is similar to how ‘sga correct’ finds and corrects errors. The plot shows how often putatively incorrect k-mers are found at each position in the reads. - Per-position error rate This directly measures the sequencing error rate along the read by counting mismatches in groups of overlapping reads. - Duplicate proportion This plot attempts to infer the proportion of read pairs that are PCR duplicates. - Estimated fragment size histogram This plot shows the distribution of paired-end fragment sizes. - 51-mer count distribution For an assembly to be successful, it is important to have high coverage data. This plot attempts to capture sequence coverage by plotting a histogram of 51-mer counts. Most data sets are bimodal with a sharp peak at low count for k-mers with sequencing errors and a wider distribution of true genomic k-mers. If these two distributions (true k-mers and k-mers with errors) are well-separated, it makes assembly easier. The Snake data is ideal in this regard. The yeast data is acceptable but would benefit from higher coverage. - GC Bias plots This series of plots (one per data set) shows k-mer counts as function of GC content in the read. Ideally, there would be no dependence between GC content and k-mer count. The yeast data shows some bias, while the fish data is less biased. - Simulated contig lengths in k-de Bruijn graph The last plot shows a simulated assembly of the data by finding contig paths in the graph. The simulator will extend contigs by ignoring sequencing errors and resolving sequence variants, only stopping when a repeat is found or there is no coverage. This plot can help predict if your data is easy to assemble or hard. For example the yeast data is easy to assemble (very good N50) but the oyster data, which has many sequence variant branches and many repeats, is very hard (low N50).</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/14/Bioinfo-t-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/14/Bioinfo-t-test/" class="post-title-link" itemprop="url">T检验中，单尾和双尾，成对、等方差和异方差的差异</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-14 12:05:21" itemprop="dateCreated datePublished" datetime="2016-06-14T12:05:21+08:00">2016-06-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在做数据检验的时候，通常先要检验数据是否正态，因为正态分布下有非常详尽的理论基础，用起来非常方便，如果数据不服从正态分布怎么办呢？此时就可以用非参数检验，是基于秩（其实就是序号啦）的，也有很多种方法。你可能会问：不管数据是否正态，是否都能用非参数检验呢，其实也是可以的，不过正态下用非参数检验的话，检验功效就不如参数方法了。如果你不知道什么是检验功效的话就去查一查概率统计的课本。为了有较高的检验功效，非正态数据就用非参数方法，正态数据就用参数方法。 至于该做双尾还是单尾检验，是可以根据问题的实际意义进行判断的，如果不好判断就画画散点图，看一个是否明显在另一个之上或之下。 至于方差的要求那是因为在正态分布下，等方差会省去很多麻烦，所以通常假定方差相等，相关的检验理论也非常完善。如果你不知道方差到底是否相等，可以做检验，最直观的方法就是绘制箱线图，或计算样本标准差。</p>
+<p>实际上是： 当所要比较的两个样本统计量的总体参数事先无法肯定哪个大或者哪个小时，就要用双尾检验，所得到的检验结果取P双尾值。否则就取P单尾值。单尾检验强调的是方向性。 举个例子： 例子1：在甲、乙两地随机抽取两个样本，他们的身高平均数分别为x1和x2，现在要对x1和x2进行检验，由于事先无法确定两个样本均数所在的总体样本均数哪个大哪个小，所以要用双尾检验。 例子2：一批17岁男生测验的身高平均数x1,到18岁时再进行测验得到平均数x2，若要对x1和x2进行检验，因为同一批人的18岁身高平均值不可能比17岁的还低，所以这里要用单尾检验。 实际上我们前面所说的T检验的例子都是无法确定两样本总体参数谁大谁小，所以都取P双尾值 上面是一个找到的资料，不知道对不对。 ********************** 还有一个百度上面的： 单尾和双尾取决于你的H0。设两个样本是X1，X2，如果H0是X1=X2，那么做双尾检验，因为不确定X1比X2大还是小。如果如果H0是X1&gt;X2或X1&lt;X2，那么做的是单尾，因为有先验的假设。 ************************ 还有一个相关的： 通常假设检验的目的是两总体参数是否相等，以两样本均数比较为例， 无效假设为两样本所代表的总体均数相等； 备择假设为不相等（有可能甲大于乙，也有可能甲小于乙）既两种情况都有可能发生． 而研究者做这样的假设说明（１）他没有充分的理由判断甲所代表的总体均数会大于乙的或甲的会小于乙的；（２）他只关心甲乙两个样本各自所代表的总体均数是否相等？至于哪个大不是他关心的问题．这时研究者往往会采用双侧检验． 如果研究者从专业知识的角度判断甲所代表的总体均数不可能大于（或小于）乙的，这时一般就采用单侧检验． 例如：要比较经常参加体育锻炼的中学男生心率是否低于一般中学男生的心率，就属于单侧检验．因为根据医学知识知道经常锻炼的中学男生心率不会高于一般中学男生，因此在进行假设检验时应使用单侧检验． 单尾检验和双尾检验的区别在于他们拒绝H0的标准。单尾检验允许你在差异相对较小时拒绝H0，这个差异被规定了方向。另一方面，双尾检验需要相对较大的差异，这个差异不依赖于方向。 所有的研究者都同意单尾检验与双尾检验不同。一些研究者认为，双尾检验更为严格，比单尾检验更令人信服。因为双尾检验要求更多的证据来拒绝H0，因此提供了更强的证据说明处理存在效应。另一些研究者倾向于使用单尾检验，因为它更为敏感，即在单尾检验中相对较小的处理效应也可能是显著的，但是，它可能不能达到双尾检验的显著性要求。 那么我们是应该使用单尾检验还是双尾检验？？通常，双尾检验被用于没有强烈方向性期望的实验研究中，或是存在两个可竞争的预测时。例如，当一种理论预测分数增加，而另一种理论预测分数减少时，应当使用双尾检验。应当使用单尾检验的情况包括在进行实验前已经有方向性预测，或强烈需要做出方向性预测时。   参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://www.ilovematlab.cn/thread-162174-1-1.html">http://www.ilovematlab.cn/thread-162174-1-1.html</a><br />
+<a target="_blank" rel="noopener" href="http://wiki.mbalib.com/wiki/%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E9%AA%8C">http://wiki.mbalib.com/wiki/显著性检验</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/09/%E8%BF%9B%E5%8C%96%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90%EF%BC%9Akaks%E6%AF%94%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/09/%E8%BF%9B%E5%8C%96%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90%EF%BC%9Akaks%E6%AF%94%E7%8E%87/" class="post-title-link" itemprop="url">生物进化之选择压力分析：Ka/Ks比率</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-09 14:37:18" itemprop="dateCreated datePublished" datetime="2016-06-09T14:37:18+08:00">2016-06-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景知识"><a class="markdownIt-Anchor" href="#背景知识"></a> <strong>背景知识</strong></h3>
+<p>In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Genetics" title="Genetics">genetics</a>, the <strong>Ka/Ks ratio</strong> is an indicator of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Selective_pressure" title="Selective pressure">selective pressure</a> (the force applied by <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Natural_selection" title="Natural selection">natural selection</a>) acting on a protein-coding gene. It is calculated as the ratio of the number of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nonsynonymous_substitution" title="Nonsynonymous substitution">nonsynonymous substitutions</a> per non-synonymous site (Ka), in a given period of time, to the number of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Synonymous_substitution" title="Synonymous substitution">synonymous substitutions</a> per synonymous site (Ks), in the same period. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Homologous_gene" title="Homologous gene">Homologous genes</a> with a Ka/Ks ratio above 1 are evolving under <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Directional_selection" title="Directional selection">positive selection</a>, meaning that at least some of the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mutation" title="Mutation">mutations</a> concerned must be advantageous. If all the mutations are neutral or disadvantageous, the ratio will be in the range 0 to 1. However, if some of the mutations are advantageous and some disadvantageous, the ratio could be less than 1.</p>
+<h3 id="方法软件"><a class="markdownIt-Anchor" href="#方法软件"></a> 方法/软件</h3>
+<p>Conclusions one may draw from dN/dS ratios (aka. ~Ka/Ks): <strong><em>Neutral Evolution (drift):</em></strong> dN/dS ratio = 1 implies there has been equal numbers of synonymous (dna substitutions that do not affect the protein sequence) and non-synonymous changes (dna substitutions that do affect the protein sequence) during the time between ancestral to the modern versions of the protein. <strong><em>Positive Selection (adaptive evolution):</em></strong> dN/dS ratio &gt; 1 implies there has been more non-synonymous changes than synonymous changes. There has been evolutionary pressure to escape from the ancestral state - i.e. positive selection pressure. This can occur for example in paralogues that are required to serve a novel function, or in proteins of parasites that need to escape host immune recognition (e.g. changes to avoid MHC-1 binding to evade T-cell attack). <strong><em>Negative Selection (conservation):</em></strong> dN/dS ratio &lt; 1 implies there has been more synonymous changes than non-synonymous changes. There has been evolutionary pressure to conserve the ancestral state - i.e. negative selection pressure. This can occur for example in orthologues that are required to maintain (conserve) some function encoded in the protein sequence, since changes from this state would lead to disruption of function. <strong>Useful Tips:</strong></p>
+<ul>
+<li>Algorithms can either run on multiple sequences, or just a pair of sequences. In either case the input sequences used to derive a dN/dS ratio must share ancestry - too divergent and there is a problem with multiple substitutions, too recent and you will not have sufficient enough observed changes to draw conclusions from.</li>
+<li>dN/dS can be used to compare whole proteins or regions within proteins (a sliding dN/dS value across the protein)</li>
+<li>A dN/dS ratio calculated for a whole protein is often an underestimate (lower than it should be) due to the variety of domains that constitute each protein, for instance a alpha-helix structure may always be required in a set of proteins that perform a variety of different functions.</li>
+<li>The only sequence changes considered are substitutions (not duplications, or inversions etc.)</li>
+<li>Significance of a given dN/dS ratio can be assessed using Fishers exact test: <a target="_blank" rel="noopener" href="https://code.google.com/p/kaks-calculator/wiki/FAQ">read this</a></li>
+</ul>
+<p><strong>Software:</strong> Here are my recommendations for software ordered by how flexible they are:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.mathworks.co.uk/help/bioinfo/ref/dnds.html">MATLAB’s Bioinformatics Toolbox:</a> Here you have the greatest variety of alternative algorithms, operating system compatibility, sliding vs. whole protein analysis, API to Genbank, etc (<a target="_blank" rel="noopener" href="http://www.mathworks.co.uk/products/bioinfo/code-examples.html?file=/products/demos/shipping/bioinfo/dndsdemo.html">Here’s</a> a great tutorial for using their dN/dS tool). Just remember MATLAB is not free.</li>
+<li><a target="_blank" rel="noopener" href="https://code.google.com/p/kaks-calculator/wiki/KaKs_Calculator">KaKs Calculator:</a> If you only care about <strong>whole protein</strong> dN/dS, many options are available with the Ka/Ks calculator - they also compute statistical significance using Fisher’s exact test. I can also provide an R script that generates error bars from the output, just ask.</li>
+<li><a target="_blank" rel="noopener" href="http://abacus.gene.ucl.ac.uk/software/paml.html">PAML:</a> If you have &gt;2 sequences per protein that you wish to get a dN/dS value from, then many options are available with PAML. This is often used in published papers, but it’s not recommended if you only have a pair of sequences per protein.</li>
+<li>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://code.google.com/p/kaks-calculator">KaKs_Calculator</a></li>
+<li><a target="_blank" rel="noopener" href="http://services.cbu.uib.no/tools/kaks">Free online server tool that calculates KaKs ratios among multiple sequences</a></li>
+<li><a target="_blank" rel="noopener" href="http://cran.r-project.org/web/packages/seqinr/index.html">SeqinR: A free and open biological sequence analysis package for the R language that includes KaKs calculation</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Ka/Ks%5C_ratio">https://en.wikipedia.org/wiki/Ka/Ks\_ratio</a><br />
+<a target="_blank" rel="noopener" href="https://www.biostars.org/p/5817/">https://www.biostars.org/p/5817/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/01/%E6%8B%9F%E5%8D%97%E8%8A%A5arabidopsis%E7%9A%84%E5%9F%BA%E5%9B%A0%E8%9B%8B%E7%99%BD%E7%AA%81%E5%8F%98%E4%BD%93%E4%B9%8B%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/01/%E6%8B%9F%E5%8D%97%E8%8A%A5arabidopsis%E7%9A%84%E5%9F%BA%E5%9B%A0%E8%9B%8B%E7%99%BD%E7%AA%81%E5%8F%98%E4%BD%93%E4%B9%8B%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83/" class="post-title-link" itemprop="url">拟南芥Arabidopsis的基因/蛋白/突变体之书写规范</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-01 22:14:35" itemprop="dateCreated datePublished" datetime="2016-06-01T22:14:35+08:00">2016-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>（2）拟南芥（<em>Arabidopsis thaliana</em>） 基因：野生型基因名用大写的斜体字母表示，如：<em>EMBRYO</em>、<em>DEFECTIVE 1</em>。野生型基因符号由三个斜体的大写字母组成，如：<em>EMB1</em>。突变体基因名用小写斜体字母表示，如：<em>de-etiolated 1</em>。突变体基因符号用相应基因座名称的三个小写斜体字母命名，如：<em>det1</em>。 蛋白质：用相应的基因符号命名，大写，正体，如：EMB1、EMB2、DET1、DET2。 表型：用基因名或一个描述性的短语表示表型。有时也可以用基因符号来命名表型（正体，首字母大写），并用上标“＋”或“－”代表野生型或突变型，如：Abc＋、Abc－。   参考资料： <a target="_blank" rel="noopener" href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi-vLC3gYfNAhUGX5QKHWKoCysQFgg5MAQ&amp;url=http%3A%2F%2Fwww.medicine.sdu.edu.cn%2F0tongzhixinwen%2F2013%2F9%2Fcaoh%2Fzhuanzhu%2F2.doc&amp;usg=AFQjCNFH8gNip2KCNwWmqqgY1DNmhVzQYQ&amp;sig2=4fUsnPVhVfLdB0h%5C_c3oxqA">https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=5&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwi-vLC3gYfNAhUGX5QKHWKoCysQFgg5MAQ&amp;url=http%3A%2F%2Fwww.medicine.sdu.edu.cn%2F0tongzhixinwen%2F2013%2F9%2Fcaoh%2Fzhuanzhu%2F2.doc&amp;usg=AFQjCNFH8gNip2KCNwWmqqgY1DNmhVzQYQ&amp;sig2=4fUsnPVhVfLdB0h\_c3oxqA</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/01/%E4%BD%BF%E7%94%A8fastq-dump%E4%BB%8Encbi%E7%9A%84sra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/01/%E4%BD%BF%E7%94%A8fastq-dump%E4%BB%8Encbi%E7%9A%84sra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">使用fastq-dump从NCBI的SRA数据库下载数据</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-01 21:43:05" itemprop="dateCreated datePublished" datetime="2016-06-01T21:43:05+08:00">2016-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>测序类的论文，一般需要将原始测序reads数据上传到某个公开的数据库，然后在文章末尾标明数据存储位置和登录号。NCBI的SRA (Sequence Read Archive) 数据库(<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/sra/">http://www.ncbi.nlm.nih.gov/sra/</a>) 是最常用的存储测序数据的数据库。如何从SRA数据库下载他人公开的数据，以作己用呢？</p>
+<blockquote>
+<p>fastq-dump -X 5 -Z SRR492257 #直接看到DRR047093数据的前5条/对Reads，输出在屏幕</p>
+</blockquote>
+<blockquote>
+<p>fastq-dump  -O ./data SRR492257 # 将fastq格式的Reads文件下载到./data目录，但是Read 1与Read2并排存储在fastq文件中，对后续分析造成不便。</p>
+</blockquote>
+<blockquote>
+<p>fastq-dump --split-files -O ./data SRR492257 # 将Reads 1和Reads 2两个文件均下载到./data目录</p>
+</blockquote>
+<p>参考资料： <a target="_blank" rel="noopener" href="https://github.com/ncbi/sra-tools/wiki/Downloads">https://github.com/ncbi/sra-tools/wiki/Downloads</a> <a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/books/NBK158899/#SRA%5C_download.when%5C_to%5C_use%5C_a%5C_command%5C_line">http://www.ncbi.nlm.nih.gov/books/NBK158899/#SRA\_download.when\_to\_use\_a\_command\_line</a> <a target="_blank" rel="noopener" href="https://www.biostars.org/p/19446/">https://www.biostars.org/p/19446/</a> <a target="_blank" rel="noopener" href="http://blog.csdn.net/xubo245/article/details/50512018">http://blog.csdn.net/xubo245/article/details/50512018</a> <a target="_blank" rel="noopener" href="http://www.bio-info-trainee.com/338.html">http://www.bio-info-trainee.com/338.html</a></p>
+<hr />
+<p>顺便学习上传数据到SRA： 目前，测序类的论文，一般需要将原始测序reads数据上传到某个公开的数据库，然后在文章末尾标明数据存储位置和登录号。NCBI的SRA (Sequence Read Archive) 数据库(<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/sra/">http://www.ncbi.nlm.nih.gov/sra/</a>) 是最常用的存储测序数据的数据库。然而要上传自己的数据到 NCBI SRA 对很多人而言，并不是一件容易的事。 要学会怎么上传数据到NCBI SRA，最直接的方式就是仔细阅读NCBI给的说明文档。这个链接（<a target="_blank" rel="noopener" href="http://www.ncbi.nlm.nih.gov/books/NBK47529/">http://www.ncbi.nlm.nih.gov/books/NBK47529/</a>）的文档给出了详细步骤。仔细阅读，按照上面的步骤，结合具体操作时的网页上各处的说明，一般都可以顺利完成任务。 现实是，许多人遇到的主要困难是：不看说明文档或说明文档看不懂；测序数据相关的一些概念不懂，导致不知道该怎样填表格，比如不明白SE和PE的区别，insert size和read length分别是什么意思，MD5的意思，以及怎样获得一个文件的MD5值。 一般上传数据到NCBI SRA的过程需要6步：</p>
+<ol>
+<li>Create a <a target="_blank" rel="noopener" href="https://submit.ncbi.nlm.nih.gov/subs/bioproject/">BioProject</a> for this research</li>
+<li>Create a <a target="_blank" rel="noopener" href="https://submit.ncbi.nlm.nih.gov/subs/biosample/">BioSample</a> submission for your biological sample(s)</li>
+<li>Gather Sequence Data Files</li>
+<li>Enter Metadata on SRA website
+<ol>
+<li>Create SRA submission</li>
+<li>Create Experiment(s) and link to BioProject and BioSample</li>
+<li>Create Run(s)</li>
+</ol>
+</li>
+<li>Transfer Data files to SRA</li>
+<li>Update Submission with PubMed links, Release Date, or Metadata Changes</li>
+</ol>
+<p>需要注意的一点是，上传的过程中很多地方一旦保存或提交就不可以修改，尤其是各处的Alias。但是，可以联系NCBI的工作人员修改内容。NCBI的工作效率是很高的，一般不超过48小时，就可以得到确认，并拿到登录号。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

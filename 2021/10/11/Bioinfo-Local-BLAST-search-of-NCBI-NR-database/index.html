@@ -1,31 +1,469 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Bioinfo | Local BLAST search of NCBI NR database | FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Bioinfo | Local BLAST search of NCBI NR database</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Bioinfo | Local BLAST search of NCBI NR database</h1><div class="post-meta">2021-10-11<span> | </span><span class="category"><a href="/categories/Bioinformatics/">Bioinformatics</a></span></div><div class="post-content"><p>DIAMOND 是一种快速批量序列比对程序，可将 DNA 文件与蛋白质参考序列文件（如 NCBI-nr）进行比较。它以 C++ 实现，旨在在多核服务器上快速运行。该程序明确地设计为，利用具有大内存容量和许多内核的现代计算机体系结构。那么为什么它那么快呢，因为它使用了种子延伸方法。额外的算法成分是使用缩小的字母，间隔种子和双索引。算法简单了解一下就可以了，具体的算法的内容比较难懂就不深入讨论了。其主要的特点包括(为什么该工具那么受欢迎):在比较NCBI-nr数据库的短DNA reads时，DIAMOND比BLASTX 快4个数量级，并且在e-value &lt; 0.001 的比对上保持相当的灵敏度水平。简单一句话就是又快又准。可用于移位分析的长reads比对资源要求低，适合在标准台式机或笔记本电脑上运行(入门门槛低，适合各类的玩家)各种输出格式，包括BLAST对比格式，例如格式6的tabular分隔形式和格式5的XML格式 (很多下游分析，或者脚本都是基于BLAST的输出结果，diamond能够直接输出和Blast相同的格式不能不说是最大的优点之一)（摘自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d2407ec4648a">lakeseafly</a></p>
-<h3 id="NR-数据库下载"><a href="#NR-数据库下载" class="headerlink" title="NR 数据库下载"></a>NR 数据库下载</h3><p>浏览器打开 <a target="_blank" rel="noopener" href="https://ftp.ncbi.nlm.nih.gov/blast/db/">https://ftp.ncbi.nlm.nih.gov/blast/db/</a>。进入 fasta 目录，可以见到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Index of &#x2F;blast&#x2F;db&#x2F;FASTA</span><br><span class="line">Name                    Last modified      Size  </span><br><span class="line">Parent Directory                             -   </span><br><span class="line">nr.gz                   2021-10-09 19:36  111G  </span><br><span class="line">nr.gz.md5               2021-10-09 20:21   40   </span><br><span class="line">nt.gz                   2021-10-04 07:27  133G  </span><br><span class="line">nt.gz.md5               2021-10-04 08:40   40   </span><br><span class="line">pdbaa.gz                2021-10-09 11:37   32M  </span><br><span class="line">pdbaa.gz.md5            2021-10-09 11:37   43   </span><br><span class="line">swissprot.gz            2021-10-09 11:36  134M  </span><br><span class="line">swissprot.gz.md5        2021-10-09 11:36   47   </span><br></pre></td></tr></table></figure>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="DIAMOND 是一种快速批量序列比对程序，可将 DNA 文件与蛋白质参考序列文件（如 NCBI-nr）进行比较。它以 C++ 实现，旨在在多核服务器上快速运行。该程序明确地设计为，利用具有大内存容量和许多内核的现代计算机体系结构。那么为什么它那么快呢，因为它使用了种子延伸方法。额外的算法成分是使用缩小的字母，间隔种子和双索引。算法简单了解一下就可以了，具体的算法的内容比较难懂就不深入讨论了。其主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | Local BLAST search of NCBI NR database">
+<meta property="og:url" content="http://example.com/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="DIAMOND 是一种快速批量序列比对程序，可将 DNA 文件与蛋白质参考序列文件（如 NCBI-nr）进行比较。它以 C++ 实现，旨在在多核服务器上快速运行。该程序明确地设计为，利用具有大内存容量和许多内核的现代计算机体系结构。那么为什么它那么快呢，因为它使用了种子延伸方法。额外的算法成分是使用缩小的字母，间隔种子和双索引。算法简单了解一下就可以了，具体的算法的内容比较难懂就不深入讨论了。其主">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-11T03:36:30.000Z">
+<meta property="article:modified_time" content="2021-10-22T02:23:21.995Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | Local BLAST search of NCBI NR database | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | Local BLAST search of NCBI NR database
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-11 11:36:30" itemprop="dateCreated datePublished" datetime="2021-10-11T11:36:30+08:00">2021-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-22 10:23:21" itemprop="dateModified" datetime="2021-10-22T10:23:21+08:00">2021-10-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>DIAMOND 是一种快速批量序列比对程序，可将 DNA 文件与蛋白质参考序列文件（如 NCBI-nr）进行比较。它以 C++ 实现，旨在在多核服务器上快速运行。该程序明确地设计为，利用具有大内存容量和许多内核的现代计算机体系结构。那么为什么它那么快呢，因为它使用了种子延伸方法。额外的算法成分是使用缩小的字母，间隔种子和双索引。算法简单了解一下就可以了，具体的算法的内容比较难懂就不深入讨论了。其主要的特点包括(为什么该工具那么受欢迎):在比较NCBI-nr数据库的短DNA reads时，DIAMOND比BLASTX 快4个数量级，并且在e-value &lt; 0.001 的比对上保持相当的灵敏度水平。简单一句话就是又快又准。可用于移位分析的长reads比对资源要求低，适合在标准台式机或笔记本电脑上运行(入门门槛低，适合各类的玩家)各种输出格式，包括BLAST对比格式，例如格式6的tabular分隔形式和格式5的XML格式 (很多下游分析，或者脚本都是基于BLAST的输出结果，diamond能够直接输出和Blast相同的格式不能不说是最大的优点之一)（摘自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d2407ec4648a">lakeseafly</a></p>
+<h3 id="nr-数据库下载"><a class="markdownIt-Anchor" href="#nr-数据库下载"></a> NR 数据库下载</h3>
+<p>浏览器打开 <a target="_blank" rel="noopener" href="https://ftp.ncbi.nlm.nih.gov/blast/db/">https://ftp.ncbi.nlm.nih.gov/blast/db/</a>。进入 fasta 目录，可以见到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Index of /blast/db/FASTA</span><br><span class="line">Name                    Last modified      Size  </span><br><span class="line">Parent Directory                             -   </span><br><span class="line">nr.gz                   2021-10-09 19:36  111G  </span><br><span class="line">nr.gz.md5               2021-10-09 20:21   40   </span><br><span class="line">nt.gz                   2021-10-04 07:27  133G  </span><br><span class="line">nt.gz.md5               2021-10-04 08:40   40   </span><br><span class="line">pdbaa.gz                2021-10-09 11:37   32M  </span><br><span class="line">pdbaa.gz.md5            2021-10-09 11:37   43   </span><br><span class="line">swissprot.gz            2021-10-09 11:36  134M  </span><br><span class="line">swissprot.gz.md5        2021-10-09 11:36   47   </span><br></pre></td></tr></table></figure>
 <p>通过 FileZilla 软件下载 nr.gz 文件，文件较大，需时较长。（备注：这个方式不推荐，我下载了两次，文件大小都不一样，均无法通过md5完整性检测，文件解压自然也是失败的。）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ wget ftp:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;db&#x2F;FASTA&#x2F;nr.gz</span><br><span class="line">--2021-10-11 10:21:12--  ftp:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;db&#x2F;FASTA&#x2F;nr.gz</span><br><span class="line">           &#x3D;&gt; ‘nr.gz’</span><br><span class="line">Resolving ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)... 165.112.9.230, 165.112.9.228, 2607:f220:41f:250::230, ...</span><br><span class="line">Connecting to ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)|165.112.9.230|:21... connected.</span><br><span class="line">Logging in as anonymous ... Logged in!</span><br><span class="line">&#x3D;&#x3D;&gt; SYST ... done.    &#x3D;&#x3D;&gt; PWD ... done.</span><br><span class="line">&#x3D;&#x3D;&gt; TYPE I ... done.  &#x3D;&#x3D;&gt; CWD (1) &#x2F;blast&#x2F;db&#x2F;FASTA ... done.</span><br><span class="line">&#x3D;&#x3D;&gt; SIZE nr.gz ... 119246586487</span><br><span class="line">&#x3D;&#x3D;&gt; PASV ... done.    &#x3D;&#x3D;&gt; RETR nr.gz ... done.</span><br><span class="line">Length: 119246586487 (111G) (unauthoritative)</span><br><span class="line"></span><br><span class="line"> 3% [&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;  （我的下载速度约 1 M&#x2F;s，花了一个晚上下载数据集，但是数据集通不过完整性检测。）</span><br><span class="line"></span><br><span class="line">$ wget ftp:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;db&#x2F;FASTA&#x2F;nr.gz.md5</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz</span><br><span class="line">--2021-10-11 10:21:12--  ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz</span><br><span class="line">           =&gt; ‘nr.gz’</span><br><span class="line">Resolving ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)... 165.112.9.230, 165.112.9.228, 2607:f220:41f:250::230, ...</span><br><span class="line">Connecting to ftp.ncbi.nlm.nih.gov (ftp.ncbi.nlm.nih.gov)|165.112.9.230|:21... connected.</span><br><span class="line">Logging in as anonymous ... Logged in!</span><br><span class="line">==&gt; SYST ... done.    ==&gt; PWD ... done.</span><br><span class="line">==&gt; TYPE I ... done.  ==&gt; CWD (1) /blast/db/FASTA ... done.</span><br><span class="line">==&gt; SIZE nr.gz ... 119246586487</span><br><span class="line">==&gt; PASV ... done.    ==&gt; RETR nr.gz ... done.</span><br><span class="line">Length: 119246586487 (111G) (unauthoritative)</span><br><span class="line"></span><br><span class="line"> 3% [=====&gt;  （我的下载速度约 1 M/s，花了一个晚上下载数据集，但是数据集通不过完整性检测。）</span><br><span class="line"></span><br><span class="line">$ wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz.md5</span><br></pre></td></tr></table></figure>
 <p>测试用 blast 自带的下载程序 update_blastdb.pl，最终也因网络中断而失败。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ perl &#x2F;home&#x2F;fenglei&#x2F;local&#x2F;app&#x2F;blast-2.11.0&#x2F;bin&#x2F;update_blastdb.pl nr</span><br><span class="line">Connected to NCBI</span><br><span class="line">Downloading nr (56 volumes) ...</span><br><span class="line">Downloading nr.00.tar.gz...</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ perl /home/fenglei/local/app/blast-2.11.0/bin/update_blastdb.pl nr</span><br><span class="line">Connected to NCBI</span><br><span class="line">Downloading nr (56 volumes) ...</span><br><span class="line">Downloading nr.00.tar.gz...</span><br></pre></td></tr></table></figure>
 <p>最后还是用 wget 工具成功下载 nr 数据集。wget 可以设置 <code>-c</code> 参数，即断点续传功能；<code>-t</code> 参数表示中断之后无限次重连。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c -t 0 ftp:&#x2F;&#x2F;ftp.ncbi.nlm.nih.gov&#x2F;blast&#x2F;db&#x2F;FASTA&#x2F;nr.gz</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c -t 0 ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz</span><br></pre></td></tr></table></figure>
 <p>下载完毕，用 <code>md5sum</code> 程序检测数据集完整度，通过的话就可以构建数据库索引，制作 index。<code>nr.fa.gz</code> 文件大小 120 Gb，解压成文本文件 <code>nr.fa</code> 约220 Gb，制作成索引文件 <code>nr.fa.dmnd</code> 约 220 Gb。是否可以直接以压缩格式的序列文件来制作 index 索引文件？测试发现是可以的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">md5sum -c nr.gz.md5</span><br><span class="line">#### 如果上面的文件是完整的，将看到如下信息</span><br><span class="line">#### nr.gz: OK</span><br><span class="line">diamond makedb --in nr.fa -d nr.fa</span><br><span class="line"># diamond makedb --in Araport11_genes.201606.pep.fasta.gz -d Araport11_genes.pep</span><br><span class="line"># makeblastdb -dbtype prot -input_type fasta -in nr.fa -out nr.fa</span><br><span class="line"># makeblastdb -dbtype nucl -input_type fasta -in nt.fa -out nt.fa</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">md5sum -c nr.gz.md5</span><br><span class="line">#### 如果上面的文件是完整的，将看到如下信息</span><br><span class="line">#### nr.gz: OK</span><br><span class="line">diamond makedb --in nr.fa -d nr.fa</span><br><span class="line"># diamond makedb --in Araport11_genes.201606.pep.fasta.gz -d Araport11_genes.pep</span><br><span class="line"># makeblastdb -dbtype prot -input_type fasta -in nr.fa -out nr.fa</span><br><span class="line"># makeblastdb -dbtype nucl -input_type fasta -in nt.fa -out nt.fa</span><br></pre></td></tr></table></figure>
 <p>注意，nr 数据库内容截取如下，有的序列名字有多个 ID，以“^A”分割。看来这几个名字就是不同的版本。我用相应的氨基酸序列去 NCBI 官网做 BLASTp，得到的结果就是排在前面的那一个 ID。将 nr 数据库在本地做 blast 比对，实际输出的也是第第一个 ID，“^A”之后的其他基因ID不会出现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;WP_036746896.1 UxaA family hydrolase [Paenibacillus sp. UNC451MF]</span><br><span class="line">MSQSSVHSRTIWGYRRTDGRVGVRNHVLILPTIVCATQTAQRVTELVQGTVTFIHQHGCAQVGVDYEQTFRTYVGMAANP</span><br><span class="line">NVYGVIVLGLGCETHQARSVASEVRKTGKPVEVISIQDHGGTLFTVAEAARAAAKMVQEASRERRVECDFAELIVGTECG</span><br><span class="line">GSDACSGLSANPAVGVCSDKIVDHGGTSILAETTELIGAEHLLARRAVNDHVAKRVYQVIEAMEKRAFSMNVDIRTGNPS</span><br><span class="line">PGNIKGGLSSLEEKSLGASNKSGTRPLQELIDYAERPSQRGLVWMDTPGHDIEQLTGMVAGGSQIVLFTTGRGTPTGSPI</span><br><span class="line">APVIKIATNTSIFEKMNDNIDLNAGTIIEGTETIESVGDRIFEEIIEVCSGKLTKSEILKQHDFGIWRIGPTF</span><br><span class="line">&gt;WP_198710437.1 energy transducer TonB [Pseudomonas syringae]^AMBI6798472.1 TonB family protein [Pseudomonas syringae]</span><br><span class="line">MIAAALAPPVGAAEPFLVPIYTPTPVFPPELVKTRYAGKVRAQLWIKSDGQVREVRAIESGHPQLAAAVEQALRQWRYKP</span><br><span class="line">WIGTVGAPPMTTITVPVIFGSHGYRRFNTEVTVGLGNIRCGYLNHEVKSARQDYPKEPLSKVDVFWYTGQALFGSHVAHL</span><br><span class="line">RSEPQRQVLLEQLGAAIPMMVSNCRRNPDRLYGDYLPTPIKALMVGLAEQAEGSE</span><br><span class="line">&gt;WP_160354286.1 DUF1491 family protein [Sphingorhabdus profundilacus]^AMVZ98371.1 DUF1491 family protein [Sphingorhabdus profundilacus]</span><br><span class="line">MTEPRLTSQFRISALQRLTEADGGFATLLHKGDPTSGVILLVGHIRGGNPVLFERYPALDGSLTWHRITQSLVGDETEIT</span><br><span class="line">KYWKTRTQRDPDLWVLELDVASIERLDGLLATDA</span><br><span class="line">&gt;CAD7654860.1 unnamed protein product, partial [Oppiella nova]^ACAG2172047.1 unnamed protein product, partial [Oppiella nova]</span><br><span class="line">MNIEDIVALHNLVSIKIYSLQKENSNLVQQVIKFKTFYDKNKTDENETKDTESESMDTLADDKGFDKDNLLKEVERIKKK</span><br><span class="line">YSIKSKKLEQKMVSMSQRNRAHSPLLWTQIKTSKNKTDENETKDTESESMDTLADDKGFDKDNLLKEVERIKKKYSIKSK</span><br><span class="line">KLEQKMVSMSQRNRAHVRHNH</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;WP_036746896.1 UxaA family hydrolase [Paenibacillus sp. UNC451MF]</span><br><span class="line">MSQSSVHSRTIWGYRRTDGRVGVRNHVLILPTIVCATQTAQRVTELVQGTVTFIHQHGCAQVGVDYEQTFRTYVGMAANP</span><br><span class="line">NVYGVIVLGLGCETHQARSVASEVRKTGKPVEVISIQDHGGTLFTVAEAARAAAKMVQEASRERRVECDFAELIVGTECG</span><br><span class="line">GSDACSGLSANPAVGVCSDKIVDHGGTSILAETTELIGAEHLLARRAVNDHVAKRVYQVIEAMEKRAFSMNVDIRTGNPS</span><br><span class="line">PGNIKGGLSSLEEKSLGASNKSGTRPLQELIDYAERPSQRGLVWMDTPGHDIEQLTGMVAGGSQIVLFTTGRGTPTGSPI</span><br><span class="line">APVIKIATNTSIFEKMNDNIDLNAGTIIEGTETIESVGDRIFEEIIEVCSGKLTKSEILKQHDFGIWRIGPTF</span><br><span class="line">&gt;WP_198710437.1 energy transducer TonB [Pseudomonas syringae]^AMBI6798472.1 TonB family protein [Pseudomonas syringae]</span><br><span class="line">MIAAALAPPVGAAEPFLVPIYTPTPVFPPELVKTRYAGKVRAQLWIKSDGQVREVRAIESGHPQLAAAVEQALRQWRYKP</span><br><span class="line">WIGTVGAPPMTTITVPVIFGSHGYRRFNTEVTVGLGNIRCGYLNHEVKSARQDYPKEPLSKVDVFWYTGQALFGSHVAHL</span><br><span class="line">RSEPQRQVLLEQLGAAIPMMVSNCRRNPDRLYGDYLPTPIKALMVGLAEQAEGSE</span><br><span class="line">&gt;WP_160354286.1 DUF1491 family protein [Sphingorhabdus profundilacus]^AMVZ98371.1 DUF1491 family protein [Sphingorhabdus profundilacus]</span><br><span class="line">MTEPRLTSQFRISALQRLTEADGGFATLLHKGDPTSGVILLVGHIRGGNPVLFERYPALDGSLTWHRITQSLVGDETEIT</span><br><span class="line">KYWKTRTQRDPDLWVLELDVASIERLDGLLATDA</span><br><span class="line">&gt;CAD7654860.1 unnamed protein product, partial [Oppiella nova]^ACAG2172047.1 unnamed protein product, partial [Oppiella nova]</span><br><span class="line">MNIEDIVALHNLVSIKIYSLQKENSNLVQQVIKFKTFYDKNKTDENETKDTESESMDTLADDKGFDKDNLLKEVERIKKK</span><br><span class="line">YSIKSKKLEQKMVSMSQRNRAHSPLLWTQIKTSKNKTDENETKDTESESMDTLADDKGFDKDNLLKEVERIKKKYSIKSK</span><br><span class="line">KLEQKMVSMSQRNRAHVRHNH</span><br></pre></td></tr></table></figure>
+<h3 id="diamond-blast"><a class="markdownIt-Anchor" href="#diamond-blast"></a> Diamond BLAST</h3>
+<p>普通的 BLAST 将会非常慢，所以要用到 Diamond 的 blast 功能。通过 <code>outfmt 6</code> 来控制需要输出的信息项目。参数 <code>-k</code> （–max-target-seqs）表示，针对每一个序列，仅仅输出最佳匹配的一个结果，默认是输出 25 个匹配结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">diamond blastp --threads 8 -d /index/nr.fa -q unkonwn_proteins_seq.fa -k 1 -e 0.0001 -o unkonwn_proteins_seq_blastp_nr_1</span><br><span class="line"># diamond blastx --threads 8 -d /index/nr.fa --outfmt 6 qseqid sallseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore -q unkonwn_DNA_seq.fas -k 1 -e 0.0001 -o unkonwn_proteins_seq_blastx_nr_2</span><br><span class="line"></span><br><span class="line">##### 下面是显示tab格式的比对信息，通过-outfmt 6 参数设置将比对目标的基因名全部信息进行输出</span><br><span class="line">diamond blastp --threads 8 -d /index/nr.fa --outfmt 6 qseqid sallseqid stitle pident length mismatch gapopen qstart qend sstart send evalue bitscore -q unkonwn_proteins_seq.fas -k 1 -e 0.001 -o unkonwn_proteins_seq_blastx_nr_3</span><br><span class="line"></span><br><span class="line">##### 下面是生成 paorwise 比对信息，可以直观看到比对的区间信息</span><br><span class="line">diamond blastx --threads 16 -d ~/databases/nr/nr.fa --outfmt 0 -q Transcripts.fa -k 1 -e 0.001 -o Transcripts.fa_blastx_nr_outfmt0.tab</span><br></pre></td></tr></table></figure>
+<h3 id="结果解读"><a class="markdownIt-Anchor" href="#结果解读"></a> 结果解读</h3>
+<p>如下就是 tab 格式的输出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Query_ID	gene_ID_in_NR	gene_info_in_NR	identity%	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore</span><br><span class="line">TRINITY_DN69561_c0_g1_i1	SHE22971.1	SHE22971.1 Exodeoxyribonuclease III [Bathymodiolus brooksi thiotrophic gill symbiont]	41.5	82	47	1	250	5	155	235	3.95E-10	65.1</span><br><span class="line">TRINITY_DN69561_c3_g1_i1	XP_033731479.1	XP_033731479.1 uncharacterized protein LOC117321118 [Pecten maximus]	42.4	66	38	0	198	1	610	675	2.09E-06	54.3</span><br><span class="line">TRINITY_DN69557_c0_g1_i5	XP_025020276.1	XP_025020276.1 tigger transposable element-derived protein 1-like [Python bivittatus]	51.7	201	71	4	3	533	71	269	4.86E-54	183</span><br><span class="line">TRINITY_DN69557_c0_g1_i9	XP_008336686.1	XP_008336686.1 tigger transposable element-derived protein 1-like [Cynoglossus semilaevis]	60.5	114	45	0	1	342	17	130	1.86E-34	136</span><br><span class="line">TRINITY_DN69557_c0_g1_i10	XP_005003688.1	XP_005003688.1 tigger transposable element-derived protein 1-like isoform X2 [Cavia porcellus]	83.3	36	6	0	147	254	76	111	6.29E-11	67.8</span><br></pre></td></tr></table></figure>
 
-<h3 id="Diamond-BLAST"><a href="#Diamond-BLAST" class="headerlink" title="Diamond BLAST"></a>Diamond BLAST</h3><p>普通的 BLAST 将会非常慢，所以要用到 Diamond 的 blast 功能。通过 <code>outfmt 6</code> 来控制需要输出的信息项目。参数 <code>-k</code> （–max-target-seqs）表示，针对每一个序列，仅仅输出最佳匹配的一个结果，默认是输出 25 个匹配结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">diamond blastp --threads 8 -d &#x2F;index&#x2F;nr.fa -q unkonwn_proteins_seq.fa -k 1 -e 0.0001 -o unkonwn_proteins_seq_blastp_nr_1</span><br><span class="line"># diamond blastx --threads 8 -d &#x2F;index&#x2F;nr.fa --outfmt 6 qseqid sallseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore -q unkonwn_DNA_seq.fas -k 1 -e 0.0001 -o unkonwn_proteins_seq_blastx_nr_2</span><br><span class="line"></span><br><span class="line">##### 下面是显示tab格式的比对信息，通过-outfmt 6 参数设置将比对目标的基因名全部信息进行输出</span><br><span class="line">diamond blastp --threads 8 -d &#x2F;index&#x2F;nr.fa --outfmt 6 qseqid sallseqid stitle pident length mismatch gapopen qstart qend sstart send evalue bitscore -q unkonwn_proteins_seq.fas -k 1 -e 0.001 -o unkonwn_proteins_seq_blastx_nr_3</span><br><span class="line"></span><br><span class="line">##### 下面是生成 paorwise 比对信息，可以直观看到比对的区间信息</span><br><span class="line">diamond blastx --threads 16 -d ~&#x2F;databases&#x2F;nr&#x2F;nr.fa --outfmt 0 -q Transcripts.fa -k 1 -e 0.001 -o Transcripts.fa_blastx_nr_outfmt0.tab</span><br></pre></td></tr></table></figure>
+    </div>
 
-<h3 id="结果解读"><a href="#结果解读" class="headerlink" title="结果解读"></a>结果解读</h3><p>如下就是 tab 格式的输出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Query_ID	gene_ID_in_NR	gene_info_in_NR	identity%	length	mismatch	gapopen	qstart	qend	sstart	send	evalue	bitscore</span><br><span class="line">TRINITY_DN69561_c0_g1_i1	SHE22971.1	SHE22971.1 Exodeoxyribonuclease III [Bathymodiolus brooksi thiotrophic gill symbiont]	41.5	82	47	1	250	5	155	235	3.95E-10	65.1</span><br><span class="line">TRINITY_DN69561_c3_g1_i1	XP_033731479.1	XP_033731479.1 uncharacterized protein LOC117321118 [Pecten maximus]	42.4	66	38	0	198	1	610	675	2.09E-06	54.3</span><br><span class="line">TRINITY_DN69557_c0_g1_i5	XP_025020276.1	XP_025020276.1 tigger transposable element-derived protein 1-like [Python bivittatus]	51.7	201	71	4	3	533	71	269	4.86E-54	183</span><br><span class="line">TRINITY_DN69557_c0_g1_i9	XP_008336686.1	XP_008336686.1 tigger transposable element-derived protein 1-like [Cynoglossus semilaevis]	60.5	114	45	0	1	342	17	130	1.86E-34	136</span><br><span class="line">TRINITY_DN69557_c0_g1_i10	XP_005003688.1	XP_005003688.1 tigger transposable element-derived protein 1-like isoform X2 [Cavia porcellus]	83.3	36	6	0	147	254	76	111	6.29E-11	67.8</span><br></pre></td></tr></table></figure>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&amp;Tag sequencing and ChIP sequencing</a><a class="next" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/" rel="prev" title="Bioinfo | Positive Selection Ka/Ks calculation">
+      <i class="fa fa-chevron-left"></i> Bioinfo | Positive Selection Ka/Ks calculation
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/" rel="next" title="Bioinfo | CUT&Tag sequencing and ChIP sequencing">
+      Bioinfo | CUT&Tag sequencing and ChIP sequencing <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nr-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text"> NR 数据库下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diamond-blast"><span class="nav-number">2.</span> <span class="nav-text"> Diamond BLAST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E8%A7%A3%E8%AF%BB"><span class="nav-number">3.</span> <span class="nav-text"> 结果解读</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

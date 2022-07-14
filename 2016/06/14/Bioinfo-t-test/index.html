@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在做数据检验的时候，通常先要检验数据是否正态，因为正态分布下有非常详尽的理论基础，用起来非常方便，如果数据不服从正态分布怎么办呢？此时就可以用非参数检验，是基于秩（其实就是序号啦）的，也有很多种方法。你可能会问：不管数据是否正态，是否都能用非参数检验呢，其实也是可以的，不过正态下用非参数检验的话，检验功效就不如参数方法了。如果你不知道什么是检验功效的话就去查一查概率统计的课本。为了有较高的检验功效">
+<meta property="og:type" content="article">
+<meta property="og:title" content="T检验中，单尾和双尾，成对、等方差和异方差的差异">
+<meta property="og:url" content="http://example.com/2016/06/14/Bioinfo-t-test/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="在做数据检验的时候，通常先要检验数据是否正态，因为正态分布下有非常详尽的理论基础，用起来非常方便，如果数据不服从正态分布怎么办呢？此时就可以用非参数检验，是基于秩（其实就是序号啦）的，也有很多种方法。你可能会问：不管数据是否正态，是否都能用非参数检验呢，其实也是可以的，不过正态下用非参数检验的话，检验功效就不如参数方法了。如果你不知道什么是检验功效的话就去查一查概率统计的课本。为了有较高的检验功效">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-06-14T04:05:21.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.162Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2016/06/14/Bioinfo-t-test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>T检验中，单尾和双尾，成对、等方差和异方差的差异 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/14/Bioinfo-t-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          T检验中，单尾和双尾，成对、等方差和异方差的差异
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-14 12:05:21" itemprop="dateCreated datePublished" datetime="2016-06-14T12:05:21+08:00">2016-06-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在做数据检验的时候，通常先要检验数据是否正态，因为正态分布下有非常详尽的理论基础，用起来非常方便，如果数据不服从正态分布怎么办呢？此时就可以用非参数检验，是基于秩（其实就是序号啦）的，也有很多种方法。你可能会问：不管数据是否正态，是否都能用非参数检验呢，其实也是可以的，不过正态下用非参数检验的话，检验功效就不如参数方法了。如果你不知道什么是检验功效的话就去查一查概率统计的课本。为了有较高的检验功效，非正态数据就用非参数方法，正态数据就用参数方法。 至于该做双尾还是单尾检验，是可以根据问题的实际意义进行判断的，如果不好判断就画画散点图，看一个是否明显在另一个之上或之下。 至于方差的要求那是因为在正态分布下，等方差会省去很多麻烦，所以通常假定方差相等，相关的检验理论也非常完善。如果你不知道方差到底是否相等，可以做检验，最直观的方法就是绘制箱线图，或计算样本标准差。</p>
+<p>实际上是： 当所要比较的两个样本统计量的总体参数事先无法肯定哪个大或者哪个小时，就要用双尾检验，所得到的检验结果取P双尾值。否则就取P单尾值。单尾检验强调的是方向性。 举个例子： 例子1：在甲、乙两地随机抽取两个样本，他们的身高平均数分别为x1和x2，现在要对x1和x2进行检验，由于事先无法确定两个样本均数所在的总体样本均数哪个大哪个小，所以要用双尾检验。 例子2：一批17岁男生测验的身高平均数x1,到18岁时再进行测验得到平均数x2，若要对x1和x2进行检验，因为同一批人的18岁身高平均值不可能比17岁的还低，所以这里要用单尾检验。 实际上我们前面所说的T检验的例子都是无法确定两样本总体参数谁大谁小，所以都取P双尾值 上面是一个找到的资料，不知道对不对。 ********************** 还有一个百度上面的： 单尾和双尾取决于你的H0。设两个样本是X1，X2，如果H0是X1=X2，那么做双尾检验，因为不确定X1比X2大还是小。如果如果H0是X1&gt;X2或X1&lt;X2，那么做的是单尾，因为有先验的假设。 ************************ 还有一个相关的： 通常假设检验的目的是两总体参数是否相等，以两样本均数比较为例， 无效假设为两样本所代表的总体均数相等； 备择假设为不相等（有可能甲大于乙，也有可能甲小于乙）既两种情况都有可能发生． 而研究者做这样的假设说明（１）他没有充分的理由判断甲所代表的总体均数会大于乙的或甲的会小于乙的；（２）他只关心甲乙两个样本各自所代表的总体均数是否相等？至于哪个大不是他关心的问题．这时研究者往往会采用双侧检验． 如果研究者从专业知识的角度判断甲所代表的总体均数不可能大于（或小于）乙的，这时一般就采用单侧检验． 例如：要比较经常参加体育锻炼的中学男生心率是否低于一般中学男生的心率，就属于单侧检验．因为根据医学知识知道经常锻炼的中学男生心率不会高于一般中学男生，因此在进行假设检验时应使用单侧检验． 单尾检验和双尾检验的区别在于他们拒绝H0的标准。单尾检验允许你在差异相对较小时拒绝H0，这个差异被规定了方向。另一方面，双尾检验需要相对较大的差异，这个差异不依赖于方向。 所有的研究者都同意单尾检验与双尾检验不同。一些研究者认为，双尾检验更为严格，比单尾检验更令人信服。因为双尾检验要求更多的证据来拒绝H0，因此提供了更强的证据说明处理存在效应。另一些研究者倾向于使用单尾检验，因为它更为敏感，即在单尾检验中相对较小的处理效应也可能是显著的，但是，它可能不能达到双尾检验的显著性要求。 那么我们是应该使用单尾检验还是双尾检验？？通常，双尾检验被用于没有强烈方向性期望的实验研究中，或是存在两个可竞争的预测时。例如，当一种理论预测分数增加，而另一种理论预测分数减少时，应当使用双尾检验。应当使用单尾检验的情况包括在进行实验前已经有方向性预测，或强烈需要做出方向性预测时。   参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://www.ilovematlab.cn/thread-162174-1-1.html">http://www.ilovematlab.cn/thread-162174-1-1.html</a><br />
+<a target="_blank" rel="noopener" href="http://wiki.mbalib.com/wiki/%E6%98%BE%E8%91%97%E6%80%A7%E6%A3%80%E9%AA%8C">http://wiki.mbalib.com/wiki/显著性检验</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/06/09/%E8%BF%9B%E5%8C%96%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90%EF%BC%9Akaks%E6%AF%94%E7%8E%87/" rel="prev" title="生物进化之选择压力分析：Ka/Ks比率">
+      <i class="fa fa-chevron-left"></i> 生物进化之选择压力分析：Ka/Ks比率
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/06/27/Bioinfo-preqc-of-sga/" rel="next" title="Preqc of SGA">
+      Preqc of SGA <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,13 +1,1228 @@
-<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>FENG's notes</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">FENG's notes</h1><a id="logo" href="/.">FENG's notes</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"><a href="/2017/06/06/mac-os-x%E4%BD%BF%E7%94%A8chflags%E5%91%BD%E4%BB%A4%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/">Mac OS X使用chflags命令隐藏文件</a></h1><div class="post-meta">2017-06-06</div><div class="post-content"><p>转载：Mac OS X如何使用chflags快速隐藏文件 Mac OS X 自带的命令行隐藏文件方法，使用chflags即可完成，打开终端程序，输入如下命令：</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="FENG&#39;s Notes">
+<meta property="og:url" content="http://example.com/page/9/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/page/9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/09/20/Bioinfo-sort-contigs-based-on-chromosomes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/20/Bioinfo-sort-contigs-based-on-chromosomes/" class="post-title-link" itemprop="url">根据参考基因组对contigs进行排列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-20 23:42:18" itemprop="dateCreated datePublished" datetime="2017-09-20T23:42:18+08:00">2017-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Multiple programs have been developed for reference-assisted chromosome assembly: Bambus [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR10">10</a>], BACCardI [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR11">11</a>], Projector2 [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR12">12</a>], OSLay [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR13">13</a>], ABACAS [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR14">14</a>], MeDuSa [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR15">15</a>], AlignGraph [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR16">16</a>], Ragout [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR17">17</a>], SyMap [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR18">18</a>] and RACA [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR19">19</a>]. Most of the listed tools were designed for bacterial or small genomes. For example, ABACAS is a convenient bacterial genome contiguation tool that may also be used for small eukaryotic genomes such as <em>Saccharomyces cerevisiae</em> (12.1 mega base pairs). However, ABACAS is not efficiently scaled to use with the large genomes typical of vertebrate species. ABACAS对小型基因组很实用。但是注意：contig连接处是由99个N连接起来的，实际上contig的末端室友重叠关系的。 针对大型基因组，可以使用Chromosomer: a reference-based genome arrangement tool for producing draft chromosome sequences</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/09/20/Bioinfo-Genome-synteny-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/20/Bioinfo-Genome-synteny-analysis/" class="post-title-link" itemprop="url">基因组序列的共线性分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-20 17:41:23" itemprop="dateCreated datePublished" datetime="2017-09-20T17:41:23+08:00">2017-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-10 11:13:23" itemprop="dateModified" datetime="2020-12-10T11:13:23+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1-mummer"><a class="markdownIt-Anchor" href="#1-mummer"></a> 1 MUMMER</h3>
+<p>基因组序列直接比较的首选工具。参考资料很多。</p>
+<h3 id="2-lastz"><a class="markdownIt-Anchor" href="#2-lastz"></a> 2 LASTZ</h3>
+<p><img src="https://genehub.files.wordpress.com/2017/09/13742_2016_141_fig5_html.gif" alt="13742_2016_141_fig5_html" /><br />
+Ref：<a target="_blank" rel="noopener" href="http://www.bx.psu.edu/miller%5C_lab/dist/README.lastz-1.02.00/README.lastz-1.02.00a.html">http://www.bx.psu.edu/miller\_lab/dist/README.lastz-1.02.00/README.lastz-1.02.00a.html</a><br />
+Paper：<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6">https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6</a></p>
+<h3 id="3-gepard"><a class="markdownIt-Anchor" href="#3-gepard"></a> 3 Gepard</h3>
+<p><img src="https://genehub.files.wordpress.com/2017/09/f4-large.jpg" alt="f4-large" /><br />
+Ref：<a target="_blank" rel="noopener" href="http://cube.univie.ac.at/gepard">http://cube.univie.ac.at/gepard</a><br />
+Paper：<a target="_blank" rel="noopener" href="http://www.plantcell.org/content/23/1/27">http://www.plantcell.org/content/23/1/27</a></p>
+<h3 id="4-mauve-multiple-alignment-of-conserved-genomic-sequence"><a class="markdownIt-Anchor" href="#4-mauve-multiple-alignment-of-conserved-genomic-sequence"></a> 4 MAUVE ( Multiple Alignment of Conserved Genomic Sequence )</h3>
+<p><img src="https://genehub.files.wordpress.com/2017/09/fmicb-02-00236-g001.jpg" alt="fmicb-02-00236-g001" /> Ref：<a target="_blank" rel="noopener" href="http://darlinglab.org/mauve/mauve.html">darlinglab.org/mauve/mauve.html</a></p>
+<h3 id="5-mcscanx"><a class="markdownIt-Anchor" href="#5-mcscanx"></a> 5 MCscanX</h3>
+<p><img src="https://genehub.files.wordpress.com/2017/09/circle.png" alt="circle" /><br />
+<img src="https://genehub.files.wordpress.com/2017/09/dual_synteny.png" alt="dual_synteny" /><br />
+<img src="https://genehub.files.wordpress.com/2017/09/dot.png" alt="dot" /></p>
+<p>MCScanX采用改进了的MCScan算法，分析基因组内或者基因组间的共线性区块。它利用两个物种蛋白质blastp比对结果，再结合这些蛋白质基因在基因组中的位置，得到两个物种基因组的共线性区块。如果是分析基因组内的共线性区块，物种内蛋白质自己比对自己就好了。</p>
+<p>Ref：<a target="_blank" rel="noopener" href="http://chibba.pgml.uga.edu/mcscan2/examples/example7.php">http://chibba.pgml.uga.edu/mcscan2/examples/example7.php</a></p>
+<h3 id="6-c-sibelia"><a class="markdownIt-Anchor" href="#6-c-sibelia"></a> 6 C-Sibelia</h3>
+<p>an easy-to-use and highly accurate tool for bacterial genome comparison <img src="https://genehub.files.wordpress.com/2017/09/9c8a61c3-6abf-49a0-8637-fec6d0ed1aa7_figure1.gif" alt="9c8a61c3-6abf-49a0-8637-fec6d0ed1aa7_figure1" /></p>
+<p>ref:</p>
+<h3 id="7-symap"><a class="markdownIt-Anchor" href="#7-symap"></a> 7 SyMAP</h3>
+<p><a target="_blank" rel="noopener" href="http://www.symapdb.org/">http://www.symapdb.org/</a></p>
+<p><img src="https://genehub.files.wordpress.com/2017/09/alignment2d.png" alt="alignment2d" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/28/sspace-cant-locate-getopts-pl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/28/sspace-cant-locate-getopts-pl/" class="post-title-link" itemprop="url">SSPACE: Can't locate getopts.pl</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-28 17:00:28" itemprop="dateCreated datePublished" datetime="2017-08-28T17:00:28+08:00">2017-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题：运行SSPACE_Standard_v3.0.pl报错。 Can’t locate <a target="_blank" rel="noopener" href="http://getopts.pl">getopts.pl</a> in @INC (@INC contains: /xxx/SSPACE-STANDARD/dotlib/ /home/fenglei-cuhk/perl5/lib/perl5 /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl .) at /home/xx/SSPACE-STANDARD/SSPACE_Standard_v3.0.pl line 124. 原因： <a target="_blank" rel="noopener" href="http://getopts.pl">getopts.pl</a> is a Perl 4 core library but no longer included in current Perl 5 distributions. 解决办法： 在Linux命令行模式下输入“perl -MCPAN -e shell”进入perl界面，然后输入“install Perl4::CoreLibs”即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/23/shell-get-prefix-of-file-name/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/23/shell-get-prefix-of-file-name/" class="post-title-link" itemprop="url">Shell编程：获取文件前缀字符串</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-23 15:03:52" itemprop="dateCreated datePublished" datetime="2017-08-23T15:03:52+08:00">2017-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>比如处理名为 /xxx/yyy/zzz/abc2017.1.fq.gz 的文件，我们需要获取abc2017这个文件名。</p>
+<p>i=/xxx/yyy/zzz/abc2017.1.fq.gz</p>
+<p>IN=$i</p>
+<h1 id="read1文件绝对路径xxxyyyzzzabc20171fqgz"><a class="markdownIt-Anchor" href="#read1文件绝对路径xxxyyyzzzabc20171fqgz"></a> read1文件绝对路径：/xxx/yyy/zzz/abc2017.1.fq.gz</h1>
+<p>path=${IN%/*}</p>
+<h1 id="read1文件的绝对路径前缀以作为分隔界限并获取界限之前的字符串xxxyyyzzz"><a class="markdownIt-Anchor" href="#read1文件的绝对路径前缀以作为分隔界限并获取界限之前的字符串xxxyyyzzz"></a> Read1文件的绝对路径前缀，以“/”作为分隔界限并获取界限之前的字符串：/xxx/yyy/zzz</h1>
+<p>sample=${path##*/}</p>
+<h1 id="read1所在文件夹名称即-zzz"><a class="markdownIt-Anchor" href="#read1所在文件夹名称即-zzz"></a> Read1所在文件夹名称，即 zzz</h1>
+<p>prefix=${IN%.1*}</p>
+<h1 id="read1与read2两个文件共有的路径前缀即以1作为分隔界限并获取界限之前的字符串-xxxyyyzzzabc2017"><a class="markdownIt-Anchor" href="#read1与read2两个文件共有的路径前缀即以1作为分隔界限并获取界限之前的字符串-xxxyyyzzzabc2017"></a> Read1与Read2两个文件共有的路径前缀，即以“.1”作为分隔界限并获取界限之前的字符串 /xxx/yyy/zzz/abc2017</h1>
+<p>sample=${prefix##*/}</p>
+<h1 id="sample的名称-abc2017"><a class="markdownIt-Anchor" href="#sample的名称-abc2017"></a> sample的名称 abc2017</h1>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/23/Linux-shellcheck-chech-shell-scripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/23/Linux-shellcheck-chech-shell-scripts/" class="post-title-link" itemprop="url">shellcheck: 自动检测shell脚本的语法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-23 11:20:39" itemprop="dateCreated datePublished" datetime="2017-08-23T11:20:39+08:00">2017-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>生物信息分析工作中，可以将数据操作命令写入shell脚本，一方面方便自动化运行，另一方面是将操作记录存档，便于日后查阅。 但是shell脚本也会因人为疏忽而存在错误，我想有没有程序可以检测脚本的正确性呢，一查果然有shellcheck之类的程序。shellcheck有在线版：<a target="_blank" rel="noopener" href="http://www.shellcheck.net/">http://www.shellcheck.net/</a> shellcheck也有本地版，安装有多种方法，可参考官方网站：<a target="_blank" rel="noopener" href="https://github.com/koalaman/shellcheck">https://github.com/koalaman/shellcheck</a> 我直接下载了编译好的程序：<a target="_blank" rel="noopener" href="https://storage.googleapis.com/shellcheck/shellcheck-latest.linux.x86%5C_64.tar.xz">https://storage.googleapis.com/shellcheck/shellcheck-latest.linux.x86\_64.tar.xz</a> 解压之后，即可使用。 使用方法：shellcheck <a target="_blank" rel="noopener" href="http://myscript.sh">myscript.sh</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/15/shell-set-illegal-option-o-pipefail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/15/shell-set-illegal-option-o-pipefail/" class="post-title-link" itemprop="url">Shell脚本 \"set Illegal option -o pipefail\"</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-15 12:18:27" itemprop="dateCreated datePublished" datetime="2017-08-15T12:18:27+08:00">2017-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Linux编写Shell 脚本程序的时候，set -o pipefail是很实用的命令。因为Shell脚本中通常有一连串的动作需要执行，一旦某个环节出错，如果设定了pipefail，脚本会立即中断运行；而如果没有设定，脚本将继续执行后续命令，可能造成错误。 然而在Ubuntu中，当使用“set -o pipefail”的时候，一直报错：</p>
+<p>set Illegal option -o pipefail</p>
+<p>经查，原因是Ubuntu的 shell 默认安装的是 dash，而不是 bash。 运行以下命令查看 sh 的详细信息，确认 shell 对应的程序是哪个： $ls -al /bin/sh dash 比 bash 更轻，更快。但 bash 却更常用。 如果一些命令、脚本等总不能正常执行，有可能是 dash 的原因。 比如编译 Android 源代码的时候，如果使用 dash，则有可能编译出错，或者编译的系统不能启动。 通过以下方式可以使 shell 切换回 bash： $sudo dpkg-reconfigure dash 然后选择 no 或者 否 ，并确认。 这样做将重新配置 dash，并使其不作为默认的 shell 工具。 也可以直接修改 /bin/sh 链接文件，将其指定到 /bin/bash： $sudo ln -fs /bin/bash /bin/sh</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/08/15/shell-set-illegal-option-o-pipefail/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/10/Life-cash-dollar-of-HANGSANG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/10/Life-cash-dollar-of-HANGSANG/" class="post-title-link" itemprop="url">恒生银行信用卡Cash Dollar优惠登记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-10 10:55:20" itemprop="dateCreated datePublished" datetime="2017-08-10T10:55:20+08:00">2017-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由2017年7月1日至2018年6月30日，憑大學/大專聯營信用卡只需登記1次^，由登記月份起作以下簽賬交易，均可賺取<strong>高達5倍Cash Dollars</strong>:</p>
+<p>1）拨打29986038，选择语言，点3选英语；<br />
+2）选3，教育优惠Cash Dollar登记；<br />
+3）输入16位信用卡账户，以“#”（pound）结束;<br />
+4）收到语音提示之后，按“1”确认；<br />
+5）收到语音播报七位数Reference Number，然后会提示是否结束服务，按“9”即结束服务。</p>
+<p>参考：<br />
+<a target="_blank" rel="noopener" href="http://www.hangseng.com/cms/emkt/pmo/grp05/p10/chi/index.html">http://www.hangseng.com/cms/emkt/pmo/grp05/p10/chi/index.html</a></p>
+<p>细则</p>
+<p>大 學 / 大 專 聯 營 信 用 卡 「 高 達 5x Cash Dollars 自 我 增 值 獎 賞 」</p>
+<p>優惠期由2017年7月1日至2018年6月30日(「優惠期」)。</p>
+<p>客戶於優惠期內致電2998 6038登記1次，成功登記後，憑大學/大專聯營信用卡於登記之月份至2018年6月30日內之合資格交易均可享有高達5倍恒生信用卡Cash Dollars(包括原有之基本Cash Dollars)。[案:去年登記過的，今年需要重新登記。</p>
+<p>適用於5倍恒生信用卡Cash Dollars之合資格交易包括：(i)於本地或網上書店購物及/或(ii)支付本地及海外公開考試費用；適用於3倍恒生信用卡Cash Dollars之合資格交易包括：報讀本地及海外各大院校辦學機構舉辦之課程，根據持續進修基金可獲發還款項課程名單為準，並成功於2018年7月16日或之前誌賬於信用卡戶口內之簽賬。</p>
+<p>每個成功登記之信用卡戶口於優惠期內最多只可額外獲享合共$300 Cash Dollars，包括(i)於本地或網上書店購物及/或(ii)支付本地及海外公開考試費用而額外獲享之$200 Cash Dollars及報讀本地及海外各大院校辦學機構舉辦之課程，根據持續進修基金可獲發還款項課程名單為準，而額外獲享之簽賬以同一信用卡戶口計算，包括以同一主卡戶口過賬之附屬卡之簽賬。</p>
+<p>以每次單一簽賬計算及所獲取之Cash Dollars以整數為單位，不足$1 Cash Dollar則不獲計算。</p>
+<p>附：CUHK缴学费的流程。</p>
+<p>第一，先去登记3X cash dollar，如上文。<br />
+第二，登入你的恒生e-banking，点账户服务→缴付账单→缴帐→新增；商户<br />
+商户类别：Education Institutions<br />
+商户：The Chinese University of Hong Kong<br />
+账单户口号码：进入中大CUSIS→make a payment→pay amount→next，之后有一个Payment Reference，就是这个。<br />
+账单类别：01 Tuition,Hostel…<br />
+金额：xxx（学费金额）<br />
+支账户口：选择信用卡户口，会有信用卡号码，别点成储蓄卡户口。<br />
+点击付款确认就ok了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/07/Bioinfo-infernal-and-hmmer-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/07/Bioinfo-infernal-and-hmmer-installation/" class="post-title-link" itemprop="url">Infernal和hmmer程序的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-07 16:21:56" itemprop="dateCreated datePublished" datetime="2017-08-07T16:21:56+08:00">2017-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>再Rfam数据库对small RNA进行注释的过程中需要用到Infernal，但是安装遇到问题。configure之后，make不成功，报错“fatal error: config.h: No such file”，下面是解决方案。 hmmer就是一款比对软件，类似于blast等，它使用马尔可夫概率模型的方法。HMMER的目的是更准确的探测到远程同源序列，它提供的比对结果要比blast更加精确，相应的速度也要慢。在功能基因研究中需要使用到序列搜索，比如从序列数据库中，找同源的序列，或者对一个新的基因功能进行鉴定，使用hmmer比使用blast有着更高的灵敏度以及更高的搜索速度，但其应用还远没有blast普及。 hmmer安装的参考资料是：</p>
+<p>curl -O <a href="ftp://selab.janelia.org/pub/software/hmmer3/3.1b1/hmmer%5C-3.1b1.tar.gz">ftp://selab.janelia.org/pub/software/hmmer3/3.1b1/hmmer\-3.1b1.tar.gz</a><br />
+tar xzf hmmer-3.1b1.tar.gz<br />
+cd hmmer-3.1b1/<br />
+./configure --prefix=/usr &amp;&amp; make &amp;&amp; make install</p>
+<p>但是我安装过程中报错：</p>
+<p>make[2]: Entering directory ‘/home/fenglei/local/app/infernal/easel/miniapps’<br />
+CC esl-afetch.o<br />
+GEN esl-afetch<br />
+CC esl-alimanip.o<br />
+In file included from /home/fenglei/local/include/assert.h:5:0,<br />
+from esl-alimanip.c:8:<br />
+/home/fenglei/local/include/except.h:5:44: fatal error: config.h: No such file or directory<br />
+#include  /* For HAVE_PTHREAD */<br />
+^<br />
+compilation terminated.<br />
+make[2]: *** [Makefile:123: esl-alimanip.o] Error 1<br />
+make[2]: Leaving directory ‘/home/fenglei/local/app/infernal/easel/miniapps’<br />
+make[1]: *** [Makefile:377: all] Error 2<br />
+make[1]: Leaving directory ‘/home/fenglei/local/app/infernal/easel’<br />
+make: *** [Makefile:103: all] Error 2</p>
+<p>原因： 现在较新的内核已经弃用了config.h，把这个文件新建上去即可。 解决办法：执行命令（注意路径的不同）：</p>
+<p>cd easel<br />
+vi config.h</p>
+<p>在vi界面输入下述内容，随后保存退出。</p>
+<p>#ifndef _LINUX_CONFIG_H<br />
+ #define _LINUX_CONFIG_H<br />
+ #endif</p>
+<p>随后成功安装。</p>
+<p>make &amp;&amp; make install</p>
+<p>参考资料 <a target="_blank" rel="noopener" href="http://2013-caltech-workshop.readthedocs.io/en/latest/prokka-annotation.html">http://2013-caltech-workshop.readthedocs.io/en/latest/prokka-annotation.html</a> <a target="_blank" rel="noopener" href="https://lzw.me/a/linux-config-no-such-file-or-directory.html/comment-page-1#comment-80998">https://lzw.me/a/linux-config-no-such-file-or-directory.html/comment-page-1#comment-80998</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/07/18/Bioinfo-n50-n90-length/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/07/18/Bioinfo-n50-n90-length/" class="post-title-link" itemprop="url">基因组|N50与N90的统计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-07-18 18:16:07" itemprop="dateCreated datePublished" datetime="2017-07-18T18:16:07+08:00">2017-07-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h3>
+<p>基因组组装的过程中，N50与N90是常用的评价指标。</p>
+<h3 id="方法"><a class="markdownIt-Anchor" href="#方法"></a> 方法</h3>
+<p>可以使用NGS QC Toolkit实现统计。 下载地址： <a target="_blank" rel="noopener" href="http://59.163.192.90:8080/ngsqctoolkit/">http://59.163.192.90:8080/ngsqctoolkit/</a> <code>perl N50Stat.pl -i in.fa -o out.stat</code> <a target="_blank" rel="noopener" href="http://N50Stat.pl">N50Stat.pl</a></p>
+<p>Tool to generate statistics for read/sequence data given in FASTA format (total number of reads/sequences, total bases and minimum, maximum, average, median, N25, N50, N75, N90 and N95 read/sequence length)</p>
+<p>Citation Patel RK, Jain M (2012). NGS QC Toolkit: A toolkit for quality control of next generation sequencing data. PLoS ONE, 7(2): e30619.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/06/06/Linux-mac-os-x-using-chflags-to-hide-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/06/06/Linux-mac-os-x-using-chflags-to-hide-files/" class="post-title-link" itemprop="url">Mac OS X使用chflags命令隐藏文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-06-06 09:54:41" itemprop="dateCreated datePublished" datetime="2017-06-06T09:54:41+08:00">2017-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载：Mac OS X如何使用chflags快速隐藏文件 Mac OS X 自带的命令行隐藏文件方法，使用chflags即可完成，打开终端程序，输入如下命令：</p>
 <blockquote>
 <p>chflags hidden 文件绝对路径/ 相对路径</p>
 </blockquote>
-<p>这样就设置隐藏属性了，进入相应的文件夹之后看不到该文件了。但是此时在Mac的『我的所有文件』下还是能看到被隐藏的文件，这是进入「系统偏好设置」-「Spotlight」-「隐私」- 添加被隐藏的文件夹或文件。 或是输入：chflags hidden []，再将文件直接拖入terminal的“[]”中也可。 重新显示文件使用：</p></div><p class="readmore"><a href="/2017/06/06/mac-os-x%E4%BD%BF%E7%94%A8chflags%E5%91%BD%E4%BB%A4%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/05/12/%E5%9F%BA%E5%9B%A0%E5%90%8D%E7%A7%B0%E5%9C%A8excel%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%88%90%E4%BA%86%E6%97%A5%E6%9C%9F%E7%9A%84%E9%97%AE%E9%A2%98/">基因名称在Excel中显示成了日期的问题</a></h1><div class="post-meta">2017-05-12</div><div class="post-content"><p>Excel会自动把基因名称纠正为日期或者数字，这些错误很难被修正。例如，名为SEPT2和MARCH1的基因就会被Excel自动纠正为‘2-Sep ’和‘1-Mar’。此外，Excel还会自动将RIKEN标识符转化为浮点数字(比如将‘ 2310009E13’变成‘2.31E+13’)。 解决办法： 1 不要用excel直接打开文件，而是用导入数据功能。 启动Excel，在Excel功能栏里选择“数据”，然后点击“自文本”，选择目的文本文件。 <img src="https://genehub.files.wordpress.com/2017/05/qqe688aae59c9620170512181102.jpg" alt="QQ截圖20170512181102"> 2选择文本文件，就会出来“文本导入向导”，点击有基因名称的那一列，数据格式选择“文本”即可。 <img src="https://genehub.files.wordpress.com/2017/05/qqe688aae59c9620170512181305.jpg" alt="QQ截圖20170512181305">   <del>END</del></p></div><p class="readmore"><a href="/2017/05/12/%E5%9F%BA%E5%9B%A0%E5%90%8D%E7%A7%B0%E5%9C%A8excel%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%88%90%E4%BA%86%E6%97%A5%E6%9C%9F%E7%9A%84%E9%97%AE%E9%A2%98/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/04/25/linux%E4%B8%AD%E5%AF%B9%E6%96%87%E6%9C%AC%E7%9A%84%E8%A1%8C%E4%B8%8E%E5%88%97%E8%BF%9B%E8%A1%8C%E8%BD%AC%E6%8D%A2/">Linux中对文本的行与列进行转换</a></h1><div class="post-meta">2017-04-25</div><div class="post-content"><p>命令： awk ‘{for(i=0;++i&lt;=NF;)a[i]=a[i]?a[i] FS $i:$i}END{for(i=0;i++&lt;NF;)print a[i]}’  a.txt   Ref: <a target="_blank" rel="noopener" href="http://blog.csdn.net/reyleon/article/details/13018119">http://blog.csdn.net/reyleon/article/details/13018119</a></p></div><p class="readmore"><a href="/2017/04/25/linux%E4%B8%AD%E5%AF%B9%E6%96%87%E6%9C%AC%E7%9A%84%E8%A1%8C%E4%B8%8E%E5%88%97%E8%BF%9B%E8%A1%8C%E8%BD%AC%E6%8D%A2/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/04/17/%E5%AE%89%E8%A3%85r-3-3-3-linux-redhat%E6%97%A0root-%E6%9D%83%E9%99%90/">GCC与R 3.3.3升级与安装 — Linux (RedHat)无root 权限</a></h1><div class="post-meta">2017-04-17</div><div class="post-content"><h3 id="非root权限下安装gcc的方法"><a href="#非root权限下安装gcc的方法" class="headerlink" title="非root权限下安装gcc的方法"></a>非root权限下安装gcc的方法</h3><p>系统自带的GCC版本太低了（gcc version 4.4.7），不能够编译最新的 R 3.3.3 </p></div><p class="readmore"><a href="/2017/04/17/%E5%AE%89%E8%A3%85r-3-3-3-linux-redhat%E6%97%A0root-%E6%9D%83%E9%99%90/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/03/31/linux-shell-%E5%AF%B9%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C/">Linux shell: 对特定时间的文件执行操作</a></h1><div class="post-meta">2017-03-31</div><div class="post-content"><p>有时候目录下文件数目比较多，手动逐个操作费时费力，因此可以通过查找文件的生成时间找到这些文件，随后执行删除、转移等操作。 例如需要找到09点92分的文件并转移到tmp文件夹： for filename in `ls`; do if [ `date -r $filename +%H%M` == “0952” ]; then mv $filename ./tmp; fi; done</p></div><p class="readmore"><a href="/2017/03/31/linux-shell-%E5%AF%B9%E7%89%B9%E5%AE%9A%E6%97%B6%E9%97%B4%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/03/01/%E8%BD%AC%EF%BC%9A%E7%80%9A%E6%B5%B7%E5%B8%B8%E9%9D%92%E6%A0%91%E6%B2%99%E5%86%AC%E9%9D%92/">转：瀚海常青树沙冬青</a></h1><div class="post-meta">2017-03-01</div><div class="post-content"><p>瀚海常青树沙冬青</p>
-<p>2010-10-15 编辑： 【大 中 小】</p>
-<p>  自落叶阔叶树种称霸北方大地后，北方的冬天就增添了一片萧煞的沉闷，与绿色的南方形成鲜明的对比。 然而，我国北方的沙漠中，却独有一种常绿的阔叶木本植物，它叫做沙冬青。一听名字，就知道是沙漠中冬天仍保持绿色的植物。 沙冬青是豆科的一个属，生长在我国西北荒漠、半荒漠地区的沙冬青，只有两个种。一种叫蒙古沙冬青，主要分布在内蒙古的库布齐沙带、乌兰布和沙漠、腾格里沙漠；另一种叫新疆沙冬青，又叫矮沙冬青或小沙冬青，仅分布在我国新疆喀什地区的康苏一带，数量已经很少，已处于绝灭状态，被列为国家二级重点保护植物。沙冬青与胡杨一样，是第三纪的古老植物，在地球上已经存在了几千万年，也有“活化石”之称。 蒙古沙冬青高1~1.5米，叶片肥厚，常年保持绿色，不过冬天的绿略有一些灰暗。它从4月进入花期后，花期长近两个月，为中型花，色泽金黄。初夏时间，满树金黄花的沙冬青，点缀在无垠的沙海中，令人留连忘返。由于沙冬青常绿、花艳的特点，除可用于治理、美化沙漠外，也可作为一种观赏价值很高的树种应用于城市的园林建设，特别是作为绿篱使用。当你倘佯在金黄的绿萌夹道中时，一定会有心旷神怡的感觉。 过去，沙冬青被称为“不挪窝的植物”，生长再好，移植后很快就会死亡，为此影响了它在庭院中的应用。经过科学家们的努力，沙冬青带土移植已宣告成功，沙冬青由沙漠走向城市很快就会实现了。 新疆沙冬青却没有蒙古沙冬青好侍弄，它的身高不过50厘米，而且对原生地的留恋远超出蒙古沙冬青。迁地保护，并发展人工种群大约也是防止它的灭绝的唯一途径。目前，在新疆吐鲁番沙漠植物园已经有了新疆沙冬青的身影。我们想，新疆沙冬青告别过去，走向新生终究会实现。它会像它的兄弟蒙古沙冬青一样，既为生物多样性的保护尽到自己的职责，又为美化人们的生活做出自己的奉献。</p></div><p class="readmore"><a href="/2017/03/01/%E8%BD%AC%EF%BC%9A%E7%80%9A%E6%B5%B7%E5%B8%B8%E9%9D%92%E6%A0%91%E6%B2%99%E5%86%AC%E9%9D%92/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2017/03/01/%E8%BD%AC%EF%BC%9A%E5%9B%BD%E5%AE%B6%E9%87%8D%E7%82%B9%E4%BF%9D%E6%8A%A4%E9%87%8E%E7%94%9F%E6%A4%8D%E7%89%A9%E5%90%8D%E5%BD%95%E4%BB%8B%E7%BB%8D/">转：国家重点保护野生植物名录介绍</a></h1><div class="post-meta">2017-03-01</div><div class="post-content"><p>国家重点保护野生植物名录介绍   国家重点保护野生植物是指受国家法律重点保护的野生植物。1984年7月24日国务院环境保护委员会公布《中国珍稀濒危保护植物名录》，目的是对我国的珍稀濒危植物予以正式确认，进行重点保护。该名录共列出濒危、渐危、稀有植物354种，并分别规定了每种植物的保护级别。其中一级保护的8种，二级保护的143种，三级保护的203种。虽然该目录第一次对我国的珍稀濒危植物进行了确认和保护，但是并没有相应的法律来规范和保护。 直到1996年9月30日，我国第一部专门保护野生植物的行政法规——《中华人民共和国野生植物保护条例》由国务院正式发布，并于1997年1月1日起实施。才真正意义上有了保护野生植物的法律规范。在该条例中野生植物种类按其濒危稀有程度和其价值，仅分为国家一级和二级保护植物。 国家一级和二级保护植物由《国家重点保护野生植物名录》确定，是《中华人民共和国野生植物保护条例》的具体保护和管理对象。1999年8月4日，《国家重点保护野生植物名录（第一批）》由国务院正式批准公布，这是我国野生植物保护管理工作的一个里程碑，标志着此项工作纳入法制化轨道，意义重大。 该名录是由我国野生植物行政主管部门国家林业总局和农业部共同组织制定的，共列植物419种和13类（指种以上分类等级），其中一级保护的67种和4类，二级保护的352种和9类，受国家重点保护的野生植物一共约有1900种。 由于国家林业总局、农业部对《国家重点保护野生植物名录》所列物种的分管意见尚需协商，因此将分批上报、公布。现经国务院批准公布的只是分管意见一致的《国家重点保护野生植物名录（第一批）》，共列植物246种和8类。2001年8月4日，农业部、国家林业局发布第53号令，将念珠藻科的发菜保护级别由二级调整为一级。其余物种多属经济价值较高、资源破坏严重的种类（如人参、杜仲、甘草、肉苁蓉、五味子、牡丹组、黄连属、兰科等），待两部门协商分管意见后，将作为《国家重点保护野生植物名录（第二批）》再上报国务院批准公布。为了加强生物多样性保护，2011年国家林业总局“林办发[2011]1号”文件再次提出要推动《国家重点保护野生植物名录（第二批）》的调整和颁布。该名录有望近期得到国务院的批准公布。 《国家重点保护野生植物名录（第一批）》和《国家重点保护野生植物名录（第二批）》所批准或建议的物种可在中国科学院植物研究所建立的“中国植物主题数据库”国家重点保护野生植物名录（第一批和第二批）子数据库中查询：<a target="_blank" rel="noopener" href="http://www.plant.csdb.cn/protectlist">http://www.plant.csdb.cn/protectlist</a> 此外许多地方政府为了保护地方特有的野生植物，也制定了地方性野生动植物保护法规，公布了地方性的“重点保护野生植物名录”或“重点保护野生动植物名录”。如浙江省人民政府制定的《浙江省野生植物保护办法》，北京市人民政府批准的《北京市重点保护野生植物名录》等。 （植物分类学研究组 杜诚）</p></div><p class="readmore"><a href="/2017/03/01/%E8%BD%AC%EF%BC%9A%E5%9B%BD%E5%AE%B6%E9%87%8D%E7%82%B9%E4%BF%9D%E6%8A%A4%E9%87%8E%E7%94%9F%E6%A4%8D%E7%89%A9%E5%90%8D%E5%BD%95%E4%BB%8B%E7%BB%8D/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/11/21/R%EF%BC%9A%E7%BB%98%E5%88%B6%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE-/">R：绘制中国地图</a></h1><div class="post-meta">2016-11-21</div><div class="post-content"><p>转自：<a target="_blank" rel="noopener" href="http://cos.name/2009/07/drawing-china-map-using-r/">http://cos.name/2009/07/drawing-china-map-using-r/</a> 鉴于最近有不少人在讨论用R软件绘制地图的问题，我也就跟着凑了凑热闹，对相应的方法学习了一番。下面的这篇文章是一个初步的介绍，还有很多内容仍在学习和探索中，如果大家有什么意见或建议，我将根据自己学习的情况对文章进行进一步的补充。 在R中绘制地图其实是十分方便的，最直接的办法大概就是安装<code>maps</code>和<code>mapdata</code>这两个包，然后输入下面的命令：</p></div><p class="readmore"><a href="/2016/11/21/R%EF%BC%9A%E7%BB%98%E5%88%B6%E4%B8%AD%E5%9B%BD%E5%9C%B0%E5%9B%BE-/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/10/27/%E9%BC%A0%E6%A0%87%E5%9C%A8%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%87%BA%E7%8E%B0%E5%9B%9E%E6%BB%9A%E7%8E%B0%E8%B1%A1/">鼠标在谷歌浏览器中出现回滚现象</a></h1><div class="post-meta">2016-10-27</div><div class="post-content"><p>刚买不久的罗技M275无线鼠标，最近使用谷歌浏览器，用滑动鼠标滚轮使页面上下移动的时候总出现回滚现象。简直不能忍。 网上搜索之后，有人说是受潮了。我想有可能，因为之前鼠标一直放在干燥的办公室中，最近确实带回家用过两天，广东的气候本来就潮湿，家里由于没有抽湿系统，东西十分容易受潮。于是用吹风机对着鼠标吹到发热，结果冷下来之后也没有解决问题。 我怀疑是不是几周前摔到地上摔坏了内部零件，想拆开鼠标看看，结果还不知道怎么拆，因为看不到螺丝孔。谷歌一搜索logitech M280（M275的升级款），首先看到有人在抱怨同样的问题，另外看到了Youtube上面有M280拆开的视频：原来拿下电池之后，有一张塑料标签纸，要把塑料标签纸揭掉，方才看到螺丝。于是顺利拆开，发现并无损坏。这下咋办，先放到实验室的硅胶干燥剂中干燥一下。过会儿拿出来组装完毕，问题仍然没有解决，鼠标滚轮依然有回滚现象。 只能继续在网上搜索一下，有人说是谷歌浏览器的设置问题，如下摘录的文字所示，进入特定的设置页面，将“平滑滚动 ”设置为关闭，马上就恢复正常了！</p></div><p class="readmore"><a href="/2016/10/27/%E9%BC%A0%E6%A0%87%E5%9C%A8%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%87%BA%E7%8E%B0%E5%9B%9E%E6%BB%9A%E7%8E%B0%E8%B1%A1/">Read More</a></p></div><div class="post"><h1 class="post-title"><a href="/2016/10/11/R%EF%BC%9Ausing-r-to-darw-heatmap-/">R：Using R to draw Heatmap</a></h1><div class="post-meta">2016-10-11</div><div class="post-content"><h4 id="1-heatmap"><a href="#1-heatmap" class="headerlink" title="#1 heatmap"></a>#1 heatmap</h4><p><a target="_blank" rel="noopener" href="http://blog.qiubio.com:8080/archives/2477">http://blog.qiubio.com:8080/archives/2477</a></p></div><p class="readmore"><a href="/2016/10/11/R%EF%BC%9Ausing-r-to-darw-heatmap-/">Read More</a></p></div><nav class="page-navigator"><a class="extend prev" rel="prev" href="/page/8/">Previous</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/10/">Next</a></nav></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Bioinformatics/">Bioinformatics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Notes/">Notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Plant/">Plant</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Proteomics/">Proteomics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/R/">R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Visualization/">Visualization</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/Tag/" style="font-size: 15px;">Tag</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/10/20/Bioinfo-CUT-Tag-sequencing-and-ChIP-sequencing/">Bioinfo | CUT&Tag sequencing and ChIP sequencing</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/11/Bioinfo-Local-BLAST-search-of-NCBI-NR-database/">Bioinfo | Local BLAST search of NCBI NR database</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/10/01/Bioinfo-Positive-Selection-Ka-Ks-calculation/">Bioinfo | Positive Selection Ka/Ks calculation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">Proteomics | Top-down proteomics analysis of histones</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">Bioinfo | TCseq Time Course sequencing data analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/">Bioinfo | LTR identification and analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">Bioinfo | Gene Ontology - Enrichment Analysis</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/17/Linux-Gene-Ontology-GOMAP/">Bioinfo | Gene Ontology - GOMAP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/08/Linux-PKG-CONFIG-PATH/">Linux | 认识 PKG_CONFIG_PATH</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/06/03/jcvi%E5%AE%89%E8%A3%85%E6%8A%A5%E9%94%99%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">jcvi 安装与使用，报错以及解决办法</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Links</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">FENG's notes.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=0.0.0"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
-if (search_path.length == 0) {
-   search_path = 'search.xml';
-}
-var path = '/' + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
-</script><script type="text/javascript" src="/js/copycode.js" successtext="Copy Successed!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p>这样就设置隐藏属性了，进入相应的文件夹之后看不到该文件了。但是此时在Mac的『我的所有文件』下还是能看到被隐藏的文件，这是进入「系统偏好设置」-「Spotlight」-「隐私」- 添加被隐藏的文件夹或文件。 或是输入：chflags hidden []，再将文件直接拖入terminal的“[]”中也可。 重新显示文件使用：</p>
+<blockquote>
+<p>chflags nohidden /xxx/yyy/file</p>
+</blockquote>
+<p>再来回顾一下显示/隐藏finder所有隐藏文件的命令： defaults write com.apple.finder AppleShowAllFiles -bool true（false） – killall finder（重启finder） false 表示不显示『隐藏的文件』；true表示显示『隐藏的文件』。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

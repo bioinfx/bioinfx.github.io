@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 iamphioxus.org 。 Augu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Augustus-3.3的安装">
+<meta property="og:url" content="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 iamphioxus.org 。 Augu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-05-16T13:09:09.000Z">
+<meta property="article:modified_time" content="2020-12-07T09:58:21.324Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Augustus-3.3的安装 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Augustus-3.3的安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-16 21:09:09" itemprop="dateCreated datePublished" datetime="2018-05-16T21:09:09+08:00">2018-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 <a target="_blank" rel="noopener" href="http://iamphioxus.org">iamphioxus.org</a> 。 Augustus is a very popular tool for gene annotation, however its installation process can be a bit tricky. For example, if we just download and install <em>Augustus</em> like below, it will not work.</p>
+<p>wget <a target="_blank" rel="noopener" href="http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz">http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz</a><br />
+tar xvzf augustus-3.3.1.tar.gz<br />
+cd augustus-3.3.1<br />
+make</p>
+<p>You will probably get these errors:</p>
+<p>cd auxprogs &amp;&amp; make<br />
+make[1]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
+cd bam2hints; make;<br />
+make[2]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
+g++ -Wall -O2 -c <a target="_blank" rel="noopener" href="http://bam2hints.cc">bam2hints.cc</a> -o bam2hints.o -I/usr/include/bamtools<br />
+bam2hints.cc:16:27: fatal error: api/BamReader.h: No such file or directory<br />
+#include &lt;api/BamReader.h&gt;<br />
+^<br />
+compilation terminated.<br />
+Makefile:29: recipe for target ‘bam2hints.o’ failed<br />
+make[2]: *** [bam2hints.o] Error 1<br />
+make[2]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
+Makefile:7: recipe for target ‘all’ failed<br />
+make[1]: *** [all] Error 2<br />
+make[1]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
+Makefile:7: recipe for target ‘all’ failed<br />
+make: *** [all] Error 2<br />
+This is because the auxiliary tools, bam2hints and filterBam, depend on the pre-installation of bamtools with proper library path configured.</p>
+<p>Therefore, let’s install bamtools first. It will be much easier if we just do system-wide installation like: 首先安装 bamtools，我在使用 redhat 系统，安装 bamtools-2.4.1 要用到 cmake 3.0以上版本。我尝试安装了 cmake 3.0 的源码，但是编译失败，于是下载了二进制文件，cmake 可以运行，随后顺利编译 bamtools 2.4.1。</p>
+<p>tar -zxvf bamtools-2.4.1.tar.gz<br />
+cd bamtools-2.4.1<br />
+mkdir build<br />
+cd build<br />
+cmake -DCMAKE_INSTALL_PREFIX=/home/fenglei/local …<br />
+make<br />
+make install</p>
+<h1 id="此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"><a class="markdownIt-Anchor" href="#此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"></a> 此时运行 bamtools 发现报错，提示无法用 libbamtools.so.2.4.1，于是在下载目录把该文件拷贝到了安装目录下的 lib 和 lib64 中，再运行bamtools就成了。</h1>
+<h1 id="find-~local-name-libbamtoolsso241"><a class="markdownIt-Anchor" href="#find-~local-name-libbamtoolsso241"></a> find ~/local -name libbamtools.so.2.4.1</h1>
+<p>cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1 /home/fenglei/local/lib/<br />
+cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1  /home/fenglei/local/lib64</p>
+<p>Now bamtools should have been correctly installed. Next, we need to modify the Makefiles of bam2hints and filterBam to adapt them with our manually installed bamtools.</p>
+<p>First, go to the “./auxprogs/bam2hints” directory and make the following changes for the Makefile:</p>
+<p>Add:<br />
+BAMTOOLS = /home/fenglei/local</p>
+<p>Replace:<br />
+INCLUDES = /usr/include/bamtools<br />
+By:<br />
+INCLUDES = $(BAMTOOLS)/include</p>
+<p>Replace:<br />
+LIBS = -lbamtools -lz<br />
+By:<br />
+LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
+<h1 id="注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"><a class="markdownIt-Anchor" href="#注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"></a> 注意 LIBS 中 lib64 也可能是 lib，要通过搜索 libbamtools.a 查看其实际位置。</h1>
+<p>Then, go to the “augustus-3.2.3/auxprogs/filterBam/src” directory and make the following changes for the Makefile:</p>
+<p>Replace:</p>
+<p>BAMTOOLS = /usr/include/bamtools<br />
+By:<br />
+BAMTOOLS = /home/fenglei/local</p>
+<p>Replace:<br />
+INCLUDES = -I<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>B</mi><mi>A</mi><mi>M</mi><mi>T</mi><mi>O</mi><mi>O</mi><mi>L</mi><mi>S</mi><mo stretchy="false">)</mo><mo>−</mo><mi>I</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>−</mo><mi>I</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi>a</mi><mi>m</mi><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mi>s</mi><mi>B</mi><mi>y</mi><mo>:</mo><mi>I</mi><mi>N</mi><mi>C</mi><mi>L</mi><mi>U</mi><mi>D</mi><mi>E</mi><mi>S</mi><mo>=</mo><mo>−</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">(BAMTOOLS) -Iheaders -I./bamtools
+By:
+INCLUDES = -I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord">.</span><span class="mord">/</span><span class="mord mathnormal">b</span><span class="mord mathnormal">a</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>(BAMTOOLS)/include -Iheaders -I./bamtools</p>
+<p>Replace:<br />
+LIBS = -lbamtools -lz<br />
+By:<br />
+LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
+<p>进入 augustus-3.3.1/auxprogs/bam2wig，编辑 Makefile。</p>
+<p># SAMTOOLS=$(TOOLDIR)/samtools/<br />
+SAMTOOLS=/home/fenglei/local/app/samtools</p>
+<p>#HTSLIB=$(TOOLDIR)/htslib/<br />
+HTSLIB=/home/fenglei/local/app/htslib</p>
+<h1 id="bcftoolstooldirbcftools"><a class="markdownIt-Anchor" href="#bcftoolstooldirbcftools"></a> BCFTOOLS=$(TOOLDIR)/bcftools/</h1>
+<p>BCFTOOLS=/home/fenglei/local/app/bcftools</p>
+<h1 id="tabixtooldirtabix"><a class="markdownIt-Anchor" href="#tabixtooldirtabix"></a> TABIX=$(TOOLDIR)/tabix/</h1>
+<p>TABIX=/home/fenglei/local/app/htslib</p>
+<h2 id="上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"><a class="markdownIt-Anchor" href="#上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"></a> 上述注释掉的内容是 Makefile 中的原始设置，分别改一下就行了。tabix 是 htslib 下的一程序。</h2>
+<p>[20201027 update] 在新的机器上重新安装Augustus，虽然按照上述步骤修改MakeFile，但是bam2wig还是无法make成功。于是将这个文件夹改掉，单独下载bam2wig程序（<a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig%EF%BC%89%EF%BC%8C%E5%B7%B2%E7%BB%8F%E6%98%AF%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E7%BC%96%E8%AF%91%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%EF%BC%81%E7%84%B6%E5%90%8E%E8%BF%9B%E5%85%A5auxprogs%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%BF%AE%E6%94%B9MakeFile%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B0%B1%E5%B0%86bam2wig%E5%AD%97%E7%AC%A6%E9%82%A3%E4%B8%A4%E8%A1%8C%E6%B3%A8%E9%87%8A%E6%8E%89%E3%80%82%E7%84%B6%E5%90%8E%E5%9B%9E%E5%88%B0Augustus%E7%9B%AE%E5%BD%95%E4%B8%8BMake%E5%B0%B1OK%E4%BA%86%E3%80%82">https://github.com/MikeAxtell/bam2wig），已经是二进制文件，不需要编译，可以直接使用！然后进入auxprogs目录，修改MakeFile文件，就将bam2wig字符那两行注释掉。然后回到Augustus目录下Make就OK了。</a> Now, we are finally ready to compile Augustus. Get back to the “augustus-3.3.1” directory and type “make”, 成功! References <a target="_blank" rel="noopener" href="https://github.com/pezmaster31/bamtools/wiki/Building-and-installing">https://github.com/pezmaster31/bamtools/wiki/Building-and-installing</a> <a target="_blank" rel="noopener" href="https://www.biostars.org/p/189048/">https://www.biostars.org/p/189048/</a> <a target="_blank" rel="noopener" href="http://tiramisutes.github.io/2017/01/06/GLIBC.html">http://tiramisutes.github.io/2017/01/06/GLIBC.html</a> <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/25/R-volcano-plot-in-R/" rel="prev" title="R：火山图 volcano plot">
+      <i class="fa fa-chevron-left"></i> R：火山图 volcano plot
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/09/Bioinfo-diamond-vs-blast/" rel="next" title="Diamond: 比BLAST更快速的比对工具">
+      Diamond: 比BLAST更快速的比对工具 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A4%E6%97%B6%E8%BF%90%E8%A1%8C-bamtools-%E5%8F%91%E7%8E%B0%E6%8A%A5%E9%94%99%E6%8F%90%E7%A4%BA%E6%97%A0%E6%B3%95%E7%94%A8-libbamtoolsso241%E4%BA%8E%E6%98%AF%E5%9C%A8%E4%B8%8B%E8%BD%BD%E7%9B%AE%E5%BD%95%E6%8A%8A%E8%AF%A5%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D%E5%88%B0%E4%BA%86%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84-lib-%E5%92%8C-lib64-%E4%B8%AD%E5%86%8D%E8%BF%90%E8%A1%8Cbamtools%E5%B0%B1%E6%88%90%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text"> 此时运行 bamtools 发现报错，提示无法用 libbamtools.so.2.4.1，于是在下载目录把该文件拷贝到了安装目录下的 lib 和 lib64 中，再运行bamtools就成了。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#find-~local-name-libbamtoolsso241"><span class="nav-number">2.</span> <span class="nav-text"> find ~&#x2F;local -name libbamtools.so.2.4.1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-libs-%E4%B8%AD-lib64-%E4%B9%9F%E5%8F%AF%E8%83%BD%E6%98%AF-lib%E8%A6%81%E9%80%9A%E8%BF%87%E6%90%9C%E7%B4%A2-libbamtoolsa-%E6%9F%A5%E7%9C%8B%E5%85%B6%E5%AE%9E%E9%99%85%E4%BD%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text"> 注意 LIBS 中 lib64 也可能是 lib，要通过搜索 libbamtools.a 查看其实际位置。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bcftoolstooldirbcftools"><span class="nav-number">4.</span> <span class="nav-text"> BCFTOOLS&#x3D;$(TOOLDIR)&#x2F;bcftools&#x2F;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tabixtooldirtabix"><span class="nav-number">5.</span> <span class="nav-text"> TABIX&#x3D;$(TOOLDIR)&#x2F;tabix&#x2F;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E8%BF%B0%E6%B3%A8%E9%87%8A%E6%8E%89%E7%9A%84%E5%86%85%E5%AE%B9%E6%98%AF-makefile-%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%A7%8B%E8%AE%BE%E7%BD%AE%E5%88%86%E5%88%AB%E6%94%B9%E4%B8%80%E4%B8%8B%E5%B0%B1%E8%A1%8C%E4%BA%86-tabix-%E6%98%AF-htslib-%E4%B8%8B%E7%9A%84%E4%B8%80%E7%A8%8B%E5%BA%8F"><span class="nav-number">5.1.</span> <span class="nav-text"> 上述注释掉的内容是 Makefile 中的原始设置，分别改一下就行了。tabix 是 htslib 下的一程序。</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

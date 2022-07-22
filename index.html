@@ -293,10 +293,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-07-14 10:30:27 / Modified: 21:06:50" itemprop="dateCreated datePublished" datetime="2022-07-14T10:30:27+08:00">2022-07-14</time>
+              <time title="Created: 2022-07-14 10:30:27" itemprop="dateCreated datePublished" datetime="2022-07-14T10:30:27+08:00">2022-07-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-22 10:13:56" itemprop="dateModified" datetime="2022-07-22T10:13:56+08:00">2022-07-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -319,21 +325,14 @@
 
       
           <p>自 2020 年 12 月 7 日开始使用 Hexo 建立博客，设置主题为 maupassant，博客推送到 github，使用一直很方便。由于 2022 年 5 月份对电脑的硬盘升级，本地的 Hexo 需要重装，一直到 2022 年 7 月 14 日才开始处理，本来以为将原来备份的 Hexo 目录直接拷贝到新的硬盘就可以，哪知道不是这么简单。安装好 node.js 和 git 之后，要重新新建 Hexo，并设置主题。但是原来的 maupassant 主题已经无法使用了，所以新找了 NexT 主题也勉强可以用，只是默认的渲染工具不好用，我更换成了 hexo-renderer-markdown-it-plus。至此，新博客的架构已经搭建好，并且可以在本地用 localhost/4000 成功访问。将旧备份目录下的 markdown 格式的原始博文拷贝到 Hexo/source/_posts 目录下，就能看到。</p>
-<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/14/hello-world/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -383,7 +382,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-14 20:54:50" itemprop="dateModified" datetime="2022-07-14T20:54:50+08:00">2022-07-14</time>
+                <time title="Modified: 2022-07-22 10:12:14" itemprop="dateModified" datetime="2022-07-22T10:12:14+08:00">2022-07-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,19 +406,95 @@
 
       
           <p>以内置的 iris 数据集为例。Iris 鸢尾花数据集是一个经典数据集，在统计学习和机器学习领域都经常被用作示例。数据集内包含 3 类共 150 条记录，每类各 50 个数据，每条记录都有 4 项特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度，可以通过这4个特征预测鸢尾花卉属于（iris-setosa, iris-versicolour, iris-virginica）中的哪一品种。在博文 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/52b86c774b0b">https://www.jianshu.com/p/52b86c774b0b</a> 有对 Iris 数据集进行统计分析以及机器学习的总结。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&gt; iris</span><br><span class="line">    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species</span><br><span class="line">1            5.1         3.5          1.4         0.2     setosa</span><br><span class="line">2            4.9         3.0          1.4         0.2     setosa</span><br><span class="line">3            4.7         3.2          1.3         0.2     setosa</span><br><span class="line">4            4.6         3.1          1.5         0.2     setosa</span><br><span class="line">5            5.0         3.6          1.4         0.2     setosa</span><br><span class="line">6            5.4         3.9          1.7         0.4     setosa</span><br><span class="line">7            4.6         3.4          1.4         0.3     setosa</span><br><span class="line">8            5.0         3.4          1.5         0.2     setosa</span><br><span class="line">9            4.4         2.9          1.4         0.2     setosa</span><br><span class="line">51           7.0         3.2          4.7         1.4 versicolor</span><br><span class="line">52           6.4         3.2          4.5         1.5 versicolor</span><br><span class="line">53           6.9         3.1          4.9         1.5 versicolor</span><br><span class="line">54           5.5         2.3          4.0         1.3 versicolor</span><br><span class="line">55           6.5         2.8          4.6         1.5 versicolor</span><br><span class="line">56           5.7         2.8          4.5         1.3 versicolor</span><br><span class="line">57           6.3         3.3          4.7         1.6 versicolor</span><br><span class="line">58           4.9         2.4          3.3         1.0 versicolor</span><br><span class="line">59           6.6         2.9          4.6         1.3 versicolor</span><br><span class="line">100          5.7         2.8          4.1         1.3 versicolor</span><br><span class="line">101          6.3         3.3          6.0         2.5  virginica</span><br><span class="line">102          5.8         2.7          5.1         1.9  virginica</span><br><span class="line">103          7.1         3.0          5.9         2.1  virginica</span><br><span class="line">104          6.3         2.9          5.6         1.8  virginica</span><br><span class="line">105          6.5         3.0          5.8         2.2  virginica</span><br><span class="line">106          7.6         3.0          6.6         2.1  virginica</span><br><span class="line">107          4.9         2.5          4.5         1.7  virginica</span><br></pre></td></tr></table></figure>
-<p>柱状图是生物学文献中最常见的一类图形，下面基于 Iris 数据做一个柱状图（展示 MEAN、SE 等信息）。首先想到了 dplyr 函数来进行统计。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 对三个植物品种的花萼 (Sepal)进行平均值和标准差统计</span><br><span class="line">iris %&gt;%</span><br><span class="line">  group_by(Species) %&gt;%</span><br><span class="line">  summarise(</span><br><span class="line">    mean.Sepal.Length = mean(Sepal.Length),</span><br><span class="line">    sd.Sepal.Length = sd(Sepal.Length)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"># A tibble: 3 × 3</span><br><span class="line">#Species    mean.Sepal.Length sd.Sepal.Length</span><br><span class="line">#&lt;fct&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span><br><span class="line">#1 setosa                  5.01           0.352</span><br><span class="line">#2 versicolor              5.94           0.516</span><br><span class="line">#3 virginica               6.59           0.636</span><br><span class="line"></span><br><span class="line"># 如果要对所有数值型变量计算某些统计量， 可以用summarize_if(is.numeric, list(变量后缀=~统计函数名&lt;, ...&gt;))</span><br><span class="line">a &lt;- iris %&gt;%</span><br><span class="line">  group_by(Species) %&gt;%</span><br><span class="line">  summarise_if(</span><br><span class="line">    is.numeric,</span><br><span class="line">    list(avg = ~mean(.), std = ~sd(.))</span><br><span class="line">  )</span><br><span class="line"># A tibble: 3 × 9</span><br><span class="line">#Species    Sepal.Length_avg Sepal.Width_avg Petal.Length_avg Petal.Width_avg Sepal.Length_std Sepal.Width_std Petal.Length_std</span><br><span class="line">#&lt;fct&gt;                 &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;</span><br><span class="line">#1 setosa                 5.01            3.43             1.46           0.246            0.352           0.379            0.174</span><br><span class="line">#2 versicolor             5.94            2.77             4.26           1.33             0.516           0.314            0.470</span><br><span class="line">#3 virginica              6.59            2.97             5.55           2.03             0.636           0.322            0.552</span><br><span class="line"># … with 1 more variable: Petal.Width_std &lt;dbl&gt;</span><br></pre></td></tr></table></figure>
-<p>下面将三个不同植物品种各自花萼平均值来做柱状图。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot() +</span><br><span class="line">  geom_col(data=a, aes(x=Species, y=Sepal.Length_avg)) +</span><br><span class="line">  geom_errorbar(data=a, aes(x=Species, ymin=Sepal.Length_avg-Sepal.Length_std, ymax=Sepal.Length_avg+Sepal.Length_std))</span><br></pre></td></tr></table></figure>
-<p>下面是生成的图，可看到灰色网格背景，以及柱子的宽度都不够美观。</p>
-<p><img src="https://i.imgur.com/4pwGYUW.jpeg" alt="" /></p>
-<p>下面通过 theme_bw() 函数去掉灰色背景；再通过 theme() 函数去掉网格背景，设置坐标轴字体大小；通过 ylab 和 xlab 函数设置坐标轴标签文字；通过 xlim 和 ylim 设置坐标轴展示区间；通过scale_fill_manual 函数来控制柱状图颜色；通过guides 函数控制是否显示 legend。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pdf(&quot;Sepal_length_barplot.pdf&quot;, width = 2, height = 2)</span><br><span class="line">ggplot() +</span><br><span class="line">  geom_col(data=a, aes(x=Species, y=Sepal.Length_avg, fill=Species), width=.5) +</span><br><span class="line">  geom_errorbar(data=a, aes(x=Species, ymin=Sepal.Length_avg-Sepal.Length_std, ymax=Sepal.Length_avg+Sepal.Length_std), width=.3) +</span><br><span class="line">  geom_jitter(data=iris, size=.3, alpha=.5, color=&quot;darkgrey&quot;, aes(x=Species, y=Sepal.Length), width=.3) +</span><br><span class="line">  scale_fill_manual(values=c(&#x27;#90c9e7&#x27;, &#x27;#219ebc&#x27;, &#x27;#136783&#x27;)) +</span><br><span class="line">  theme_bw() +</span><br><span class="line">  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = &quot;black&quot;)) +</span><br><span class="line">  theme(axis.text.x = element_text(size = 6, color = &quot;black&quot;)) +</span><br><span class="line">  #theme(axis.text.x = element_text(size = 6, color = &quot;black&quot;, hjust = 0.1, vjust = 0.4, angle = 70)) +</span><br><span class="line">  theme(axis.text.y = element_text(size = 6, color = &quot;black&quot;)) +</span><br><span class="line">  ylab(&quot;Sepal Length&quot;) +</span><br><span class="line">  xlab(&quot;Species&quot;) +</span><br><span class="line">  #xlim(-7, 7) +</span><br><span class="line">  ylim(0, 9) +</span><br><span class="line">  theme(axis.title.x = element_text(size = 8)) +</span><br><span class="line">  theme(axis.title.y = element_text(size = 8)) +</span><br><span class="line">  guides(fill = FALSE)</span><br><span class="line">dev.off()</span><br></pre></td></tr></table></figure>
-<p>用pdf函数将图片存储为PDF格式，打开就是下面的效果。</p>
-<p><img src="https://i.imgur.com/Nl6NDlZ.jpeg" alt="" /></p>
-<p>小结：为了制作适合投稿的图片，需要选择合适的背景色、图片尺寸、字体大小。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/10/R-draw-high-quality-figure-in-RStudio/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
 
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/10/NAS-adding-new-harddisks-20220608/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/10/NAS-adding-new-harddisks-20220608/" class="post-title-link" itemprop="url">Notes | 群晖 Synology NAS 新硬盘的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-06-10 19:32:13" itemprop="dateCreated datePublished" datetime="2022-06-10T19:32:13+08:00">2022-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-22 10:06:27" itemprop="dateModified" datetime="2022-07-22T10:06:27+08:00">2022-07-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>新买一个 8 TB 硬盘，需要插入群晖 NAS 的空盘位，并且作为独立的一个存储空间用来备份文件，跟之前的两个存储空间不影响。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/10/NAS-adding-new-harddisks-20220608/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1136,127 +1211,6 @@ for语句依次提取command1中的每一个元素，把它的值赋予形式变
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/31/Plant-Rice-Oryza-sativa-subsp-japonica-and-indica/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/31/Plant-Rice-Oryza-sativa-subsp-japonica-and-indica/" class="post-title-link" itemprop="url">Plant | Rice: Oryza sativa subsp. japonica and indica</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-31 19:25:40" itemprop="dateCreated datePublished" datetime="2021-10-31T19:25:40+08:00">2021-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-09 23:44:12" itemprop="dateModified" datetime="2022-03-09T23:44:12+08:00">2022-03-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文总结粳稻（japonica）与籼稻（indica）的分类，以及相对应的数据库的事项。</p>
-<p>作者：稻我家安全食材<br />
-链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/28272395/answer/513511209">https://www.zhihu.com/question/28272395/answer/513511209</a><br />
-来源：知乎<br />
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>籼稻（Indica rice）：有 20% 左右为直链淀粉。属中黏性。籼稻起源于亚热带，种植于热带和亚热带地区，生长期短，在无霜期长的地方一年可多次成熟。去壳成为籼米后，外观细长、透明度低。有的品种表皮发红，如中国江西出产的红米，煮熟后米饭较干、松。通常用于萝卜糕、米粉、炒饭。</p>
-<p>粳稻（Japonica rice）：粳稻的直链淀粉较少，低于15%。种植于温带和寒带地区，生长期长，一般一年只能成熟一次。去壳成为粳米后，外观圆短、透明（部分品种米粒有局部白粉质）。煮食特性介于糯米与籼米之间。用途为一般食用米。籼稻和粳稻是长期适应不同生态条件，尤其是温度条件而形成的两种气候生态型，两者在形态生理特性方面部有明显差异因为籼稻和粳稻产自不同的地方，米粒的形状也不同，口感上更是相差很远。</p>
-<p>那么二者的区别又在哪里呢？</p>
-<ol>
-<li>
-<p>首先在品种上籼稻是由野生稻演变来的，而粳稻是由籼稻在人们不断向高纬度、高海拔地区引种的过程中不断演变和人工选育而来的。因此说籼稻是基本型，粳稻是变异型。</p>
-</li>
-<li>
-<p>从形态特征和经济性状上看，一般籼稻的茎杆较粗，分蘖力较强，叶色较淡，谷粒细长，容易落粒，出米率较低。籼米的直链淀粉含量高，煮饭时胀饭性大，黏性小，米饭散落。粳稻一般茎杆较细，传统粳稻品种的分蘖力不如籼稻，叶色较深，谷粒短圆，不容易落粒，出米率较高，碎米少。粳米的直链淀粉含量低，米饭黏性大，胀饭性小。</p>
-</li>
-<li>
-<p>从生理特征和适应性上看，籼稻一般吸肥性强，而耐肥力差，易倒伏，耐寒力较差，温度在12℃以上时才能发芽。粳稻则耐肥力强而吸肥性差，较抗倒伏，耐寒力较强，温度达到10℃即可发芽。在温度适宜的条件下，籼稻叶片的光合速率高于粳稻，繁茂性好，易早生快发。</p>
-</li>
-<li>
-<p>从地区分布上看，籼稻适于在低纬度、低海拔的湿热地区栽培，如我国的南方稻区。粳稻则适于在高纬度、高海拔地区栽培，如我国的东北稻区、华北稻区和西北稻区，也可在云贵高原的高海拔地区和江淮流域双季稻区作中粳和晚粳种植。</p>
-</li>
-<li>
-<p>从稻株外部形态进行区别：籼稻一般株高多在1米以上，茎秆较软，叶片宽，色泽淡绿，剑叶开度小。叶片茸毛多，有短小茸毛散生于颖壳。大多为无芒或短芒，谷粒细长而稍扁平，一般长度为宽度的二倍以上。谷粒易脱落，较耐湿、耐热和耐强光，但不耐寒。粳稻一般株高多为75-95厘米，茎秆较矮，叶子较窄，深绿色，米粒不易脱落，耐寒性强。</p>
-</li>
-</ol>
-<p>因此，籼稻是由野生稻演变成的栽培稻，是基本型。粳稻分布范围广泛，从南方的高寒山区，云贵高原到秦岭，淮河以北的广大的地区均有栽培。粳稻具有耐寒，耐弱光的习性，粒形短圆，米质粘性较强，叶面少毛或无毛，颖毛长密，不易落粒等特性，与野生稻有较大差异。因此，可以说粳稻是人类将籼稻由南向北，由低向高引种后，逐渐适应低温的变异型。</p>
-<h3 id="籼稻indica9311的基因组信息"><a class="markdownIt-Anchor" href="#籼稻indica9311的基因组信息"></a> 籼稻（indica，9311）的基因组信息</h3>
-<p>数据下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget ftp://ftp.genomics.org.cn/pub/ricedb/SynVs9311/9311/Sequence/Chromosome/ChrAll.fasta.gz</span><br><span class="line">wget ftp://ftp.genomics.org.cn/pub/ricedb/rice_update_data/GLEAN_genes/Beijing_indica/GLEAN_genes/9311.glean.gff.cds.gz</span><br><span class="line">wget ftp://ftp.genomics.org.cn/pub/ricedb/rice_update_data/GLEAN_genes/Beijing_indica/GLEAN_genes/9311.glean.gff.gff.gz</span><br><span class="line">hisat2-build -p 8  genome.fa genome</span><br><span class="line">gffread 9311.glean.gff.gff -F -T -o 9311.glean.raw.gtf</span><br><span class="line">perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl -i ChrAll.fasta -o ChrAll.fasta.stat</span><br></pre></td></tr></table></figure>
-<p>基因命名</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">##gff-version 3</span><br><span class="line">##sequence-region Chr01 1 47283185</span><br><span class="line">Chr01   glean   gene    47275570        47278635        .       -       .       ID=BGIOSGA000001;Name=BGIOSGA000001;</span><br><span class="line">Chr01   glean   mRNA    47275570        47278635        0.798504        -       .       ID=BGIOSGA000001-TA;Name=BGIOSGA000001-TA;Parent=BGIOSGA000001;</span><br><span class="line">Chr01   glean   CDS     47278477        47278635        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47278262        47278399        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47278135        47278186        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47277979        47278058        .       -       2       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47276528        47276587        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47275842        47275922        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   CDS     47275570        47275662        .       -       0       Parent=BGIOSGA000001-TA;</span><br><span class="line">Chr01   glean   gene    47247293        47259724        .       -       .       ID=BGIOSGA000002;Name=BGIOSGA000002;</span><br><span class="line">Chr01   glean   mRNA    47247293        47259724        0.997143        -       .       ID=BGIOSGA000002-TA;Name=BGIOSGA000002-TA;Parent=BGIOSGA000002;</span><br><span class="line">Chr01   glean   CDS     47259551        47259724        .       -       0       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47259199        47259261        .       -       0       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47258441        47258518        .       -       0       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47258327        47258376        .       -       0       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47257303        47257405        .       -       1       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47256255        47256407        .       -       0       Parent=BGIOSGA000002-TA;</span><br><span class="line">Chr01   glean   CDS     47255968        47256060        .       -       0       Parent=BGIOSGA000002-TA;</span><br></pre></td></tr></table></figure>
-<h3 id="粳稻japonica或称日本晴var-nipponbare的基因组信息"><a class="markdownIt-Anchor" href="#粳稻japonica或称日本晴var-nipponbare的基因组信息"></a> 粳稻（japonica，或称“日本晴”，var Nipponbare）的基因组信息</h3>
-<p>下载地址 <a target="_blank" rel="noopener" href="https://rapdb.dna.affrc.go.jp/download/irgsp1.html">https://rapdb.dna.affrc.go.jp/download/irgsp1.html</a>，从下面下载的文件来看，该数据集的更新日期为2020年12月。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">drwxrwxr-x 2 fenglei fenglei      4096 Mar 10  2021 index</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   2205461 Mar 10  2021 IRGSP-1.0_representative_transcript_exon_2020-12-02.gtf.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   2910542 Mar 10  2021 IRGSP-1.0_representative_annotation_2020-12-02.tsv.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  15479652 Mar 10  2021 IRGSP-1.0_representative_2020-12-02.tar.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   8071768 Mar 10  2021 IRGSP-1.0_protein_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  12921645 Mar 10  2021 IRGSP-1.0_cds_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  21521204 Mar 10  2021 IRGSP-1.0_transcript_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  14082338 Mar 10  2021 IRGSP-1.0_1kb-upstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  13852984 Mar 10  2021 IRGSP-1.0_1kb-downstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  27531029 Mar 10  2021 IRGSP-1.0_2kb-upstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  40892583 Mar 10  2021 IRGSP-1.0_gene_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei     65536 Mar 10  2021 irgsp1_repeat_unit.gff.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  27067699 Mar 10  2021 IRGSP-1.0_2kb-downstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  40469323 Mar 10  2021 IRGSP-1.0_3kb-upstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  39804961 Mar 10  2021 IRGSP-1.0_3kb-downstream_2020-12-02.fasta.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 208876624 Mar 10  2021 kasalath_genome.tar.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    828064 Mar 10  2021 IRGSP-1.0_predicted_2020-12-02.tar.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    212118 Mar 10  2021 IRGSP-1.0_predicted_transcript_exon_2020-12-02.gtf.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei     65407 Mar 10  2021 IRGSP-1.0_predicted_annotation_2020-12-02.tsv.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   1624227 Mar 10  2021 IRGSP-1.0_predicted-protein_2020-12-02.fasta</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei     18236 Mar 10  2021 irgsp1_rRNA_tRNA.gff.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    323084 Mar 10  2021 RAP-MSU_2020-12-02.txt.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    339560 Mar 10  2021 IRGSP-1.0_transcript-evidence_2012-04-11.txt.gz</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   4589349 Mar 10  2021 IRGSP-1.0_predicted-cds_2020-12-02.fasta</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    174987 Mar 10  2021 organelle.gff</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    650061 Mar 10  2021 Mt_Pt_genome.fasta</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   8054917 Mar 10  2021 Rice_vegetative_and_reproductive_stage-specific_sRNAs_and_networks.zip</span><br><span class="line">-rwxr-xr-x 1 fenglei fenglei        51 Mar 10  2021 opt.sh</span><br></pre></td></tr></table></figure>
-<p>看看他的基因命名</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost O.sativa_japonica_2021]$ less IRGSP-1.0_representative_transcript_exon_2020-12-02.gtf.gz</span><br><span class="line">chr01   irgsp1_rep      transcript      2983    10815   .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    2983    3268    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    3354    3616    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    4357    4455    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    5457    5560    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    7136    7944    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    8028    8150    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    8232    8320    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    8408    8608    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    9210    9615    .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    10102   10187   .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    10274   10430   .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      exon    10504   10815   .       +       .       gene_id &quot;Os01g0100100&quot;; transcript_id &quot;Os01t0100100-01&quot;;</span><br><span class="line">chr01   irgsp1_rep      transcript      11218   12435   .       +       .       gene_id &quot;Os01g0100200&quot;; transcript_id &quot;Os01t0100200-01&quot;;</span><br></pre></td></tr></table></figure>
-<h3 id="粳稻另一个版本"><a class="markdownIt-Anchor" href="#粳稻另一个版本"></a> 粳稻另一个版本</h3>
-<p>下载地址 <a target="_blank" rel="noopener" href="http://rice.uga.edu/">http://rice.uga.edu/</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RGAP 7 Summary</span><br><span class="line">Gene Annotation</span><br><span class="line"></span><br><span class="line">Total loci	55,986</span><br><span class="line">Non-TE Loci	</span><br><span class="line">Number	39,045</span><br><span class="line">Gene models	49,066</span><br><span class="line">Gene size	2,853 bp</span><br><span class="line">Exons/gene	4.9</span><br><span class="line">Introns/gene	3.9</span><br><span class="line">TE Loci	</span><br><span class="line">Number	16,941</span><br><span class="line">Gene models	17,272</span><br><span class="line">Gene size	3,223 bp</span><br><span class="line">Exons/gene	4.2</span><br><span class="line">Introns/gene	3.2</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ le MSU_japonica_all.gff3</span><br><span class="line">##gff-version 3</span><br><span class="line">Chr1    MSU_osa1r7      gene    2903    10817   .       +       .       ID=LOC_Os01g01010;Name=LOC_Os01g01010;Note=TBC%20domain%20containing%20protein%2C%20expressed</span><br><span class="line">Chr1    MSU_osa1r7      mRNA    2903    10817   .       +       .       ID=LOC_Os01g01010.1;Name=LOC_Os01g01010.1;Parent=LOC_Os01g01010</span><br><span class="line">Chr1    MSU_osa1r7      exon    2903    3268    .       +       .       ID=LOC_Os01g01010.1:exon_1;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    3354    3616    .       +       .       ID=LOC_Os01g01010.1:exon_2;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    4357    4455    .       +       .       ID=LOC_Os01g01010.1:exon_3;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    5457    5560    .       +       .       ID=LOC_Os01g01010.1:exon_4;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    7136    7944    .       +       .       ID=LOC_Os01g01010.1:exon_5;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    8028    8150    .       +       .       ID=LOC_Os01g01010.1:exon_6;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    8232    8320    .       +       .       ID=LOC_Os01g01010.1:exon_7;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    8408    8608    .       +       .       ID=LOC_Os01g01010.1:exon_8;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    9210    9617    .       +       .       ID=LOC_Os01g01010.1:exon_9;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    10104   10187   .       +       .       ID=LOC_Os01g01010.1:exon_10;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    10274   10430   .       +       .       ID=LOC_Os01g01010.1:exon_11;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      exon    10504   10817   .       +       .       ID=LOC_Os01g01010.1:exon_12;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      five_prime_UTR  2903    3268    .       +       .       ID=LOC_Os01g01010.1:utr_1;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      five_prime_UTR  3354    3448    .       +       .       ID=LOC_Os01g01010.1:utr_2;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     3449    3616    .       +       .       ID=LOC_Os01g01010.1:cds_1;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     4357    4455    .       +       .       ID=LOC_Os01g01010.1:cds_2;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     5457    5560    .       +       .       ID=LOC_Os01g01010.1:cds_3;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     7136    7944    .       +       .       ID=LOC_Os01g01010.1:cds_4;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     8028    8150    .       +       .       ID=LOC_Os01g01010.1:cds_5;Parent=LOC_Os01g01010.1</span><br><span class="line">Chr1    MSU_osa1r7      CDS     8232    8320    .       +       .       ID=LOC_Os01g01010.1:cds_6;Parent=LOC_Os01g01010.1</span><br></pre></td></tr></table></figure>
-<p>注意粳稻有两个版本的基因组，使用的染色体编号与基因编号均有不同，曾经因为参考基因组版本问题导致生成的比对 bam 格式文件无法浏览，后续查询才发觉问题。</p>
-<h3 id="新的分析项目"><a class="markdownIt-Anchor" href="#新的分析项目"></a> 新的分析项目</h3>
-<p>某分析项目的 gff 文件如下所示，这是哪个版本的基因组？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Chr1    MSU_osa1r7      gene    2903    10817   .       +       .       ID=LOC_Os01g01010;</span><br><span class="line">Chr1    MSU_osa1r7      mRNA    2903    10817   .       +       .       ID=LOC_Os01g01010.1;Parent=LOC_Os01g01010;</span><br><span class="line">Chr1    MSU_osa1r7      exon    2903    3268    .       +       .       ID=LOC_Os01g01010.1:exon_1;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    3354    3616    .       +       .       ID=LOC_Os01g01010.1:exon_2;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    4357    4455    .       +       .       ID=LOC_Os01g01010.1:exon_3;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    5457    5560    .       +       .       ID=LOC_Os01g01010.1:exon_4;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    7136    7944    .       +       .       ID=LOC_Os01g01010.1:exon_5;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    8028    8150    .       +       .       ID=LOC_Os01g01010.1:exon_6;Parent=LOC_Os01g01010.1;</span><br><span class="line">Chr1    MSU_osa1r7      exon    8232    8320    .       +       .       ID=LOC_Os01g01010.1:exon_7;Parent=LOC_Os01g01010.1;</span><br></pre></td></tr></table></figure>
-<p>经过比对，推测该数据来自：<a target="_blank" rel="noopener" href="http://rice.uga.edu/pub/data/Eukaryotic_Projects/o_sativa/annotation_dbs/pseudomolecules/version_7.0/all.dir/">http://rice.uga.edu/pub/data/Eukaryotic_Projects/o_sativa/annotation_dbs/pseudomolecules/version_7.0/all.dir/</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Index of /pub/data/Eukaryotic_Projects/o_sativa/annotation_dbs/pseudomolecules/version_7.0/all.dir</span><br><span class="line">[ICO]	Name	Last modified	Size	Description</span><br><span class="line">[PARENTDIR]	Parent Directory	 	-	 </span><br><span class="line">[TXT]	APK_ftp_file.txt	2011-10-31 10:12	3.9M	 </span><br><span class="line">[TXT]	POG_ftp_file.txt	2011-10-31 10:12	2.3M	 </span><br><span class="line">[   ]	all.GOSlim_assignment	2011-11-21 10:15	12M	 </span><br><span class="line">[   ]	all.cdna	2011-10-31 10:12	114M	 </span><br><span class="line">[   ]	all.cds	2011-10-31 10:12	91M	 </span><br><span class="line">[   ]	all.chrs.con	2011-10-31 10:11	363M	 </span><br><span class="line">[   ]	all.con	2011-10-31 10:12	364M	 </span><br><span class="line">[   ]	all.gff3	2012-02-07 09:41	78M	 </span><br><span class="line">[   ]	all.interpro	2011-10-31 10:12	62M	 </span><br><span class="line">[   ]	all.locus_brief_info..&gt;	2012-02-07 09:38	6.8M	 </span><br><span class="line">[   ]	all.masked.con.gz	2011-11-21 15:13	78M	 </span><br><span class="line">[   ]	all.pep	2011-10-31 10:11	33M	 </span><br><span class="line">[   ]	all.pfam	2011-10-31 10:12	4.9M	 </span><br><span class="line">[   ]	all.seq	2011-10-31 10:12	165M	 </span><br><span class="line">[TXT]	final_rice_v7_expres..&gt;	2011-10-31 10:12	10M	 </span><br><span class="line">[   ]	final_rice_v7_expres..&gt;	2011-10-31 10:12	38M	 </span><br><span class="line">[   ]	rice_osa1r7_rm.gff3.gz	2011-11-21 15:21	7.5M	 </span><br><span class="line">[   ]	rice_r7_all_tiling_p..&gt;	2011-10-31 10:12	412K	 </span><br></pre></td></tr></table></figure>
-<p>将该目录下的文件全部下载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -r -np -nH -R index.html  http://rice.uga.edu/pub/data/Eukaryotic_Projects/o_sativa/annotation_dbs/pseudomolecules/version_7.0/all.dir/</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1328,7 +1282,7 @@ for语句依次提取command1中的每一个元素，把它的值赋予形式变
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

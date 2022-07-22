@@ -189,6 +189,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Linux-PKG-CONFIG-PATH/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/08/Linux-PKG-CONFIG-PATH/" class="post-title-link" itemprop="url">Linux | 认识 PKG_CONFIG_PATH</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-08 15:55:09 / Modified: 16:21:29" itemprop="dateCreated datePublished" datetime="2021-06-08T15:55:09+08:00">2021-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安装 <a target="_blank" rel="noopener" href="https://github.com/agordon/fastx_toolkit/releases/download/0.0.14/fastx_toolkit-0.0.14.tar.bz2">Fastx-Toolkit</a> 的过程中遇问题：No package ‘gtextutils’ found. Consider adjusting the PKG_CONFIG_PATH environment variable if you.</p>
+<p>实际上我已经安装 <a target="_blank" rel="noopener" href="https://github.com/agordon/libgtextutils/releases/download/0.7/libgtextutils-0.7.tar.gz">libgtextutils</a></p>
+<p>解决办法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /usr/local/lib/pkgconfig/gtextutils.pc /usr/lib64/pkgconfig/</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1490">参考资料</a>：</p>
+<p>安装源码包，进行 configure 步骤，提示某依赖的软件包找不到或软件包版本太低；或某一个库文件找不到。而实际上却已经安装好了相应的软件。这两种情况的处理方法分别为：</p>
+<ol>
+<li>设置环境变量 PKG_CONFIG_PATH</li>
+</ol>
+<p>.pc 文件是安装软件后生成的一个文件，其中包含该软件的信息；该 .pc 文件一般统一存放于名为 pkgconfig 的目录下。命令 pkg-config 按照系统设置路径（CentOS6 x64_86 系统默认为 /usr/lib64/pkgconfig/）的先后顺序来搜索 .pc 文件，从而或得到软件的版本号、头文件和库文件位置等信息。</p>
+<p>因此当把软件包安装到默认位置 /usr/local/ 位置后，则其 .pc 文件会生成到 /usr/local/lib/pkgconfig/ 或 /usr/local/lib64/pkgconfig/ 文件夹下，此时只需要将相应的 .pc 文件复制到 /usr/lib64/pkgconfig/ 中即可。</p>
+<p>或者，在安装软件包的时候，使用 “./configure –prefix=/usr/” 将软件直接安装到 /usr/ 目录下。这时有可能会将 .pc 文件生成到 /usr/lib/pkgconfig/ 中，依然导致问题出现，只需将该目录中的 .pc 文件复制到 /usr/lib64/pkgconfig/ 中即可。</p>
+<p>或者，设置环境变量PKG_CONFIG_PATH，加入含有相应的.pc文件的路径。注意要使用命令 ‘export’ 。比如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH</span><br></pre></td></tr></table></figure>
+<p>使用以上3种方法，能解决软件版本不符或系统找不到依赖的软件包的问题。</p>
+<ol start="2">
+<li>设置环境变量 LD_LIBRARY_PATH</li>
+</ol>
+<p>Linux 系统默认把 /lib 和 /usr/lib 两个目录作为默认的库搜索路径。而修改库搜索路径有两个方法：</p>
+<p>(1) 在 /etc/ld.so.conf 文件中添加库的搜索路径。</p>
+<p>(2) 在环境变量 LD_LIBRARY_PATH 中指明库的搜索路径。</p>
+<p>将库的路径设置好后，需要使用 /sbin/ldconfig 命令来将这些搜索路径下的共享库文件集中在一起而生成 /etc/ld.so.cache。该 cache 用于快速定位共享库。</p>
+<p>特别是新安装了软件后，即使其库文件明明就在库搜索路径下，但是编译的时候依然报错，提示缺少该库。则需要使用 ldconfig 命令来更新缓存。</p>
+<p>更详细信息，可参考：<a target="_blank" rel="noopener" href="http://www.mike.org.cn/articles/description-configure-pkg-config-pkg_config_path-of-the-relations-between/">简述configure、pkg-config、pkg_config_path三者的关系</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/03/Bioinfo-jcvi-installation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1179,89 +1270,6 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/" class="post-title-link" itemprop="url">Proteomics | 质谱分析中DDA与DIA有什么不同？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-04 17:16:31 / Modified: 19:02:28" itemprop="dateCreated datePublished" datetime="2021-03-04T17:16:31+08:00">2021-03-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>液相色谱与串联质谱（LC-MS/MS）相结合的技术成为蛋白质组研究的主要研究手段。在自下而上的蛋白质组学中，蛋白质通过蛋白水解酶消化成肽段，这些肽段通过高效液相分离后经电喷雾电离源（ESI）加上电荷，发射到质谱仪中进行一级质谱（MS）和二级质谱（MS/MS）的分析。一级质谱由肽段离子的质荷比和信号强度组成，二级质谱由肽段碎裂后的碎片离子质荷比和信号强度组成。</p>
-<p>DDA 为数据依赖性采集方式，选择一级质谱中特定数量的肽段分子（如信号强度最强的前 10 个离子）进行高能碰撞碎裂，产生的碎片离子送入二级质谱检测。</p>
-<p>DIA 为数据非依赖性采集方式，随着时间连续设置一定范围的质荷比窗口，对将通过窗口的全部肽段离子进行碎裂并用二级质谱检测碎片离子的信号。相比之下，DIA 模式不涉及到对肽段离子的限制性筛选，<u>定量准确性和重复性都要优于 DDA 模式</u>。但 DIA 模式产生的碎片离子谱图过于复杂，丢失了肽段及碎片离子的对应关系，对其结果的解析较为困难。目前的方法是通过建立样本的参考库（如同一样本的 DDA 数据），对 DIA 的混合数据进行去卷积分析来鉴定和定量肽段。</p>
-<p>DDA 模式对肽段离子的选择具有限制性和随机性，存在较多的数据信息缺失，而 DIA 模式的目标则是获得完整的数据，实现蛋白质的深度覆盖和精准定量。此外在复杂样品中，二级信号的定量比一级信号更为灵敏（例如一级质谱信号可能存在相似质荷比离子的干扰）。DDA模 式为一级质谱信号定量，而 DIA 模式为二级质谱信号定量，因此 DIA 模式的定量准确性和重现性都更好。</p>
-<p>DDA 模式下肽段分子和其二级碎片离子有着对应关系，通过对已知数据库的搜索匹配，即可得到样本中的肽段及相关蛋白质信息。而 DIA 模式下肽段离子与其碎片离子之间的直接关系丢失（DIA 光谱中的碎片离子可能是由多个肽段离子），复杂的谱图仍然给后续的数据分析和统计学检验带来很多挑战。对此目前已有多个团队开发出 DIA 分析的软件，例如 OpenSWATH 和 Skyline，这些软件通过建立样本的参考库，对色谱峰进行抽提并分析。此外也有研发团队提出不需要参考库的数据分析方法 DIA-Umpire，通过对肽段离子和碎片离子的匹配合成产生虚拟谱图进而搜库分析。因此，DIA 技术非常适合一次性获取数百上千种蛋白质更为全面信息（高覆盖率，高准确度，高重复性）的研究。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-42e5990e613ffb77de82db5ad6aca80c_720w.jpg" alt="DIA与DDA对比" /></p>
-<p><img src="http://wayen.ezweb1-3.35.com/htdocs/d/2/wayen/resource/rich/99c6d7e97d73a0c753a8e5ed2f3c4756.png" alt="DIA技术原理图（来源：LCGC North America.Volume 35, Issue 10, pg 756–759）" /></p>
-<p><img src="https://f1000researchdata.s3.amazonaws.com/manuscripts/7580/6631ee4c-6910-44ec-a8cc-c8bdb77fc401_figure1.gif" alt="" /></p>
-<p>参考资料</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/131977">2018 一篇SCI来看蛋白DIA技术如何完胜DDA</a> （这里面有个DIA与DDA对比的图，也可帮助理解，但是因网站设置导致图片链接过不来。）</li>
-<li><a target="_blank" rel="noopener" href="http://html.rhhz.net/SWJSTB/html/2017-9-73.htm">2017 《生物技术通报》基于质谱的定量蛋白质组学技术发展现状</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/47994226">2018 知乎专栏：学会DIA技术</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.wayenbiotech.com/danbaizhizuxue-316395-151150-item-683817.html">简介：DIA蛋白质组学技术</a></li>
-<li><a target="_blank" rel="noopener" href="https://chemistry.fudan.edu.cn/a9/84/c21871a240004/page.htm">2020 复旦化学系：基于深度学习的DIA蛋白质组分析新方法</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1333,7 +1341,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

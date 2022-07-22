@@ -189,6 +189,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/06/06/Linux-mac-os-x-using-chflags-to-hide-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/06/06/Linux-mac-os-x-using-chflags-to-hide-files/" class="post-title-link" itemprop="url">Mac OS X使用chflags命令隐藏文件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-06-06 09:54:41" itemprop="dateCreated datePublished" datetime="2017-06-06T09:54:41+08:00">2017-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载：Mac OS X如何使用chflags快速隐藏文件 Mac OS X 自带的命令行隐藏文件方法，使用chflags即可完成，打开终端程序，输入如下命令：</p>
+<blockquote>
+<p>chflags hidden 文件绝对路径/ 相对路径</p>
+</blockquote>
+<p>这样就设置隐藏属性了，进入相应的文件夹之后看不到该文件了。但是此时在Mac的『我的所有文件』下还是能看到被隐藏的文件，这是进入「系统偏好设置」-「Spotlight」-「隐私」- 添加被隐藏的文件夹或文件。 或是输入：chflags hidden []，再将文件直接拖入terminal的“[]”中也可。 重新显示文件使用：</p>
+<blockquote>
+<p>chflags nohidden /xxx/yyy/file</p>
+</blockquote>
+<p>再来回顾一下显示/隐藏finder所有隐藏文件的命令： defaults write com.apple.finder AppleShowAllFiles -bool true（false） – killall finder（重启finder） false 表示不显示『隐藏的文件』；true表示显示『隐藏的文件』。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/05/12/Bioinfo-gene-names-were-converted-to-dates-in-excel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -963,101 +1045,6 @@ ylab=“”);</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/09/11/Linux-awk-how-to-print-int-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/11/Linux-awk-how-to-print-int-number/" class="post-title-link" itemprop="url">Awk编程：将数字四舍五入之后输出整数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-11 12:33:25" itemprop="dateCreated datePublished" datetime="2016-09-11T12:33:25+08:00">2016-09-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p></p>
-<ol>
-<li>awk ‘{print int($1+0.5)}’ file</li>
-</ol>
-<p><em>复制代码</em></p>
-<ol>
-<li>n====a% more file</li>
-<li>40</li>
-<li>72</li>
-<li>83.25</li>
-<li>222.032</li>
-<li>249.75</li>
-<li>1722.501</li>
-<li>n====a% awk ‘{print int($1+0.5)}’ file</li>
-<li>40</li>
-<li>72</li>
-<li>83</li>
-<li>222</li>
-<li>250</li>
-<li>1723</li>
-</ol>
-<p><strong>+0.5, 然后取整，是很多编程语言常用的计算四舍五入的方法。</strong>   Ref：<a target="_blank" rel="noopener" href="http://bbs.linuxtone.org/thread-16472-1-1.html">http://bbs.linuxtone.org/thread-16472-1-1.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1129,7 +1116,7 @@ ylab=“”);</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

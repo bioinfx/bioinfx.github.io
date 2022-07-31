@@ -8730,4 +8730,31 @@ Node.js下载地址：Node.js官网</p>
         <category>Notes</category>
       </categories>
   </entry>
+  <entry>
+    <title>Python IDE： Spyder 的安装与使用</title>
+    <url>/2022/07/31/Python-IDE-Spyder/</url>
+    <content><![CDATA[<p>工作中大量用到 R 画图，R 的 IDE 是 RStudio， 用得非常习惯，越用越喜欢，在想Python有没有IDE呢，一查发现 RStudio 可以直接作为 Python 的 IDE，竟然一直没发现。不过试用了一下感觉不好用。又经网友指路找到 Spyder，这个好用。 ​​​</p>
+<span id="more"></span>
+<p>Spyder 的默认界面如下，其实与 RStudio 很相似，甚至可以在 “View - Windows layouts” 菜单里面直接设置为 Rstudio 风格。</p>
+<p><img src="https://raw.githubusercontent.com/spyder-ide/spyder/5.x/img_src/screenshot.png" alt="" /><br />
+<img src="https://wx3.sinaimg.cn/large/65ba09d9gy1h45pxxoglyj217n0t3wsy.jpg" alt="" /></p>
+<p>怎么安装 Spyder 呢？需要先安装 Anaconda 3. 去Anaconda 官网下载 wondows 版本，然后安装即可。安装好之后就是下面的界面。</p>
+<p><img src="https://cdn-images-1.medium.com/max/2000/1*8VwF5RUh4vEf4FfrKMw7qg.png" alt="" /></p>
+<p>然后在 Anaconda 界面下直接安装 Spyder，感觉跟 CytoScape 安装 App 是类似的操作。</p>
+<p>下次打开 Spyder，可以直接在 Windows 桌面的搜索框检索 “Spyder” 即可。</p>
+<p><strong>网路教程</strong></p>
+<p>检索资料的过程中找到一个厦门大学图书馆的中文pdf格式教程，比较细心的介绍了Anaconda和Spyder，但是超链接似乎没法显示。</p>
+<center><embed src="https://library.xmu.edu.cn/__local/3/30/15/EAA09B3D9ACCA198730A19458EB_7E777360_3AC94C.pdf?e=.pdf" width="850" height="600"></center>
+<p><strong>参考资料</strong></p>
+<ol>
+<li><a href="https://www.zhihu.com/question/30722156">知乎：Python有没有一个类似RStudio一样的IDE？</a></li>
+<li><a href="https://www.bilibili.com/video/BV1xp4y1Y7N5">哔哩哔哩: 介绍Spyder （Python IDE）by GANYU WANG</a></li>
+<li><a href="https://library.xmu.edu.cn/__local/3/30/15/EAA09B3D9ACCA198730A19458EB_7E777360_3AC94C.pdf?e=.pdf">Anaconda 安装以及Spyder使用 - 厦门大学图书馆</a></li>
+<li><a href="https://blog.csdn.net/RObot_123/article/details/103019588">CSDN 博客：安装 Anaconda3 Python3.6 Spyder3 详细教程</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+  </entry>
 </search>

@@ -189,6 +189,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/16/perl%E6%A8%A1%E5%9D%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C%EF%BC%88%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%E3%80%81%E5%88%A0%E9%99%A4%E5%B7%B2%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/11/16/perl%E6%A8%A1%E5%9D%97%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C%EF%BC%88%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%E3%80%81%E5%88%A0%E9%99%A4%E5%B7%B2%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%EF%BC%89/" class="post-title-link" itemprop="url">perl模块的一些操作（安装模块、删除已安装模块）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-11-16 23:21:35" itemprop="dateCreated datePublished" datetime="2015-11-16T23:21:35+08:00">2015-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关于模块的安装，包含自动/手动，自动使用的是CPAN，系统自动下载、编译、测试、安装，手动需要将安装包下载下来，再执行相关命令。基本原理一样 1、自动安装 在Linux命令行模式下输入“perl -MCPAN -e shell”进入perl界面，然后输入“instal <em>module-name</em>”即可 （在cmd中，cmd&gt;cpan modulename;   cmd&gt;perl -MCPAN -e ‘install module’;） cpan&gt;install modulename; cpan中的相关操作，可通过cpan&gt;h来查看，主要用到以下几个 i          查看模块的相关信息 m          模块的安装信息 reload     重新加载模块 get        获取模块，下载后的位置放在G:\strawberry\cpan\sources\authors\id\…解压对应的位置是.cpan/build install    安装模块 test force    强制进行安装，可能会有问题 notest    不进行test操作，也可能存在问题 2、手动安装，主要分以下几步： tar zxvf CPAN-1.9600.tar.gz cd CPAN-1.9600 perl <a target="_blank" rel="noopener" href="http://Makefile.PL">Makefile.PL</a> make Makefile test Makefile make install Makefile ----------------------------------------- <strong>删除已安装的模块</strong>： 使用App::pmunintsall模块来实现:cpan&gt;install App::pmuninstall 安装完成后，退出cpan 执行删除模块操作：cmd&gt;pm-uninstall DBD::Oracle 注：pm-uninstall 是dos下的命令操作，同时-为连字符，之间没有空格 其他可参照：<a target="_blank" rel="noopener" href="http://blog.csdn.net/xinke453/article/details/6732300">http://blog.csdn.net/xinke453/article/details/6732300</a> #本文转载 “<a target="_blank" rel="noopener" href="http://heshw.blog.51cto.com/">奔跑的羚羊</a>” 博客，出处<a target="_blank" rel="noopener" href="http://heshw.blog.51cto.com/5891747/1272581">http://heshw.blog.51cto.com/5891747/1272581</a> #有少许修改。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/10/18/topgo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1027,80 +1101,6 @@ listhet extract the position of each het</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/05/10/%E6%A4%8D%E7%89%A9%E7%A7%8D%E5%AD%90%E8%90%8C%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/05/10/%E6%A4%8D%E7%89%A9%E7%A7%8D%E5%AD%90%E8%90%8C%E5%8F%91/" class="post-title-link" itemprop="url">植物种子萌发</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-05-10 17:52:09" itemprop="dateCreated datePublished" datetime="2015-05-10T17:52:09+08:00">2015-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>萌发实验 选取发育良好的 30 粒成熟种子或果实，进行消毒（用 0.05%高锰酸甲浸泡 15 分 钟）后再用无菌水冲洗干净，播种于花盆中，播深为 0.5cm 左右，在室温下测定种子 的萌发率，重复 3 次。 贺慧. <em>阿拉善主要荒漠植物种子 (果实) 形态结构和萌发特性的适应性研究</em>. Diss. 内蒙古农业大学, 2008.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1172,14 +1172,14 @@ listhet extract the position of each het</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

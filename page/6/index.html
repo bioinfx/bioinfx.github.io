@@ -189,6 +189,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/05/Linux-shell-perl-mute-multiple-lines/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/05/Linux-shell-perl-mute-multiple-lines/" class="post-title-link" itemprop="url">shell脚本和perl脚本的段注释</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-05 12:53:15" itemprop="dateCreated datePublished" datetime="2020-12-05T12:53:15+08:00">2020-12-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>shell脚本段注释</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash </span><br><span class="line">echo &quot;Say Something&quot; </span><br><span class="line">&lt;&lt;COMMENT     </span><br><span class="line">  your comment 1     </span><br><span class="line">  comment 2     </span><br><span class="line">  blah </span><br><span class="line">COMMENT </span><br><span class="line">echo &quot;Do something else&quot;</span><br></pre></td></tr></table></figure>
+<p>perl脚本段注释。测试了一下，“=”符号和“pod”之间不能加空格，pod不能大写。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">=pod</span><br><span class="line">while(&lt;file&gt;)&#123;</span><br><span class="line">  chomp $_;</span><br><span class="line">  print &quot;$_\n;</span><br><span class="line">&#125;</span><br><span class="line">=cut</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/R-corrplot-coefficient-correlation-/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1215,196 +1295,6 @@ $ git config --global user.email “<a href="mailto:hanyuntaocn@163.com">hanyunt
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/08/R-sorted-values-in-axis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/08/R-sorted-values-in-axis/" class="post-title-link" itemprop="url">R：如何对坐标轴对应元素的顺序进行调整</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-08 11:41:38" itemprop="dateCreated datePublished" datetime="2020-08-08T11:41:38+08:00">2020-08-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 11:45:06" itemprop="dateModified" datetime="2020-12-08T11:45:06+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>R作图中，坐标轴上的元素默认按照数字大小或者 Alphabetical order（字母顺序）排列。如果需要对坐标轴元素顺序进行调整，可以使用 reorder 命令。</p>
-<p>例1. 柱状图</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># Create data</span><br><span class="line">data &lt;- data.frame(</span><br><span class="line">  name=c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;) ,  </span><br><span class="line">  value=c(3,12,5,18,45)</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line"># Barplot</span><br><span class="line">ggplot(data, aes(x=name, y=value)) + </span><br><span class="line">geom_bar(stat = &quot;identity&quot;)</span><br><span class="line"># Barplot</span><br><span class="line">ggplot(data, aes(x=reorder(name, -value), y=value)) + </span><br><span class="line">geom_bar(stat = &quot;identity&quot;)</span><br></pre></td></tr></table></figure>
-<p><img src="https://genehub.files.wordpress.com/2020/08/11111.jpeg" alt="" /></p>
-<p><img src="https://genehub.files.wordpress.com/2020/08/222222.jpeg" alt="" /></p>
-<p>例2. 点状图 + 多个子图</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot(mpg, aes(displ, hwy)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  facet_wrap(vars(class)</span><br></pre></td></tr></table></figure>
-<p><img src="https://genehub.files.wordpress.com/2020/08/test1.jpeg?w=845" alt="" /></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># To change the order in which the panels appear, change the levels</span><br><span class="line"># of the underlying factor.</span><br><span class="line">mpg$class2 &lt;- reorder(mpg$class, mpg$displ)</span><br><span class="line">ggplot(mpg, aes(displ, hwy)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  facet_wrap(vars(class2))</span><br></pre></td></tr></table></figure>
-<p><img src="https://genehub.files.wordpress.com/2020/08/reorder.jpeg?w=845" alt="" /></p>
-<p>其他案例：</p>
-<p>Reordering groups in a <code>ggplot2</code> chart can be a struggle. This is due to the fact that ggplot2 takes into account the order of the <code>factor</code> levels, not the order you observe in your data frame. You can sort your input data frame with <code>sort()</code> or <code>arrange()</code>, it will never have any impact on your <code>ggplot2</code> output.</p>
-<p>This post explains how to reorder the level of your factor through several examples. Examples are based on 2 dummy datasets:</p>
-<p># Library<br />
-library(ggplot2)<br />
-library(dplyr)</p>
-<h1 id="dataset-1-one-value-per-group"><a class="markdownIt-Anchor" href="#dataset-1-one-value-per-group"></a> Dataset 1: one value per group</h1>
-<p>data &lt;- data.frame(<br />
-name=c(“north”,“south”,“south-east”,“north-west”,“south-west”,“north-east”,“west”,“east”),<br />
-val=sample(seq(1,10), 8 )<br />
-)</p>
-<h1 id="dataset-2-several-values-per-group-natively-provided-in-r"><a class="markdownIt-Anchor" href="#dataset-2-several-values-per-group-natively-provided-in-r"></a> Dataset 2: several values per group (natively provided in R)</h1>
-<h1 id="mpg"><a class="markdownIt-Anchor" href="#mpg"></a> mpg</h1>
-<h1 id="method-1-the-forecats-library"><a class="markdownIt-Anchor" href="#method-1-the-forecats-library"></a> Method 1: the <code>Forecats</code> library</h1>
-<hr />
-<p>The <a target="_blank" rel="noopener" href="https://github.com/tidyverse/forcats">Forecats library</a> is a library from the <a target="_blank" rel="noopener" href="https://www.tidyverse.org/">tidyverse</a> especially made to handle factors in R. It provides a suite of useful tools that solve common problems with factors. The <code>fact_reorder()</code> function allows to reorder the factor (<code>data$name</code> for example) following the value of another column (<code>data$val</code> here).</p>
-<p># load the library<br />
-library(forcats)</p>
-<h1 id="reorder-following-the-value-of-another-column"><a class="markdownIt-Anchor" href="#reorder-following-the-value-of-another-column"></a> Reorder following the value of another column:</h1>
-<p>data %&gt;%<br />
-mutate(name = fct_reorder(name, val)) %&gt;%<br />
-ggplot( aes(x=name, y=val)) +<br />
-geom_bar(stat=“identity”, fill=“#f68060”, alpha=.6, width=.4) +<br />
-coord_flip() +<br />
-xlab(“”) +<br />
-theme_bw()</p>
-<h1 id="reverse-side"><a class="markdownIt-Anchor" href="#reverse-side"></a> Reverse side</h1>
-<p>data %&gt;%<br />
-mutate(name = fct_reorder(name, desc(val))) %&gt;%<br />
-ggplot( aes(x=name, y=val)) +<br />
-geom_bar(stat=“identity”, fill=“#f68060”, alpha=.6, width=.4) +<br />
-coord_flip() +<br />
-xlab(“”) +<br />
-theme_bw()</p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-2-1.png" alt="" /></p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-2-2.png" alt="" /></p>
-<p>If you have several values per level of your factor, you can specify which function to apply to determine the order. The default is to use the median, but you can use the number of data points per group to make the classification:</p>
-<p># Using median<br />
-mpg %&gt;%<br />
-mutate(class = fct_reorder(class, hwy, .fun=‘median’)) %&gt;%<br />
-ggplot( aes(x=reorder(class, hwy), y=hwy, fill=class)) +<br />
-geom_boxplot() +<br />
-xlab(“class”) +<br />
-theme(legend.position=“none”) +<br />
-xlab(“”)</p>
-<h1 id="using-number-of-observation-per-group"><a class="markdownIt-Anchor" href="#using-number-of-observation-per-group"></a> Using number of observation per group</h1>
-<p>mpg %&gt;%<br />
-mutate(class = fct_reorder(class, hwy, .fun=‘length’ )) %&gt;%<br />
-ggplot( aes(x=class, y=hwy, fill=class)) +<br />
-geom_boxplot() +<br />
-xlab(“class”) +<br />
-theme(legend.position=“none”) +<br />
-xlab(“”) +<br />
-xlab(“”)</p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-3-1.png" alt="" /></p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-3-2.png" alt="" /></p>
-<p>The last common operation is to provide a specific order to your levels, you can do so using the <code>fct_relevel()</code> function as follow:</p>
-<p># Reorder following a precise order<br />
-p &lt;- data %&gt;%<br />
-mutate(name = fct_relevel(name,<br />
-“north”, “north-east”, “east”,<br />
-“south-east”, “south”, “south-west”,<br />
-“west”, “north-west”)) %&gt;%<br />
-ggplot( aes(x=name, y=val)) +<br />
-geom_bar(stat=“identity”) +<br />
-xlab(“”)<br />
-#p</p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-5-1.png" alt="" /></p>
-<h1 id="method-2-using-dplyr-only"><a class="markdownIt-Anchor" href="#method-2-using-dplyr-only"></a> Method 2: using <code>dplyr</code> only</h1>
-<hr />
-<p>The <code>mutate()</code> function of <code>dplyr</code> allows to create a new variable or modify an existing one. It is possible to use it to recreate a factor with a specific order. Here are 2 examples:</p>
-<ul>
-<li>The first use <code>arrange()</code> to sort your data frame, and reorder the factor following this desired order.</li>
-<li>The second specifies a custom order for the factor giving the levels one by one.</li>
-</ul>
-<p>data %&gt;%<br />
-arrange(val) %&gt;%    # First sort by val. This sort the dataframe but NOT the factor levels<br />
-mutate(name=factor(name, levels=name)) %&gt;%   # This trick update the factor levels<br />
-ggplot( aes(x=name, y=val)) +<br />
-geom_segment( aes(xend=name, yend=0)) +<br />
-geom_point( size=4, color=“orange”) +<br />
-coord_flip() +<br />
-theme_bw() +<br />
-xlab(“”)</p>
-<p>data %&gt;%<br />
-arrange(val) %&gt;%<br />
-mutate(name = factor(name, levels=c(“north”, “north-east”, “east”, “south-east”, “south”, “south-west”, “west”, “north-west”))) %&gt;%<br />
-ggplot( aes(x=name, y=val)) +<br />
-geom_segment( aes(xend=name, yend=0)) +<br />
-geom_point( size=4, color=“orange”) +<br />
-theme_bw() +<br />
-xlab(“”)</p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-6-1.png" alt="" /></p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-6-2.png" alt="" /></p>
-<h1 id="method-3-the-reorder-function-of-base-r"><a class="markdownIt-Anchor" href="#method-3-the-reorder-function-of-base-r"></a> Method 3: the <code>reorder()</code> function of base R</h1>
-<hr />
-<p>In case your an unconditional user of the good old R, here is how to control the order using the <code>reorder()</code> function inside a <code>with()</code> call:</p>
-<p># reorder is close to order, but is made to change the order of the factor levels.<br />
-mpg$class = with(mpg, reorder(class, hwy, median))</p>
-<p>p &lt;- mpg %&gt;%<br />
-ggplot( aes(x=class, y=hwy, fill=class)) +<br />
-geom_violin() +<br />
-xlab(“class”) +<br />
-theme(legend.position=“none”) +<br />
-xlab(“”)<br />
-#p</p>
-<p><img src="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2_files/figure-html/unnamed-chunk-8-1.png" alt="" /></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1476,14 +1366,14 @@ xlab(“”)<br />
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

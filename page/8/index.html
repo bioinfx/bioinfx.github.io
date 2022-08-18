@@ -189,6 +189,249 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/08/%E6%A4%8D%E7%89%A9%E5%9F%BA%E5%9B%A0%E7%BB%84ncrna%E9%A2%84%E6%B5%8B%EF%BC%88trna%E3%80%81rrna%E3%80%81snrna%E3%80%81mirna%EF%BC%89/" class="post-title-link" itemprop="url">植物基因组ncRNA预测（tRNA、rRNA、snRNA、miRNA）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-08 15:49:22" itemprop="dateCreated datePublished" datetime="2019-08-08T15:49:22+08:00">2019-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>引用文献 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae696b9e6b395.png" alt="胡杨ncRNA鉴定方法" /></p>
+<h2 id="一-trna"><a class="markdownIt-Anchor" href="#一-trna"></a> 一、tRNA</h2>
+<p>先安装tRNAscan-SE，然后运行如下命令即可。</p>
+<p>/xxx/biosoftwares/tRNAscan-SE-2.0/tRNAscan-SE -G -o gDNA.tRNA.out -f gDNA.tRNA.scdstr -m gDNA.tRNA.stat genome.sm.fa</p>
+<p>结果示意如下</p>
+<p>Sequence tRNA Bounds tRNA Anti Intron Bounds Cove<br />
+Name tRNA # Begin End Type Codon Begin End Score</p>
+<hr />
+<p>ChrM 1 12693 12766 Met CAT 0 0 63.37<br />
+ChrM 2 75688 75758 Cys GCA 0 0 48.76<br />
+ChrM 3 77742 77815 His GTG 0 0 56.52<br />
+ChrM 4 90837 90909 Cys GCA 0 0 59.37<br />
+ChrM 5 102551 102624 Asp GTC 0 0 68.25<br />
+ChrM 6 184436 184507 Gly GCC 0 0 70.59<br />
+ChrM 7 197972 198043 Glu TTC 0 0 65.49<br />
+ChrM 8 198963 199035 Met CAT 0 0 70.15<br />
+ChrM 9 237157 237228 Asn GTT 0 0 71.98<br />
+ChrM 10 238160 238242 Tyr GTA 0 0 62.80<br />
+ChrM 11 261058 261136 Lys TTT 261096 261101 34.22<br />
+ChrM 12 288825 288906 Met CAT 0 0 73.07<br />
+ChrM 13 312625 312696 Gln TTG 0 0 64.58<br />
+ChrM 14 335330 335403 Met CAT 0 0 73.76<br />
+ChrM 15 317035 316963 Phe AAA 0 0 30.83<br />
+ChrM 16 285436 285349 Ser GCT 0 0 55.78<br />
+ChrM 17 284968 284895 Phe GAA 0 0 67.07<br />
+ChrM 18 284630 284556 Pro TGG 0 0 64.26<br />
+ChrM 19 260713 260640 Trp CCA 0 0 76.23<br />
+ChrM 20 3494 3422 Lys TTT 0 0 81.82</p>
+<h2 id="二-rrna"><a class="markdownIt-Anchor" href="#二-rrna"></a> 二、rRNA</h2>
+<p>不同植物中的rRNA序列高度保守，基于blast比对即可预测新物种的rRNA。植物基因组rRNA包含18S、28S、5S和5.8S四种。我下载了大豆或拟南芥的rRNA序列作为比对文件。</p>
+<p>&gt;5S rRNA 556bp X15199.1 Soybean 5S rDNA gene for 5S rRNA</p>
+<blockquote>
+<p>5.8S rRNA Arabidopsis thaliana 15172 AT2G01020.1 Chr2+ 5782-5945<br />
+18S rRNA 1807bp X02623.1 Soybean (Glycine max) 18S ribosomal RNA<br />
+28S rRNA XR_003264281.1 PREDICTED: Glycine max 28S ribosomal RNA (LOC112999102), rRNA</p>
+</blockquote>
+<p>比对方法如下，结果还需要根据实际情况进行过滤，将部分匹配的基因组片段过滤掉即可。</p>
+<p>blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 7 -num_threads 4 -out Glycine_max_rRNA.fa__genome.7<br />
+blastn -db /xxx_references/index/genome.sm.fa -query Glycine_max_rRNA.fa -evalue 1e-5 -outfmt 0 -num_threads 4 -out Glycine_max_rRNA.fa__genome.0</p>
+<p>三、snRNA snRNA是真核细胞核内的一组小分子RNA，分子较小，约含50—200nt，其主要作用是与有关蛋白结合形成小核糖核蛋白体(snRNP)，对RNA的前体进行加工。snRNA在核内转录，但snRNP在胞浆组装，发挥功能则又在核内，所以需要跨核膜转运。 snRNA的特点 ① 高度保守，如人和爪蟾的U1snRNA有90%的序列相同。② 其长度在哺乳动物中约为100-215个核苷酸，共分为7类，由于含U丰富，故编号为U1~U7。③ 分析方法是用rfam数据库（cm格式）作参考，通过cmscan比对程序进行比对预测。 先安装infernal程序（内置cmscan）。</p>
+<p>wget <a target="_blank" rel="noopener" href="http://eddylab.org/infernal/infernal-1.1.2.tar.gz">http://eddylab.org/infernal/infernal-1.1.2.tar.gz</a><br />
+`tar -zxvf infernal-1.1.2.tar.gz <br />
+cd infernal-1.1.2<br />
+./configure  --prefix=/home/user/local<br />
+make<br />
+make install<br />
+cd easel; make install</p>
+<h1 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试`</h1>
+<p>$ cmscan --version<br />
+Failed to parse command line: No such option “–version”.<br />
+Usage: cmscan [-options] <cmdb> <seqfile><br />
+where basic options are:<br />
+-h        : show brief help on version and usage<br />
+-g        : configure CM for glocal alignment [default: local]<br />
+-Z <x>    : set search space size in *Mb* to <x> for E-value calculations  (x&gt;0)<br />
+–devhelp : show list of otherwise hidden developer/expert options<br />
+To see more help on available options, do cmscan -h</p>
+<p>再下载rfam数据库，并将Rfam.cm做成索引文件。</p>
+<p>wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.clanin</a><br />
+wget <a href="ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz">ftp://ftp.ebi.ac.uk/pub/databases/Rfam/14.1/Rfam.cm.gz</a><br />
+gunzip Rfam.cm.gz<br />
+cmpress <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a></p>
+<h1 id="出现如下文件"><a class="markdownIt-Anchor" href="#出现如下文件"></a> 出现如下文件</h1>
+<p>ls Rfam.*<br />
+Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> Rfam.cm.i1f Rfam.cm.i1i Rfam.cm.i1m Rfam.cm.i1p</p>
+<p>计算基因组大小，后面cmscan要用到-G参数</p>
+<p>esl-seqstat my-genome.fa</p>
+<p>比如基因组1000M，那么-G参数为 1000M*2/1M=2000，这个数据根据实际情况调整。 运行比对程序进行ncRNA预测</p>
+<p># Rfam12.2.claninfo 为下载的claninfo文件，需提供所在路径</p>
+<h1 id="rfamcm"><a class="markdownIt-Anchor" href="#rfamcm"></a> <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> 下载的cm文件</h1>
+<h1 id="my-genomefa-待查询序列"><a class="markdownIt-Anchor" href="#my-genomefa-待查询序列"></a> my-genome.fa 待查询序列</h1>
+<h1 id="my-genomecmscan-输出结果"><a class="markdownIt-Anchor" href="#my-genomecmscan-输出结果"></a> my-genome.cmscan 输出结果</h1>
+<h1 id="my-genometblout-有一个输出结果"><a class="markdownIt-Anchor" href="#my-genometblout-有一个输出结果"></a> my-genome.tblout 有一个输出结果</h1>
+<h1 id="对500m大小的输入序列48线程需要7个小时最好放入后台"><a class="markdownIt-Anchor" href="#对500m大小的输入序列48线程需要7个小时最好放入后台"></a> 对500M大小的输入序列，48线程，需要7个小时，最好放入后台</h1>
+<h1 id="esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"><a class="markdownIt-Anchor" href="#esl-seqstat-my-genomefa-awk-if0~total-print-int421000000-1751"></a> esl-seqstat my-genome.fa  awk ‘{if($0~/^Total/) print int($4*2/1000000);}’ -----&gt; 1751</h1>
+<p>cmscan -Z 1751 --cut_ga --rfam --nohmmonly --tblout my-genome.tblout --fmt 2 --clanin Rfam.clanin <a target="_blank" rel="noopener" href="http://Rfam.cm">Rfam.cm</a> my-genome.fa &gt; my-genome.cmscan</p>
+<p>cmscan结果文件示意如下，包含预测的ncRNA列表和RNA比对结构示意，其实不仅包含了snRNA，还有miRNA、rRNA和tRNA。 另有一个my-genome.tblout文件，就是tab分割的表格，更加简洁。</p>
+<p>Query: scaffold4 [L=2607366]<br />
+Hit scores:<br />
+rank E-value score bias modelname start end mdl trunc gc description</p>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 MIR408 2312792 2312644 - cm no 0.48 microRNA MIR408<br />
+(2) ! 1.9e-17 88.4 0.0 snoZ107_R87 2081687 2081578 - cm no 0.46 Small nucleolar RNA Z107/R87<br />
+(3) ! 2.4e-16 73.0 0.0 MIR164 1105583 1105483 - cm no 0.54 microRNA MIR164<br />
+(4) ! 1.2e-13 71.7 0.0 snoR30 2081522 2081420 - cm no 0.44 Small nucleolar RNA R30/Z108<br />
+(5) ! 1.3e-11 65.1 0.0 tRNA 2140920 2140992 + cm no 0.59 tRNA<br />
+(6) ! 1.3e-11 65.1 0.0 tRNA 2245335 2245407 + cm no 0.59 tRNA<br />
+(7) ! 1.6e-11 64.8 0.0 tRNA 223678 223759 + cm no 0.56 tRNA<br />
+(8) ! 1.7e-11 64.7 0.0 tRNA 374728 374800 + cm no 0.56 tRNA<br />
+(9) ! 4e-11 63.3 0.0 tRNA 482023 481943 - cm no 0.53 tRNA<br />
+(10) ! 7.3e-11 71.3 0.0 snoR41 705999 705902 - cm no 0.40 Small nucleolar RNA R41<br />
+(11) ! 3.2e-10 60.1 0.0 tRNA 624224 624152 - cm no 0.58 tRNA<br />
+(12) ! 4.3e-10 59.6 0.0 tRNA 793379 793309 - cm no 0.59 tRNA<br />
+(13) ! 1.7e-08 53.9 0.0 tRNA 767498 767569 + cm no 0.57 tRNA<br />
+(14) ! 0.00018 43.5 0.1 SNORD34 2081329 2081243 - cm no 0.33 Small nucleolar RNA SNORD34</p>
+<p>Hit alignments:</p>
+<blockquote>
+<blockquote>
+<p>MIR408 microRNA MIR408<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+</blockquote>
+</blockquote>
+<hr />
+<p>(1) ! 6.3e-19 81.7 0.0 cm 1 136 [] 2312792 2312644 - … 0.95 no 0.48</p>
+<p>v NC<br />
+::::::::::::::::&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;&lt;-&lt;&lt;&lt;&lt;&lt;-&lt;—&lt;&lt;_____________…______________ CS<br />
+MIR408 1 aauUGGugAugAgAugGAGACaGGGAagAgGCAGaGCAuGaGAUGGaGCUaucAAcaAau…ugUGAgAaaaagaU 74<br />
+A+U G+GA +AGA + AG AGGGAA AGGCAGAGCAUG :AUG AGC AUCAACA A GUGAG +AA++<br />
+scaffold4 2312792 AGUCAGAGACAAGACAAAGGUAGGGAACAGGCAGAGCAUG-GAUGGAGCCAUCAACAGAAuagagucaagaaaccgagAGUGAGGGAAGA-- 2312704<br />
+****************************************.***************88779*************9988777777777766… PP</p>
+<p>v NC<br />
+______________&gt;&gt;----&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;&gt;&gt;&gt;&gt;-&gt;&gt;&gt;::::::::::::::::: CS<br />
+MIR408 75 GgaauUGUUgUuGCuCcCuCCCaUGCACUGCcUCuUCCCuGGCUCCuuucuCuccucuuUuu 136</p>
+<ul>
+<li>++UGUU +GCU C + :CAUGCACUGCCUCUUCCCU GCU U +U+U+C+ U+U +<br />
+scaffold4 2312703 -AGUCUGUUACGGCUUC-AAUCAUGCACUGCCUCUUCCCUGGCUCUAUCUUUUUCCAUCUCC 2312644<br />
+.8899**********99.999***********************8899999999******** PP</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>snoZ107_R87 Small nucleolar RNA Z107/R87<br />
+rank E-value score bias mdl mdl from mdl to seq from seq to acc trunc gc</p>
+</blockquote>
+</blockquote>
+<hr />
+<p>(2) ! 1.9e-17 88.4 0.0 cm 1 117 [] 2081687 2081578 - … 0.94 no 0.46</p>
+<p>NC<br />
+&lt;&lt;&lt;&lt;&lt;&lt;________________.___________________________________________________________________ CS<br />
+snoZ107_R87 1 GAugGCaGUGAuGACUuGGUAA.uAUUCAAGCUCAACAGACCaaAuuacAGgucUUUCUCuauggcuuuuccuaugGGAUuGaUUUGUaU 89<br />
+GAU::CAGUGAUGAC UAA +AUUCAAGCUCAACAGACC+ AUU CA G +UUUCUCU+U ++U G GAUU UUUG +U<br />
+scaffold4 2081687 GAUCACAGUGAUGACCACAUAAaAAUUCAAGCUCAACAGACCGGAUUGCACGGUUUUCUCUCU-------UUUGGGAGAUUACUUUGCGU 2081605<br />
+***************999987615677*******************************99665…9999**************** PP</p>
+<p>NC<br />
+______________________&gt;&gt;&gt;&gt;&gt;&gt; CS<br />
+snoZ107_R87 90 GcCGAUaaUcCCGCUGAACuGAGCcaUC 117<br />
+G+CGA A CCCGCUGAACUGAG::AUC<br />
+scaffold4 2081604 GUCGAC-ACCCCGCUGAACUGAGUGAUC 2081578<br />
+*****8.799****************** PP</p>
+<p>如何对结果进行分类？首先下载Rfam家族的注释，点击<a target="_blank" rel="noopener" href="http://rfam.xfam.org/search#tabview=tab5">http://rfam.xfam.org/search#tabview=tab5</a>，选择所有复选框，提交，把得到的表格拷贝下来，整理成TAB键分割的格式。并把第三列拆开，取出类型, 存储为 <code>Rfam_anno.txt</code>。</p>
+<p>Accession ID Type Description<br />
+RF00001 5S_rRNA Gene; rRNA 5S ribosomal RNA<br />
+RF00002 5_8S_rRNA Gene; rRNA 5.8S ribosomal RNA<br />
+RF00003 U1 Gene; snRNA; splicing U1 spliceosomal RNA<br />
+RF00004 U2 Gene; snRNA; splicing U2 spliceosomal RNA<br />
+RF00005 tRNA Gene; tRNA tRNA<br />
+RF00006 Vault Gene Vault RNA<br />
+RF00007 U12 Gene; snRNA; splicing U12 minor spliceosomal RNA<br />
+RF00008 Hammerhead_3 Gene; ribozyme Hammerhead ribozyme (type III)<br />
+RF00009 RNaseP_nuc Gene; ribozyme Nuclear RNase P<br />
+RF00010 RNaseP_bact_a Gene; ribozyme Bacterial RNase P class A<br />
+RF00011 RNaseP_bact_b Gene; ribozyme Bacterial RNase P class B<br />
+RF00012 U3 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA U3<br />
+RF00013 6S Gene 6S / SsrS RNA<br />
+RF00014 DsrA Gene; sRNA DsrA RNA<br />
+RF00015 U4 Gene; snRNA; splicing U4 spliceosomal RNA<br />
+RF00016 SNORD14 Gene; snRNA; snoRNA; CD-box Small nucleolar RNA SNORD14<br />
+RF00017 Metazoa_SRP Gene Metazoan signal recognition particle RNA</p>
+<p>grep其中snRNA如下</p>
+<p>$ cat xfam_family_types.tab  grep snRNA  awk -F “\t” ‘{print $3}’  sort  uniq<br />
+Cis-reg<br />
+Gene; antisense<br />
+Gene; snRNA<br />
+Gene; snRNA; snoRNA; CD-box<br />
+Gene; snRNA; snoRNA; HACA-box<br />
+Gene; snRNA; snoRNA; scaRNA<br />
+Gene; snRNA; splicing<br />
+Gene; sRNA</p>
+<p>将CD-box、HACA-box和splicing对应的部分统计出来就可以做成如下文献对应的图了。 <img src="https://genehub.files.wordpress.com/2019/08/e883a1e69da8ncrnae989b4e5ae9ae7bb93e69e9c.png" alt="胡杨ncRNA鉴定结果" /></p>
+<h2 id="四-mirna"><a class="markdownIt-Anchor" href="#四-mirna"></a> 四、miRNA</h2>
+<p>可以直接用上面的结果，也可以用miRNA测序的数据。   参考资料： [1] Chen Tong: <a target="_blank" rel="noopener" href="http://blog.genesino.com/2017/06/Rfam/">http://blog.genesino.com/2017/06/Rfam/</a> [2] Chen Lianfu: <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=2185">http://www.chenlianfu.com/?p=2185</a> [3] tiehan: <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_670445240102uxhu.html">http://blog.sina.com.cn/s/blog\_670445240102uxhu.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/31/Linux-how-to-upgrade-git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1187,103 +1430,6 @@ y<br />
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/08/R-Gene-Ontology-hypergeometric/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/08/R-Gene-Ontology-hypergeometric/" class="post-title-link" itemprop="url">R：超几何分布与基因功能富集分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-08 14:56:49" itemprop="dateCreated datePublished" datetime="2018-02-08T14:56:49+08:00">2018-02-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 11:47:19" itemprop="dateModified" datetime="2020-12-08T11:47:19+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>GO功能显著性富集分析给出与基因组背景相比，在差异表达基因中显著富集的GO功能条目，从而给出差异表达基因与哪些生物学功能显著相关。该分析首先把所有差异表达基因向Gene Ontology数据库（<a target="_blank" rel="noopener" href="http://www.geneontology.org/">http://www.geneontology.org/</a>）的各个term映射，计算每个term的基因数目，然后应用超几何检验，找出与整个基因组背景相比，在差异表达基因中显著富集的GO条目，其计算公式为 <img src="https://genehub.files.wordpress.com/2018/02/hypergeometric.jpg" alt="hypergeometric" /> 其中，N为所有基因中具有GO注释的基因数目；n为N中差异表达基因的数目；M为所有基因中注释为某特定GO term的基因数目；m为注释为某特定GO term的差异表达基因数目。计算得到的p-value通过Bonferroni校正之后，以corrected p-value≤0.05为阈值，满足此条件的GO term定义为在差异表达基因中显著富集的GO term。通过GO功能显著性富集分析能确定差异表达基因行使的主要生物学功能。 例如，如下的结果： <img src="https://genehub.files.wordpress.com/2018/02/qqe688aae59bbe20180208115638.jpg" alt="QQ截图20180208115638" /> P值计算方法为（在R语言程序中调用phyper命令）：</p>
-<p>phyper(66-1, 2775, 20269-2775, 249, lower.tail=F)<br />
-[1] 5.546399e-08</p>
-<p>Q值计算方法： Q值则需要考虑到全部差异表达基因的P值。引用他人的解释：设总共有m个候选基因，每个基因对应的p值从小到大排列分别是p(1),p(2),…,p(m),则若想控制fdr不能超过q，则只需找到最大的正整数 i，使得 p(i)&lt;= (i*q)/m.然后，挑选对应p(1),p(2),…,p(i)的基因做为差异表达基因，这样就能从统计学上保证fdr不超过q。 例如</p>
-<p>&gt; p&lt;-c(0.0003,0.0001,0.02)</p>
-<blockquote>
-<p>p.adjust(p,method=“fdr”,length(p))<br />
-[1] 0.00045 0.00030 0.02000</p>
-</blockquote>
-<p>注： 一、什么是超几何分布 超几何分布的公式为：</p>
-<p>p(x) = choose(m, x) choose(n, k-x) / choose(m+n, k)<br />
-for x = 0, …, k.<br />
-其中, m 是桶里面白球的个数, n 是黑球的个数, k 是从桶中随机取出的球数, x 是取出球<br />
-中白球的个数.</p>
-<p>Fisher‘s Exact Test就是依据超几何概率分布得到的。 二、计算公式 公式：计算P值的代码也可以自己写：C(k,M)*C(n-k,N-M)/C(n,N) R语言的代码：</p>
-<p>dhyper(x, m, n, k, log = FALSE)<br />
-计算某一个点的p值<br />
-phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
-计算一个分布的p值，默认下计算P(X&lt;=x)<br />
-qhyper(p, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
-计算某一个p值对应的分位数<br />
-rhyper(nn, m, n, k)<br />
-按超几何分布给出nn的可能的模拟结果值</p>
-<p>三、运用案例 （见前文） 四、编程 参考： <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1122">http://www.chenlianfu.com/?p=1122</a> <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-749-1-1.html">http://www.biotrainee.com/thread-749-1-1.html</a> <a target="_blank" rel="noopener" href="http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814">http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814</a> <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_73e6125c01012412.html">http://blog.sina.com.cn/s/blog\_73e6125c01012412.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1355,14 +1501,14 @@ rhyper(nn, m, n, k)<br />
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

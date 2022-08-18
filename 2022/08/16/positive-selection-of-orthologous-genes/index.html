@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="去年做的分析现在回去看有点记不清了，重温正向选择分析。多个基因组（比如A、B、C、D、E 这五个物种）的比较分析，假如有 5000 个单拷贝同源基因（single-copy orthologous），怎么找出哪些基因在 A 物种具有正向选择呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo：再记基因的正向选择分析">
+<meta property="og:url" content="http://example.com/2022/08/16/positive-selection-of-orthologous-genes/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="去年做的分析现在回去看有点记不清了，重温正向选择分析。多个基因组（比如A、B、C、D、E 这五个物种）的比较分析，假如有 5000 个单拷贝同源基因（single-copy orthologous），怎么找出哪些基因在 A 物种具有正向选择呢？">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/1ioOGTD.jpeg">
+<meta property="og:image" content="https://i.imgur.com/K8fUb0A.jpeg">
+<meta property="article:published_time" content="2022-08-16T13:10:07.000Z">
+<meta property="article:modified_time" content="2022-08-16T09:04:54.469Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/1ioOGTD.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/08/16/positive-selection-of-orthologous-genes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo：再记基因的正向选择分析 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/16/positive-selection-of-orthologous-genes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo：再记基因的正向选择分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-08-16 21:10:07 / Modified: 17:04:54" itemprop="dateCreated datePublished" datetime="2022-08-16T21:10:07+08:00">2022-08-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinfo/" itemprop="url" rel="index"><span itemprop="name">Bioinfo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>去年做的分析现在回去看有点记不清了，重温正向选择分析。多个基因组（比如A、B、C、D、E 这五个物种）的比较分析，假如有 5000 个单拷贝同源基因（single-copy orthologous），怎么找出哪些基因在 A 物种具有正向选择呢？</p>
+<span id="more"></span>
+<h3 id="简要的流程之前的笔记已经纪录过这里再总结一次"><a class="markdownIt-Anchor" href="#简要的流程之前的笔记已经纪录过这里再总结一次"></a> 简要的流程（之前的笔记已经纪录过，这里再总结一次。）</h3>
+<ol>
+<li>
+<p>鉴定单拷贝基因。先整理各个物种的蛋白序列、CDS 序列和gff 文件，然后运行 OrthoFinder 流程。</p>
+</li>
+<li>
+<p>单拷贝基因的序列比对。对于每一个单拷贝基因，用蛋白序列做比对，然后基于蛋白序列的比对情况将 DNA 序列比对，这个过程叫做 codon alignment，并且可以借助工具去掉 gaps，最后得到 PAML 格式的比对结果。这一步我主要参考了 <a href="doi.org/10.1007/978-1-4939-1438-8_4">Jeffares et al</a> ，它介绍了 PAL2NAL 这样便捷的 codon alignment 工具，同时其附件甚至有提供 demo data 和  paml 程序的 <a target="_blank" rel="noopener" href="https://static-content.springer.com/esm/chp%3A10.1007%2F978-1-4939-1438-8_4/MediaObjects/217442_2_En_4_MOESM1_ESM.pdf">Jeffares et al 示范代码</a>。另外，这里涉及到几千个单拷贝基因的分别比对，我是使用 shell 脚本的循环功能来完成的，需要结合工作目录保存的脚本。</p>
+</li>
+<li>
+<p>使用 PAML 程序下面的 codeml 命令来计算正向选择。简单提一下原理，涉及到统计学知识，我们最初的问题是“某单拷贝基因在指定的物种有没有经历正向选择”，那么先假设没有正向选择（null model），计算似然值（likelihood value）lnL0；再假设有正向选择（alternative model），计算似然值 lnL1；然后用卡方检验计算 lnL0 与 lnL1 的差异显著性，如果小于 0.05，那么假设是成立的，认为基因经历了正向选择。</p>
+</li>
+</ol>
+<p>上面步骤 3 的 codeml 由于参数比较多，初看上去很费脑。下面先贴上我自己用到的两个 codeml 配置文件。</p>
+<p><strong>Null model:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># cat codeml-branch_site_model_A_null.ctl</span><br><span class="line">      seqfile = all_aligned_codon.paml      * sequence data filename</span><br><span class="line">     treefile = unrooted_tree_5.txt      * tree structure file name</span><br><span class="line">      outfile = legume_genes.branch_site_model_A_null.mcl           * main result file name</span><br><span class="line">      runmode = 0  * 0: user tree;  1: semi-automatic;  2: automatic</span><br><span class="line">                   * 3: StepwiseAddition; (4,5):PerturbationNNI; -2: pairwise</span><br><span class="line">      seqtype = 1  * 1:codons; 2:AAs; 3:codons--&gt;AAs</span><br><span class="line">    CodonFreq = 2  * 0:1/61 each, 1:F1X4, 2:F3X4, 3:codon table</span><br><span class="line">        ndata = 3197 * number of gene alignments to be analysed 注意这里的数字，如果设置有误，最后也会报错</span><br><span class="line">        clock = 0  * 0:no clock, 1:clock; 2:local clock; 3:CombinedAnalysis</span><br><span class="line">        model = 2  * models for codons: 0:one, 1:b, 2:2 or more dN/dS ratios for branches</span><br><span class="line">      NSsites = 2  * 0:one w;1:neutral;2:selection; 3:discrete;4:freqs;</span><br><span class="line">                   * 5:gamma;6:2gamma;7:beta;8:beta&amp;w;9:beta&amp;gamma;</span><br><span class="line">                   * 10:beta&amp;gamma+1; 11:beta&amp;normal&gt;1; 12:0&amp;2normal&gt;1;</span><br><span class="line">                   * 13:3normal&gt;0</span><br><span class="line">        icode = 0  * 0:universal code; 1:mammalian mt; 2-10:see below</span><br><span class="line">    fix_omega = 1  * 1: omega or omega_1 fixed, 0: estimate </span><br><span class="line">        omega = 1  * initial or fixed omega, for codons or codon-based AAs</span><br><span class="line">    cleandata = 0  * remove sites with ambiguity data (1:yes, 0:no)?</span><br><span class="line">* Genetic codes: 0:universal, 1:mammalian mt., 2:yeast mt., 3:mold mt.,</span><br><span class="line">* 4: invertebrate mt., 5: ciliate nuclear, 6: echinoderm mt., </span><br><span class="line">* 7: euplotid mt., 8: alternative yeast nu. 9: ascidian mt., </span><br><span class="line">* 10: blepharisma nu.</span><br><span class="line">* These codes correspond to transl_table 1 to 11 of GENEBANK.</span><br></pre></td></tr></table></figure>
+<p><strong>Alternative model:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#cat codeml-branch_site_model_A.ctl</span><br><span class="line">      seqfile = all_aligned_codon.paml      * sequence data filename</span><br><span class="line">     treefile = unrooted_tree_5.txt      * tree structure file name</span><br><span class="line">      outfile = legume_genes.branch_site_model_A.mcl           * main result file name</span><br><span class="line">      runmode = 0  * 0: user tree;  1: semi-automatic;  2: automatic</span><br><span class="line">                   * 3: StepwiseAddition; (4,5):PerturbationNNI; -2: pairwise</span><br><span class="line">      seqtype = 1  * 1:codons; 2:AAs; 3:codons--&gt;AAs</span><br><span class="line">    CodonFreq = 2  * 0:1/61 each, 1:F1X4, 2:F3X4, 3:codon table</span><br><span class="line">        ndata = 3195 * number of gene alignments to be analysed</span><br><span class="line">        clock = 0  * 0:no clock, 1:clock; 2:local clock; 3:CombinedAnalysis</span><br><span class="line">        model = 2  * models for codons: 0:one, 1:b, 2:2 or more dN/dS ratios for branches</span><br><span class="line">      NSsites = 2  * 0:one w;1:neutral;2:selection; 3:discrete;4:freqs;</span><br><span class="line">                   * 5:gamma;6:2gamma;7:beta;8:beta&amp;w;9:beta&amp;gamma;</span><br><span class="line">                   * 10:beta&amp;gamma+1; 11:beta&amp;normal&gt;1; 12:0&amp;2normal&gt;1;</span><br><span class="line">                   * 13:3normal&gt;0</span><br><span class="line">        icode = 0  * 0:universal code; 1:mammalian mt; 2-10:see below</span><br><span class="line">    fix_omega = 0  * 1: omega or omega_1 fixed, 0: estimate </span><br><span class="line">        omega = 1.5 * initial or fixed omega, for codons or codon-based AAs</span><br><span class="line">    cleandata = 0  * remove sites with ambiguity data (1:yes, 0:no)?</span><br><span class="line">* Genetic codes: 0:universal, 1:mammalian mt., 2:yeast mt., 3:mold mt.,</span><br><span class="line">* 4: invertebrate mt., 5: ciliate nuclear, 6: echinoderm mt., </span><br><span class="line">* 7: euplotid mt., 8: alternative yeast nu. 9: ascidian mt., </span><br><span class="line">* 10: blepharisma nu.</span><br><span class="line">* These codes correspond to transl_table 1 to 11 of GENEBANK.</span><br></pre></td></tr></table></figure>
+<h3 id="记录几个要点"><a class="markdownIt-Anchor" href="#记录几个要点"></a> 记录几个要点</h3>
+<ol>
+<li>
+<p>Null model 的参数是“model=2, NSsites=2, fix_omega=1, omega=1”；而 Alternative model 的参数只需要将上一步的 fix_omega 改成 0，即可以改成“model=2, NSsites=2, fix_omega=0, omega=1.5”。（这个步骤，我参考了几个资料，后面会逐个列出。）</p>
+</li>
+<li>
+<p>model 和 NSsites 是 codeml 程序中最重要的两个参数。在<a target="_blank" rel="noopener" href="https://static-content.springer.com/esm/chp%3A10.1007%2F978-1-4939-1438-8_4/MediaObjects/217442_2_En_4_MOESM1_ESM.pdf">Jeffares et al 示范代码</a>中，作者说“ The two most important options are model and NSsites. The first option tells CODEML whether ω should be allowed to vary among branches in the tree, and the second option tells CODEML whether ω should be allowed to vary among sites.” model 为 0 的时候，认为不同分支具有相同的 ω；NSsites 为 0，认为不同的位点具有相同的 ω。作者示例演示将 model 和 NSsites 均设置为 0，计算 3261 个单拷贝基因分别在 6 个物种的平均 ω 值（estimate average ω values (model M0) for each ortholog），这样就得到 3261 个 ω 值，绘制数值的分布图可知ω值基本都小于1，这是合理的，因为绝大多数基因就处于纯化选择（As discussed in the introduction, most sites in most proteins are under strong purifying selection and usually average ω &lt; 1.）。</p>
+</li>
+<li>
+<p>Chenlianfu 的博客中也提到了正向选择基因鉴定方法，这与上面 Jeffares et al 的方法是一致的。Chenlianfu：“指定分化枝上的正选择基因鉴定方法，经过上一步初步鉴定后，设置 model = 2、NSsites = 2、fix_omega = 0、omega = 2.0 运行codeml命令（branch-site model A）；再设置 model = 2、NSsites = 2、fix_omega = 1、omega = 1 运行 codeml 命令（modified branch-site model A / null model）。进行这两种模型分析时，要求输入的树文件中对目标分化枝进行标注。对这两种模型进行 LRT 分析，计算 2Δl = 2(l1-l0)，注意是前者的似然值减后者（null model）的似然值；再使用自由度为 1 的卡方检验，通过命令“chi2 1 2Δl”计算出的值再除以 2，即得到 p 值。”</p>
+</li>
+<li>
+<p>注意在位点模型时，即 model = 0，此时 NSsites 可以同时设置多个数值，例如 NSsites = 0 1 2 7 8。意义是什么？在我之前的笔记中有“PAML 分析四大模型”章节专门记录。M1a (NSsites=1)与 M2a (NSsites=2)是一对；M7 (NSsites=7) 与 M8 (NSsites=8) 也是一对。Chenlianfu 的<a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=3036">博文</a>中提到 M7 与 M8 参数更宽松，将得到更多结果。这个可以用于初步分析担某基因是否存在正向选择，不限定某个进化枝。</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://doi.org/10.1093%2Fgbe%2Fevx056">Feng et al</a> 研究 3R-MYB 基因家族的进化时，分析了 3R-MYB 的 dS 值（synonymous substitutions per synonymous site，同义替换率，也可记作 Ks），方法为：PAML v. 4.8a (Yang 2007) was used on the nucleotide alignments described in the positive selection test (above) to calculate pairwise synonymous distances (dS, synonymous substitutions per synonymous site) with one ratio model (M0)。M0 指的是 [NSsites=0]，pairwise synonymous distances 指的是 [runmodel=-2]。我用自己的数据做个测试，看看得到结果是怎么样的。注意 M0 的意思是“假设所有位点具有相同的 dN/dS 值”。假设基因突变的速率是一定的，同义突变不会导致氨基酸的变化，那么同源基因之间随着植物漫长的进化将逐渐积累同义突变，因此同义突变率可以反映出两个基因分开的时间。基因家族分析中，假设有数百个基因，可以分别计算 dS 值，然后对 dS 值做分布图，并且还可以对 dS 的分布做正态拟合，看看分布规律，作者原文描述为“Normal distributions were fit to the dS distributions of the six groups.”。</p>
+</li>
+</ol>
+<center>
+<img src="https://i.imgur.com/1ioOGTD.jpeg" width=500 />
+</center>
+<center>
+<img src="https://i.imgur.com/K8fUb0A.jpeg" width=500 />
+</center>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料：</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://static-content.springer.com/esm/chp%3A10.1007%2F978-1-4939-1438-8_4/MediaObjects/217442_2_En_4_MOESM1_ESM.pdf">Jefares et al., “A worked example of estimating ω and testing for adaptive evolution in six parasite species”, filetype: PDF</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=3036">陈连福：指定分化枝上的正选择基因鉴定方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qx411m7Bn">Bilibili：PAML 视频教程 利用 codeml 计算 dN/dS</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/31/Python-IDE-Spyder/" rel="prev" title="Python IDE： Spyder 的安装与使用">
+      <i class="fa fa-chevron-left"></i> Python IDE： Spyder 的安装与使用
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%A6%81%E7%9A%84%E6%B5%81%E7%A8%8B%E4%B9%8B%E5%89%8D%E7%9A%84%E7%AC%94%E8%AE%B0%E5%B7%B2%E7%BB%8F%E7%BA%AA%E5%BD%95%E8%BF%87%E8%BF%99%E9%87%8C%E5%86%8D%E6%80%BB%E7%BB%93%E4%B8%80%E6%AC%A1"><span class="nav-number">1.</span> <span class="nav-text"> 简要的流程（之前的笔记已经纪录过，这里再总结一次。）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%87%A0%E4%B8%AA%E8%A6%81%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text"> 记录几个要点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text"> 参考资料：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

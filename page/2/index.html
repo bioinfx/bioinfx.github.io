@@ -189,6 +189,130 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/31/Bioinfo-MCScanX-genome-synteny-blocks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/31/Bioinfo-MCScanX-genome-synteny-blocks/" class="post-title-link" itemprop="url">Bioinfo | MCScanX genome synteny blocks and 4dtv of paralogous genes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-31 15:32:13" itemprop="dateCreated datePublished" datetime="2022-03-31T15:32:13+08:00">2022-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-02 23:28:56" itemprop="dateModified" datetime="2022-04-02T23:28:56+08:00">2022-04-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>原文记录于 2019-07-05，因 2022-04-01 再次测试，遇到问题，再次编辑记录。</p>
+<p>安装如果遇到下面的问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[fenglei@localhost MCScanX]$ make</span><br><span class="line">g++ struct.cc mcscan.cc read_data.cc out_utils.cc dagchainer.cc msa.cc permutation.cc -o MCScanX</span><br><span class="line">msa.cc: In function ‘void msa_main(const char*)’:</span><br><span class="line">msa.cc:289:22: error: ‘chdir’ was not declared in this scope</span><br><span class="line">if (chdir(html_fn)&lt;0)</span><br><span class="line">^</span><br><span class="line">make: *** [makefile:2: mcscanx] Error 1</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<p>错误的原因是 MCScanX 不支持64位系统, 如果要在 64 位上运行, 需要在<code>msa.h</code>, <code>dissect_multiple_alignment.h</code>, and <code>detect_collinear_tandem_arrays.h</code>第一行加上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br></pre></td></tr></table></figure>
+<p>如果要对两个基因组（以soybean和medicago为例）进行共线性分析，需要收集两个物种的数据编码基因的gff3文件和CDS序列文件，然后进行下面的操作。</p>
+<p>首先利用gff3文件，得到每一个基因的起始和终止坐标信息，注意基因有多个transcripts，只需要保留“xxxx.1”的转录本，不同物种的序列用awk等工具灵活处理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=Name Gmax\_275\_Wm82.a2.v1.gene.gff3.gz -o soybean.bed</span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=Name Mtruncatula\_285\_Mt4.0v1.gene.gff3 -o medicago.bed</span><br><span class="line"></span><br><span class="line">cat soybean.bed  awk &#x27;BEGIN&#123;OFS=&quot;\\t&quot;&#125;&#123;if(length($4) == 17 &amp;&amp; $4 ~ /\\.1$/)&#123;gsub(/\\.1$/,&quot;&quot;,$4);gsub(/Chr/,&quot;gm&quot;,$1); print $1,$4,$2,$3&#125;&#125;&#x27; &gt; soybean\_gff.tab</span><br><span class="line">cat medicago.bed  awk &#x27;BEGIN&#123;OFS=&quot;\\t&quot;&#125;&#123;if(length($4) == 15 &amp;&amp; $4 ~ /\\.1$/)&#123;gsub(/\\.1/,&quot;&quot;,$4);gsub(/chr/,&quot;mt&quot;,$1); print $1,$4,$2,$3&#125;&#125;&#x27; &gt; medicago\_gff.tab</span><br></pre></td></tr></table></figure>
+<p>得到gff格式文件如下。 soybean.gff</p>
+<p><strong>注意</strong> gff 文件中别包含 contigs 和 scaffolds，最好只包含 chromosomes。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gm01 Glyma.01G000100 27354 28320</span><br><span class="line">gm01 Glyma.01G000200 58974 67527</span><br><span class="line">gm01 Glyma.01G000300 67769 69968</span><br><span class="line">gm01 Glyma.01G000400 90151 95947</span><br><span class="line">gm01 Glyma.01G000500 90288 91197</span><br><span class="line">gm01 Glyma.01G000600 116093 127845</span><br><span class="line">gm01 Glyma.01G000700 143466 155573</span><br><span class="line">gm01 Glyma.01G000800 157029 157772</span><br><span class="line">gm01 Glyma.01G000900 170533 193342</span><br><span class="line">gm01 Glyma.01G001000 196255 201895</span><br></pre></td></tr></table></figure>
+<p>medicago.gff</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mt1 Medtr1g004930 688 7332</span><br><span class="line">mt1 Medtr1g004940 6523 7366</span><br><span class="line">mt1 Medtr1g004950 14513 15729</span><br><span class="line">mt1 Medtr1g004960 16282 18382</span><br><span class="line">mt1 Medtr1g006530 28972 29214</span><br><span class="line">mt1 Medtr1g004980 31972 32344</span><br><span class="line">mt1 Medtr1g004990 35909 40554</span><br><span class="line">mt1 Medtr1g006490 44429 46280</span><br><span class="line">mt1 Medtr1g006590 46547 50437</span><br><span class="line">mt1 Medtr1g006600 51360 54977</span><br></pre></td></tr></table></figure>
+<p>随后对 CDS 序列文件进行整理，保留 primary transcripts 的序列。序列名称跟上面 gff 文件里面要一致。并灵活选用工具将 CDS 序列转换成蛋白序列，或者一开始就用蛋白序列也可以。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;&#123;print $1&#125;&#x27; ../jcvi\_190704/Gmax\_275\_Wm82.a2.v1.cds.fa &gt; Gmax\_275\_Wm82.a2.v1.cds.fa\_simplified</span><br><span class="line">awk &#x27;&#123;print $1&#125;&#x27; ../jcvi\_190704/Mtruncatula\_285\_Mt4.0v1.cds.fa &gt; Mtruncatula\_285\_Mt4.0v1.cds.fa\_simplified</span><br><span class="line"></span><br><span class="line">fasta\_formatter -t -i Mtruncatula\_285\_Mt4.0v1.cds.fa\_simplified -o Mtruncatula\_285\_Mt4.0v1.cds.tab</span><br><span class="line">fasta\_formatter -t -i Gmax\_275\_Wm82.a2.v1.cds.fa\_simplified -o Gmax\_275\_Wm82.a2.v1.cds.tab</span><br><span class="line"></span><br><span class="line">cat Gmax\_275\_Wm82.a2.v1.cds.tab  awk &#x27;BEGIN&#123;OFS=&quot;\\t&quot;&#125;&#123;if(length($1) == 17 &amp;&amp; $1 ~ /\\.1$/)&#123;gsub(/\\.1$/,&quot;&quot;,$1); print &quot;\\&gt;&quot;$1&quot;\\n&quot;$2&#125;&#125;&#x27; &gt; soybean\_cds.fa</span><br><span class="line">cat Mtruncatula\_285\_Mt4.0v1.cds.tab  awk &#x27;BEGIN&#123;OFS=&quot;\\t&quot;&#125;&#123;if(length($1) == 15 &amp;&amp; $1 ~ /\\.1$/)&#123;gsub(/\\.1/,&quot;&quot;,$1); print &quot;\\&gt;&quot;$1&quot;\\n&quot;$2&#125;&#125;&#x27; &gt; medicago.cds.fa</span><br><span class="line">iTools Fatools CDS2Pep -InCDS soybean\_cds.fa -OutPut soybean\_pep.fa</span><br><span class="line">iTools Fatools CDS2Pep -InCDS medicago.cds.fa -OutPut medicago.pep.fa</span><br></pre></td></tr></table></figure>
+<p>然后用 blastp 对两个物种的蛋白序列进行比对，并用 MCScanX 命令检测共线性区间。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">makeblastdb -in medicago.pep.fa -dbtype prot -out index/mt -parse\_seqids</span><br><span class="line">## diamond makedb --in medicago.pep.fa --db ./diamond\_index/mt</span><br><span class="line">## diamond blastp --query soybean\_pep.fa --evalue 1e-5 --outfmt 6 --threads 24 --db ./diamond\_index/mt.dmnd --out soybean\_medicago.blast</span><br><span class="line">blastp -query soybean\_pep.fa -db index/mt -out gm\_mt.blast -evalue 1e-5 -num\_threads 24 -outfmt 6 -num\_alignments 5</span><br><span class="line">mkdir mcdata</span><br><span class="line">cp gm\_mt.blast mcdata</span><br><span class="line">cat soybean.gff medicago.gff &gt; mcdata/gm\_mt.gff</span><br><span class="line">MCScanX ./mcdata/gm\_mt</span><br></pre></td></tr></table></figure>
+<p>产生的线性文件（gm_mt.collinearity）如下，可以用于下游画图。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">\[fenglei@localhost gm\_mt\_test\]$ head -n 50 gm\_mt.collinearity </span><br><span class="line">############### Parameters ###############</span><br><span class="line"># MATCH\_SCORE: 50</span><br><span class="line"># MATCH\_SIZE: 5</span><br><span class="line"># GAP\_PENALTY: -1</span><br><span class="line"># OVERLAP\_WINDOW: 5</span><br><span class="line"># E\_VALUE: 1e-05</span><br><span class="line"># MAX GAPS: 25</span><br><span class="line">############### Statistics ###############</span><br><span class="line"># Number of collinear genes: 51572, Percentage: 49.62</span><br><span class="line"># Number of all genes: 103927</span><br><span class="line">##########################################</span><br><span class="line">## Alignment 0: score=1008.0 e\_value=1.4e-69 N=23 gm01&amp;mt1 plus</span><br><span class="line">0- 0: Glyma01G232800 Medtr1g103160 0</span><br><span class="line">0- 1: Glyma01G234900 Medtr1g103450 8e-39</span><br><span class="line">0- 2: Glyma01G235100 Medtr1g103490 0.0001</span><br><span class="line">0- 3: Glyma01G236800 Medtr1g103500 2e-87</span><br><span class="line">0- 4: Glyma01G237000 Medtr1g103550 9e-47</span><br><span class="line">0- 5: Glyma01G237300 Medtr1g103570 2e-45</span><br><span class="line">0- 6: Glyma01G237400 Medtr1g103600 1e-144</span><br><span class="line">0- 7: Glyma01G237900 Medtr1g103690 9e-39</span><br><span class="line">0- 8: Glyma01G238200 Medtr1g103830 0</span><br><span class="line">0- 9: Glyma01G238400 Medtr1g104500 1e-170</span><br><span class="line">0- 10: Glyma01G238500 Medtr1g104520 6e-33</span><br><span class="line">0- 11: Glyma01G238700 Medtr1g104680 0</span><br><span class="line">0- 12: Glyma01G238800 Medtr1g104750 0</span><br><span class="line">0- 13: Glyma01G238900 Medtr1g104800 2e-80</span><br><span class="line">0- 14: Glyma01G239200 Medtr1g104870 0</span><br><span class="line">0- 15: Glyma01G239400 Medtr1g104930 1e-50</span><br><span class="line">0- 16: Glyma01G239800 Medtr1g105075 1e-32</span><br><span class="line">0- 17: Glyma01G239900 Medtr1g105305 5e-101</span><br><span class="line">0- 18: Glyma01G240000 Medtr1g105415 3e-91</span><br><span class="line">0- 19: Glyma01G240500 Medtr1g105555 5e-62</span><br><span class="line">0- 20: Glyma01G240600 Medtr1g105570 6e-06</span><br><span class="line">0- 21: Glyma01G240800 Medtr1g105650 2e-175</span><br><span class="line">0- 22: Glyma01G240900 Medtr1g105655 4e-164</span><br><span class="line">## Alignment 1: score=741.0 e\_value=1e-39 N=16 gm01&amp;mt1 plus</span><br><span class="line">1- 0: Glyma01G084800 Medtr1g093020 0</span><br><span class="line">1- 1: Glyma01G086700 Medtr1g093080 1e-138</span><br><span class="line">1- 2: Glyma01G086800 Medtr1g093095 2e-108</span><br><span class="line">1- 3: Glyma01G087500 Medtr1g093600 5e-175</span><br><span class="line">1- 4: Glyma01G087700 Medtr1g093630 0</span><br><span class="line">1- 5: Glyma01G088000 Medtr1g093650 8e-07</span><br><span class="line">1- 6: Glyma01G088200 Medtr1g093670 9e-115</span><br><span class="line">1- 7: Glyma01G088300 Medtr1g093750 1e-118</span><br><span class="line">1- 8: Glyma01G089100 Medtr1g093770 0</span><br><span class="line">1- 9: Glyma01G089300 Medtr1g093850 0</span><br><span class="line">1- 10: Glyma01G089900 Medtr1g093860 0</span><br><span class="line">1- 11: Glyma01G090200 Medtr1g093900 0</span><br><span class="line">1- 12: Glyma01G090400 Medtr1g093920 9e-22</span><br><span class="line">1- 13: Glyma01G091000 Medtr1g094010 0</span><br></pre></td></tr></table></figure>
+<p>注意画图的配置文件不要出错，双斜杠（//）表示注释，注释号前面用tab符号跟染色体名称分隔，或者干脆去掉注释，我删掉注释才顺利画图，否则报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[fenglei@localhost gm\_mt\_test\]$ cat dot.ctl</span><br><span class="line">2000</span><br><span class="line">2000</span><br><span class="line">gm01,gm02,gm03,gm04,gm05,gm06,gm07,gm08,gm09,gm10,gm11,gm12,gm13,gm14,gm15,gm16,gm17,gm18,gm19,gm20</span><br><span class="line">mt1,mt2,mt3,mt4,mt5,mt6,mt7,mt8</span><br></pre></td></tr></table></figure>
+<p>画图命令。注意 dot_plotter.java 与 dot_plotter .class 要在一个文件夹下面。其他环状图做法也类似。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /PATH_TO_MCScanX/downstream_analyses</span><br><span class="line">DATA_PATH=/xx/my/mcdata  # 根据实际情况</span><br><span class="line">java dot_plotter -g $DATA_PATH/gm_mt.gff -s $DATA_PATH/gm_mt.collinearity -c $DATA_PATH/dot.ctl -o gm_mt.test.png</span><br></pre></td></tr></table></figure>
+<p>画图结果：</p>
+<p><img src="https://genehub.files.wordpress.com/2019/07/gm_mt.test_.png" alt="gm_mt.test" /></p>
+<p>与文献（ Wang Jinpeng et al., 2017, Plant Physiol.）中的图片对比，基本是一样的效果。</p>
+<p><img src="https://genehub.files.wordpress.com/2019/07/mt4_gm.order_.png" alt="mt4_gm.order" /></p>
+<p>这个 MCScanX 共线性图跟更新开发的 jcvi 相比，画质要差一些。下面是 jcvi 的结果。</p>
+<p><img src="https://i.imgur.com/Ly4FSpT.png" alt="jcvi 绘制的基因组共线性图实例" /></p>
+<p>MCScanX 还可以将图画成圆形。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java circle_plotter -g /home/fenglei/projects/genome_synteny_20190704/MCScanX_soybean_medicago_190705/gm_mt_test/MADS-master/MADS.gff -s /home/fenglei/projects/genome_synteny_20190704/MCScanX_soybean_medicago_190705/gm_mt_test/MADS-master/MADS.collinearity -c /home/fenglei/projects/genome_synteny_20190704/MCScanX_soybean_medicago_190705/gm_mt_test/MADS-master/circle.ctl -o MADS.png</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong> circle_plotter 的 dot.ctl 文件与 dot_plotter 的 dot.ctl 文件不一样。</p>
+<p>For circle_plotter , put chromosome IDs in one line in dot.ctl file.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2000</span><br><span class="line">Gm01,Gm02,Gm03,Gs01,Gs02,Gs03</span><br></pre></td></tr></table></figure>
+<p>For dot_plotter, put chromosome IDs in two lines in dot.ctl file</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2000</span><br><span class="line">2000</span><br><span class="line">Gm01,Gm02,Gm03</span><br><span class="line">Gs01,Gs02,Gs03</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat /home/fenglei/projects/genome_synteny_20190704/MCScanX_soybean_medicago_190705/gm_mt_test/MADS-master/circle.ctl</span><br><span class="line">1600    //plot width and height (in pixels)</span><br><span class="line">Chr1,Chr2,Chr3,Chr4,Chr5,Chr6,Chr7,Chr8,Chr9,Chr10,Chr11,Chr12,Chr13,Chr14,Chr15,Chr16,Chr17    //chromosomes in the circle</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/lRwZIhA.png" alt="" /></p>
+<h3 id="mcscanx-与-jcvi-的比较"><a class="markdownIt-Anchor" href="#mcscanx-与-jcvi-的比较"></a> MCScanX 与 jcvi 的比较</h3>
+<p>在基因组进化分析的 paralogous genes 鉴定中，MCScanX 与 jcvi 都可以用，有什么区别？从下面两幅图来看，jcvi 绘制的图片更有观赏性，而且 jcvi 能识别出这是一个物种内部（intra-genomic comparison）的 paralogous genes。</p>
+<p>MCScanX：2019年基于a2v1的基因组数据。一共 1112 synteny blocks，35094 个两两配对。Number of collinear genes: 37190, Percentage: 66.90，Number of all genes: 55589。</p>
+<p><img src="https://i.imgur.com/cAzbMcg.png" alt="MCScanX 分析 soybean 基因组内部的 synteny blocks" /></p>
+<p>jcvi：2021年基于a4v1的基因组数据。一共 472 synteny blocks，18439个两两配对。</p>
+<p><img src="https://i.imgur.com/6P2ig8r.jpeg" alt="jcvi 分析 soybean 基因组内部的 synteny blocks" /></p>
+<p>看来 MCScanX 的结果更全面？以基因 <code>Glyma.01G210400</code> 为例，通过 MCScanX 可以找到另外三个旁系同源基因（paralogous），而通过 jcvi 只找到一个旁系同源基因。难怪在 2021 年的时候测试 4dtv 计算的时候，我发现 MCScanX 的结果更适合做 4dtv 计算，原因是它鉴定的 paralogous 更合理。当然，也有可能是 jcvi 的参数设计原因，我用的默认参数，没有进行额外设置。</p>
+<p>MCScanX：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost mcdata]$ cat soybean.collinearity | grep &#x27;Glyma.01G210400&#x27;</span><br><span class="line"> 28- 43:        Glyma.01G210400 Glyma.05G058100       0</span><br><span class="line"> 71-432:        Glyma.01G210400 Glyma.11G031600   5e-82</span><br><span class="line"> 88-129:        Glyma.01G210400 Glyma.17G140600       0</span><br></pre></td></tr></table></figure>
+<p>jcvi：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost gmo-gmo]$ cat gma.gma.anchors | grep &#x27;Glyma.01G210400&#x27;</span><br><span class="line">Glyma.01G210400.2       Glyma.17G140600.1       1030</span><br></pre></td></tr></table></figure>
+<p><em>END</em></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/09/Peoteomics-Using-MaxQuant-to-analyze-LC-MS-MS-data/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1475,104 +1599,6 @@ LTR_FINDER_parallel: <a target="_blank" rel="noopener" href="https://github.com/
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/" class="post-title-link" itemprop="url">Bioinfo | Gene Ontology - Enrichment Analysis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-06-29 11:14:12 / Modified: 23:44:19" itemprop="dateCreated datePublished" datetime="2021-06-29T11:14:12+08:00">2021-06-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>下面是我做的大豆GO数据库（version Gmax_508_Wm82_a4.v1）构建与富集分析。数据文件在：<a target="_blank" rel="noopener" href="https://github.com/bioinfx/Glycine_max_Gene_Ontology">https://github.com/bioinfx/Glycine_max_Gene_Ontology</a>。</p>
-<p>经过前期数据比对和整理（比如依据 swissprot、blast2GO，或 GOMAP），得到下面“基因——GO号——Ontology 类别——证据”这四列格式的文件 GMA_GO_TERM.txt，就可以在R程序里面用于 GO 数据库的构建。</p>
-<h3 id="数据库源文件准备"><a class="markdownIt-Anchor" href="#数据库源文件准备"></a> 数据库源文件准备</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ zcat GMA_GO_TERM.txt.gz | head</span><br><span class="line">GID     GO      ONTOLOGY        EVIDENCE</span><br><span class="line">Glyma.01G000100 GO:0006412      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009063      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009234      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0016021      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0031969      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0016835      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0030976      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0070204      F       IEA</span><br><span class="line">Glyma.01G000137 GO:0016043      P       IEA</span><br></pre></td></tr></table></figure>
-<h3 id="数据库导入-r"><a class="markdownIt-Anchor" href="#数据库导入-r"></a> 数据库导入 R</h3>
-<p>构建过程如下，调用 makeOrgPackage 函数构建 GO 数据库。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">## Makes an organism package for Glycine max data.frames:</span><br><span class="line"></span><br><span class="line">library(RSQLite)</span><br><span class="line">library(AnnotationForge)</span><br><span class="line"></span><br><span class="line">## Now prepare some data.frames</span><br><span class="line">fGO &lt;- read.table(&quot;../3_final-result/GMA_GO_TERM.txt&quot;, sep=&quot;\t&quot;, head=TRUE)</span><br><span class="line"></span><br><span class="line">## remove duplication in the table</span><br><span class="line">go_df &lt;- fGO[!duplicated(fGO),]</span><br><span class="line"></span><br><span class="line">## only tree coloums are needed: GID, GO, EVIDENCE</span><br><span class="line">go_df &lt;- go_df[,c(1,2,4)]</span><br><span class="line"></span><br><span class="line">## Making Organism packages </span><br><span class="line">makeOrgPackage(go=go_df,</span><br><span class="line">    version = &quot;0.0.1&quot;,</span><br><span class="line">    maintainer = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">    author = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">    outputDir = &quot;./&quot;,</span><br><span class="line">    tax_id = &quot;3847&quot;,</span><br><span class="line">    genus = &quot;Glycine&quot;,</span><br><span class="line">    species = &quot;max&quot;,</span><br><span class="line">    goTable = &quot;go&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">## then you can call install.packages based on the return value</span><br><span class="line">install.packages(&quot;./org.Gmax.eg.db&quot;, repos = NULL, type=&quot;source&quot;)</span><br><span class="line">library(org.Gmax.eg.db)</span><br><span class="line">org &lt;- org.Gmax.eg.db</span><br><span class="line"></span><br><span class="line">## A demo for using the database</span><br><span class="line"># BiocManager::install(&quot;Rgraphviz&quot;)</span><br><span class="line"># BiocManager::install(&quot;topGO&quot;)</span><br><span class="line">library()</span><br><span class="line">geneTable = read.table(&quot;./Gmax_ABA_exp.xls&quot;, head=T)</span><br><span class="line">geneList=geneTable[,5]</span><br><span class="line">geneList=geneList[!duplicated(geneList)]</span><br><span class="line"># Biology process</span><br><span class="line">ego_up &lt;-enrichGO(gene = geneList, OrgDb = org, keyType = &quot;GID&quot;, ont = &quot;BP&quot;)</span><br><span class="line">pdf(&quot;up_GO_BP_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_up, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;up_GO_BP_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;up_GO_BP_tree.pdf&quot;)</span><br><span class="line">plotGOgraph(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_up@result ), file=&quot;up_GO_BP.csv&quot;)</span><br></pre></td></tr></table></figure>
-<h1 id="数据库开启与富集分析"><a class="markdownIt-Anchor" href="#数据库开启与富集分析"></a> 数据库开启与富集分析</h1>
-<p>下面代码示范如何引用上构建的数据库，并且开展 GO 分析：BP、MF 和 CC 三个类别。<br />
-图片可输出为柱状图 barplot 和点状图 dotplot，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">library(org.Gmax.eg.db)</span><br><span class="line">org &lt;- org.Gmax.eg.db</span><br><span class="line"></span><br><span class="line">## A demo for using the database</span><br><span class="line"># BiocManager::install(&quot;Rgraphviz&quot;)</span><br><span class="line"># BiocManager::install(&quot;topGO&quot;)</span><br><span class="line">library(topGO)</span><br><span class="line">library(clusterProfiler)</span><br><span class="line">geneTable = read.table(&quot;./gene_table.txt&quot;, head=T, sep=&quot;\t&quot;)</span><br><span class="line">#geneTable = geneTable[!apply(geneTable == &quot;&quot;, 1, all),]</span><br><span class="line">geneList=geneTable[,5]</span><br><span class="line"></span><br><span class="line">geneList=geneList[!duplicated(geneList)]</span><br><span class="line"># Biology process</span><br><span class="line">b=geneList</span><br><span class="line"></span><br><span class="line"># biological progress</span><br><span class="line">ego_up &lt;-enrichGO(</span><br><span class="line">                  gene = b, </span><br><span class="line">                  OrgDb = org, </span><br><span class="line">                  keyType = &quot;GID&quot;, </span><br><span class="line">                  ont = &quot;BP&quot;</span><br><span class="line">                  )</span><br><span class="line">pdf(&quot;test_GO_BP_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_up, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_BP_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;up_GO_BP_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_up)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_up@result ), file=&quot;test_GO_BP.csv&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># molecular function</span><br><span class="line">ego_down &lt;-enrichGO(</span><br><span class="line">                    gene = b,</span><br><span class="line">                    OrgDb = org,</span><br><span class="line">                    keyType = &quot;GID&quot;,</span><br><span class="line">                    ont = &quot;MF&quot;</span><br><span class="line">                    )</span><br><span class="line">pdf(&quot;test_GO_MF_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_down, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_MF_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_down)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;test_GO_MF_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_down)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_down@result), file=&quot;test_GO_MF.csv&quot;)</span><br><span class="line"></span><br><span class="line"># cellular component</span><br><span class="line">ego_down &lt;-enrichGO(</span><br><span class="line">                    gene = b,</span><br><span class="line">                    OrgDb = org,</span><br><span class="line">                    keyType = &quot;GID&quot;,</span><br><span class="line">                    ont = &quot;CC&quot;</span><br><span class="line">                    )</span><br><span class="line">pdf(&quot;test_GO_CC_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_down, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_CC_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_down)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;test_GO_CC_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_down)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_down@result), file=&quot;test_GO_CC.csv&quot;)</span><br></pre></td></tr></table></figure>
-<p>有时候 GO 项目的名称过长，基于默认作图代码出来的图片会出现文字将图形区域挤压得无法显示。</p>
-<p><img src="https://i.imgur.com/FlARCCO.jpeg" alt="" /></p>
-<p>有两种优化方案，一是将长的文字换行；二是只截取一部分文字显示。</p>
-<h3 id="一过长的文字换行显示"><a class="markdownIt-Anchor" href="#一过长的文字换行显示"></a> 一：过长的文字换行显示，</h3>
-<p>参考资料：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/songbiao/articles/12717670.html">songbiao: GO term name太长的处理</a><br />
-在使用clusterProfiler进行绘制GO dotplot时，会遇到 GO term 的 name 过长，压缩了图形区域的情况。<br />
-因为 clusterProfiler 作图是基于 ggplot2 的，所以这个处理办法也适用于其他 ggplot2 作图遇到此种情况。<br />
-解决文本过长的办法就是，用stringr包的str_wrap来完成文本自动换行。<br />
-效果如下图所示，其实还是不太完美，需要后期手工调整才美观。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)  # 需要开启 ggplot2 才可以使用 scale_y_discrete 函数</span><br><span class="line">library(stringr)</span><br><span class="line">dotplot(mf, showCategory=30) + scale_y_discrete(labels=function(mf) str_wrap(mf, width=40))</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/JRkomgm.jpeg" alt="" /></p>
-<h3 id="二只截取一部分文字显示"><a class="markdownIt-Anchor" href="#二只截取一部分文字显示"></a> 二：只截取一部分文字显示</h3>
-<p>参考资料：<a target="_blank" rel="noopener" href="https://r.bio-spring.info/2018/11/26/enrichplot-fancy-label/">在enrichplot中使用更好的Label</a><br />
-该方法是定义一个截取短 label 的函数, 将其传递给 scale_y_discrete() 即可. 在输出 ggplot 对象时做修改。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#&#x27; Truncate string vector of ggplot axis label</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @param label    a ordered string vector</span><br><span class="line">#&#x27; @param maxLen   max length of character (nchar) to show in label</span><br><span class="line">#&#x27; @param maxWord  max count of words allowed to show in label</span><br><span class="line">#&#x27; @param pattern  Word separater</span><br><span class="line">#&#x27; @param dot      If true, three dots will added to truncated label</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @return a vector of truncated strings</span><br><span class="line">#&#x27; @export</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @examples</span><br><span class="line"># 默认最多显示 50 个字符, 5 个单词.</span><br><span class="line">short_label &lt;- function(label, maxLen = 50, maxWord = 5, pattern = &quot; &quot;, dot = TRUE)&#123;</span><br><span class="line">  l &lt;- strsplit(label, pattern)</span><br><span class="line">  short_label &lt;- vector(&quot;character&quot;,length(l))</span><br><span class="line">  </span><br><span class="line">  for (i in seq_along(l))&#123;</span><br><span class="line">    truncated &lt;- FALSE</span><br><span class="line">    s &lt;- l[[i]]</span><br><span class="line">    if (length(s) &gt; maxWord)&#123;</span><br><span class="line">      ll &lt;- paste(s[1:maxWord], collapse = &quot; &quot;)</span><br><span class="line">      truncated &lt;- TRUE</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">      ll &lt;- paste(s, collapse = &quot; &quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (nchar(ll) &gt; maxLen)&#123;</span><br><span class="line">      ll &lt;- substr(ll, 1, maxLen)</span><br><span class="line">      truncated &lt;- TRUE</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (dot &amp; truncated) ll &lt;- paste(ll, &quot;...&quot;,sep = &quot; &quot;)</span><br><span class="line">    </span><br><span class="line">    short_label[[i]] &lt;- ll</span><br><span class="line">  &#125;</span><br><span class="line">  attr(short_label, &quot;pos&quot;) &lt;- attr(label,&quot;pos&quot;)</span><br><span class="line">  return(short_label)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>画图代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">dotplot(mf) + scale_y_discrete(label=short_label)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/pALA2H9.jpeg" alt="" /></p>
-<p>注意上面的图，其实很多项目都是高度近似的，怎么优化？对于模式物种而言，CytoScape的插件ClueGO有一个选项可以实现，就是设置Ontology的级别。因为Ontology的结构就是树状，从根部到.</p>
-<p>构建GO数据库的过程中，如果成功会输出下面的信息。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&gt; head(go_df)</span><br><span class="line">           GID         GO EVIDENCE</span><br><span class="line">1 Chr01.g00016 GO:0003676      IEA</span><br><span class="line">2 Chr01.g00016 GO:0003964      IEA</span><br><span class="line">3 Chr01.g00016 GO:0004190      IEA</span><br><span class="line">4 Chr01.g00016 GO:0004519      IEA</span><br><span class="line">5 Chr01.g00016 GO:0006310      IEA</span><br><span class="line">6 Chr01.g00016 GO:0015074      IEA</span><br><span class="line">&gt; makeOrgPackage(go=go_df,</span><br><span class="line">+                version = &quot;0.0.1&quot;,</span><br><span class="line">+                maintainer = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">+                author = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">+                outputDir = &quot;.&quot;,</span><br><span class="line">+                tax_id = &quot;126911&quot;,</span><br><span class="line">+                genus = &quot;Ammopiptanthus&quot;,</span><br><span class="line">+                species = &quot;mongolicus&quot;,</span><br><span class="line">+                goTable = &quot;go&quot;</span><br><span class="line">+ )</span><br><span class="line">Populating genes table:</span><br><span class="line">genes table filled</span><br><span class="line">Populating go table:</span><br><span class="line">go table filled</span><br><span class="line">table metadata filled</span><br><span class="line">&#x27;select()&#x27; returned many:1 mapping between keys and columns</span><br><span class="line">Dropping GO IDs that are too new for the current GO.db</span><br><span class="line">Populating go table:</span><br><span class="line">go table filled</span><br><span class="line">Populating go_bp table:</span><br><span class="line">go_bp table filled</span><br><span class="line">Populating go_cc table:</span><br><span class="line">go_cc table filled</span><br><span class="line">Populating go_mf table:</span><br><span class="line">go_mf table filled</span><br><span class="line">&#x27;select()&#x27; returned many:1 mapping between keys and columns</span><br><span class="line">Populating go_bp_all table:</span><br><span class="line">go_bp_all table filled</span><br><span class="line">Populating go_cc_all table:</span><br><span class="line">go_cc_all table filled</span><br><span class="line">Populating go_mf_all table:</span><br><span class="line">go_mf_all table filled</span><br><span class="line">Populating go_all table:</span><br><span class="line">go_all table filled</span><br><span class="line">Creating package in ./org.Amongolicus.eg.db </span><br><span class="line">Now deleting temporary database file</span><br><span class="line">[1] &quot;./org.Amongolicus.eg.db&quot;</span><br><span class="line">There were 50 or more warnings (use warnings() to see the first 50)</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1644,14 +1670,14 @@ LTR_FINDER_parallel: <a target="_blank" rel="noopener" href="https://github.com/
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

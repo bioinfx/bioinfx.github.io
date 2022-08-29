@@ -189,6 +189,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/16/Bioinfo-understanding-sequence-identity/" class="post-title-link" itemprop="url">Bioinfo | 怎么理解序列一致性（Sequence identity）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-16 12:06:40" itemprop="dateCreated datePublished" datetime="2021-03-16T12:06:40+08:00">2021-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-18 09:38:48" itemprop="dateModified" datetime="2021-03-18T09:38:48+08:00">2021-03-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 <a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">Heng Li’s blog</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGC</span><br><span class="line">CCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
+<p>经典的方法是先对两个序列做比对，并且设置打分规则：匹配 match=1，错配 mismatch=-2，缺失 gapOpen=-2，缺失延伸 gapExt=-1。依据这个打分规则，上述两条序列的最佳比对结果如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  1 CCAGTGTGGCCGATaCCCcagGTtgGC-ACGCATCGTTGCCTTGGTAAGC 49</span><br><span class="line">         |||||||||||||| |||   ||  || ||||||||||||||||||||||</span><br><span class="line">Qry+:  1 CCAGTGTGGCCGATgCCC---GT--GCtACGCATCGTTGCCTTGGTAAGC 45</span><br></pre></td></tr></table></figure>
+<p>Here we have 43 matching bases, 1 mismatch, 5 deletions and 1 insertion to the first/Ref sequence. The <a target="_blank" rel="noopener" href="https://www.drive5.com/usearch/manual/cigar.html">CIGAR</a> is 18M3D2M2D2M1I22M. CIGAR 的定义： Concise Idiosyncratic Gapped Alignment Report，上面的CIGAR值可翻译为：18 matches，3 deletions，2 matches，2 matches，1 deletions，22 mathces。</p>
+<h3 id="不考虑-gap-的序列一致性"><a class="markdownIt-Anchor" href="#不考虑-gap-的序列一致性"></a> 不考虑 Gap 的“序列一致性”</h3>
+<p>如果不考虑 Gap，则只考虑匹配 Match 和错配 Mismatch。序列一致性等于 “#matches / (#matches + #mismatches)” = 43/(43+1) = 97.7%。这里的序列一致性并没有考虑 Gap，有一定局限性，早期基因组相关报道中提到的“大猩猩基因组与人类基因组的相似程度为98%”应该就是这种情况。摘抄：An obvious problem with this definition is that it doesn’t count gaps. However, it is an often used definition. We may hear that the chimpanzee and human genome differ by a couple of percent. Here we are referring to such gap-excluded identity. The exact sentence in the first chimpanzee genome paper is “Single-nucleotide substitutions occur at a mean rate of 1.23% between copies of the human and chimpanzee genome”.</p>
+<h3 id="考虑-gap-的序列一致性以-blast-为例"><a class="markdownIt-Anchor" href="#考虑-gap-的序列一致性以-blast-为例"></a> 考虑 Gap 的“序列一致性”（以 BLAST 为例）</h3>
+<p>BLAST 中对序列一致性的算法是最常见的算法，序列一致性等于匹配数 43（matchings bases）除以比对区间总长度 50，得到 86%。需要指出，虽然 Ref 序列的长度是 49，但是总比对长度却是 50（就是要多加 1 个插入碱基的长度）。局限在于，虽然考虑的 Gap 的存在，但是没有考虑 Gap 是否连续。一个连续的 Gap，与若干个分散的 Gap，如果总长度一样，计算得到的序列一致性也一样，这种计算方法就有不够科学的地方。原作者举例，如果一个 query 序列长度为 1000bp，比对到参考序列上面发现中间有连续 300bp 是 insertion 导致的 Gap，这个情况下序列一致性为 (1000-300)/1000 = 70%，这个结果会被过滤掉，而在进化（evolution）的过程中，这个连续的 300bp 可能只是一次序列插入事件，而非 300 次独立的单碱基插入事件。BLAST identity is defined as the number of matching bases over the number of alignment columns. In this example, there are 50 columns, so the identity is 43/50=86%. In a SAM file, the number of columns can be calculated by summing over the lengths of M/I/D CIGAR operators. The number of matching bases equals the column length minus the NM tag. Here is a Perl one-liner to calculate BLAST identity:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $l=0; $l+=$1 while/(\d+)[MID]/g; print(($l-$n)/$l,&quot;\n&quot;)&#125;&#x27;</span><br><span class="line"># Where variable $n is the sum of mismatches and gaps and $l is the alignment length. </span><br><span class="line">#In the PAF format, column 10 divived by column 11 gives the BLAST identity.</span><br></pre></td></tr></table></figure>
+<p>核酸序列比对程序 BLASTN 可以输出 SAM 格式结果，如下所示。上面的 Perl 命令行即可以读取包含“NM:i:[\d+]”的行，NM即$1=17；识别M、I、D 字符对应的数字，相同字母对应的数值分别累加，累加之后分别为 match，M=551；insertion，I=5；deletion，D=9。那么序列一致性等于 (M+I+D-NM)/(M+I+D)=(565-17)/565=97%。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@HD     VN:1.2  SO:coordinate   GO:reference</span><br><span class="line">@SQ     SN:Query_1      LN:916</span><br><span class="line">@PG     ID:0    VN:2.9.0+       CL:blastn -db /home/fenglei/database/Glycine_max/Gmax_275_Wm82_a2.v1/index/genome.fa -query GNAT_mutate.fa -out GNAT_mutate.fa-BLASTN-Wm82-275.m17 -outfmt 17 -window_size 10 -word_size 10     PN:blastn</span><br><span class="line">Chr02   0       Query_1 1       255     2929886H24M3D83M3D83M3D83M3D291M3I13M2I57M45646980H     *       0       0       *       *       AS:i:591        EV:f:0  NM:i:17 PI:f:100.00     BS:f:1092.49</span><br></pre></td></tr></table></figure>
+<h3 id="压缩-gap-的序列一致性以-minimap2-为例"><a class="markdownIt-Anchor" href="#压缩-gap-的序列一致性以-minimap2-为例"></a> 压缩 Gap 的“序列一致性”（以 minimap2 为例）</h3>
+<p>上文提到，连续若干个碱基的 Gap 可能是进化过程中单次插入导致的，那么可以通过压缩 Gap 将上述序列比对转化成下面的情形。Gap 的数目没有变化，但是长度全部变为 1，这样总长度也发生了变化。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  CCAGTGTGGCCGATaCCCcGTtGCTACGCATC-TTGCCTTGGTAAGC</span><br><span class="line">       |||||||||||||| ||| || |||||||||| ||||||||||||||</span><br><span class="line">Qry+:  CCAGTGTGGCCGATgCCC-GT-GCTACGCATCgTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
+<p>Gap 压缩之后的序列一致性为 43/(50-2-1)=91.5%。对于比对软件 minimap2，即是采用这种算法。下面是Perl 命令计算一致性数值的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $m=$g=$o=0; $m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; print(1-($n-$g+$o)/($m+$o),&quot;\n&quot;)&#125;&#x27;</span><br><span class="line">#where $m is the sum of M operations, $g the sum of I and D operations and $o the number of gap opens.</span><br></pre></td></tr></table></figure>
+<p>参考资料</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">On the definition of sequence identity</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9539f44ecf61">怎样定义 sequences 比对的相似度</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55324279">知乎专栏：序列一致性</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/Bioinfo-Extracting-sequence-by-names/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1097,137 +1193,6 @@ find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/01/Linux-Using-Nginx-to-host-Hexo-blog-in-PC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/01/Linux-Using-Nginx-to-host-Hexo-blog-in-PC/" class="post-title-link" itemprop="url">在Linux服务器上使用Nginx部署Hexo站点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-01 14:14:56" itemprop="dateCreated datePublished" datetime="2021-01-01T14:14:56+08:00">2021-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-15 10:21:28" itemprop="dateModified" datetime="2022-07-15T10:21:28+08:00">2022-07-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之前，我在内网的 Linux 计算机上通过使用 Nginx（web服务器），然后安装了 JBrowse 基因组浏览器，从而可以使基因组数据以 web 页面形式展示出来。通过内网其他电脑的浏览器访问 Linux 计算机的 IP 地址即可浏览基因组数据。由于没有设置外网IP，外网是不能访问的。</p>
-<p>后来，由于尝试个人博客，我在 github 网站上通过 hexo（一种博客框架）搭建了自己的博客。这个博客可以在互联网访问，但是由于托管在 GitHub 仓库，所以有空间限制，不能上传太多大文件到仓库的。</p>
-<p>最近买了一个虚拟主机（VPS），其实就是一个具有公网 IP 的 Linux 服务器。理论上，这台虚拟主机也可以用来自建一个 web 服务器，并建立个人博客或网站。下面是实践过程。</p>
-<h3 id="一-在虚拟主机上安装-nginx-web服务器"><a class="markdownIt-Anchor" href="#一-在虚拟主机上安装-nginx-web服务器"></a> 一、在虚拟主机上安装 Nginx （web服务器）</h3>
-<p>虚拟主机是在 vultr 购买的。基本配置是 CPU: 1 vCore；RAM: 1024 MB； Storage: 25 GB SSD；Bandwidth: 0.26 GB of 1000 GB；OS: CentOS SELinux 8 x64。</p>
-<p><strong>Nginx安装</strong></p>
-<p>以root用户登陆服务器，新建目录<code>/usr/local/nginx</code>。</p>
-<p>Nginx 安装包下载地址：<a target="_blank" rel="noopener" href="http://nginx.org/download/">http://nginx.org/download/</a>，我选了 <a target="_blank" rel="noopener" href="http://nginx.org/download/nginx-1.19.6.tar.gz">nginx-1.19.6.tar.gz</a>。</p>
-<p>安装步骤如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx</span><br><span class="line">wget http://nginx.org/download/nginx-1.19.6.tar.gz</span><br><span class="line">tar -zxvf nginx-1.19.6.tar.gz</span><br><span class="line">cd nginx-1.19.6</span><br><span class="line">./configure --user=fenglei --group=fenglei --prefix=/usr/local/nginx/</span><br><span class="line"># 或者 ./configure --prefix=/usr/local/nginx/</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>备注：由于是新购买的主机，很多依赖软件没有安装，上面 <code>configure</code> 和 <code>make</code> 的过程中遇到系统报错信息，安装对应的编译工具就可以了。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc</span><br><span class="line">yum -y install gcc-c++</span><br><span class="line">yum -y install openssl openssl-devel</span><br><span class="line">yum -y install pcre-devel</span><br><span class="line">#useradd fenglei</span><br><span class="line">yum -y install automake autoconf libtool make</span><br></pre></td></tr></table></figure>
-<p><strong>Nginx启动、关闭、重启</strong></p>
-<p>执行下方的 <code>nginx -s reload</code> 命令，即启动 Nginx web 服务器，理论上就可以在任何位置访问到这个 nginx 的初始网页，比如在其他 PC 或手机浏览器输入 <a href="http://123.456.78.89:80">http://123.456.78.89:80</a>，会看到一个如下图所示的静态网页。Nginx 配置文件中默认端口号是 80，如果 80 端口被其他应用占用，就需要更改 nginx 端口号。</p>
-<p>更改端口号或者其他相关的配置需要修改 nginx 的配置文件：<code>/usr/local/nginx/conf/nginx.conf</code>，root 权限下 vim 这个配置文件，在 http 内容里面加入下面的文字。端口号可以自己设置，比如 8080、8082 等。location 字样则表示指向主页文件，比如我之前的 JBrowse 浏览器就设定为<code>/var/www/html/jbrowse/index.html</code>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 停止运行 nginx </span><br><span class="line">/usr/local/nginx/sbin/nginx -s stop  </span><br><span class="line"></span><br><span class="line"># 重启（reload）如果报错，就要先输入下面的命令`</span><br><span class="line">/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf  </span><br><span class="line"></span><br><span class="line"># 重启 nginx</span><br><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
-<p><img src="https://genehub.files.wordpress.com/2020/10/nginx-default-page.jpg?w=834" alt="nginx初始页面示例" /></p>
-<h3 id="二-安装-nodejs"><a class="markdownIt-Anchor" href="#二-安装-nodejs"></a> 二、安装 Node.js</h3>
-<p>Node.js 是什么？<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/33578075/answer/122448279">某网站</a>的解释是：Node.js 是一项服务器技术。我们都知道客户端提出服务请求，而服务器端负责处理请求并提供服务。而对于互联网来说，在Node.js 之前 JavaScript 是一项完全的客户端技术，被用于浏览器中实现各种动画，对 DOM 的操作等等。而后端，即服务端则是由 PHP、Python、Ruby、Java 等等语言来实现。Node.js 的出现，使得前后端使用同一种语言，统一模型的梦想得以实现。</p>
-<p>npm 是随同 Node.js 一起安装的包管理工具，能解决 Node.js 代码部署上的很多问题，常见的使用场景有以下几种：允许用户从NPM服务器下载别人编写的第三方包到本地使用；允许用户从NPM服务器下载并安装别人编写的命令行程序到本地使用；允许用户将自己编写的包或命令行程序上传到NPM服务器供别人使用。</p>
-<p>Node.js 软件包下载 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz">https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz</a></p>
-<p>按照下方命令行下载之，直接解压，没有编译步骤。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/local/app</span><br><span class="line">cd /usr/local/app</span><br><span class="line">https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz</span><br><span class="line">tar -xvJf node-v8.11.1-linux-x64.tar.xz</span><br></pre></td></tr></table></figure>
-<p>解压目录里面会包含bin目录（node，npm，npx 三个程序），将 bin 目录路径加入环境变量（.bashrc）。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/app/node-v12.18.4-linux-x64/bin:$PATH</span><br><span class="line"># source ~/.bashrc 之后即可测试 node -h 与 npm -h，均可以运行。</span><br></pre></td></tr></table></figure>
-<p>测试安装是否成功。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node --version</span><br><span class="line">npm --version</span><br></pre></td></tr></table></figure>
-<h3 id="三-安装-hexo-博客框架"><a class="markdownIt-Anchor" href="#三-安装-hexo-博客框架"></a> 三、安装 Hexo （博客框架）</h3>
-<p>在虚拟机上直接用 npm 安装 hexo。（什么情况下需要：sudo yum install git-core）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line">hexo --version  # 测试是否安装成功</span><br></pre></td></tr></table></figure>
-<p>新建hexo项目</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd  /usr/local/app # 设置新建web项目所在路径</span><br><span class="line">hexo init hexo     # 初始化新建一个项目名称，随便起名 hexo init myname 都可以</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>通过 <code>Hexo g</code> 命令生成的静态站点，Hexo 站点目录中将出现一个 public 文件夹。如下方代码块所示。将新生成的静态站点（也就是 public/ 目录），拷贝至 nginx 目录下的 html 文件夹中。然后修改Nginx配置文件 nginx.conf，只修改 root 字段为 public 目录，其他地方都不变（参考下面的代码块所示例），然后重新加载 nginx，执行 <code>nginx -s reload</code>，重新访问 <a href="http://123.456.78.89:8000">http://123.456.78.89:8000</a>，就可以看到 Hexo 静态站点了。这里要注意浏览器缓存的问题，另外应该也可以不用将 public 拷贝到 <code>/usr/local/nginx/html/</code>，直接将 location 定义成绝对路径（/usr/local/app/hexo/public/）可能也能访问。</p>
-<p>执行 <code>tree -l 1 /usr/local/app/hexo</code> 可见到其目录下包含的文件列表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/app/hexo/</span><br><span class="line">├── _config.landscape.yml</span><br><span class="line">├── _config.yml</span><br><span class="line">├── db.json</span><br><span class="line">├── node_modules</span><br><span class="line">├── package.json</span><br><span class="line">├── package-lock.json</span><br><span class="line">├── public</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
-<p><code>/usr/local/nginx/conf/nginx.conf</code> 配置文件中的部分内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       8000;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #charset koi8-r;</span><br><span class="line"></span><br><span class="line">    #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   html/public;</span><br><span class="line">        index  index.html;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>至此就可以看到 Hexo 的静态站点了。就是下图所示的界面。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/5997a40576f3beca7bbbd86fe79a795e9d520d8e/87f88/themes/screenshots/landscape.png" alt="Hexo 初始页面示意图" /></p>
-<p>Hexo 提供 <code>hexo s</code> 命令来实时查看页面，如果在服务器端启动 <code>hexo s</code>，在浏览器中同样也可以通过服务器 IP 来访问站点，并且能实时显示当前状态。但是，<code>hexo s</code> 效率低，只适合在线调试，不适合作为站点访问。更新的时候，需要使用 <code>hexo g</code> 命令重新生成站点，然后将更新后的 public 目录拷贝到 nginx 目录中 html 文件夹下即可。</p>
-<h3 id="四-更改网站主题"><a class="markdownIt-Anchor" href="#四-更改网站主题"></a> 四、更改网站主题</h3>
-<p>Hexo 有大量个性化主题，我在 GitHub 博客用的 ，因为简洁轻便，所以在访问博客的时候加载快速，又因为它自动适应不同设备，在电脑、Pad 或手机访问均能良好展示，我非常中意。这次测试 Academia 主题，是一个学术主题，例如展示实验室课题组，或者研究人员个人主页。该主题网址：<a target="_blank" rel="noopener" href="https://phosphorw.github.io/">https://phosphorw.github.io/</a></p>
-<p>The simplest way to install is to clone the entire repository:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/PhosphorW/hexo-theme-academia.git themes/Academia</span><br></pre></td></tr></table></figure>
-<p>Some required renderers:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug hexo-renderer-stylus</span><br></pre></td></tr></table></figure>
-<p>Set theme in hexo work folder’s _config.yml</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: Academia</span><br></pre></td></tr></table></figure>
-<p>以上就是安装 Academia 主题的最基本操作，设置 hexo 的 _config.yml 之后，执行 <code>hexo</code> 更新 public 文件夹，再将 public/ 拷贝到 Nginx 安装目录的 html 下面。就可以看到新主题了（类似下图），内容区域还是个空白的，需要参考 Academia 的说明书进行添加页面。</p>
-<p><img src="https://raw.githubusercontent.com/PhosphorW/phower-img-folder/master/hexo-theme-academia_mockup.jpg" alt="Academia 示意图" /></p>
-<h3 id="五-参考资料"><a class="markdownIt-Anchor" href="#五-参考资料"></a> 五、参考资料</h3>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://bioinfx.github.io/2020/10/03/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8-jbrowse-%E5%AE%89%E8%A3%85%EF%BC%88%E5%9F%BA%E4%BA%8E-nginx-%E7%9A%84-web-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89/">基因组浏览器 JBrowse 安装（基于 Nginx 的 Web 服务器）</a></li>
-<li><a target="_blank" rel="noopener" href="https://genehub.wordpress.com/2020/12/07/%e4%bd%bf%e7%94%a8-github-hexo-%e5%bb%ba%e7%ab%8b%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2/">使用 GitHub + Hexo 建立个人博客</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/31eb5c754c01">使用Nginx部署Hexo站点</a></li>
-<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009723457">使用Nginx+Hexo光速搭建博客并实现服务器自动部署</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/t8116189520/article/details/81909574">LINUX安装nginx详细步骤</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1299,7 +1264,7 @@ find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">176</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在转录组或蛋白组实验中，如果涉及到以时间为序的多组样品，基因的表达谱会随时间变化，依据算法将相似表达模式的基因聚类，则称之为时间序列分析（Time Series Clustering, or Time Course Clustering）。对于转录组数据的分析，最常见的手段是差异基因表达（Differentially expressed genes），一般设定 fold change 阈值为 1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | 时间序列分析">
+<meta property="og:url" content="http://example.com/2022/08/29/Time-Series-Clustering/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="在转录组或蛋白组实验中，如果涉及到以时间为序的多组样品，基因的表达谱会随时间变化，依据算法将相似表达模式的基因聚类，则称之为时间序列分析（Time Series Clustering, or Time Course Clustering）。对于转录组数据的分析，最常见的手段是差异基因表达（Differentially expressed genes），一般设定 fold change 阈值为 1.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/R8Sd89M.jpeg">
+<meta property="og:image" content="https://i.imgur.com/6B8UxIQ.jpeg">
+<meta property="og:image" content="https://i.imgur.com/gU6Nhi5.png">
+<meta property="og:image" content="https://i.imgur.com/KcBEshg.png">
+<meta property="og:image" content="https://i.imgur.com/FpLfDfh.png">
+<meta property="og:image" content="https://i.imgur.com/VuEOnuQ.png">
+<meta property="og:image" content="https://i.imgur.com/76tALVo.png">
+<meta property="og:image" content="https://i.imgur.com/V5azlwI.png">
+<meta property="og:image" content="https://i.imgur.com/VuEOnuQ.png">
+<meta property="og:image" content="https://i.imgur.com/6M74QGg.jpeg">
+<meta property="article:published_time" content="2022-08-29T04:10:07.000Z">
+<meta property="article:modified_time" content="2022-08-29T04:46:21.008Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/R8Sd89M.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/08/29/Time-Series-Clustering/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | 时间序列分析 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/29/Time-Series-Clustering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | 时间序列分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-08-29 12:10:07 / Modified: 12:46:21" itemprop="dateCreated datePublished" datetime="2022-08-29T12:10:07+08:00">2022-08-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinfo/" itemprop="url" rel="index"><span itemprop="name">Bioinfo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在转录组或蛋白组实验中，如果涉及到以时间为序的多组样品，基因的表达谱会随时间变化，依据算法将相似表达模式的基因聚类，则称之为时间序列分析（Time Series Clustering, or Time Course Clustering）。对于转录组数据的分析，最常见的手段是差异基因表达（Differentially expressed genes），一般设定 fold change 阈值为 1.5 或者 2，P value 阈值为 0.05，这种筛选方法并不是适用所有实验设计，比如在某个处理下，植物基因缓慢提高，呈现 1, 1.1, 1.3, 1.5, 1.8 这样的趋势，这种情况下时间序列分析可以找出这些基因。</p>
+<span id="more"></span>
+<h3 id="从一篇文章案例谈起"><a class="markdownIt-Anchor" href="#从一篇文章案例谈起"></a> 从一篇文章案例谈起</h3>
+<p>下面这张图来自 2014 年发表在 Nature Biotechnology 杂志的一篇文章《<a target="_blank" rel="noopener" href="https://www.nature.com/articles/nbt.3019">Comparative analyses of C<sub>4</sub> and C<sub>3</sub> photosynthesis in developing leaves of maize and rice</a>》。作者将玉米与水稻的叶片分成若干段，并分别做转录组测序，针对叶片分段开展聚类分析，将类别定义为 K。设定 K 为 50，并采用 K-means 算法进行聚类，再计算各个类别之间的相关系数，如果两个类的相关系数大于 0.9 则合并之，最终得到 30 个 clusters，如下图一；对每个 clusters 进行功能富集分析，发现其中四个包含作者感兴趣的光合作用，如图二。（原文：<a target="_blank" rel="noopener" href="https://www.nature.com/articles/nbt.3019#Sec11"><strong>Co-clustering the fitted maize and rice gene expressions</strong></a> After establishing the unified gradients, U and V, we fit the expression patterns, , and using gene expressions Xg and Yh for each gene μ of maize and each gene h of rice, respectively. Before clustering, genes with no clearly defined expression patterns were removed because these genes are of much less interest in the scope of our study due to low expression and/or their noisy nature. Genes whose correlations between observed patterns and fitted ones are &gt;0.6 are kept in the cluster analysis. To obtain data vectors to cluster the expression patterns of all selected maize and rice genes, we took N = 15 points on the fitted expression profiles for each gene. These points correspond to the same N equally spaced gradients. Hence, only the region shared between maize and rice observed profiles is used for cluster analysis. A hybrid hierarchical clustering algorithm was used for the cluster analysis. First we performed K-means clustering based on Pearson correlation with K = 50 (Supplementary Fig. 11). We then merged two clusters with highest correlation based on average linkage at a time. We stopped the merging when none of any two different clusters had an average correlation above 0.9. We obtained K = 30 clusters for the final result (Supplementary Fig. 3).）</p>
+<center>
+<img src="https://i.imgur.com/R8Sd89M.jpeg" width=600 />
+</center>
+<center>
+<img src="https://i.imgur.com/6B8UxIQ.jpeg" width=600 />
+</center>
+<h3 id="常用时间序列分析工具"><a class="markdownIt-Anchor" href="#常用时间序列分析工具"></a> 常用时间序列分析工具</h3>
+<p>上面的文章案例中对时间序列分析采用的是 K-means 聚类算法（hard clustering），但是我看后来其他文献中用 Fuzzy C-means 聚类算法（soft clustering）的比较多。目前最常见的软件是 Mfuzz（2007年至2022年被引用次数：677），另外 TCseq 也同样可用（2019年至2022年被引用次数：33），这两个软件都有 R 包，比较持续的更新以及相应的 demo，使用还是比较方便的。</p>
+<p>Mfuzz 要求的输入文件是 RPKM 这样的基因表达值，对于转录组测序常见的生物学重复，需要自己先计算平均值，做成下文的 Mfuzz 输入文件。TCseq 要求的输入文件是基因的 read counts，样品分组信息，以及基因的 start &amp; end 信息，该程序包会自动进行基因表达值的计算。</p>
+<h3 id="mfuzz-操作示范"><a class="markdownIt-Anchor" href="#mfuzz-操作示范"></a> Mfuzz 操作示范</h3>
+<p>对于 Mfuzz 软件的操作，已有博主做了很好的中文总结，比如《<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1845577">小明的数据分析——使用 R 语言的 Mfuzz 包进行基因表达的时间趋势分析并划分聚类群</a>》</p>
+<p><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S2211124717317953?via%3Dihub">Gao et al. (2017)</a> 基于蛋白质谱的方法，研究了小鼠胚胎着床前发育过程中的蛋白质组。共涉及了 6 个发育阶段，受精卵（Zygote）、二分胚（2-cell）、四分胚（4-cell）、八分胚（8-cell）、桑葚胚（Morula）和囊胚（Blastocyst）。为了将蛋白质功能与胚胎发育相结合，作者首先表征了蛋白质丰度与胚胎发育阶段的时间关系，根据所有蛋白质在每个阶段的丰度信息，通过 Mfuzz 包对这些蛋白质执行了时间序列的聚类。最终获得了 10 组聚类群（即 10 组蛋白群），代表了胚胎蛋白质的 10 种动力学模式，并在随后对这 10 组蛋白群的丰度变化与其功能展开了更细致的讨论（如基因集富集分析，蛋白网络分析等）。所示的蛋白质表达矩阵文件内容如下，第一列为蛋白质名称，随后几列依次为这些蛋白质在小鼠受精卵（Zygote）、二分胚（2-cell）、四分胚（4-cell）、八分胚（8-cell）、桑葚胚（Morula）和囊胚（Blastocyst）时期的相对丰度数值。Gao et al. (2017) 的蛋白质表达矩阵表格可以在原文献的补充材料 <a target="_blank" rel="noopener" href="https://www.cell.com/cms/10.1016/j.celrep.2017.11.111/attachment/bc1eedf3-89d1-473f-9b66-b44a17994029/mmc2.xlsx">Table S1</a> 中自行下载（Excel表格中，Sheet名称为“union_all_protein_exp_cluster”）。</p>
+<center>
+<img src="https://i.imgur.com/gU6Nhi5.png" width=600 />
+</center>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#使用 Bioconductor 安装 Mfuzz 包</span><br><span class="line">#install.packages(&#x27;BiocManager&#x27;)</span><br><span class="line">#BiocManager::install(&#x27;Mfuzz&#x27;)</span><br><span class="line"> </span><br><span class="line">#加载 Mfuzz 包</span><br><span class="line">library(Mfuzz)</span><br><span class="line"> </span><br><span class="line">#读取矩阵表格，在我网盘中，示例数据为“mmc2.union_all_protein_exp.txt”</span><br><span class="line">#该示例中，行为基因或蛋白名称，列为时间样本（按时间顺序提前排列好，若存在生物学重复需提前取均值）</span><br><span class="line">protein &lt;- read.delim(&#x27;mmc2.union_all_protein_exp.txt&#x27;, row.names = 1, check.names = FALSE)</span><br><span class="line">protein &lt;- as.matrix(protein)</span><br><span class="line"> </span><br><span class="line">#构建对象</span><br><span class="line">mfuzz_class &lt;- new(&#x27;ExpressionSet&#x27;,exprs = protein)</span><br><span class="line"> </span><br><span class="line">#预处理缺失值或者异常值</span><br><span class="line">mfuzz_class &lt;- filter.NA(mfuzz_class, thres = 0.25)</span><br><span class="line">mfuzz_class &lt;- fill.NA(mfuzz_class, mode = &#x27;mean&#x27;)</span><br><span class="line">mfuzz_class &lt;- filter.std(mfuzz_class, min.std = 0)</span><br><span class="line"> </span><br><span class="line">#标准化数据</span><br><span class="line">mfuzz_class &lt;- standardise(mfuzz_class)</span><br><span class="line"> </span><br><span class="line">#Mfuzz 基于 fuzzy c-means 的算法进行聚类，详情 ?mfuzz</span><br><span class="line">#需手动定义目标聚类群的个数，例如这里我们为了重现原作者的结果，设定为 10，即期望获得 10 组聚类群</span><br><span class="line">#需要设定随机数种子，以避免再次运行时获得不同的结果</span><br><span class="line">set.seed(123)</span><br><span class="line">cluster_num &lt;- 10</span><br><span class="line">mfuzz_cluster &lt;- mfuzz(mfuzz_class, c = cluster_num, m = mestimate(mfuzz_class))</span><br><span class="line"> </span><br><span class="line">#作图，详情 ?mfuzz.plot2</span><br><span class="line">#time.labels 参数设置时间轴，需要和原基因表达数据集中的列对应</span><br><span class="line">#颜色、线宽、坐标轴、字体等细节也可以添加其他参数调整，此处略，详见函数帮助</span><br><span class="line">mfuzz.plot2(mfuzz_class, cl = mfuzz_cluster, mfrow = c(2, 5), time.labels = colnames(protein))</span><br><span class="line"></span><br><span class="line">#查看每个聚类群中各自包含的蛋白数量</span><br><span class="line">cluster_size &lt;- mfuzz_cluster$size</span><br><span class="line">names(cluster_size) &lt;- 1:cluster_num</span><br><span class="line">cluster_size</span><br><span class="line"> </span><br><span class="line">#查看每个蛋白所属的聚类群</span><br><span class="line">head(mfuzz_cluster$cluster)</span><br><span class="line"> </span><br><span class="line">#Mfuzz 通过计算一个叫 membership 的统计量判断蛋白质所属的聚类群，以最大的 membership 值为准</span><br><span class="line">#查看各蛋白的 membership 值</span><br><span class="line">head(mfuzz_cluster$membership)</span><br><span class="line"></span><br><span class="line">#最后，提取所有蛋白所属的聚类群，并和它们的原始表达值整合在一起</span><br><span class="line">protein_cluster &lt;- mfuzz_cluster$cluster</span><br><span class="line">protein_cluster &lt;- cbind(protein[names(protein_cluster), ], protein_cluster)</span><br><span class="line">head(protein_cluster)</span><br><span class="line">write.table(protein_cluster, &#x27;protein_cluster.txt&#x27;, sep = &#x27;\t&#x27;, col.names = NA, quote = FALSE)</span><br><span class="line"> </span><br><span class="line">#如果您想提取数据分析过程中，标准化后的表达值（绘制曲线图用的那个值，而非原始蛋白表达值）</span><br><span class="line">protein_cluster &lt;- mfuzz_cluster$cluster</span><br><span class="line">protein_standard &lt;- mfuzz_class@assayData$exprs</span><br><span class="line">protein_standard_cluster &lt;- cbind(protein_standard[names(protein_cluster), ], protein_cluster)</span><br><span class="line">head(protein_standard_cluster)</span><br><span class="line">#write.table(protein_standard_cluster, &#x27;protein_standard_cluster.txt&#x27;, sep = &#x27;\t&#x27;, col.names = NA, quote = FALSE)</span><br></pre></td></tr></table></figure>
+<center>
+<img src="https://i.imgur.com/KcBEshg.png" width=600 />
+</center>
+<center>
+<img src="https://i.imgur.com/FpLfDfh.png" width=600 />
+</center>
+<center>
+<img src="https://i.imgur.com/VuEOnuQ.png" width=600 />
+</center>
+<h3 id="tcseq-操作示范"><a class="markdownIt-Anchor" href="#tcseq-操作示范"></a> TCseq 操作示范</h3>
+<p>我在<a target="_blank" rel="noopener" href="https://bioinfx.github.io/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">自己的项目中</a>已经用过 TCseq，用这个的原因是当时找到了原作者撰写的 <a target="_blank" rel="noopener" href="https://rdrr.io/bioc/TCseq/f/inst/doc/TCseq.pdf">demo 文档</a>，并且发现作者有保持更新，按照他们提供的代码操作能顺利得到结果。</p>
+<p>下面的示例摘抄自《<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1845579?from=article.detail.1845577">小明的数据分析笔记本——使用 R 语言的 TCseq 包分析基因表达的时间趋势并划分聚类群</a>》，通过一个涉及时间序列的蛋白质组学数据集，演示如何在 R 语言中使用 TCseq 包分析蛋白质表达的时间趋势，并根据时间表达模式的相似性实现聚类的过程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#使用 Bioconductor 安装 TCseq 包</span><br><span class="line">#install.packages(&#x27;BiocManager&#x27;)</span><br><span class="line">#BiocManager::install(&#x27;TCseq&#x27;)</span><br><span class="line"> </span><br><span class="line">#加载 TCseq 包</span><br><span class="line">library(TCseq)</span><br><span class="line"> </span><br><span class="line">#以本示例的蛋白表达矩阵为例，行为基因或蛋白名称，列为时间样本</span><br><span class="line">#每一列是独立的时间单位，按时间顺序提前排列好，若存在生物学重复（即一个时间点对应多个样本时）建议提前取均值</span><br><span class="line">protein &lt;- read.delim(&#x27;protein_exp.txt&#x27;, row.names = 1, check.names = FALSE)</span><br><span class="line">protein &lt;- as.matrix(protein)</span><br><span class="line"> </span><br><span class="line">#聚类，详情 ?timeclust</span><br><span class="line">#algo 用于指定聚类方法，例如基于 fuzzy c-means 的算法进行聚类，此时需要设定随机数种子，以避免再次运行时获得不同的结果</span><br><span class="line">#k 用于指定期望获得的聚类群数量，例如这里预设为 10</span><br><span class="line">#standardize 用于 z-score 标准化变量</span><br><span class="line">set.seed(123)</span><br><span class="line">cluster_num &lt;- 10</span><br><span class="line">tcseq_cluster &lt;- timeclust(protein, algo = &#x27;cm&#x27;, k = cluster_num, standardize = TRUE)</span><br><span class="line"> </span><br><span class="line">#作图，详情 ?timeclustplot</span><br><span class="line">#颜色、线宽、坐标轴、字体等细节可以在函数中调整，具体参数详见函数帮助</span><br><span class="line">p &lt;- timeclustplot(tcseq_cluster, value = &#x27;z-score&#x27;, cols = 3, </span><br><span class="line">    axis.line.size = 0.6, axis.title.size = 8, axis.text.size = 8, </span><br><span class="line">    title.size = 8, legend.title.size = 8, legend.text.size = 8)</span><br><span class="line"> </span><br><span class="line">#上述获得了 10 组聚类群</span><br><span class="line">#如果绘制单个的聚类群，例如 cluster 2，直接在作图结果中输入下标选取</span><br><span class="line">p[2]</span><br></pre></td></tr></table></figure>
+<center>
+<img src="https://i.imgur.com/76tALVo.png" width=600 />
+</center>
+<p>提取各聚类群的样本或变量名称和数值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#查看每个蛋白所属的聚类群，展示前几个为例</span><br><span class="line">head(tcseq_cluster@cluster)</span><br><span class="line"> </span><br><span class="line">#统计每个聚类群中各自包含的蛋白数量</span><br><span class="line">table(tcseq_cluster@cluster)</span><br><span class="line"> </span><br><span class="line">#上述聚类过程中，通过计算 membership 值判断蛋白质所属的聚类群，以最大的 membership 值为准</span><br><span class="line">#查看本次计算的各蛋白的 membership 值，展示前几个为例</span><br><span class="line">head(tcseq_cluster@membership)</span><br><span class="line"> </span><br><span class="line">#上述聚类过程中，我们在聚类函数 timeclust() 中指定了对蛋白表达值的 z-score 标准化</span><br><span class="line">#如果您想查看标准化后的表达值（也即绘制曲线图用的那个值，而非原始的蛋白表达值），展示前几个为例</span><br><span class="line">head(tcseq_cluster@data)</span><br><span class="line"> </span><br><span class="line">#啥？您若问原始的蛋白表达值在哪里看？一开始的输入数据就是啊......</span><br><span class="line"></span><br><span class="line">#最后，提取所有蛋白所属的聚类群，并和它们的原始表达值整合在一起</span><br><span class="line">protein_cluster &lt;- tcseq_cluster@cluster</span><br><span class="line">protein_cluster &lt;- cbind(protein[names(protein_cluster), ], protein_cluster)</span><br><span class="line">head(protein_cluster)</span><br><span class="line">write.table(protein_cluster, &#x27;protein_cluster.txt&#x27;, sep = &#x27;\t&#x27;, col.names = NA, quote = FALSE)</span><br></pre></td></tr></table></figure>
+<center>
+<img src="https://i.imgur.com/V5azlwI.png" width=600 />
+</center>
+<center>
+<img src="https://i.imgur.com/VuEOnuQ.png" width=600 />
+</center>
+<h3 id="经验小结"><a class="markdownIt-Anchor" href="#经验小结"></a> 经验小结</h3>
+<ol>
+<li>时间序列分析不仅仅应用于以时间为序的样品，也可以用于不同浓度梯度处理的样品，比如梯度植物激素处理的植物；可用于植物的不同部位或器官；甚至不同的品种。</li>
+<li>对于 clusters 的数目问题，Mfuzz 和 TCseq 都是手动设定，具有很大的主观性，设定太多会导致某些 clusters 很相近，设定太小会导致个别 clusters 的趋势不够一致。此时可参考本文案例中 NBT 那个文章，对 clusters 相互之间计算相关系数，如果大于 0.9 则可以合并。</li>
+<li>对于同一批数据，用 TCseq 分析测试的时候，我发现多次运行同样的命令得到的结果有不同，首先是 cluster #1 #2 #3 这些 clusters 的顺序可能会变化；其次就是 clusters 包含的基因有细微差别（由于采用的是模糊聚类算法？）。这个现象在上文 Mfuzz 示例中有体现，复现 Cell Reports 文章的数据过程中，同样的 clusters 数目，那些 clusters 的顺序是不一样的，如果更进一步去比较 clusters 包含的基因 ID，可能也存在少许差别。所以分析过程中应该及时保存代码和导出数据结果表。</li>
+<li>TCseq demo 文档里提到要求准备 gene counts 作为输入文件，从上面 TCseq 的示例来看，其实经过预先校正的 RPKM 表达值也是可以的。</li>
+</ol>
+<h3 id="如何自己绘制基因表达趋势图"><a class="markdownIt-Anchor" href="#如何自己绘制基因表达趋势图"></a> 如何自己绘制基因表达趋势图</h3>
+<p>本文最开始引用的 NBT 杂志那个基因时序分析的基因表达趋势图怎么做？可以用 ggplot 来绘制，灰色线条是每一个基因单独的表达趋势，用 geom_line 即可；红色线条是基因平均值，用 geom_smooth 绘制。这个过程中麻烦一点的地方就是如何从基因 RPKM 表达值表格（下面代码中的 individual_cluster 数据框），转换成 ggplot 可以识别的数据框，需要先对 RPKM 做 Z-score 转换，再逐个基因转换成 ggplot 可读的数据格式，并对这若干个基因的数据合并（下面代码中的 df 数据框），同时还要对每个时间点的基因表达值计算平均值并转换成数据框（下面代码中的 k 数据框），基于 df 和 k 两个数据框即可画图，效果如下图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">#### 20220829 用Gao et al 的数据绘制个别clusters的基因趋势图</span><br><span class="line">library(ggplot2)</span><br><span class="line">library(dplyr)     # 筛选表格数据</span><br><span class="line">library(patchwork) # 如果需要拼图</span><br><span class="line">TenClusters &lt;- read.table(&quot;gao_et_al_protein_10_clusters_demo_data.txt&quot;, sep = &quot;\t&quot;, header = TRUE)</span><br><span class="line">head(TenClusters)</span><br><span class="line">individual_cluster &lt;- TenClusters %&gt;% filter(cluster==9)</span><br><span class="line">head(individual_cluster)</span><br><span class="line">#Gene_Name    zygote   X2.cell   X4.cell   X8.cell   morula blastocyst cluster</span><br><span class="line">#1      Rer1 0.8666539 0.8672568 0.8379625 0.9981545 1.043738   1.386234       9</span><br><span class="line">#2     Ckap2 0.8241345 0.8702265 1.0013516 0.9844172 1.001041   1.318829       9</span><br><span class="line">cluster.fpkm &lt;- individual_cluster[,2:7]</span><br><span class="line">#cluster1.fpkm</span><br><span class="line">row.names(cluster.fpkm) &lt;- individual_cluster[,1]</span><br><span class="line">colnames(cluster.fpkm) &lt;- c(1,2,3,4,5,6)</span><br><span class="line">b &lt;- cluster.fpkm</span><br><span class="line">c &lt;- data.matrix(b)</span><br><span class="line">d=t(c)</span><br><span class="line">e=scale(d, center=T, scale=T)   # 将 FPKM 计算 Z score</span><br><span class="line">zscore=t(e)                     # 回到行为基因，列为样品，的数据框</span><br><span class="line">f &lt;- data.frame(zscore)  ## colnames成了 X1 X2 X3 这样的格式, 下面手动命名为 1 2 3 这样</span><br><span class="line">colnames(f) &lt;- c(1,2,3,4,5,6)</span><br><span class="line">g = t(f)                 ## 又转置一次</span><br><span class="line">#&gt; head(f)</span><br><span class="line">#                1          2            3            4           5        6</span><br><span class="line">#Rer1   -0.6464415 -0.6435188 -0.785533163 -0.008946659 0.212036554 1.872404</span><br><span class="line">#Ckap2  -1.0164865 -0.7500791  0.007811928 -0.090067076 0.006016526 1.842804</span><br><span class="line">h &lt;- as.data.frame(g)</span><br><span class="line">head(h)</span><br><span class="line">df &lt;- data.frame(            # 将第一个基因单独制作成方便 ggplot 读取的格式，命名为数据框 df</span><br><span class="line">  time = c(1,2,3,4,5,6),</span><br><span class="line">  gene = names(h[1]),</span><br><span class="line">  zscore = h[1]</span><br><span class="line">)</span><br><span class="line">colnames(df) &lt;- c(&quot;time&quot;, &quot;gene&quot;, &quot;zscore&quot;)</span><br><span class="line">#</span><br><span class="line">for (i in 2:ncol(h)) &#123;</span><br><span class="line">  subdf &lt;- data.frame(</span><br><span class="line">    time = c(1,2,3,4,5,6),</span><br><span class="line">    gene = names(h[i]),</span><br><span class="line">    zscore = h[i]</span><br><span class="line">  )</span><br><span class="line">  colnames(df) &lt;- c(&quot;time&quot;, &quot;gene&quot;, &quot;zscore&quot;)</span><br><span class="line">  colnames(subdf) &lt;- c(&quot;time&quot;, &quot;gene&quot;, &quot;zscore&quot;)</span><br><span class="line">  df &lt;- union(df, subdf)   # 从第二个基因开始，依次合并到 df 数据框里面。</span><br><span class="line">  # 每个基因建立一个 Zscore 数据框，依次用数据框合并的方式，将所有基因的数据框合并。</span><br><span class="line">  colnames(df) &lt;- c(&quot;time&quot;, &quot;gene&quot;, &quot;zscore&quot;)</span><br><span class="line">&#125;</span><br><span class="line">#head(df)</span><br><span class="line">#&gt; head(df, n=20)</span><br><span class="line">#       time   gene       zscore</span><br><span class="line">#1...1     1   Rer1 -0.646441480</span><br><span class="line">#2...2     2   Rer1 -0.643518806</span><br><span class="line">#3...3     3   Rer1 -0.785533163</span><br><span class="line">#4...4     4   Rer1 -0.008946659</span><br><span class="line">#5...5     5   Rer1  0.212036554</span><br><span class="line">#6...6     6   Rer1  1.872403554</span><br><span class="line">#1...7     1  Ckap2 -1.016486464</span><br><span class="line">#2...8     2  Ckap2 -0.750079108</span><br><span class="line">#3...9     3  Ckap2  0.007811928</span><br><span class="line">#4...10    4  Ckap2 -0.090067076</span><br><span class="line">#5...11    5  Ckap2  0.006016526</span><br><span class="line">#6...12    6  Ckap2  1.842804194</span><br><span class="line">#1...13    1   Safb -0.759950153</span><br><span class="line">#2...14    2   Safb -0.874711572</span><br><span class="line">#3...15    3   Safb -0.071782045</span><br><span class="line">#4...16    4   Safb -0.298405705</span><br><span class="line">#5...17    5   Safb  0.121105813</span><br><span class="line">#6...18    6   Safb  1.883743663</span><br><span class="line"># ggplot() +   # 显示各个基因的表达趋势</span><br><span class="line">#   geom_line(data = df, aes(x=time, y=zscore, group=gene), colour=&quot;darkgrey&quot;, size=1) +</span><br><span class="line">#   ylim(-3,3) +</span><br><span class="line">#   theme_bw() +</span><br><span class="line">#   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = &quot;black&quot;))</span><br><span class="line">#  计算不同基因的z score平均值，这样便可以画一个整体趋势线</span><br><span class="line">j &lt;- df %&gt;%   </span><br><span class="line">  group_by(time) %&gt;%</span><br><span class="line">  summarise(avg=mean(zscore))   # 计算每个时间点的数值平均值</span><br><span class="line">k &lt;- as.data.frame(j, stringsAsFactors=FALSE) # The stringsAsFactors=FALSE setting is important, do not omit.</span><br><span class="line">#&gt; head(k)</span><br><span class="line">#  time        avg</span><br><span class="line">#1    1 -0.8349276</span><br><span class="line">#2    2 -0.7264787</span><br><span class="line">#3    3 -0.4482506</span><br><span class="line">#4    4 -0.2034883</span><br><span class="line">#5    5  0.4347488</span><br><span class="line">#6    6  1.7783964</span><br><span class="line">#</span><br><span class="line">ggplot() +   # 显示各个基因的表达趋势，另外增加一个红色的总趋势线</span><br><span class="line">  geom_line(data = df, aes(x=time, y=zscore, group=gene), colour=&quot;darkgrey&quot;, size=0.7, alpha=0.5) +</span><br><span class="line">  geom_smooth(data = k, aes(x=time, y=avg), colour=&quot;red&quot;, size=1, se = FALSE, span=0.5) +</span><br><span class="line">  ylim(-2.5, 2.5) +</span><br><span class="line">  theme_bw() +</span><br><span class="line">  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = &quot;black&quot;)) +</span><br><span class="line">  scale_x_continuous(breaks=c(1,2,3,4,5,6), labels = c(&quot;zygote&quot;, &quot;2-cell&quot;, &quot;4-cell&quot;, &quot;8-cell&quot;, &quot;morula&quot;, &quot;blastocyst&quot;)) +</span><br><span class="line">  theme(axis.text.x = element_text(size = 8, color = &quot;black&quot;)) +</span><br><span class="line">  theme(axis.text.y = element_text(size = 8, color = &quot;black&quot;)) +</span><br><span class="line">  ylab(&quot;Normalized expression&quot;) +</span><br><span class="line">  xlab(&quot;&quot;) +</span><br><span class="line">  theme(axis.title.x = element_text(size = 10)) +</span><br><span class="line">  theme(axis.title.y = element_text(size = 10)) +</span><br><span class="line">  theme(legend.position=&quot;none&quot;)</span><br></pre></td></tr></table></figure>
+<center>
+<img src="https://i.imgur.com/6M74QGg.jpeg" width=600 />
+</center>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/16/positive-selection-of-orthologous-genes/" rel="prev" title="Bioinfo：再记基因的正向选择分析">
+      <i class="fa fa-chevron-left"></i> Bioinfo：再记基因的正向选择分析
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E6%A1%88%E4%BE%8B%E8%B0%88%E8%B5%B7"><span class="nav-number">1.</span> <span class="nav-text"> 从一篇文章案例谈起</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text"> 常用时间序列分析工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mfuzz-%E6%93%8D%E4%BD%9C%E7%A4%BA%E8%8C%83"><span class="nav-number">3.</span> <span class="nav-text"> Mfuzz 操作示范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcseq-%E6%93%8D%E4%BD%9C%E7%A4%BA%E8%8C%83"><span class="nav-number">4.</span> <span class="nav-text"> TCseq 操作示范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E5%B0%8F%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text"> 经验小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%87%AA%E5%B7%B1%E7%BB%98%E5%88%B6%E5%9F%BA%E5%9B%A0%E8%A1%A8%E8%BE%BE%E8%B6%8B%E5%8A%BF%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text"> 如何自己绘制基因表达趋势图</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

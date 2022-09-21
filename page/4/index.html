@@ -189,6 +189,170 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/08/Bioinfo-RepeatModeler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/08/Bioinfo-RepeatModeler/" class="post-title-link" itemprop="url">Bioinfo | 重复序列预测工具 RepeatModeler</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-08 14:25:07" itemprop="dateCreated datePublished" datetime="2021-04-08T14:25:07+08:00">2021-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 17:02:46" itemprop="dateModified" datetime="2021-04-16T17:02:46+08:00">2021-04-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>RepeatMasker是重复序列检测的常用工具，通过与参考数据库的相似性比对来准确识别或屏蔽基因组中的重复序列，属于同源预测注释的方式。基因组组装完成后，进行基因预测和注释。由于基因组中存在重复序列结构区，特别是高等真核生物，重复序列占了相当大的比例，会影响基因预测的质量，也会带来不必要的资源消耗。因此在基因预测前，首先要检测并屏蔽基因组中的重复序列（真核生物很必要，原核生物可忽略）。对于这种情况，只是为了屏蔽重复序列降低后续基因预测的压力，重复序列的检测可以不必太纠结。但有时候我们注释基因组的重复序列结构，也可能是专注于某些特定研究，例如，某些重复元件可能参与了重要功能，我们期望定位它们的位置。这种情况下，需要识别精准。</p>
+<p>RepeatModeler 的识别过程是怎么样的？根据<a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/856591v1.full.pdf">原始文献</a>的描述，它采用了两个不同的策略，第一个是 RepeatScout，第二个是 RECON。另外，新版的RepeatModeler2 针对 LTR 鉴定进行了功能升级，引入 LTRharvest 和 LTR_retriever 模块。RepeatScout 原理是先找出出现频率较高的“种子”序列，然后对“种子”序列进行延长来预测重复序列，这与BLAST的双序列比对过程类似，RepeatScout 能快速鉴定高频率的重复序列与出现时间比较晚的重复元件，这个过程中（Round-1），RepeatScout 从基因组随机取 40Mbp 序列，并分析其中的重复元件，通过与已知数据库进行比较能够快速鉴定已知的转座子，在 Round-1 目录下，有一个 sampleDB-1.fa 文件，这个文件对应的 blastdb 数据库文件，。对于 RECON 而言，它通过基因组之间的比较来鉴定转座子，更彻底的序列比对，也能鉴定出现时间比较早的转座子。RECON 先从基因组选取3Mbp序列作为样品，再依次增加为3倍，分别9Mbp、27Mbp、81Mbp、243Mbp，即一直从Round-2到Round-6（什么目的？）。</p>
+<h3 id="软件依赖-安装"><a class="markdownIt-Anchor" href="#软件依赖-安装"></a> 软件依赖、安装</h3>
+<ol>
+<li><em>Perl</em> 5.8.0 or higher. 我是通过 Python3.7 的 conda 安装的：This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install perl</span><br></pre></td></tr></table></figure>
+<p>在Linux命令行模式下输入“perl -MCPAN -e shell”进入perl界面，然后输入“instal module-name”安装下面的包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">install JSON</span><br><span class="line">install File::Which</span><br><span class="line">install URI</span><br><span class="line">install LWP::UserAgent</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://metacpan.org/pod/JSON">JSON</a>自动安装失败，改成手动从cpan下载安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/JSON-4.03.tar.gz</span><br><span class="line">tar -zxvf JSON-4.03.tar.gz</span><br><span class="line">cd JSON-4.03</span><br><span class="line">perl Makefile.PL</span><br><span class="line">make</span><br><span class="line">make install Makefile</span><br><span class="line"></span><br><span class="line">wget https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/File-Which-1.24.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/O/OA/OALDERS/URI-5.09.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/O/OA/OALDERS/libwww-perl-6.53.tar.gz</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Python 3 and the <em>h5py</em> python library. 我电脑已经安装 Python 的管理器 Anaconda 3，然后安装Python3.7，再通过 conda 安装 h5py：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install h5py。</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Sequence Search Engine (RepeatMasker uses a sequence search engine to perform it’s search for repeats. Currently Cross_Match, <em>RMBlast</em> and WUBlast/ABBlast are supported. You will need to obtain one or the other of these and install them on your system.) Download Pre-compiled Package: Download the RMBlast package for your platform:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.repeatmasker.org/rmblast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">tar -zxvf rmblast-2.11.0+-x64-linux.tar.gz</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><em>TRF</em> - Tandem Repeat Finder, G. Benson et al.<br />
+You can obtain a free copy at <a target="_blank" rel="noopener" href="http://tandem.bu.edu/trf/trf.html">http://tandem.bu.edu/trf/trf.html</a>. RepeatMasker was developed using TRF version 4.0.9</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Benson-Genomics-Lab/TRF.git</span><br><span class="line">cd TRF</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">../configure --prefix=/home/fenglei/local</span><br><span class="line">make</span><br><span class="line"># To install to user&#x27;s path</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>安装TRF中途报错：/home/fenglei/local/app/TRF/missing: line 81: aclocal-1.16: command not found. WARNING: ‘aclocal-1.16’ is missing on your system.<br />
+通过安装 automake 解决问题。</p>
+<ol start="5">
+<li><em>Repeat Database</em><br />
+RepeatMasker can be used with custom libraries, or with Dfam out of the box. Dfam is an open database of transposable element (TE) profile HMM models and consensus sequences. The current release (Dfam 3.2) contains 6,900 TE families spanning five organisms: human, mouse, zebrafish, fruit fly, nematode, and a growing number of additional species. To supplement this databases we recommend obtaining the RepeatMasker edition of RepBase.<br />
+To update the Dfam libraries contained in this release go to <a target="_blank" rel="noopener" href="http://www.dfam.org">http://www.dfam.org</a>.<br />
+RepeatMasker软件自带有Dfam（RepBase数据库HMM版）的常见重复序列库，要更新完整的Dfam需去官网下载。该文件大小15G,下载时间比较久下载解压之后将Dfam文件转移到 RepeatMasker 安装目录下，替换掉RepeatMasker自带的Dfam数据集。如下方命令操作。<br />
+RepeatMasker comes with a copy of the curated portion of Dfam ( Libraries/Dfam.h5 ) and will work out-of-the box with this library. This is a small library ( at this time ). There are two options for supplementing the main RepeatMasker library:<br />
+The complete Dfam ( curated and uncurated families ) library may be downloaded from <a target="_blank" rel="noopener" href="http://www.dfam.org">www.dfam.org</a> in famdb HDF5 format and used to replace the distributed “Libraries/dfam.h5” file. For example:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.dfam.org/releases/Dfam_3.2/families/Dfam.h5.gz</span><br><span class="line">gunzip Dfam.h5.gz</span><br><span class="line"># mv Dfam.h5 /usr/local/RepeatMasker/Libraries</span><br><span class="line">NOTE: This will overwrite the distributed Dfam.h5 file.</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>安装 <em>RepeatMasker</em> 按照这个网页：<a target="_blank" rel="noopener" href="https://www.repeatmasker.org/RepeatMasker/">https://www.repeatmasker.org/RepeatMasker/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz</span><br><span class="line">tar -zxvf RepeatMasker-4.1.2-p1.tar.gz</span><br><span class="line">cd RepeatMasker</span><br><span class="line">perl ./configure</span><br><span class="line"># 输入TRF软件所在路径：/software/annotation/TRF-4.10/bin/trf</span><br><span class="line"># 选择搜索引擎：小编选的是2. RMBlast，其他搜索引擎可以根据需求选择（可多次操作），输入 RMBlast路径：/software/annotation/rmblast-2.10.0/bin 并确认默认搜索引擎</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li><em>RECON</em> - De Novo Repeat Finder, Bao Z. and Eddy S.R. Developed and tested with our patched version of RECON ( 1.08 ). The 1.08 version fixes problems with running RECON on 64 bit machines and supplies a workaround to a division by zero bug along with some buffer overrun fixes. The program is available at: <a target="_blank" rel="noopener" href="http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz">http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz</a>. The original version is available at <a target="_blank" rel="noopener" href="http://eddylab.org/software/recon/">http://eddylab.org/software/recon/</a>.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz</span><br><span class="line">tar -zxvf RECON-1.08.tar.gz</span><br><span class="line">cd RECON-1.08</span><br><span class="line">cd src</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li><em>RepeatScout</em> - De Novo Repeat Finder, Price A.L., Jones N.C. and Pevzner P.A. Developed and tested with our multiple sequence version of RepeatScout ( 1.0.6 ). This version is available at <a target="_blank" rel="noopener" href="http://www.repeatmasker.org/RepeatScout-1.0.6.tar.gz">http://www.repeatmasker.org/RepeatScout-1.0.6.tar.gz</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf RepeatScout-1.0.6.tar.gz</span><br><span class="line">cd RepeatScout</span><br><span class="line"># edit MakeFile:</span><br><span class="line"># INSTDIR = /home/fenglei/local/scripts/</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li><em>GenomeTools</em> [optional]<br />
+LtrHarvest - The LtrHarvest program is part of the GenomeTools suite. We have developed this release of RepeatModeler on GenomeTools version 1.5.9 available for download from here: <a target="_blank" rel="noopener" href="http://genometools.org/pub/">http://genometools.org/pub/</a> NOTE: use the “make threads=yes” build options to enable multi-threaded runs.<br />
+参考 <a target="_blank" rel="noopener" href="http://events.jianshu.io/p/d2fc7a1de669">CentOS 8 安装genometools</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget http://genometools.org/pub/genometools-1.6.1.tar.gz</span><br><span class="line"># make 报错：cairo.h: No such file or directory 报错，需要安装cairo</span><br><span class="line">sudo yum install cairo.x86_64 cairo-devel.x86_64 pango-devel.x86_64 pango.x86_64</span><br><span class="line">tar -zxvf genometools-1.6.1.tar.gz</span><br><span class="line">cd genometools-1.6.1</span><br><span class="line">~~make~~</span><br><span class="line"># make 的参数加上 threads=yes</span><br><span class="line"># 最开始没有加允许多线程的参数，导致程序允许时间特别长</span><br><span class="line"># 另注意，我在 Pytho3.7 环境下 make 失败，切换到系统默认的 base 环境才 make 成功</span><br><span class="line">make threads=yes</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li><em>Ltr_retriever</em> [optional]<br />
+Ltr_retriever - A LTR discovery post-processing and filtering tool. We recommend using version 2.6 or higher from here: <a target="_blank" rel="noopener" href="https://github.com/oushujun/LTR_retriever/releases">https://github.com/oushujun/LTR_retriever/releases</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># download LTR_retriever-2.9.0.tar.gz</span><br><span class="line">tar -zxvf LTR_retriever-2.9.0.tar.gz</span><br><span class="line">mv LTR_retriever-2.9.0 LTR_retriever</span><br><span class="line">/home/fenglei/local/app/LTR_retriever/LTR_retriever -h</span><br></pre></td></tr></table></figure>
+<ol start="11">
+<li><em>MAFFT</em> [optional]<br />
+MAFFT - A multiple sequence alignment program. We developed and tested RepeatModeler using mafft version 7.407. Please use this verison or higher from here: <a target="_blank" rel="noopener" href="https://mafft.cbrc.jp/alignment/software/">https://mafft.cbrc.jp/alignment/software/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">wget https://mafft.cbrc.jp/alignment/software/mafft-7.475-with-extensions-src.tgz</span><br><span class="line">tar -zxvf mafft-7.475-with-extensions-src.tgz</span><br><span class="line">mv </span><br><span class="line">cd </span><br><span class="line">cd core</span><br><span class="line">make clean</span><br><span class="line">make</span><br><span class="line">vi Makefile</span><br><span class="line"># eidt 1st line. change &quot;/usr/local&quot; to &quot;/home/fenglei/local&quot;</span><br><span class="line">make clean</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cd ../extention</span><br><span class="line">vi Makefile</span><br><span class="line"># Edit the 1st line. Change &quot;/usr/local&quot; to &quot;/home/fenglei/local&quot;</span><br><span class="line">make clean</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<ol start="12">
+<li><em>Ninjia</em> [optional]<br />
+Ninja - A tool for large-scale neighbor-joining phylogeny inference and clustering. We developed and tested RepeatModeler using Ninja version “0.95-cluster_only”. Please obtain a copy from: <a target="_blank" rel="noopener" href="https://github.com/TravisWheelerLab/NINJA/releases/tag/0.95-cluster_only">https://github.com/TravisWheelerLab/NINJA/releases/tag/0.95-cluster_only</a><br />
+Download source code from <a target="_blank" rel="noopener" href="https://github.com/TravisWheelerLab/NINJA/releases/tag/0.95-cluster_only">https://github.com/TravisWheelerLab/NINJA/releases/tag/0.95-cluster_only</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf NINJA-0.95-cluster_only.tar.gz</span><br><span class="line">mv NINJA-0.95-cluster_only /home/fenglei/local/app/NINJA-0.95-cluster</span><br><span class="line">cd NINJA-0.95-cluster/NINJIA</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol start="13">
+<li><em>cd-hit</em> [optional]<br />
+CD-HIT - A sequence clustering package. We developed and tested RepeatModeler using version 4.8.1. Please use this version or higher from: <a target="_blank" rel="noopener" href="http://weizhongli-lab.org/cd-hit/">http://weizhongli-lab.org/cd-hit/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/weizhongli/cdhit.git</span><br><span class="line">sudo yum install zlib-devel</span><br><span class="line">cd cdhit</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol start="14">
+<li><em>RepeatModeler</em> 按照这个网页 <a target="_blank" rel="noopener" href="http://www.repeatmasker.org/RepeatModeler/">http://www.repeatmasker.org/RepeatModeler/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.1.tar.gz</span><br><span class="line">tar -zxvf RepeatModeler-2.0.1.tar.gz</span><br><span class="line">cd RepeatModeler-2.0.1</span><br><span class="line">perl ./configure</span><br></pre></td></tr></table></figure>
+<p>根据程序提示，依次输入下方各个程序所在路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#perl</span><br><span class="line">/home/fenglei/local/app/anaconda3/envs/python37/bin/perl</span><br><span class="line">#RepeatMasker</span><br><span class="line">/home/fenglei/local/app/RepeatMasker</span><br><span class="line">#RECON</span><br><span class="line">/home/fenglei/local/app/RECON-1.08/bin</span><br><span class="line">#RepeatScount</span><br><span class="line">/home/fenglei/local/app/RepeatScout-1.0.6</span><br><span class="line">#TRF</span><br><span class="line">/home/fenglei/local/bin/trf</span><br><span class="line">#search engine: RMBlast</span><br><span class="line">/home/fenglei/local/app/rmblast-2.11.0/bin</span><br><span class="line">#genometools</span><br><span class="line">/home/fenglei/local/app/genometools-1.6.1/bin</span><br><span class="line">#Ltr_retriever</span><br><span class="line">/home/fenglei/local/app/LTR_retriever</span><br><span class="line">#MAFFT</span><br><span class="line">/home/fenglei/local/bin</span><br><span class="line">#NINJIA</span><br><span class="line">/home/fenglei/local/app/NINJA-0.95-cluster/NINJA</span><br><span class="line">#cd-hit</span><br><span class="line">/home/fenglei/local/app/cdhit</span><br><span class="line">### Congratulations!  RepeatModeler is now ready to use.</span><br></pre></td></tr></table></figure>
+<h3 id="软件使用"><a class="markdownIt-Anchor" href="#软件使用"></a> 软件使用</h3>
+<p>使用 REPEATMODELER 来通过基因组序列构建 LIBRARY。生成一个文件夹，名称为 RM_[PID].[DATE] ie. “RM_5098.MonMar141305172005″。该文件夹中的“consensi.fa.classified”即为 library，用于RepeatMasker的输入。值得注意的是，输入 fasta 文件序列间不能有空（空格和换行等），否则会程序出错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">##改成自己的输入fasta名称</span><br><span class="line">fasta=/home/fenglei/databases/Arabidopsis/TAIR10_chr_all.fasta</span><br><span class="line">##改成自己想要的database名称</span><br><span class="line">database_name=Arabidopsis</span><br><span class="line">##改成RepeatModeler安装目录</span><br><span class="line">RepeatModelerPath=/home/fenglei/local/app/RepeatModeler-2.0.1</span><br><span class="line">## Build database</span><br><span class="line">$&#123;RepeatModelerPath&#125;/BuildDatabase -name $&#123;database_name&#125; -engine rmblast $&#123;fasta&#125;</span><br><span class="line">## Run RepeatModeler to detect repeats</span><br><span class="line">$&#123;RepeatModelerPath&#125;/RepeatModeler -pa 10 -database $&#123;database_name&#125; -LTRStruct</span><br></pre></td></tr></table></figure>
+<p>第二步就调用 RepeatMasker，依据上一步鉴定的该物种的重复序列库（Library），即 consensi.fa.classified 文件，来对基因组进行标记，输出文件夹中的“*.fasta.masked”文件就是 softmasked 文件，重复序列会被标记成小写字母。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">set -e</span><br><span class="line">set -u</span><br><span class="line">set -o pipefail</span><br><span class="line"></span><br><span class="line">refgenome=/home/fenglei/databases/Arabidopsis/TAIR10_chr_all.fasta  #改成自己的输入fasta名称 不可以用压缩文件</span><br><span class="line">database_name=Arabidopsis  #改成自己想要的database名称</span><br><span class="line">RepeatMaskerHome=/home/fenglei/local/app/RepeatMasker/</span><br><span class="line"></span><br><span class="line">$&#123;RepeatMaskerHome&#125;/RepeatMasker -pa 12 \</span><br><span class="line">        -e rmblast \</span><br><span class="line">        -lib consensi.fa.classified \</span><br><span class="line">        -dir Repeat_result \</span><br><span class="line">        -gff \</span><br><span class="line">        -xsmall \</span><br><span class="line">        $refgenome</span><br></pre></td></tr></table></figure>
+<p>如何对重复序列元件进行统计？比如每种元件的数目和总长度，从而知道其在基因组所占比例，这也是一般文章需要展示的地方。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 从 RepeatMasker 分析结果找出重复元件的类别</span><br><span class="line">awk &#x27;NR&gt;3&#123;print $11&#125;&#x27; TAIR10_chr_all.fasta.out | sort | uniq -c &gt; repeat.class</span><br><span class="line"># 自编程序统计每种元件的数目和总长度</span><br><span class="line">perl ./statistics.pl  repeat.class TAIR10_chr_all.fasta.out &gt; repeat.stat</span><br><span class="line"># 调用 buildSummary.pl 对重复序列元件进行详细统计</span><br><span class="line">perl ~/local/app/RepeatMasker/util/buildSummary.pl TAIR10_chr_all.fasta.out &gt; TAIR10_chr_all.fasta.out_stat</span><br></pre></td></tr></table></figure>
+<p>注：上面自编的statistics.pl程序内容如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/home/fenglei/local/bin/perl</span><br><span class="line">use warnings;</span><br><span class="line">use strict;</span><br><span class="line"></span><br><span class="line">### usage: ./statistics.pl  repeat.class scaffold_out.final.scaffolds.fasta.out &gt; repeat.stat</span><br><span class="line"></span><br><span class="line">open REPCLASS, $ARGV[0] or die $!;</span><br><span class="line">open REPEATMASKER, $ARGV[1] or die $!;</span><br><span class="line"></span><br><span class="line">while(&lt;REPCLASS&gt;)&#123;</span><br><span class="line">        chomp $_;</span><br><span class="line">        my @reparr=split(/\s+/);</span><br><span class="line">        print &quot;$reparr[2]\t&quot;;</span><br><span class="line">        my $totallength=0;</span><br><span class="line">        my $repeatNum=0;</span><br><span class="line">        while(&lt;REPEATMASKER&gt;)&#123;</span><br><span class="line">                chomp $_;</span><br><span class="line">                $_ =~ s/^\s+//;</span><br><span class="line">                my @repeatmask=split(/\s+/);</span><br><span class="line">                my $repeatlength=0;</span><br><span class="line">#               print &quot;$repeatmask[5]\t$repeatmask[6]\t$repeatmask[10]&quot;; exit;</span><br><span class="line">                if(length($_) == 0)&#123;next;&#125;</span><br><span class="line">                if($reparr[2] eq $repeatmask[10])&#123;</span><br><span class="line">#                       print &quot;$repeatmask[5]\t$repeatmask[6]\t$repeatmask[10]&quot;; exit;</span><br><span class="line">                        $repeatNum = $repeatNum + 1;</span><br><span class="line">                        $repeatlength = $repeatmask[6] - $repeatmask[5];</span><br><span class="line">                        $totallength = $totallength + $repeatlength;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        print &quot;$repeatNum\t$totallength\n&quot;;</span><br><span class="line">        close REPEATMASKER;</span><br><span class="line">        open REPEATMASKER, $ARGV[1] or die $!;</span><br><span class="line">#       print &quot;\n&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">close REPCLASS;</span><br><span class="line">close REPEATMASKER;</span><br></pre></td></tr></table></figure>
+<p>以拟南芥为例，下面是输出的部分结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">Repeat Classes</span><br><span class="line">==============</span><br><span class="line">Total Sequences: 7</span><br><span class="line">Total Length: 119667750 bp</span><br><span class="line">Class                  Count        bpMasked    %masked</span><br><span class="line">=====                  =====        ========     =======</span><br><span class="line">DNA                    --           --           --   </span><br><span class="line">    CMC-EnSpm          878          720527       0.60% </span><br><span class="line">    MULE-MuDR          1202         1171346      0.98% </span><br><span class="line">    PIF-Harbinger      150          71815        0.06% </span><br><span class="line">    TcMar-Pogo         150          31269        0.03% </span><br><span class="line">    hAT-Ac             81           28117        0.02% </span><br><span class="line">    hAT-Tip100         94           86316        0.07% </span><br><span class="line">LINE                   --           --           --   </span><br><span class="line">    L1                 2259         1292456      1.08% </span><br><span class="line">LTR                    --           --           --   </span><br><span class="line">    Copia              1251         1270535      1.06% </span><br><span class="line">    Gypsy              4058         4618620      3.86% </span><br><span class="line">    Pao                55           10627        0.01% </span><br><span class="line">RC                     --           --           --   </span><br><span class="line">    Helitron           1213         556951       0.47% </span><br><span class="line">Unknown                23305        7697251      6.43% </span><br><span class="line">                      ---------------------------------</span><br><span class="line">    total interspersed 34696        17555830     14.67%</span><br><span class="line"></span><br><span class="line">Low_complexity         8617         414746       0.35% </span><br><span class="line">Simple_repeat          34644        1364479      1.14% </span><br><span class="line">rRNA                   265          338782       0.28% </span><br><span class="line">tRNA                   289          84920        0.07% </span><br><span class="line">---------------------------------------------------------</span><br><span class="line">Total                  78511        19758757     16.51%</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">By Sequence</span><br><span class="line">===========</span><br><span class="line">Seq            Count      bpMasked</span><br><span class="line">=====          =====      ========</span><br><span class="line">               2   13984      3678725 </span><br><span class="line">    mitochondria   163        89662   </span><br><span class="line">               1   18731      4168514 </span><br><span class="line">               3   15642      4105811 </span><br><span class="line">     chloroplast   77         49506   </span><br><span class="line">               5   17313      4206310 </span><br><span class="line">               4   12601      3460229 </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1106,93 +1270,6 @@ find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/04/Visualization-Remove-Background-from-Image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/04/Visualization-Remove-Background-from-Image/" class="post-title-link" itemprop="url">Remove Background from Image</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-04 09:33:30" itemprop="dateCreated datePublished" datetime="2021-01-04T09:33:30+08:00">2021-01-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-05 21:02:29" itemprop="dateModified" datetime="2021-01-05T21:02:29+08:00">2021-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Visualization/" itemprop="url" rel="index"><span itemprop="name">Visualization</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>没有扫描仪的情况下，往往会用手机拍摄文档照片，但是其背景通常是不均匀的灰色，不适合打印/复印。如何通过调整使背景变成白色或接近白色？</p>
-<p>对于背景均匀的情况，在 PS 中用 ctrl+L 调整色阶或者曲线就可以满足要求。但是受到拍照的时候光线的原因，照片的背景颜色一般会深浅不一，而且手机拍摄的照片往往会有畸变。</p>
-<p>下面记录一实用的办法：“高斯模糊”配合“划分”模式做出扫描的效果</p>
-<ol>
-<li>PS 打开图片文件。由于手机拍摄的照片角度可能不够理想，往往使文档有一定畸变，如果需要调整，选中左侧工具栏“剪裁工具”里面有一个“透视剪裁工具”，鼠标左键依次单击文档的四角，按下回车键，就可以把“透视”一定程度上矫正回来。</li>
-<li>crtl+J复制一个图层出来，点击菜单栏：滤镜 -&gt; 模糊 -&gt; 高斯模糊，参数输入100，点击确定。此时视野中的图片变成了模糊的一片。</li>
-<li>软件右下角图层设置区域，“不透明度”字样左边有个“正常”字样，将其重设为“划分”。此时视野中的图片背景变成了白色，文字颜色深灰色。</li>
-<li>按下Ctrl+Alt+Shift+E，盖印一个图层。把之前的图层合并成另一新图层。再将其复制新图层，右下角图层栏目下“正常”模式更改成“颜色加深”，即可看到文字从深灰色变成黑色。</li>
-</ol>
-<p>参考资料：B 站有一个视频教学：<a target="_blank" rel="noopener" href="https://www.bilibili.com/s/video/BV1i7411Z718">https://www.bilibili.com/s/video/BV1i7411Z718</a></p>
-<p><img src="https://199508.com/wp-content/uploads/2016/03/31db1439868311.jpg" alt="复制图层" /><br />
-<img src="https://199508.com/wp-content/uploads/2016/03/be261439868309.jpg" alt="高斯模糊" /><br />
-<img src="https://199508.com/wp-content/uploads/2016/03/ac5a1439868306.jpg" alt="划分" /><br />
-<img src="https://pic2.zhimg.com/80/v2-b7fd16a3ea91d8285cb903aede434689_720w.jpg?source=1940ef5c" alt="效果图（其实可以更好）" /></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1264,7 +1341,7 @@ find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">177</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

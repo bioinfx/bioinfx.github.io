@@ -189,6 +189,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/13/Linux-ssh-from-remote/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/13/Linux-ssh-from-remote/" class="post-title-link" itemprop="url">SSH远程登录设置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-13 18:15:35" itemprop="dateCreated datePublished" datetime="2019-12-13T18:15:35+08:00">2019-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如图所示，Linux服务器为C，用户客户端电脑为A。如何从A登录到C服务器。之前尝试多次不成功，原来是没有在Linux服务器正确设置参数（即下面步骤二）。   步骤一、在B路由器设定“端口转发”（或端口映射？），比如将端口22转发到服务器C；参考<a target="_blank" rel="noopener" href="https://service.tp-link.com.cn/detail%5C_article%5C_69.html">https://service.tp-link.com.cn/detail\_article\_69.html</a> 步骤二、在Linux服务器上设置远程登录，编辑/etc/ssh/sshd_config，打开22端口，再修改一些设置允许用户远程登录。具体参考：<a target="_blank" rel="noopener" href="http://jianshu.com/p/df83a3b96f64">jianshu.com/p/df83a3b96f64</a> 步骤三、在用户电脑客户端进行ssh操作即可。比如ssh <a href="mailto:user@101.1.1.2">user@101.1.1.2</a>，即可登录到服务器C。参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qiushisoftware/article/details/55258624">https://blog.csdn.net/qiushisoftware/article/details/55258624</a>   <img src="https://genehub.files.wordpress.com/2019/12/790056-20151122112639515-536213849.png" alt="790056-20151122112639515-536213849" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/04/linux-redhat-4-4-7-3-upgrade-to-centos-7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1351,120 +1425,6 @@ HTSLIB=/home/fenglei/local/app/htslib</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/04/25/R-volcano-plot-in-R/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/25/R-volcano-plot-in-R/" class="post-title-link" itemprop="url">R：火山图 volcano plot</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-25 16:54:11" itemprop="dateCreated datePublished" datetime="2018-04-25T16:54:11+08:00">2018-04-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 11:44:04" itemprop="dateModified" datetime="2020-12-08T11:44:04+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>两个实验组之间的若干个基因的差异倍数比较，可以通过 Volcano Plot 图形化展示。 <img src="https://genehub.files.wordpress.com/2018/04/qqe688aae59bbe20180425163433.jpg" alt="QQ截图20180425163433" /> 例如 DEseq2 对转录组测序的样品做差异基因分析之后，会得到一个基因表达差异的表格的。案例使用数据的来源是 GitHub：<a target="_blank" rel="noopener" href="https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29%5C_fabio-newlines/summary/control-vs-e7107-deseq2.csv">https://github.com/hbc/fabio-splicing/blob/master/new-samples/2016-07-29\_fabio-newlines/summary/control-vs-e7107-deseq2.csv</a> 下载上述数据之后，运行下面的命令即可得到文章起始的图。</p>
-<p>setwd(“C:\\Users\\FengLei\\Desktop\\scatter-plot”)<br />
-library(ggplot2)<br />
-library(ggthemes)<br />
-library(Cairo)</p>
-<p>data=read.csv(“control-vs-e7107-deseq2.csv”, head=T)</p>
-<h3 id="火山图"><a class="markdownIt-Anchor" href="#火山图"></a> 火山图</h3>
-<p>data<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>h</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mo>=</mo><mi>a</mi><mi>s</mi><mi mathvariant="normal">.</mi><mi>f</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo stretchy="false">(</mo><mi>i</mi><mi>f</mi><mi>e</mi><mi>l</mi><mi>s</mi><mi>e</mi><mo stretchy="false">(</mo><mi>d</mi><mi>a</mi><mi>t</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">threshold = as.factor(ifelse(data</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">e</span><span class="mord mathnormal">s</span><span class="mord mathnormal">h</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">s</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord mathnormal">i</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">s</span><span class="mord mathnormal">e</span><span class="mopen">(</span><span class="mord mathnormal">d</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">a</span></span></span></span>pvalue =1, ‘Up’, ifelse(data<span class='katex-error' title='ParseError: KaTeX parse error: Expected &#039;EOF&#039;, got &#039;&amp;&#039; at position 15: pvalue &lt; 0.05 &amp;̲ data'>pvalue &lt; 0.05 &amp; data</span>log2FoldChange &lt;= -1, ‘Down’, ‘Not’)))<br />
-ggplot(data=data, aes(x=log2FoldChange, y=-log10(pvalue), colour=threshold, fill=threshold)) +<br />
-scale_color_manual(values=c(“blue”, “grey”,“red”))+<br />
-geom_point(alpha=0.4, size=1.2) +</p>
-<h1 id="xlimc-4-4"><a class="markdownIt-Anchor" href="#xlimc-4-4"></a> xlim(c(-4, 4)) +</h1>
-<h1 id="ylimc0-75"><a class="markdownIt-Anchor" href="#ylimc0-75"></a> ylim(c(0, 7.5)) +</h1>
-<p>theme_bw(base_size = 12, base_family = “Times”) +<br />
-geom_vline(xintercept=c(-1,1),lty=4,col=“grey”,lwd=0.6)+<br />
-geom_hline(yintercept = -log10(0.05),lty=4,col=“grey”,lwd=0.6)+<br />
-theme(legend.position=“right”,<br />
-panel.grid=element_blank(),<br />
-legend.title = element_blank(),<br />
-legend.text= element_text(face=“bold”, color=“black”,family = “Times”, size=8),<br />
-plot.title = element_text(hjust = 0.5),<br />
-axis.text.x = element_text(face=“bold”, color=“black”, size=12),<br />
-axis.text.y = element_text(face=“bold”, color=“black”, size=12),<br />
-axis.title.x = element_text(face=“bold”, color=“black”, size=12),<br />
-axis.title.y = element_text(face=“bold”,color=“black”, size=12))+<br />
-labs(x=“log2 (Fold Change)”,y=“-log10 (P-value)”,title=“Volcano Plot”)</p>
-<p>注意 R 语言中 ifelse() 函数的使用方法。其基本语法格式如下： if(con,statement1,statement2) con 是逻辑条件，当逻辑条件的值为 TRUE 时，则输出 statement1 的值，否则输出 statement2 的值。 也就是说 ifelse() 函数只能输出两个类型的值，然而本文使用的转录组案例中，组间基因变化有三种情况，分别为上调、下调与无明显变化，这里可以使用 ifelse() 的嵌套结构来实现三种判断值的输出。</p>
-<blockquote>
-<p># ifelse() 函数使用例1</p>
-<blockquote>
-<p>x y # 如果向量 x 中的元素值非0，就输出0，否则输出1<br />
-y<br />
-[1] 0 1 0 1 0 0 1 1</p>
-<h1 id="ifelse-函数使用例2-嵌套结构的应用"><a class="markdownIt-Anchor" href="#ifelse-函数使用例2-嵌套结构的应用"></a> ifelse() 函数使用例2: 嵌套结构的应用</h1>
-<p>x y0, 2*x-1, ifelse(x==0,0,3*x-10))</p>
-<h1 id="如向量-x-中元素值大于0等于0和小于0分三种情况做转换"><a class="markdownIt-Anchor" href="#如向量-x-中元素值大于0等于0和小于0分三种情况做转换"></a> 如向量 x 中元素值大于0，等于0和小于0，分三种情况做转换</h1>
-<p>y<br />
-[1] 5 19 0 -13 -40</p>
-</blockquote>
-</blockquote>
-<p>参考资料 [1] ggplot 与火山图：<a target="_blank" rel="noopener" href="https://www.tanboyu.com/ggplot2-for-volcano.html">https://www.tanboyu.com/ggplot2-for-volcano.html</a> [2] R 语言 ifelse() 函数使用：<a target="_blank" rel="noopener" href="http://www.biye5u.com/article/R/2017/6352.html">http://www.biye5u.com/article/R/2017/6352.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1536,7 +1496,7 @@ y<br />
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">177</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

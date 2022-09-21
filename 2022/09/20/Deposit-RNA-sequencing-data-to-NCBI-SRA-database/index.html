@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在测序相关文章投稿的过程中，杂志社多要求作者将测序的原始数据提交到公开数据库（例如 NCBI 的 SRA 数据库），并获得一个数据编号，即 Accession Number。网络上有不少热心的同行分享关于 NCBI 提交数据的流程，比如某测序公司和某微信公众号，但是 NCBI 的数据提交系统近年有做改版，流程跟前几年已经有所不同。这里做一个简单记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | 如何向 NCBI 的 SRA 数据库提交 RNA seq 的原始数据（2022 年版本）">
+<meta property="og:url" content="http://example.com/2022/09/20/Deposit-RNA-sequencing-data-to-NCBI-SRA-database/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="在测序相关文章投稿的过程中，杂志社多要求作者将测序的原始数据提交到公开数据库（例如 NCBI 的 SRA 数据库），并获得一个数据编号，即 Accession Number。网络上有不少热心的同行分享关于 NCBI 提交数据的流程，比如某测序公司和某微信公众号，但是 NCBI 的数据提交系统近年有做改版，流程跟前几年已经有所不同。这里做一个简单记录。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/i3RCAMR.jpeg">
+<meta property="og:image" content="https://i.imgur.com/ly0iS0o.png">
+<meta property="og:image" content="https://i.imgur.com/jWv2UXp.png">
+<meta property="og:image" content="https://i.imgur.com/feV1xCL.png">
+<meta property="og:image" content="https://i.imgur.com/ma2pMqi.png">
+<meta property="og:image" content="https://i.imgur.com/W0okDKR.png">
+<meta property="og:image" content="https://i.imgur.com/aMsu9BN.jpeg">
+<meta property="og:image" content="https://i.imgur.com/LtKxeIm.png">
+<meta property="og:image" content="https://i.imgur.com/UTJQvR4.png">
+<meta property="og:image" content="https://i.imgur.com/5CPUhMR.png">
+<meta property="og:image" content="https://i.imgur.com/s8j5VR2.jpeg">
+<meta property="og:image" content="https://i.imgur.com/dXgSCi0.jpeg">
+<meta property="article:published_time" content="2022-09-20T12:29:09.407Z">
+<meta property="article:modified_time" content="2022-09-21T03:19:00.485Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/i3RCAMR.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/09/20/Deposit-RNA-sequencing-data-to-NCBI-SRA-database/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | 如何向 NCBI 的 SRA 数据库提交 RNA seq 的原始数据（2022 年版本） | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/Deposit-RNA-sequencing-data-to-NCBI-SRA-database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | 如何向 NCBI 的 SRA 数据库提交 RNA seq 的原始数据（2022 年版本）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-09-20 20:29:09" itemprop="dateCreated datePublished" datetime="2022-09-20T20:29:09+08:00">2022-09-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-21 11:19:00" itemprop="dateModified" datetime="2022-09-21T11:19:00+08:00">2022-09-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinfo/" itemprop="url" rel="index"><span itemprop="name">Bioinfo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在测序相关文章投稿的过程中，杂志社多要求作者将测序的原始数据提交到公开数据库（例如 NCBI 的 SRA 数据库），并获得一个数据编号，即 Accession Number。网络上有不少热心的同行分享关于 NCBI 提交数据的流程，比如<a target="_blank" rel="noopener" href="http://www.bgitechsolutions.com/resources/95">某测序公司</a>和<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1806824">某微信公众号</a>，但是 NCBI 的数据提交系统近年有做改版，流程跟前几年已经有所不同。这里做一个简单记录。</p>
+<span id="more"></span>
+<h3 id="ncbi-账号注册"><a class="markdownIt-Anchor" href="#ncbi-账号注册"></a> NCBI 账号注册</h3>
+<p>打开 NCBI 主页 <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/">https://www.ncbi.nlm.nih.gov/</a>，直接点击登录，我以前的私人 email 注册过 NCBI，但是密码忘了，点击“忘记密码”都无法找回或重设密码，但是现在可以用第三方账号登录，所以我点击了“ORCID”，因为我已经注册过 ORCID，跟随 NCBI 网站引导输入 ORCID 的账户密码即可登录 NCBI。</p>
+<h3 id="找到-sra-提交入口并创建一个新的-submission"><a class="markdownIt-Anchor" href="#找到-sra-提交入口并创建一个新的-submission"></a> 找到 SRA 提交入口并创建一个新的 submission</h3>
+<p>打开NCBI主页 <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/">https://www.ncbi.nlm.nih.gov/</a>，并点击 submit。页面打开后，向下拉找到SRA，再点击 submit。进入 my submissions 页面，底部列表中可以看到过往提交的内容以及当前处理状态，没完成的任务也在里面。点击 new submit，跟着网页的引导继续填资料即可。</p>
+<h3 id="1-submitter"><a class="markdownIt-Anchor" href="#1-submitter"></a> 1. Submitter</h3>
+<p>如果第一次提交数据，系统先提醒认证个人信息，其中邮箱需要两个，在过去要求有一个必须是教育网 edu 的邮箱，现在似乎没有这个要求了。如果该账号以前提交过数据，那么系统会确认提交者个人信息是否正确并分配任务编号。检查无误，然后点击“continue”按钮往下一页。</p>
+<p>如果以前提交过数据，则这一步的个人信息栏目无需再填.</p>
+<p><img src="https://i.imgur.com/i3RCAMR.jpeg" alt="" /></p>
+<h3 id="2-general-info"><a class="markdownIt-Anchor" href="#2-general-info"></a> 2. General info</h3>
+<p>这一步是填写所提交数据是作为独立的一次实验数据，还是属于之前提交过的某个项目的子数据集，以及设定数据 release date（公开日期）。为了节省信息填报时间，项目和样品信息这里可以选NO，这些信息系统可以自动生成。数据 release date 按个人需求大概填写，该日期在数据提交完后还可以修改。然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/ly0iS0o.png" alt="" /></p>
+<h3 id="3-project-info"><a class="markdownIt-Anchor" href="#3-project-info"></a> 3. Project info</h3>
+<p>这一步填写一个数据相关的标题和小结，类似于投文章的 title 和 abstract。带 * 的 Project title 和 description 简单填写。Relevance 根据自身研究内容选，我的数据是农业相关。其他内容暂不管。然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/jWv2UXp.png" alt="" /></p>
+<h3 id="4-biosample-type"><a class="markdownIt-Anchor" href="#4-biosample-type"></a> 4. Biosample type</h3>
+<p>这里填写样品类型，是植物还是动物之类的。样品类型关系到后面需要下载和填写的信息，要看清楚。我的是植物样本，直接选了 plant，然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/feV1xCL.png" alt="" /></p>
+<h3 id="5-biosample-attributes"><a class="markdownIt-Anchor" href="#5-biosample-attributes"></a> 5. Biosample attributes</h3>
+<p>这一步填写每个测序样本的信息以及相关属性。需要填写的信息较多，最好是本地做好表格再上传。先下载模版，按要求填好后再上传。注意：organism 的拉丁名一定要写对，否则可能需要至少2天才能改过来。如果不确定名称，可以去 NCBI 中搜索，确保准确。注意：每个样品不是依据样品名称的差异来区分的，而是利用多个属性组合把每个样品区分开。所以不能仅仅是样品名称不同，其他属性都相同，应该能填的属性多填几个，保证样品之间总有某个或多个属性不同，这样就能区分样品。具体填写可参考我的表格。如果上传不成功，系统会给错误提示。报错后，删除旧表，修改信息，重新传。上传完就 continue。</p>
+<p><font face="Georgia" color=red>Note：这一步我就遇到了问题。按照网页下载的模板 Excel 文件，填写各个样品名称以及样品相关的信息（植物品种、提交人、处理信息等），然后在网页端上传，结果显示不通过。明明我填写的样品名字都是唯一的，没有冗余（如例 1 图所示），怎么会报错呢。原来是需要自己额外增加一个列，关于生物学重复的属性，列名为“replicate”，然后将各个样品的生物学重复信息填写，比如 biological replicate 1、biological replicate 2、biological replicate 3（如例 2 图所示）。</font></p>
+<p><img src="https://i.imgur.com/ma2pMqi.png" alt="" /></p>
+<p><img src="https://i.imgur.com/W0okDKR.png" alt="例 1" /></p>
+<p><img src="https://i.imgur.com/aMsu9BN.jpeg" alt="例 2" /></p>
+<h3 id="6-sra-metadata"><a class="markdownIt-Anchor" href="#6-sra-metadata"></a> 6. SRA metadata</h3>
+<p>上一步已经填写了所有待提交的样品名，这一步就提交另一个表格：样品对应的文件名信息。先下载模版（SRA_metadata.xlsx），填好后上传。模板表格有三个 sheets，先看 sheet1 里的说明，然后再填 SRA_data 表中的信息。样品名称要和上一步表格中一致。可参考我的表格，我的是 ILLUMINA 平台双端测序的转录组数据，每个样品有两个压缩数据包，分别是 1 和 2，填在 filename 和 filename1 栏中。将 SRA_data 这个页面导出为以 tab 分隔的文本格式文件（txt）并上传即可。</p>
+<p><img src="https://i.imgur.com/LtKxeIm.png" alt="" /></p>
+<p><img src="https://i.imgur.com/UTJQvR4.png" alt="" /></p>
+<h3 id="7-file"><a class="markdownIt-Anchor" href="#7-file"></a> 7. File</h3>
+<p>这一步就到了将测序原始数据上传到 NCBI 数据库，如果数据量很小（&lt; 10 G），估计直接网页端上传就可以。但是我有超过 50 G，用网页上传失败。查了好几个网上的心得分享，对于几十 G 数据甚至更大量数据，都推荐选用 Aspera 高速上传的方法。那么执行以下步骤：</p>
+<ol>
+<li>选择“FTP or Aspera Command file preload”，并点击“Select preload folder”，此时网页上会显示 Aspera Command-Line 的信息，即 cmd 命令行。注意 Aspera command line 中包含的上传命令，等一下在自己电脑 cmd 命令上传时候需要用到。</li>
+<li>点击网页上出现的 key file，下载得到 aspera.openssh。</li>
+<li>安装 aspera 这个软件，在网址 <a target="_blank" rel="noopener" href="http://downloads.asperasoft.com/connect2/">http://downloads.asperasoft.com/connect2/</a>，下载之后得到安装文件 <code>ibm-aspera-connect_4.2.2.135_win64.msi</code>，双击按照软件自身的引导进行安装，默认安装位置：<code>C:\Program Files\IBM\Aspera Connect\bin</code>。</li>
+<li>接下来就是上传数据，先将所有测序文件放在一个文件夹中，比如 <code>D:\seq_data</code>；然后将 key file 放在另一个文件目录，比如 <code>D:\key_file</code>； 在 windows 电脑进入 cmd 界面，进入上面所述的 Aspera 安装目录，再依据网页给出的 Aspera 命令进行数据提交，如下代码框所示。我的网速比较快，接近 100 Mb/s，所以一两个小时就传输完毕 50 G 数据。</li>
+<li>所有数据上传完后，点击 NCBI 网页中的 Select preload folder，选择自己文件夹名字（比如我下面的命令中用的 seq_data，那么此时 NCBI 网页上会显示 seq_data 这个字符）。然后点击 continue 进入下一步。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd C:\Program Files\IBM\Aspera Connect\bin</span><br><span class="line">ascp.exe -i D:\key_file\aspera.openssh -QT -l100m -k1 -d D:\seq_data\ subasp@upload.ncbi.nlm.nih.gov:uploads/myemailinfo_xxxx</span><br></pre></td></tr></table></figure>
+<p><font face="Georgia" color=red>Note: 我在这一步遇到的问题就是一开始不知道怎么生成自己专属的 key file 和 Aspera command line，原来选择“FTP or Aspera Command file preload”之后是不会生成这些信息，必须点击“Select preload folder”才可以。</font></p>
+<p><img src="https://i.imgur.com/5CPUhMR.png" alt="" /></p>
+<p><img src="https://i.imgur.com/s8j5VR2.jpeg" alt="" /></p>
+<p><img src="https://i.imgur.com/dXgSCi0.jpeg" alt="" /></p>
+<h3 id="8-review-submit"><a class="markdownIt-Anchor" href="#8-review-submit"></a> 8. Review &amp; submit</h3>
+<p>最后整体检查一下所有表格和数据内容，没问题就点击 submit。整个提交完毕，等待 NCBI 系统处理。可以在 my submissions 中查看处理进度。系统处理完后可以查看 accession number，稍后我们也会收到官方的邮件通知。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1806824">最新 （2021版_Windows）| 测序原始数据上传NCBI的详细过程</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.bgitechsolutions.com/resources/95">华大科技：NCBI数据上传</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.bgitechsolutions.com/storage/tool/NCBI%20data%20upload.zip">华大科技：《上传clean reads至NCBI的SRA帮助文档-v2.pdf》</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/29/Time-Series-Clustering/" rel="prev" title="Bioinfo | 时间序列分析">
+      <i class="fa fa-chevron-left"></i> Bioinfo | 时间序列分析
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ncbi-%E8%B4%A6%E5%8F%B7%E6%B3%A8%E5%86%8C"><span class="nav-number">1.</span> <span class="nav-text"> NCBI 账号注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E5%88%B0-sra-%E6%8F%90%E4%BA%A4%E5%85%A5%E5%8F%A3%E5%B9%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84-submission"><span class="nav-number">2.</span> <span class="nav-text"> 找到 SRA 提交入口并创建一个新的 submission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-submitter"><span class="nav-number">3.</span> <span class="nav-text"> 1. Submitter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-general-info"><span class="nav-number">4.</span> <span class="nav-text"> 2. General info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-project-info"><span class="nav-number">5.</span> <span class="nav-text"> 3. Project info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-biosample-type"><span class="nav-number">6.</span> <span class="nav-text"> 4. Biosample type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-biosample-attributes"><span class="nav-number">7.</span> <span class="nav-text"> 5. Biosample attributes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-sra-metadata"><span class="nav-number">8.</span> <span class="nav-text"> 6. SRA metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-file"><span class="nav-number">9.</span> <span class="nav-text"> 7. File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-review-submit"><span class="nav-number">10.</span> <span class="nav-text"> 8. Review &amp; submit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">11.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -8878,4 +8878,63 @@ Node.js下载地址：Node.js官网</p>
         <category>Bioinfo</category>
       </categories>
   </entry>
+  <entry>
+    <title>Bioinfo | 如何向 NCBI 的 SRA 数据库提交 RNA seq 的原始数据（2022 年版本）</title>
+    <url>/2022/09/20/Deposit-RNA-sequencing-data-to-NCBI-SRA-database/</url>
+    <content><![CDATA[<p>在测序相关文章投稿的过程中，杂志社多要求作者将测序的原始数据提交到公开数据库（例如 NCBI 的 SRA 数据库），并获得一个数据编号，即 Accession Number。网络上有不少热心的同行分享关于 NCBI 提交数据的流程，比如<a href="http://www.bgitechsolutions.com/resources/95">某测序公司</a>和<a href="https://cloud.tencent.com/developer/article/1806824">某微信公众号</a>，但是 NCBI 的数据提交系统近年有做改版，流程跟前几年已经有所不同。这里做一个简单记录。</p>
+<span id="more"></span>
+<h3 id="ncbi-账号注册"><a class="markdownIt-Anchor" href="#ncbi-账号注册"></a> NCBI 账号注册</h3>
+<p>打开 NCBI 主页 <a href="https://www.ncbi.nlm.nih.gov/">https://www.ncbi.nlm.nih.gov/</a>，直接点击登录，我以前的私人 email 注册过 NCBI，但是密码忘了，点击“忘记密码”都无法找回或重设密码，但是现在可以用第三方账号登录，所以我点击了“ORCID”，因为我已经注册过 ORCID，跟随 NCBI 网站引导输入 ORCID 的账户密码即可登录 NCBI。</p>
+<h3 id="找到-sra-提交入口并创建一个新的-submission"><a class="markdownIt-Anchor" href="#找到-sra-提交入口并创建一个新的-submission"></a> 找到 SRA 提交入口并创建一个新的 submission</h3>
+<p>打开NCBI主页 <a href="https://www.ncbi.nlm.nih.gov/">https://www.ncbi.nlm.nih.gov/</a>，并点击 submit。页面打开后，向下拉找到SRA，再点击 submit。进入 my submissions 页面，底部列表中可以看到过往提交的内容以及当前处理状态，没完成的任务也在里面。点击 new submit，跟着网页的引导继续填资料即可。</p>
+<h3 id="1-submitter"><a class="markdownIt-Anchor" href="#1-submitter"></a> 1. Submitter</h3>
+<p>如果第一次提交数据，系统先提醒认证个人信息，其中邮箱需要两个，在过去要求有一个必须是教育网 edu 的邮箱，现在似乎没有这个要求了。如果该账号以前提交过数据，那么系统会确认提交者个人信息是否正确并分配任务编号。检查无误，然后点击“continue”按钮往下一页。</p>
+<p>如果以前提交过数据，则这一步的个人信息栏目无需再填.</p>
+<p><img src="https://i.imgur.com/i3RCAMR.jpeg" alt="" /></p>
+<h3 id="2-general-info"><a class="markdownIt-Anchor" href="#2-general-info"></a> 2. General info</h3>
+<p>这一步是填写所提交数据是作为独立的一次实验数据，还是属于之前提交过的某个项目的子数据集，以及设定数据 release date（公开日期）。为了节省信息填报时间，项目和样品信息这里可以选NO，这些信息系统可以自动生成。数据 release date 按个人需求大概填写，该日期在数据提交完后还可以修改。然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/ly0iS0o.png" alt="" /></p>
+<h3 id="3-project-info"><a class="markdownIt-Anchor" href="#3-project-info"></a> 3. Project info</h3>
+<p>这一步填写一个数据相关的标题和小结，类似于投文章的 title 和 abstract。带 * 的 Project title 和 description 简单填写。Relevance 根据自身研究内容选，我的数据是农业相关。其他内容暂不管。然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/jWv2UXp.png" alt="" /></p>
+<h3 id="4-biosample-type"><a class="markdownIt-Anchor" href="#4-biosample-type"></a> 4. Biosample type</h3>
+<p>这里填写样品类型，是植物还是动物之类的。样品类型关系到后面需要下载和填写的信息，要看清楚。我的是植物样本，直接选了 plant，然后点击“continue”按钮往下一页。</p>
+<p><img src="https://i.imgur.com/feV1xCL.png" alt="" /></p>
+<h3 id="5-biosample-attributes"><a class="markdownIt-Anchor" href="#5-biosample-attributes"></a> 5. Biosample attributes</h3>
+<p>这一步填写每个测序样本的信息以及相关属性。需要填写的信息较多，最好是本地做好表格再上传。先下载模版，按要求填好后再上传。注意：organism 的拉丁名一定要写对，否则可能需要至少2天才能改过来。如果不确定名称，可以去 NCBI 中搜索，确保准确。注意：每个样品不是依据样品名称的差异来区分的，而是利用多个属性组合把每个样品区分开。所以不能仅仅是样品名称不同，其他属性都相同，应该能填的属性多填几个，保证样品之间总有某个或多个属性不同，这样就能区分样品。具体填写可参考我的表格。如果上传不成功，系统会给错误提示。报错后，删除旧表，修改信息，重新传。上传完就 continue。</p>
+<p><font face="Georgia" color=red>Note：这一步我就遇到了问题。按照网页下载的模板 Excel 文件，填写各个样品名称以及样品相关的信息（植物品种、提交人、处理信息等），然后在网页端上传，结果显示不通过。明明我填写的样品名字都是唯一的，没有冗余（如例 1 图所示），怎么会报错呢。原来是需要自己额外增加一个列，关于生物学重复的属性，列名为“replicate”，然后将各个样品的生物学重复信息填写，比如 biological replicate 1、biological replicate 2、biological replicate 3（如例 2 图所示）。</font></p>
+<p><img src="https://i.imgur.com/ma2pMqi.png" alt="" /></p>
+<p><img src="https://i.imgur.com/W0okDKR.png" alt="例 1" /></p>
+<p><img src="https://i.imgur.com/aMsu9BN.jpeg" alt="例 2" /></p>
+<h3 id="6-sra-metadata"><a class="markdownIt-Anchor" href="#6-sra-metadata"></a> 6. SRA metadata</h3>
+<p>上一步已经填写了所有待提交的样品名，这一步就提交另一个表格：样品对应的文件名信息。先下载模版（SRA_metadata.xlsx），填好后上传。模板表格有三个 sheets，先看 sheet1 里的说明，然后再填 SRA_data 表中的信息。样品名称要和上一步表格中一致。可参考我的表格，我的是 ILLUMINA 平台双端测序的转录组数据，每个样品有两个压缩数据包，分别是 1 和 2，填在 filename 和 filename1 栏中。将 SRA_data 这个页面导出为以 tab 分隔的文本格式文件（txt）并上传即可。</p>
+<p><img src="https://i.imgur.com/LtKxeIm.png" alt="" /></p>
+<p><img src="https://i.imgur.com/UTJQvR4.png" alt="" /></p>
+<h3 id="7-file"><a class="markdownIt-Anchor" href="#7-file"></a> 7. File</h3>
+<p>这一步就到了将测序原始数据上传到 NCBI 数据库，如果数据量很小（&lt; 10 G），估计直接网页端上传就可以。但是我有超过 50 G，用网页上传失败。查了好几个网上的心得分享，对于几十 G 数据甚至更大量数据，都推荐选用 Aspera 高速上传的方法。那么执行以下步骤：</p>
+<ol>
+<li>选择“FTP or Aspera Command file preload”，并点击“Select preload folder”，此时网页上会显示 Aspera Command-Line 的信息，即 cmd 命令行。注意 Aspera command line 中包含的上传命令，等一下在自己电脑 cmd 命令上传时候需要用到。</li>
+<li>点击网页上出现的 key file，下载得到 aspera.openssh。</li>
+<li>安装 aspera 这个软件，在网址 <a href="http://downloads.asperasoft.com/connect2/">http://downloads.asperasoft.com/connect2/</a>，下载之后得到安装文件 <code>ibm-aspera-connect_4.2.2.135_win64.msi</code>，双击按照软件自身的引导进行安装，默认安装位置：<code>C:\Program Files\IBM\Aspera Connect\bin</code>。</li>
+<li>接下来就是上传数据，先将所有测序文件放在一个文件夹中，比如 <code>D:\seq_data</code>；然后将 key file 放在另一个文件目录，比如 <code>D:\key_file</code>； 在 windows 电脑进入 cmd 界面，进入上面所述的 Aspera 安装目录，再依据网页给出的 Aspera 命令进行数据提交，如下代码框所示。我的网速比较快，接近 100 Mb/s，所以一两个小时就传输完毕 50 G 数据。</li>
+<li>所有数据上传完后，点击 NCBI 网页中的 Select preload folder，选择自己文件夹名字（比如我下面的命令中用的 seq_data，那么此时 NCBI 网页上会显示 seq_data 这个字符）。然后点击 continue 进入下一步。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd C:\Program Files\IBM\Aspera Connect\bin</span><br><span class="line">ascp.exe -i D:\key_file\aspera.openssh -QT -l100m -k1 -d D:\seq_data\ subasp@upload.ncbi.nlm.nih.gov:uploads/myemailinfo_xxxx</span><br></pre></td></tr></table></figure>
+<p><font face="Georgia" color=red>Note: 我在这一步遇到的问题就是一开始不知道怎么生成自己专属的 key file 和 Aspera command line，原来选择“FTP or Aspera Command file preload”之后是不会生成这些信息，必须点击“Select preload folder”才可以。</font></p>
+<p><img src="https://i.imgur.com/5CPUhMR.png" alt="" /></p>
+<p><img src="https://i.imgur.com/s8j5VR2.jpeg" alt="" /></p>
+<p><img src="https://i.imgur.com/dXgSCi0.jpeg" alt="" /></p>
+<h3 id="8-review-submit"><a class="markdownIt-Anchor" href="#8-review-submit"></a> 8. Review &amp; submit</h3>
+<p>最后整体检查一下所有表格和数据内容，没问题就点击 submit。整个提交完毕，等待 NCBI 系统处理。可以在 my submissions 中查看处理进度。系统处理完后可以查看 accession number，稍后我们也会收到官方的邮件通知。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a href="https://cloud.tencent.com/developer/article/1806824">最新 （2021版_Windows）| 测序原始数据上传NCBI的详细过程</a></li>
+<li><a href="http://www.bgitechsolutions.com/resources/95">华大科技：NCBI数据上传</a></li>
+<li><a href="http://www.bgitechsolutions.com/storage/tool/NCBI%20data%20upload.zip">华大科技：《上传clean reads至NCBI的SRA帮助文档-v2.pdf》</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Bioinfo</category>
+      </categories>
+  </entry>
 </search>

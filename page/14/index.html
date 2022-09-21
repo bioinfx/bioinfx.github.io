@@ -189,6 +189,188 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Bioinfo-pacbio-sequencing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/25/Bioinfo-pacbio-sequencing/" class="post-title-link" itemprop="url">PacBio测序：专有名词的定义</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-25 14:32:42" itemprop="dateCreated datePublished" datetime="2016-02-25T14:32:42+08:00">2016-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal%5C_PacBio%5C_Glossary.htm">http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal\_PacBio\_Glossary.htm</a></p>
+<h2 id="smrt-portal-help"><a class="markdownIt-Anchor" href="#smrt-portal-help"></a> SMRT® Portal Help</h2>
+<h1 id="pacific-biosciences-terminology"><a class="markdownIt-Anchor" href="#pacific-biosciences-terminology"></a> Pacific Biosciences Terminology</h1>
+<h2 id="general-terminology"><a class="markdownIt-Anchor" href="#general-terminology"></a> General Terminology</h2>
+<ul>
+<li>SMRT® Cell: Consumable substrates comprising arrays of zero-mode waveguide nanostructures.</li>
+<li>Adapters: Exogenous nucleic acids that are ligated to a nucleic acid molecule to be sequenced. For example, SMRTbell™ adapters are hairpin loops that are ligated to both ends of the double stranded DNA insert to produce a SMRTbell™ sequencing template. When adapter sequences are removed from a CCS read, the read is split into multiple subreads.</li>
+<li>Movie: Real-time observation of a SMRT® Cell.</li>
+<li>zero-mode waveguide (ZMW): A nanophotonic device for confining light to a small observation volume. This can be, for example, a small hole in a conductive layer whose diameter is too small to permit the propagation of light in the wavelength range used for detection. Physically part of a SMRT® Cell.</li>
+<li>Sequencing ZMW: A ZMW (zero-mode waveguide) that is expected to be able to produce a sequence if it is populated with a polymerase. ZMWs used for automated SMRT Cell alignment are not considered sequencing ZMWs.</li>
+<li>Run: Specifies</li>
+<li>The wells and SMRT Cells to include in the sequencing run.</li>
+<li>The collection and analysis protocols to use for the selected wells and cells.</li>
+</ul>
+<h2 id="read-terminology"><a class="markdownIt-Anchor" href="#read-terminology"></a> Read Terminology</h2>
+<p><img src="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/3Part_Reads_Def.png" alt="" /></p>
+<ul>
+<li>polymerase read (formerly called “read”): A sequence of nucleotides incorporated by the DNA polymerase while reading a template, such as a circular SMRTbell™ template. Polymerase reads are most useful for quality control of the instrument run. Polymerase read metrics primarily reflect movie length and other run parameters rather than insert size distribution. Polymerase reads are trimmed to include only the high quality region; they include sequences from adapters; and can further include sequence from multiple passes around a circular template.</li>
+<li>subread: Each polymerase read is partitioned to form one or more subreads, which contain sequence from a single pass of a polymerase on a single strand of an insert within a SMRTbell™ template and no adapter sequences. The subreads contain the full set of quality values and kinetic measurements. Subreads are useful for applications like <em>de novo</em> assembly, resequencing, base modification analysis, and so on.</li>
+<li>circular consensus (CCS) read: The consensus sequence determined using subreads taken from a single ZMW. This is not aligned against a reference sequence. In contrast to Reads of Insert, CCS reads require at least two full-pass subreads from the insert.</li>
+<li>read of insert: Represents the highest quality single sequence for an insert, regardless of the number of passes. For example, if your template received one-and-a-half subreads, that information will be combined into a Read of Insert. CCS is an example of a special case where at least two full subreads are collected for an insert. Reads of Insert give the most accurate estimate of the length of the insert sequence loaded onto a SMRT® Cell. For long templates, Reads of Insert may be the same as Polymerase Reads.</li>
+</ul>
+<h2 id="read-length-terminology"><a class="markdownIt-Anchor" href="#read-length-terminology"></a> Read Length Terminology</h2>
+<p><img src="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Mapped_Length.png" alt="" /></p>
+<ul>
+<li>mapped polymerase read length: The total number of bases along a read from the first adapter or aligned subread to the last adapter or aligned subread. Approximates the sequence produced by a polymerase in a ZMW.</li>
+<li>mapped subread length: The length of the subread alignment to a target reference sequence. This does not include the adapter sequence.</li>
+<li>polymerase read length: The total number of bases produced from a ZMW after trimming. This may include the adapter sequence.</li>
+</ul>
+<h2 id="primary-analysis-terminology"><a class="markdownIt-Anchor" href="#primary-analysis-terminology"></a> Primary Analysis Terminology</h2>
+<ul>
+<li>
+<p>Primary analysis protocol: Specifies signal processing of the movie, base calling of the traces/pulses, and quality assessment of the base calls. Primary analysis is always performed on the instrument.</p>
+</li>
+<li>
+<p>Adapter Screening: Annotates adapter read locations. Used to break a read into subreads during secondary analysis mapping and Circular Consensus.</p>
+</li>
+<li>
+<p>High Quality Region Screening: Annotates the high quality sequencing regions of a read to be used during Raw Read Trimming.</p>
+</li>
+<li>
+<p>Insert Screening: Annotates insert DNA regions in the Polymerase Read.</p>
+</li>
+<li>
+<p>Quality Value Assignment: A prediction of the error probability of a basecall.</p>
+</li>
+<li>
+<p>Quality Value (QV): The total probability that the basecall is an insertion or substitution or is preceded by a deletion. QV = -10 * log10(p). For example, QV 20 is 99% accurate, QV 30 is 99.9% accurate, and QV 50 is 99.999% accurate.</p>
+</li>
+<li>
+<p>Insertion QV: The probability that the basecall is an insertion with respect to the true sequence.</p>
+</li>
+<li>
+<p>Deletion QV: The probability that a deletion error occurred before the current base.</p>
+</li>
+<li>
+<p>Substitution QV: The probability that the basecall is a substitution.</p>
+</li>
+<li>
+<p>raw read trimming: Extraction of high quality regions from an unfiltered read. Trimming of an unfiltered read produces a polymerase read.</p>
+</li>
+<li>
+<p>Read Quality Assignment: A trained prediction of a read’s mapped accuracy based on its pulse and base file characteristics (peak signal-to-noise ratio, average base QV, interpulse distance, and so on). This is used during secondary analysis filtering.</p>
+</li>
+</ul>
+<h2 id="secondary-analysis-terminology"><a class="markdownIt-Anchor" href="#secondary-analysis-terminology"></a> Secondary Analysis Terminology</h2>
+<ul>
+<li>
+<p>Secondary analysis protocol: Specifies how to</p>
+</li>
+<li>
+<p>Align a group of reads to a reference sequence to produce a consensus sequence.</p>
+</li>
+<li>
+<p>Assemble a set of reads into contigs to produce a <em>de novo</em> sequence.</p>
+</li>
+<li>
+<p>Identify insertions, deletions, and SNPs.</p>
+</li>
+<li>
+<p>Evaluate consensus quality and quality of the instrument run.</p>
+</li>
+<li>
+<p>Consensus: Generation of a consensus sequence from multiple-sequence alignment.</p>
+</li>
+<li>
+<p><em>De Novo</em> Assembly: Assembly of all subreads without a reference sequence.</p>
+</li>
+<li>
+<p>Filtering: Removes reads that do not meet the Read Quality and Read Length parameters set by the user. The current default filtering parameters defined by Pacific Biosciences are:</p>
+</li>
+<li>
+<p>Read Quality ≥ .75 (as of SMRT Analysis v2.1)</p>
+</li>
+<li>
+<p>Read Length ≥ 50 bases</p>
+</li>
+<li>
+<p>Mapping: Local alignment of a read or subread to a reference sequence.</p>
+</li>
+</ul>
+<h2 id="accuracy-terminology"><a class="markdownIt-Anchor" href="#accuracy-terminology"></a> Accuracy Terminology</h2>
+<ul>
+<li>circular consensus accuracy: Accuracy based on multiple sequencing passes around a single circular template molecule.</li>
+<li>consensus accuracy: Accuracy based on aligning multiple sequencing reads or subreads together, optionally with a reference sequence.</li>
+<li>polymerase read quality: A trained prediction of a read’s mapped accuracy based on its pulse and base file characteristics (peak signal-to-noise ratio, average base QV, inter-pulse distance, and so on).</li>
+<li>Subread Accuracy: The post-mapping accuracy of the basecalls.</li>
+<li>Formula: [1 - (errors/subread length)], where errors = number of deletions + insertions + substitutions.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/22/linux-using-parallel-for-a-task/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1027,137 +1209,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/21/Bioinfo-coexpression-network-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/21/Bioinfo-coexpression-network-analysis/" class="post-title-link" itemprop="url">转：大样本RNA-seq数据的共表达网络分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-11-21 00:55:06" itemprop="dateCreated datePublished" datetime="2015-11-21T00:55:06+08:00">2015-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 11:53:51" itemprop="dateModified" datetime="2020-12-08T11:53:51+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p></p>
-<p><strong>大样本RNA-seq数据的救星——共表达网络分析</strong></p>
-<p></p>
-<p><strong>什么是共表达网络分析?</strong></p>
-<p>基因共表达网络分析（Gene Co-expression Network Analysis）是根据基因表达信号值的动态变化，计算基因间的共表达关系，来建立基因转录调控模型，得到基因间的表达调控关系及调控方向，从而寻找一个或多个物种在不同发育阶段、不同组织在不同条件或处理时的全部基因表达调控网络模型以及关键基因，从而系统的研究生物体复杂的生命现象。最典型的方法就是WGCNA（Weighted Correlation Network analysis），基于基因表达网络权重构建，描述基因表达的关联模式的R程序包。简单点说就是，根据基因的表达量可以计算相关性，但是加入一些新的权重，比如处理条件等，就可以把基因表达与条件相互结合来分析两者之间的相关性或者关联性啦。</p>
-<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171402vxwez00ajes3x3hd.png.thumb.jpg" alt="" /></p>
-<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403sygryfqqqfy2zci2.png.thumb.jpg" alt="" /></p>
-<p>参考文献：Xue Z, Huang K, Cai C, et al. Genetic programs in human and mouse early embryos revealed by single-cell RNA [thinsp] sequencing[J]. Nature, 2013, 500(7464): 593-597.  <strong>当大样本量遇上WGCNA</strong> 如果我们的表达量数据是两组或者少数几组数据，相关性分析不准确，使用组间差异表达分析，聚类分析就可以了。如果我们想研究同一个组织不同的发育阶段、处理条件下不同时间点的应答或者不同器官/组织类型的发育调控，并且样本数目比较多的情况下（非重复样本数目5个以上，注意：是非重复哦~），想通过两两之间的相互比较，明显是行不通的。而WGCNA刚好适用于大规模的数据分析。  <strong>WGCNA构建方法</strong> WGCNA是从大规模数据中挖掘模块（module）信息的算法，在该方法中模块被定义为一组具有类似表达谱的基因，如果某些基因在一个生理过程或不同组织中总是具有相类似的表达变化，那么我们有理由认为这些基因在功能上是相关的，可以把他们定义为一个模块。比如上图a聚类树的不同分支就代表不同的基因模块。 下一步就需要研究模块与关注性状的相关性（WGCNA会使用不同的颜色对模块进行命名区分），如下图所示：</p>
-<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403cq9uer9xaxum7twz.png.thumb.jpg" alt="" /></p>
-<p>各基因模块与组织的相关性分析</p>
-<p>之后可以通过功能注释鉴定模块的功能，通过模块内部基因的关联网络，找到该模块的关键基因，如下图所示。</p>
-<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403zpympkja8mb4jtod.png.thumb.jpg" alt="" /></p>
-<p>参考文献：Hollender C A, Kang C, Darwish O, et al. Floral transcriptomes in woodland strawberry uncover developing receptacle and anther gene networks[J]. Plant physiology, 2014, 165(3): 1062-1075. 转录调控类文章，一般最终都会落实到某个或某些关键基因的讨论，所以共表达网络分析有助于从复杂的数据整理中筛选出关键的基因。那么，就让我们来看看WGCNA的效果吧。  <strong>WGCNA效果</strong> 下表所列的就是部分基于WGCNA所发表的文章</p>
-<p>Years</p>
-<p>Species</p>
-<p>Publication</p>
-<p>IF</p>
-<p>Article</p>
-<p>2015</p>
-<p>Human</p>
-<p>Nature neuroscience</p>
-<p>16.059</p>
-<p>Coexpression networks identify brain region-specific enhancer RNAs in the human brain</p>
-<p>2015</p>
-<p>Maize</p>
-<p>Plant cell</p>
-<p>9.338</p>
-<p>RNA Sequencing of Laser-Capture Microdissected Compartments of the Maize Kernel Identifies Regulatory Modules Associated with Endosperm Cell Differentiation</p>
-<p>2015</p>
-<p>Maize</p>
-<p>PNAS</p>
-<p>9.674</p>
-<p>Transcriptome dynamics of developing maize leaves and genomewide prediction of cis elements and their cognate transcription factors</p>
-<p>2014</p>
-<p>Human</p>
-<p>Nature communications</p>
-<p>11.47</p>
-<p>Gene co-expression network analysis reveals common system-level properties of prognostic genes across cancer types</p>
-<p>2014</p>
-<p>Human</p>
-<p>Cell reports</p>
-<p>8.358</p>
-<p>MicroRNAs establish robustness and adaptability of a critical gene network to regulate progenitor fate decisions during cortical neurogenesis</p>
-<p>2013</p>
-<p>Human and mouse</p>
-<p>Nature</p>
-<p>41.456</p>
-<p>Genetic programs in human and mouse early embryos revealed by single-cell RNA sequencing</p>
-<p>2013</p>
-<p>Human</p>
-<p>Cell</p>
-<p>32.242</p>
-<p>Integrative functional genomic analyses implicate specific molecular pathways and circuits in autism</p>
-<p><a target="_blank" rel="noopener" href="http://www.seq.cn/forum.php?mod=viewthread&amp;tid=5414967">http://www.seq.cn/forum.php?mod=viewthread&amp;tid=5414967</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1229,7 +1280,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">176</span>
+          <span class="site-state-item-count">177</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

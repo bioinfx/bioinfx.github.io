@@ -189,6 +189,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/07/25/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%9A%E4%BD%BF%E7%94%A8mega%E6%9E%84%E5%BB%BA%E8%BF%9B%E5%8C%96%E6%A0%91/" class="post-title-link" itemprop="url">学习笔记：使用MEGA构建进化树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-07-25 22:10:03" itemprop="dateCreated datePublished" datetime="2016-07-25T22:10:03+08:00">2016-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>参考资料： <a target="_blank" rel="noopener" href="http://mbe.oxfordjournals.org/content/early/2013/03/13/molbev.mst012.full">Building Phylogenetic Trees from Molecular Data with MEGA</a> 如果需要对某个基因做进化树，首先需要得到其homologues，MEGA自带的blast可以做，提取fasta格式文件并作整理，序列名称遵循一定的规范，去掉其中多余字符。 导入序列之后，MEGA的菜单里alignment选项下有两个工具可以选择：clustal和muscle。推荐muscle，我经过实验测试发现muscle速度更快。如果比对的是编码基因的核酸序列，可见两个选项：<strong>Align DNA</strong> and **Align Codons，**就必须选择后者，即以氨基酸编码的顺序进行比对。 比对完毕的序列，缺口处会以“-”显示，可另存为*.meg格式的文件，或导出为新的fasta文件。随后在file选项下点击phylogenetic analysis，进入进化分析界面。在phylogeny选项下，有各种树选择：NJ、ML、MP等。 文中例子：构建MP树时候，有一个选项是是否选择删除所有的含有gap的column，文章作者认为不必要全部删除，有的可以留下。原文表述：<strong>Gaps/Missing Data Treatment</strong> determines how gaps are handled.<strong>Complete deletion</strong> means that MEGA5 ignores all columns in which there is a gap in any sequence. Unless there are very few gaps, that option can lose a lot of information because it removes a lot of sites from consideration. I prefer the <strong>Partial Deletion</strong> option in which sites with missing data are removed only as the need arises because that option retains more information.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/27/Bioinfo-preqc-of-sga/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1262,103 +1336,6 @@ The Sequin page at NCBI is [Sequin](http://www.ncbi.nlm.nih.gov/Sequin/). You ca
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/07/Bioinfo-pacbio-smrt-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/03/07/Bioinfo-pacbio-smrt-analysis/" class="post-title-link" itemprop="url">安装PacBio数据分析工具包SMRT Analysis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-03-07 15:55:16" itemprop="dateCreated datePublished" datetime="2016-03-07T15:55:16+08:00">2016-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="download-smrt-analysis"><a class="markdownIt-Anchor" href="#download-smrt-analysis"></a> Download SMRT Analysis</h2>
-<p>Download SMRT Analysis from PacBio DevNet (<a target="_blank" rel="noopener" href="http://www.pacbiodevnet.com/">http://www.pacbiodevnet.com</a>):</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377.run</span><br><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377-patch-3.run</span><br></pre></td></tr></table></figure>
-<h2 id=""><a class="markdownIt-Anchor" href="#"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#installation-summary"></a>Installation Summary</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">sudo mkdir $SMRT_ROOT</span><br><span class="line">sudo chown smrtanalysis:smrtanalysis $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">su -l smrtanalysis</span><br><span class="line">smrtanalysis-2.2.0.133377.run -p smrtanalysis-2.2.0.133377-patch-3.run --rootdir $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br><span class="line">$SMRT_ROOT/admin/bin/kodosd start</span><br></pre></td></tr></table></figure>
-<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#upgrade-summary"></a>Upgrade Summary</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su -l smrtanalysis</span><br><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop </span><br><span class="line">$SMRT_ROOT/admin/bin/smrtupdater -- -p smrtanalysis-2.2.0.133377-patch-3.run smrtanalysis-2.2.0.133377.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
-<p>Once SMRT Portal is installed, proceed to the following sections to complete setup:</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#set-up-smrt-portal">Set up SMRT Portal</a> (for new installations only)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#verify-the-installation">Verify the Installation</a> (for new installations <strong>and</strong> upgrades)</li>
-</ol>
-<h2 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#patch-summary"></a>Patch Summary</h2>
-<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop</span><br></pre></td></tr></table></figure>
-<p><strong>These two commands must be run as <code>root</code> (e.x. using <code>sudo</code>). Skip these commands if the files do not exist.</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /tmp/mysql_XXXXX.sock </span><br><span class="line">sudo rm $SMRT_ROOT/userdata/database/../../error.log </span><br></pre></td></tr></table></figure>
-<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$SMRT_ROOT/admin/bin/smrtupdater smrtanalysis-2.2.0.133377-patch-3.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
-<p>Note： [20180704]使用的过程中发现 SMRT analysis 还是会依赖系统的一些程序的，之前系统用的是 Python 2.7，运行SMRTanalysis中的甲基化分析流程没问题，前段时间将默认的 Python 换成了 Python 3.6（Anaconda），结果遇到甲基化分析中断，报错信息: <code>Exiting smrtpipe last error: SmrtExit task://016448/P_Mapping/covGFF Failed</code> 在bashrc中将默认的 Python 设置为 Python 2.7，然后甲基化分析就可以正常运行了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1430,7 +1407,7 @@ The Sequin page at NCBI is [Sequin](http://www.ncbi.nlm.nih.gov/Sequin/). You ca
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

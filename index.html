@@ -189,6 +189,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/14/Hoagland-%20Solution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/14/Hoagland-%20Solution/" class="post-title-link" itemprop="url">Plant | 霍格兰营养液的配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-10-14 14:10:07 / Modified: 18:24:36" itemprop="dateCreated datePublished" datetime="2022-10-14T14:10:07+08:00">2022-10-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>霍格兰营养液配方，记录在此，留存备用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/14/Hoagland-%20Solution/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/20/Deposit-RNA-sequencing-data-to-NCBI-SRA-database/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -927,95 +1002,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/15/Linux-adjust-space-in-home/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/15/Linux-adjust-space-in-home/" class="post-title-link" itemprop="url">Linux | 安装Linux系统之后还想调整home目录的空间怎么操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-05-15 15:32:13" itemprop="dateCreated datePublished" datetime="2022-05-15T15:32:13+08:00">2022-05-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-14 20:52:10" itemprop="dateModified" datetime="2022-07-14T20:52:10+08:00">2022-07-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>问题：2020 年的时候，服务器系统盘损坏导致系统无法开机，于是新加了一块硬盘作为 Linux 系统盘。系统盘 /dev/sda，拿一个 500 GB 的分区（/dev/sda3）作为系统安装位置，其余 3 TB 左右（/dev/sda5）则准备挂载到系统的某个目录下（比如/mnt/xxx）。但是同学习惯在 home 目录下做项目，于是 500 GB 的空间很快就不够用，同学采取 bind mount 的方法将其余空间也挂载到 home 目录下面。</p>
-<p>确定四下无人后, 开始搬家(复制). 使用 cp 命令复制时, 记得带上 -p 参数, 保留文件权限设置. 使用 root 权限, 假设目标分区为 /new_disk :</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -p -r /home /home_new/</span><br></pre></td></tr></table></figure>
-<p>新家已经建好, 我们先给老家弄个另外的门牌号, 以免把门牌号给新家后, 找不到老家了. 利用 mount –bind 把原 home 目录挂载到一个新目录:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home_bkp</span><br><span class="line">mount --bind /home /home_bkp</span><br></pre></td></tr></table></figure>
-<p>这时我们就可以在 /home_bkp 这个目录下找到老家的所有文件. 可以把 /home 这个门牌给新家了:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount --bind /home_new/home /home</span><br></pre></td></tr></table></figure>
-<p>至此 home 目录就扩大了。mount bind 是什么原理？有人说“当我们使用 bind 的时候，是将一个目录 A 挂载到另一个目录 B ，目录 B 原有的内容就被屏蔽掉了，目录 B 里面的内容就是目录 A 里面的内容。这和我们挂在其他分区到挂载点目录一样，目录 B 的内容还是存在的，只不过是被屏蔽了，当我们 umount B 后，原内容就会复现。”</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount --bind olddir newdir</span><br></pre></td></tr></table></figure>
-<p>如果执行了上面这个命令，在 olddir 和 newdir 都可以访问相同的内容，并且如果对其中一个目录内的内容进行了修改，在另一个目录会有相同的显示。</p>
-<p>最后，注意一点，如果机器重启，上面的挂载信息会丢失，造成不便，所以可以添加相关挂载信息到 /etc/fstab 文件。这样重启之后也会自动挂载。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home   /home_bkp   none    bind    0   0</span><br><span class="line">/home_new   /home   none    bind    0   0</span><br></pre></td></tr></table></figure>
-<p>备注：这样操作之后，重启还是没有自动挂载！还是需要重新 mount。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost fenglei]# mount --bind /home /home_bkp</span><br><span class="line">[root@localhost fenglei]# mount --bind /home_new/home /home</span><br></pre></td></tr></table></figure>
-<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料：</h3>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/liuxu0703/article/details/70225591">http://blog.csdn.net/liuxu0703/article/details/70225591</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1087,7 +1073,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -189,6 +189,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/08/25/fastq-quality-control-and-filtering/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/08/25/fastq-quality-control-and-filtering/" class="post-title-link" itemprop="url">Fastq quality control and filtering</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-08-25 16:35:04" itemprop="dateCreated datePublished" datetime="2015-08-25T16:35:04+08:00">2015-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>数据质量QC：<a target="_blank" rel="noopener" href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></strong> fastqc <strong>去除adapter：<a target="_blank" rel="noopener" href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a></strong> （Trimmomatic: A flexible read trimming tool for Illumina NGS data）</p>
+<blockquote>
+<p>java -jar trimmomatic-0.30.jar PE -phred33 input_forward.fq.gz input_reverse.fq.gz output_forward_paired.fq.gz output_forward_unpaired.fq.gz output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36</p>
+</blockquote>
+<p>**去除含N过多的Reads：① ITools ② <a target="_blank" rel="noopener" href="http://prinseq.sourceforge.net/manual.html">PRINSEQ</a> ** <em>Filter options</em></p>
+<p>-ns_max_p</p>
+<p>Filter sequence with more than ns_max_p percentage of Ns</p>
+<p>INT [0…100]</p>
+<p>-ns_max_n</p>
+<p>Filter sequence with more than ns_max_n Ns</p>
+<p>INT</p>
+<p><strong>去除含低质量碱基过多的Reads：</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -970,80 +1055,6 @@ listhet extract the position of each het</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/18/soap-denovo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/12/18/soap-denovo/" class="post-title-link" itemprop="url">基因组组装软件：SOAP denovo与ALLPATHS-LG</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2014-12-18 20:51:02" itemprop="dateCreated datePublished" datetime="2014-12-18T20:51:02+08:00">2014-12-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2009年12月，华大基因公司李瑞强等人开发的SOAP denovo第一个版本发表在《Genome Research》，题为“De novo assembly of human genomes with massively parallel short read sequencing”，截至2014年12月18日，引用次数达到1090次；（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）SOAP denovo算法利用kmer构建De Brujin Graph。   2010年12月，<a target="_blank" rel="noopener" href="http://www.broadinstitute.org/software/allpaths-lg/blog/">ALLPATHS-LG</a>由Broad Institue发布，适合于组装short reads数据，由Computational Research and Development group at the Broad Institute开发，2008年推出ALLPATHS，适用小型基因组，截至目前引用次数分别450；2011年升级版发布，可用于大型基因组，“High-quality draft assemblies of mammalian genomes from massively parallel sequence data”发布在《PNAS》，截至目前引用次数380。ALLPATHS-LG是现在行业内公认进行基因组_De novo_组装效果最好的软件。（<a target="_blank" rel="noopener" href="https://www.broadinstitute.org/software/allpaths-lg/blog/">https://www.broadinstitute.org/software/allpaths-lg/blog/</a>）   2011年12月，Steven L. Salzberg开发GAGE对8个组装软件对4个物种分别进行基因组组装，发布在《genome research》，标题“<a target="_blank" rel="noopener" href="http://genome.cshlp.org/content/early/2012/01/12/gr.131383.111">GAGE: A critical evaluation of genome assemblies and assembly algorithms</a>.”。评估发现，allpaths-lg综合性能最优，SOAP denovo虽然得到N50最高，但是准确率也很高。主要结论是数据质量非常重要，因此作者使用quake等软件进行数据纠错。Three overarching conclusions are apparent: first, that data quality, rather than the assembler itself, has a dramatic effect on the quality of an assembled genome; second, that the degree of contiguity of an assembly varies enormously among different assemblers and different genomes; and third, that the correctness of an assembly also varies widely and is not well correlated with statistics on contiguity. （<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/index.html">http://gage.cbcb.umd.edu/index.html</a>）   2012年，华大基因公司罗锐邦升级SOAP denovo到SOAP denovo2，发表在《BMC Giga Science》，题为“SOAPdenovo2: an empirically improved memory-efficient short-read de novo assembler”，SOAP denovo2有哪些升级？为了解决序列连续性、准确性、覆盖度，尤其是重复序列问题。优化之后的软件，reduces memory consumption in graph construction, resolves more repeat regions in contig assembly, increases coverage and length in scaffold construction, improves gap closing, and optimizes for large genome. 截至2014年12月18日，引用次数达到243次。（<a target="_blank" rel="noopener" href="http://soap.genomics.org.cn/soapdenovo.html">http://soap.genomics.org.cn/soapdenovo.html</a>）   2014年12月，冷泉港Michael C Schatz教授对水稻3个品种分别进行测序，即pan-genome研究，发布在《genome biology》，标题“Whole genome <em>de novo</em> assemblies of three divergent strains of rice, <em>Oryza sativa</em>, document novel gene space of <em>aus</em> and <em>indica</em>”，使用ALLPATHS-LG组装，然后将quake矫正的数据分别使用SOAP denovo和SGA进行组装，最后发现ALLPATHS-LG的组装效果最好。作者认为We hypothesize that ALLPATHS-LG achieved superior results because the algorithm automatically measures many of the properties of the sequencing data, and could therefore self-adjust the various cutoffs used by the algorithm for error correction, contigging, and scaffolding.   <em>fenglei</em> <em>2014-12-18</em></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1115,7 +1126,7 @@ listhet extract the position of each het</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

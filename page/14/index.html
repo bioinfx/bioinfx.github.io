@@ -189,6 +189,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/" class="post-title-link" itemprop="url">python套件 pbh5tools: PacBio rawdata 格式轉換</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-25 21:58:46" itemprop="dateCreated datePublished" datetime="2016-02-25T21:58:46+08:00">2016-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2016-09-06更新：pbh5tools是PacBio公司早期推出的数据分析工具，其后已经被SMRTanalysis工具所替换。SMRTanalysis的安装与使用都更简单，Linux安装之后可以直接在网页里面进行数据分析操作。 ====================================== 转载自：<a target="_blank" rel="noopener" href="http://jeffreyy.pixnet.net/">http://jeffreyy.pixnet.net/</a> PacBio 是第三代定序技術 (Third generation sequencing)的技術公司，目前的最新機型為RSII，最長長度可到30kb。 出來的rawdata其檔案格式為hdf5，其中有兩種，一個是bas.h5和bax.h5，其PacBio的文件有寫到以下: “Due to the increased throughput and read lengths achieved by the PacBio® RS II upgrade, this information is now contained in one bas.h5 file and three bax.h5 files.” <a target="_blank" rel="noopener" href="http://files.pacb.com/software/instrument/2.0.0/bas.h5%20Reference%20Guide.pdf">http://files.pacb.com/software/instrument/2.0.0/bas.h5 Reference Guide.pdf</a> hdf5 格式並無法直接觀看，如果要看序列，必須要經過格式轉換，PacBio有出一個軟體為pbh5tools來進行hdf5的格式轉換。   pbh5tools是以python寫的套件，所以安裝前需要安裝其他python套件，在安裝python套件用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 <a target="_blank" rel="noopener" href="http://blog.longwin.com.tw/2014/08/python-setup-pip-package-2014/">安裝 PIP 來管理 Python Packages</a> 除了python套件外，其他的套件還有python-devel 和 hdf5與其相關套件。   其安裝其他requirement套件指令為:</p>
+<blockquote>
+<p><code>sudo yum install python-pip python-devel.x86_64 hdf5-devel.x86_64 hdf5.x86_64 hdf5-mpich-devel.x86_64 hdf5-mpich.x86_64 hdf5-openmpi.x86_64 hdf5-openmpi-devel.x86_64</code> # 上述yum指令，对于没有root权限的Linux用户，该如何解决？？？（FL 2016-02-06备注） <code>sudo pip install --upgrade pip sudo pip install --upgrade nose sudo pip install --upgrade Cython sudo pip install --upgrade numpy sudo pip install --upgrade six sudo pip install --upgrade setuptools sudo pip install --upgrade pkgconfig sudo pip install --upgrade pysam sudo pip install --upgrade h5py sudo pip install --upgrade pbcore</code></p>
+</blockquote>
+<p>其中，pbcore需要python 2.7，故如果系統為python 2.6又無法利用yum升級上去，就必須手動安裝python 2.7，並注意需雙版本依存。 參考資料: <a target="_blank" rel="noopener" href="http://ruiaylin.github.io/2014/12/12/python%20update/">http://ruiaylin.github.io/2014/12/12/python update/</a> <a target="_blank" rel="noopener" href="https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only">https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only</a> <a target="_blank" rel="noopener" href="http://toomuchdata.com/2014/02/16/how-to-install-python-on-centos/">How to install Python 2.7 and Python 3.3 on CentOS 6</a> <a target="_blank" rel="noopener" href="http://tecadmin.net/install-python-2-7-on-centos-rhel/">How to Install Python 2.7.10 on CentOS/RHEL 7/6 and Fedora</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Bioinfo-pacbio-sequencing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1099,116 +1181,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/25/linux-add-new-harddisks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/25/linux-add-new-harddisks/" class="post-title-link" itemprop="url">给linux工作站添加新硬盘</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-11-25 13:50:22" itemprop="dateCreated datePublished" datetime="2015-11-25T13:50:22+08:00">2015-11-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>作者：haohaoo 来自：CnLinux.net工作笔记 转载请保留以上信息，谢谢 在服务器上把硬盘接好，启动linux，以root登陆。 比如我新加一块SCSI硬盘，需要将其分成三个区：</p>
-<blockquote>
-<p>#fdisk /dev/sdb</p>
-<p>进入fdisk模式：</p>
-<p>Command (m for help):p  //查看新硬盘的分区（FL备注：如果是新硬盘，将显示分区为空。）</p>
-<p>Command (m for help):n  //创建新分区（FL备注：输入n命令，将自动出现e和p的选项。）</p>
-<p>可以用m命令来看fdisk命令的内部命令；n命令创建一个新分区；d命令删除一个存在的分区；p命令显示分区列表；t命令修改分区的类型ID号；l命令显示分区ID号的列表；a命令指定启动分区；w命令是将对分区表的修改存盘让它发生作用。</p>
-<p>Command action</p>
-<p>e   extended   //输入e为创建扩展分区</p>
-<p>p   primary partition (1-4)   //输入p为创建主分区，这里我们选择p</p>
-<p>Partion number(1-4)：1  //第一个扩展分区，按你需求可以最多分4个主分区</p>
-<p>First Cylinder(1-1014,default 1):  1  //第一个主分区起始的磁盘块数</p>
-<p>Last cylindet or +siza or +sizeM or +sizeK: +1024MB  //可以是以MB为单位的数字或者以磁盘块数，这里我们输入+1024MB表示分区大小为1G。（FL备注：系统默认提示整个硬盘的大小作为一个分区，比如我新增挂载2TB的硬盘，则显示“default 243201”，我直接输入回车就选择这个默认数值即可。）</p>
-</blockquote>
-<p>这样我们就创建完一个分区，如果要创建更多分区可以照上面的步骤继续创建。 创建完后用w保存分区。</p>
-<p>Command (m for help): w</p>
-<p>The partition table has been altered!</p>
-<p>Calling ioctl() to re-read partition table.</p>
-<p>Syncing disks.</p>
-<p>这样就分区完，我们还要进行格式化</p>
-<p>#mkfs -t ext3 -c /dev/sdb1  //如果有多个分区，则分区修改为sdb2这样<br />
-<em>（格式化2TB的硬盘，耗时约3小时。20151125 FL备注）</em></p>
-<p>格式化完后我们需要进行挂载分区，</p>
-<p>#mkdir /mnt/www //创建/www目录，我们将把新的分区挂到www下</p>
-<p>#mount /dev/sdb1 /mnt/www  //将/dev/sdb1挂载到/www</p>
-<p># df  //用df命令进行查看</p>
-<p>Filesystem           1K-blocks      Used Available Use% Mounted on</p>
-<p>/dev/sda2              3771316   1388956   2190788  39% /</p>
-<p>/dev/sda1               101089      9463     86407  10% /boot</p>
-<p>none                     62988         0     62988   0% /dev/shm</p>
-<p>/dev/sdb1               485906      8239    452580   2% /www  //看到了，这就是我们刚</p>
-<p>才新挂载的分区</p>
-<p>到这里我们工作已接近尾声了，不过我们如果这样就结束的话，我们每次重新启动服务器后都要 进行手工挂载，这样很麻烦，我们需要修改/etc/fstab文件来进行自动挂载。</p>
-<p>#vi /etc/fstab</p>
-<p>在文件的末尾填加如下内容：</p>
-<p>/dev/sdb1               /www                    ext3    defaults        1 2</p>
-<p>如有多个分区可修改sdb1和/www，修改完后保存，重起服务器。 到此我们添加新硬盘的工作结束了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1280,7 +1252,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

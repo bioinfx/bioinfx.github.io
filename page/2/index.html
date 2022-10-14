@@ -189,6 +189,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/15/Linux-adjust-space-in-home/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/15/Linux-adjust-space-in-home/" class="post-title-link" itemprop="url">Linux | 安装Linux系统之后还想调整home目录的空间怎么操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-15 15:32:13" itemprop="dateCreated datePublished" datetime="2022-05-15T15:32:13+08:00">2022-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-14 20:52:10" itemprop="dateModified" datetime="2022-07-14T20:52:10+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题：2020 年的时候，服务器系统盘损坏导致系统无法开机，于是新加了一块硬盘作为 Linux 系统盘。系统盘 /dev/sda，拿一个 500 GB 的分区（/dev/sda3）作为系统安装位置，其余 3 TB 左右（/dev/sda5）则准备挂载到系统的某个目录下（比如/mnt/xxx）。但是同学习惯在 home 目录下做项目，于是 500 GB 的空间很快就不够用，同学采取 bind mount 的方法将其余空间也挂载到 home 目录下面。</p>
+<p>确定四下无人后, 开始搬家(复制). 使用 cp 命令复制时, 记得带上 -p 参数, 保留文件权限设置. 使用 root 权限, 假设目标分区为 /new_disk :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -p -r /home /home_new/</span><br></pre></td></tr></table></figure>
+<p>新家已经建好, 我们先给老家弄个另外的门牌号, 以免把门牌号给新家后, 找不到老家了. 利用 mount –bind 把原 home 目录挂载到一个新目录:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home_bkp</span><br><span class="line">mount --bind /home /home_bkp</span><br></pre></td></tr></table></figure>
+<p>这时我们就可以在 /home_bkp 这个目录下找到老家的所有文件. 可以把 /home 这个门牌给新家了:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount --bind /home_new/home /home</span><br></pre></td></tr></table></figure>
+<p>至此 home 目录就扩大了。mount bind 是什么原理？有人说“当我们使用 bind 的时候，是将一个目录 A 挂载到另一个目录 B ，目录 B 原有的内容就被屏蔽掉了，目录 B 里面的内容就是目录 A 里面的内容。这和我们挂在其他分区到挂载点目录一样，目录 B 的内容还是存在的，只不过是被屏蔽了，当我们 umount B 后，原内容就会复现。”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount --bind olddir newdir</span><br></pre></td></tr></table></figure>
+<p>如果执行了上面这个命令，在 olddir 和 newdir 都可以访问相同的内容，并且如果对其中一个目录内的内容进行了修改，在另一个目录会有相同的显示。</p>
+<p>最后，注意一点，如果机器重启，上面的挂载信息会丢失，造成不便，所以可以添加相关挂载信息到 /etc/fstab 文件。这样重启之后也会自动挂载。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/home   /home_bkp   none    bind    0   0</span><br><span class="line">/home_new   /home   none    bind    0   0</span><br></pre></td></tr></table></figure>
+<p>备注：这样操作之后，重启还是没有自动挂载！还是需要重新 mount。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost fenglei]# mount --bind /home /home_bkp</span><br><span class="line">[root@localhost fenglei]# mount --bind /home_new/home /home</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料：</h3>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/liuxu0703/article/details/70225591">http://blog.csdn.net/liuxu0703/article/details/70225591</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/05/DOS-usual-commands/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1485,118 +1574,6 @@ K2b：前景支受到正选择压力（ ω&gt;1 ），而背景支处于中性�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/20/Proteomics-Top-down-proteomics-analysis-of-histones/" class="post-title-link" itemprop="url">Proteomics | Top-down proteomics analysis of histones</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-20 13:31:13 / Modified: 16:28:51" itemprop="dateCreated datePublished" datetime="2021-09-20T13:31:13+08:00">2021-09-20</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1-workflow"><a class="markdownIt-Anchor" href="#1-workflow"></a> 1 workflow</h3>
-<ol>
-<li>crude histone isolation from cells or tissues;</li>
-<li>offline HPLC to separete core histones  (H2, H3.1, H3.2, H4)</li>
-<li>LC-MS (raw data)</li>
-<li>MS data analysis</li>
-</ol>
-<p>Note: 图见 RGC proposal。</p>
-<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr1.jpg" alt="图例" /></p>
-<h3 id="2-offline-hplc"><a class="markdownIt-Anchor" href="#2-offline-hplc"></a> 2 Offline HPLC</h3>
-<p>Note：图见 RGC proposal</p>
-<p><img src="https://www.researchgate.net/profile/Yifan-Liu-41/publication/235775342/figure/fig2/AS:931921148276736@1599198724085/HPLC-and-SDS-PAGE-separation-of-core-histones_W640.jpg" alt="图例" /></p>
-<h3 id="3-ms1-chromatograph"><a class="markdownIt-Anchor" href="#3-ms1-chromatograph"></a> 3 MS1 chromatograph</h3>
-<p>首先要安装 Thermo Fisher 的 Xcalibur 软件。安装方法，<a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/login">https://thermo.flexnetoperations.com/control/thmo/login</a> ，使用教育邮箱注册，xx@link.cuhk.edu.hk，注册并登入，即可看到一系列软件的列表，我们选择 Xcalibur <a target="_blank" rel="noopener" href="https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT">https://thermo.flexnetoperations.com/control/thmo/product?child_plneID=820487&amp;ver=CURRENT</a>，可执行文件 exe 格式，将文件下载到windows电脑，再安装，安装的软件里面就包含了 freestype。</p>
-<p>将 raw data 导入 freestyle 软件，即可浏览 MS1 的图。如何导出高清图片？</p>
-<p><img src="" alt="图例" /></p>
-<h3 id="raw-data-to-pbf-和-ms2ft-格式文件"><a class="markdownIt-Anchor" href="#raw-data-to-pbf-和-ms2ft-格式文件"></a> raw data to pbf 和 ms2ft 格式文件。</h3>
-<p>使用 ProMex 软件，可以将 raw 格式的质谱文件转换成 pbf 和 ms2ft 格式文件。</p>
-<p>已经有公开的文献报道 top down proteomics 数据的分析方法 <a target="_blank" rel="noopener" href="https://www.nature.com/articles/nmeth.4388">NATURE METHODS: Informed-Proteomics: open-source software package for top-down proteomics</a>，可以去 <a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics">github</a> 下载 Informed Proteomics，软件处于持续更新中，本笔记撰写的 2021 年仍有更新。</p>
-<p>这些格式有什么不同呢？</p>
-<p>raw:<br />
-pbf: Creates a .pbf file This file contains spectra information and full chromatograms for MS1 and MSn data, allowing fast access to extracted ion chromatograms during the search.<br />
-ms2ft:</p>
-<p>“插播一句，这些格式转换的软件是 windows 平台的，如果要再 linux 下面跨平台运行，则需要用到 mono 软件，具体可以参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/jessepeng/p/12452276.html">https://www.cnblogs.com/jessepeng/p/12452276.html</a>。mono 的安装并不容易，可能有些普通用户会碰到问题，主要是依赖libgdiplus库，只要这个解决了，源码安装三部曲就行了，这里不加以赘述。”</p>
-<p>转换代码如下（参考：<a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics">https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics</a>）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PbfGen.exe -s MyDataset.raw</span><br><span class="line">ProMex.exe -i MyDataset.pbf -minCharge 2 -maxCharge 60 -minMass 3000 -maxMass 50000 -score n -csv n -maxThreads 0</span><br></pre></td></tr></table></figure>
-<h3 id="sequence-alignment-and-idntification-of-ptms"><a class="markdownIt-Anchor" href="#sequence-alignment-and-idntification-of-ptms"></a> sequence alignment and idntification of PTMs</h3>
-<p>得到pbf 和 ms2ft 文件之后，就可以检索蛋白序列和可能的修饰情况。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MSPathFinderT.exe -s MyDataset.pbf -feature MyDataset.ms1ft -d C:\FASTA\ProteinList.fasta -o C:\WorkDir -t 10 -f 10 -m 1 -tda 1 -minLength 21 -maxLength 300 -minCharge 2 -maxCharge 30 -minFragCharge 1 -maxFragCharge 15 -minMass 3000 -maxMass 50000 -mod MSPathFinder_Mods.txt</span><br></pre></td></tr></table></figure>
-<p>上面的 <code>Mods.txt</code> 文件即是可能的修饰情况，以大豆组蛋白为例，文件内容如下。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># This file is used to specify modifications for MSPathFinder</span><br><span class="line"></span><br><span class="line"># Max Number of Modifications per peptide</span><br><span class="line">NumMods=9</span><br><span class="line"></span><br><span class="line"># Static mods</span><br><span class="line"># None</span><br><span class="line"></span><br><span class="line"># Dynamic mods</span><br><span class="line"># Functional group, Amino acid, opt?, Position, Modification type</span><br><span class="line">O1,MC,opt,any,Oxidation</span><br><span class="line">HO3P,ST,opt,any,Phospho</span><br><span class="line">C2H2O1,K,opt,any,Acetyl</span><br><span class="line">CH2,KR,opt,any,Methyl</span><br><span class="line">C2H4,KR,opt,any,Dimethyl</span><br><span class="line">C3H6,K,opt,any,Trimethyl</span><br><span class="line">C2H2O,*,opt,Prot-N-term,Acetyl     # Acetylation Protein N-term (C2H2O can be replaced with &quot;H(2) C(2) O&quot;)  </span><br></pre></td></tr></table></figure>
-<p>运行结果，将得到一个 tsv （表格）文本文件，列出了可能的蛋白序列以及修饰情况，另有一个图片文件 <code>xxx.ms1ft.png</code>，意思？。</p>
-<h3 id="图片"><a class="markdownIt-Anchor" href="#图片"></a> 图片</h3>
-<p>上面的分析中，mods 文件中设定了一条蛋白序列上修饰的数目为 9 个，怎么确定这个数字是合理的？我设定为 10 个，跑了一天也没有结果，所以少于这10 会比较合适。另外需要画一个统计图，即从1到9个修饰的密度图，如果类似正态分布，就可以说明我们的设定是合理的。</p>
-<p><img src="https://www.researchgate.net/publication/329379093/figure/fig4/AS:699921351049216@1543885662248/Degree-distribution-All-the-networks-show-a-Poisson-distribution-as-corresponds-to_W640.jpg" alt="图例" /></p>
-<h3 id="图片-2"><a class="markdownIt-Anchor" href="#图片-2"></a> 图片</h3>
-<p>各个位点的修饰情况统计。</p>
-<p>（D:\博后课题文件\PHD5 project\200831 top-down proteomics in soybean\R代码-冯磊\ptm_freq_diagram\version 2 custom color）</p>
-<p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S1046202319301732-gr5.jpg" alt="图例" /></p>
-<h3 id="interplay-score"><a class="markdownIt-Anchor" href="#interplay-score"></a> Interplay Score</h3>
-<p>何谓 interplay score：<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1046202319301732">https://www.sciencedirect.com/science/article/pii/S1046202319301732</a><br />
-何为 co-existence？<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg</a></p>
-<p>两个修饰是否存在coexisence？</p>
-<p><img src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5240223/bin/nihms840427f5.jpg" alt="图例" /></p>
-<h3 id="样品之间的比较定量的问题"><a class="markdownIt-Anchor" href="#样品之间的比较定量的问题"></a> 样品之间的比较，定量的问题？</h3>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1668,7 +1645,7 @@ ms2ft:</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

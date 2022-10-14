@@ -189,6 +189,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/07/Bioinfo-pacbio-smrt-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/07/Bioinfo-pacbio-smrt-analysis/" class="post-title-link" itemprop="url">安装PacBio数据分析工具包SMRT Analysis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-07 15:55:16" itemprop="dateCreated datePublished" datetime="2016-03-07T15:55:16+08:00">2016-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="download-smrt-analysis"><a class="markdownIt-Anchor" href="#download-smrt-analysis"></a> Download SMRT Analysis</h2>
+<p>Download SMRT Analysis from PacBio DevNet (<a target="_blank" rel="noopener" href="http://www.pacbiodevnet.com/">http://www.pacbiodevnet.com</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377.run</span><br><span class="line">wget https://s3.amazonaws.com/files.pacb.com/software/smrtanalysis/2.2.0/smrtanalysis-2.2.0.133377-patch-3.run</span><br></pre></td></tr></table></figure>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#installation-summary"></a>Installation Summary</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">sudo mkdir $SMRT_ROOT</span><br><span class="line">sudo chown smrtanalysis:smrtanalysis $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">su -l smrtanalysis</span><br><span class="line">smrtanalysis-2.2.0.133377.run -p smrtanalysis-2.2.0.133377-patch-3.run --rootdir $SMRT_ROOT</span><br><span class="line"></span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br><span class="line">$SMRT_ROOT/admin/bin/kodosd start</span><br></pre></td></tr></table></figure>
+<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#upgrade-summary"></a>Upgrade Summary</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">su -l smrtanalysis</span><br><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop </span><br><span class="line">$SMRT_ROOT/admin/bin/smrtupdater -- -p smrtanalysis-2.2.0.133377-patch-3.run smrtanalysis-2.2.0.133377.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
+<p>Once SMRT Portal is installed, proceed to the following sections to complete setup:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#set-up-smrt-portal">Set up SMRT Portal</a> (for new installations only)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#verify-the-installation">Verify the Installation</a> (for new installations <strong>and</strong> upgrades)</li>
+</ol>
+<h2 id="-3"><a class="markdownIt-Anchor" href="#-3"></a> <a target="_blank" rel="noopener" href="https://github.com/PacificBiosciences/SMRT-Analysis/wiki/SMRT-Analysis-Software-Installation-v2.2.0#patch-summary"></a>Patch Summary</h2>
+<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SMRT_ROOT=/opt/smrtanalysis</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd stop</span><br></pre></td></tr></table></figure>
+<p><strong>These two commands must be run as <code>root</code> (e.x. using <code>sudo</code>). Skip these commands if the files do not exist.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /tmp/mysql_XXXXX.sock </span><br><span class="line">sudo rm $SMRT_ROOT/userdata/database/../../error.log </span><br></pre></td></tr></table></figure>
+<p><strong>These two commands must be run as <code>smrtanalysis</code> user.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$SMRT_ROOT/admin/bin/smrtupdater smrtanalysis-2.2.0.133377-patch-3.run</span><br><span class="line">$SMRT_ROOT/admin/bin/smrtportald-initd start</span><br></pre></td></tr></table></figure>
+<p>Note： [20180704]使用的过程中发现 SMRT analysis 还是会依赖系统的一些程序的，之前系统用的是 Python 2.7，运行SMRTanalysis中的甲基化分析流程没问题，前段时间将默认的 Python 换成了 Python 3.6（Anaconda），结果遇到甲基化分析中断，报错信息: <code>Exiting smrtpipe last error: SmrtExit task://016448/P_Mapping/covGFF Failed</code> 在bashrc中将默认的 Python 设置为 Python 2.7，然后甲基化分析就可以正常运行了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/06/Python-intro-anaconda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1711,7 +1808,7 @@ AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 17:02:16" itemprop="dateModified" datetime="2020-12-08T17:02:16+08:00">2020-12-08</time>
+                <time title="Modified: 2022-09-21 11:34:00" itemprop="dateModified" datetime="2022-09-21T11:34:00+08:00">2022-09-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1719,7 +1816,7 @@ AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
                 </span>
             </span>
 
@@ -2141,88 +2238,6 @@ setup.py文件的使用如下:</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/" class="post-title-link" itemprop="url">python套件 pbh5tools: PacBio rawdata 格式轉換</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-02-25 21:58:46" itemprop="dateCreated datePublished" datetime="2016-02-25T21:58:46+08:00">2016-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>2016-09-06更新：pbh5tools是PacBio公司早期推出的数据分析工具，其后已经被SMRTanalysis工具所替换。SMRTanalysis的安装与使用都更简单，Linux安装之后可以直接在网页里面进行数据分析操作。 ====================================== 转载自：<a target="_blank" rel="noopener" href="http://jeffreyy.pixnet.net/">http://jeffreyy.pixnet.net/</a> PacBio 是第三代定序技術 (Third generation sequencing)的技術公司，目前的最新機型為RSII，最長長度可到30kb。 出來的rawdata其檔案格式為hdf5，其中有兩種，一個是bas.h5和bax.h5，其PacBio的文件有寫到以下: “Due to the increased throughput and read lengths achieved by the PacBio® RS II upgrade, this information is now contained in one bas.h5 file and three bax.h5 files.” <a target="_blank" rel="noopener" href="http://files.pacb.com/software/instrument/2.0.0/bas.h5%20Reference%20Guide.pdf">http://files.pacb.com/software/instrument/2.0.0/bas.h5 Reference Guide.pdf</a> hdf5 格式並無法直接觀看，如果要看序列，必須要經過格式轉換，PacBio有出一個軟體為pbh5tools來進行hdf5的格式轉換。   pbh5tools是以python寫的套件，所以安裝前需要安裝其他python套件，在安裝python套件用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 <a target="_blank" rel="noopener" href="http://blog.longwin.com.tw/2014/08/python-setup-pip-package-2014/">安裝 PIP 來管理 Python Packages</a> 除了python套件外，其他的套件還有python-devel 和 hdf5與其相關套件。   其安裝其他requirement套件指令為:</p>
-<blockquote>
-<p><code>sudo yum install python-pip python-devel.x86_64 hdf5-devel.x86_64 hdf5.x86_64 hdf5-mpich-devel.x86_64 hdf5-mpich.x86_64 hdf5-openmpi.x86_64 hdf5-openmpi-devel.x86_64</code> # 上述yum指令，对于没有root权限的Linux用户，该如何解决？？？（FL 2016-02-06备注） <code>sudo pip install --upgrade pip sudo pip install --upgrade nose sudo pip install --upgrade Cython sudo pip install --upgrade numpy sudo pip install --upgrade six sudo pip install --upgrade setuptools sudo pip install --upgrade pkgconfig sudo pip install --upgrade pysam sudo pip install --upgrade h5py sudo pip install --upgrade pbcore</code></p>
-</blockquote>
-<p>其中，pbcore需要python 2.7，故如果系統為python 2.6又無法利用yum升級上去，就必須手動安裝python 2.7，並注意需雙版本依存。 參考資料: <a target="_blank" rel="noopener" href="http://ruiaylin.github.io/2014/12/12/python%20update/">http://ruiaylin.github.io/2014/12/12/python update/</a> <a target="_blank" rel="noopener" href="https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only">https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only</a> <a target="_blank" rel="noopener" href="http://toomuchdata.com/2014/02/16/how-to-install-python-on-centos/">How to install Python 2.7 and Python 3.3 on CentOS 6</a> <a target="_blank" rel="noopener" href="http://tecadmin.net/install-python-2-7-on-centos-rhel/">How to Install Python 2.7.10 on CentOS/RHEL 7/6 and Fedora</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2294,7 +2309,7 @@ setup.py文件的使用如下:</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">178</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

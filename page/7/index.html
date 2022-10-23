@@ -189,6 +189,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/03/Bioinfo-Genome-Browser-jbrowse-based-on-nginx-web-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/03/Bioinfo-Genome-Browser-jbrowse-based-on-nginx-web-server/" class="post-title-link" itemprop="url">基因组浏览器 JBrowse 安装（基于 Nginx 的 Web 服务器）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-03 18:44:47" itemprop="dateCreated datePublished" datetime="2020-10-03T18:44:47+08:00">2020-10-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-31 14:58:03" itemprop="dateModified" datetime="2020-12-31T14:58:03+08:00">2020-12-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>需求：将基因组浏览器 JBrowse 安装在 Linux 服务器，在内网中用客户端电脑的网页浏览器可以打开 JBrowse 进行操作。安装过程如下，以 CentOS 7 系统为例，需要 root 权限。</p>
+<p>JBrowse 是一款快速的，可以嵌入的基因组浏览器，它采用 JavaScript 和 HTML5 开发，同时提供了 Perl 脚本处理数据。JBrowse 采用了 Ajax 技术，主要的计算在客户端上完成， 对服务器资源的占用非常低，速度非常快，可以轻松部署上 G 的数据。JBrowse 支持 GFF3, BED, FASTA, Wiggle, BigWig, BAM, VCF (with tabix), REST 等众多数据格式，BAM, BigWig，VCF 格式的数据可以不需要转换而直接使用。 JBrowse 对系统依赖非常低，只需要一个 web 服务器，因此部署起来非常方便。Nginx 是一款轻量级、高性能 web 服务器，它占用内存少，并发能力强。越来越多的网站使用 Nginx 作为 web 服务器。</p>
+<h3 id="1-安装-jbrowse-依赖的软件"><a class="markdownIt-Anchor" href="#1-安装-jbrowse-依赖的软件"></a> 1 安装 Jbrowse 依赖的软件</h3>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://jbrowse.org/docs/installation.html">https://jbrowse.org/docs/installation.html</a></p>
+<p>需要先安装依赖的一些工具，即“system pre-requisites”。我用的 CentOS 7系统，操作如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum groupinstall &quot;Development Tools&quot;</span><br><span class="line">sudo yum install zlib-devel perl-ExtUtils-MakeMaker</span><br></pre></td></tr></table></figure>
+<p>安装 node 和 npm<br />
+源代码下载 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz">https://nodejs.org/dist/v12.18.4/node-v12.18.4-linux-x64.tar.xz</a><br />
+xz文件解压：<code>tar -xvJf node-v8.11.1-linux-x64.tar.xz</code><br />
+解压之后文件目录里面包含bin目录（node，npm，npx 三个程序），将bin目录加入环境变量。<br />
+<code>export PATH=/xxx/xxx/bin:$PATH</code><br />
+source ~/.bashrc 之后即可测试 node -h 与 npm -h，均可以运行。</p>
+<h3 id="2-安装基因组浏览器-jbrowe"><a class="markdownIt-Anchor" href="#2-安装基因组浏览器-jbrowe"></a> 2 安装基因组浏览器 Jbrowe</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># make a directory that this user can write to</span><br><span class="line"># for ubuntu/Debian that is /var/www/; for centos is /var/www/html</span><br><span class="line">sudo mkdir /var/www/html/jbrowse;</span><br><span class="line">sudo chown `whoami` /var/www/html/jbrowse;</span><br><span class="line"></span><br><span class="line"># cd into it</span><br><span class="line">cd /var/www/html/jbrowse;</span><br><span class="line"></span><br><span class="line"># fetch a JBrowse release zip file</span><br><span class="line">curl -O http://jbrowse.org/releases/jbrowse-1.16.10-release.tar.gz</span><br><span class="line"></span><br><span class="line"># unzip it and cd into it</span><br><span class="line">unzip JBrowse-1.12.3.zip</span><br><span class="line">cd JBrowse-1.12.3</span><br><span class="line"></span><br><span class="line"># run setup.sh, quick start with example data</span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
+<p>运行 <a target="_blank" rel="noopener" href="http://setup.sh">setup.sh</a> 自动安装成功，setup.log 文件如下所示。./setup.sh 这一步需要安装很多 perl 依赖库，需要的时间可能有点久。如果报错，请查看 setup.log 文件，一般是系统可能缺某个依赖库。</p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/jbrowse.jpg?w=1024" alt="" /></p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5ae89e8a385jbrowse.png?w=1024" alt="" /></p>
+<p>到这一步是无法从其他客户端访问服务器上的 JBrowse 的，需要在服务器上面安装 Web 服务器。比如 appache/xampp/nginx 等。</p>
+<p>xampp案例见：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1dddec8dc29c">https://www.jianshu.com/p/1dddec8dc29c</a><br />
+nginx案例见：<a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/650480">https://yq.aliyun.com/articles/650480</a></p>
+<h3 id="3-安装-web-服务器-nginx"><a class="markdownIt-Anchor" href="#3-安装-web-服务器-nginx"></a> 3 安装 Web 服务器 Nginx</h3>
+<p>我使用 nginx 做测试的。下载 ngnix 源文件 <a target="_blank" rel="noopener" href="http://nginx.org/download/nginx-1.18.0.tar.gz">nginx-1.18.0.tar.gz</a>，root 权限下，解压在 <code>/usr/local/ngnix</code> 下。</p>
+<p>运行 <code>./configure &amp;&amp; make &amp;&amp; make install</code> 成功安装nginx（默认web端口是80），然后就可以在客户端浏览器输入服务器地址，看到初始页面：</p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/nginx-default-page.jpg?w=834" alt="" /></p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003182915.jpg?w=795" alt="" /></p>
+<p>上方的截图所显示的 <em>Welcome to Nginx</em> 初始网页，实际上是由 nginx 安装目录下的 nginx.conf 配置文件控制的，红色标记处，<code>location</code> 字样下的 <code>index.html</code> 是指默认的 <code>/usr/local/nginx/html/index.html</code>。</p>
+<p>nginx安装参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/t8116189520/article/details/81909574">https://blog.csdn.net/t8116189520/article/details/81909574</a> （实测：修改nginx.conf里面端口号之后暂时无法访问。需要linux系开放相应的端口。见下文。）</p>
+<p>下面是启动与关闭 nginx 的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 停止运行 nginx </span><br><span class="line">/usr/local/nginx/sbin/nginx -s stop  </span><br><span class="line"></span><br><span class="line"># 重启（reload）如果报错，就要先输入下面的命令`</span><br><span class="line">/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf  </span><br><span class="line"></span><br><span class="line"># 重启 nginx</span><br><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="4-设置-nginx使-jbrowse-可以在-web-浏览器访问"><a class="markdownIt-Anchor" href="#4-设置-nginx使-jbrowse-可以在-web-浏览器访问"></a> 4 设置 nginx，使 Jbrowse 可以在 Web 浏览器访问</h3>
+<p>那么如何将 Jbrowse 相关文档经过 Nginx 平台呈现在客户端的web界面？需要修改 nginx的配置文件：<code>/usr/local/nginx/conf/nginx.conf</code>，root权限下vim这个配置文件，在 http 内容里面加入下面的文字。端口号可以自己设置，比如8080、8082等。location指向<code>/var/www/html/jbrowse/index.html</code></p>
+<p>查询资料的过程中发现其他人安装nginx之后有这两个目录 <code>/etc/nginx/sites-available/</code> 和 <code>/etc/nginx/sites-enabled</code>，我安装之后是没有的，后面发现并没有影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen     8000;</span><br><span class="line">    server\_name  192.168.1.108;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /var/www/html/jbrowse;</span><br><span class="line">        index  index.html;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003183445.jpg" alt="" /></p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003183654.jpg" alt="" /></p>
+<p>按照上图修改并保存，重启 nginx 理论上可以在客户端打开 192.168.1.108:8000 即可看到 jbrowse，可是我遇到了打不开的问题。原来不仅需要在 nginx 里面设置端口，还需要linux系开放相应的端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -ptcp --dport 8000 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>然后就顺利打开了 Jbrowse 浏览器，可以看到欢迎页面。</p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003184126.jpg?w=852" alt="" /></p>
+<p>访问 <a target="_blank" rel="noopener" href="http://192.168.1.108/index.html?data=sample_data/json/volvox">http://192.168.1.108/index.html?data=sample_data/json/volvox</a> 可以看到示例页面：</p>
+<p><img src="http://blog.biochen.com/wp-content/uploads/2016/06/JBrowse_1.png" alt="" /></p>
+<h3 id="5-如何配置自己的基因组"><a class="markdownIt-Anchor" href="#5-如何配置自己的基因组"></a> 5 如何配置自己的基因组</h3>
+<p>基因组浏览器一般展示如下文件</p>
+<ol>
+<li>reference genome sequence (.fasta)</li>
+<li>gene/mRNA/ncRNA annotation file (.gff3)</li>
+<li>ChIP Peak file (.bed)</li>
+<li>RNA expression file (?)</li>
+</ol>
+<p>下图所示，JBrowse 浏览器窗口左侧是一个目录，即 Available Tracks，下面通常包括 Reference、Annotation、RNA expression、Histone PTM等栏目，是需要逐个配置的。控制这些“栏目”的配置文件是<code>/var/www/html/jbrowse/data/trackList.json</code>。</p>
+<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003184221.jpg?w=1024" alt="" /></p>
+<p><strong>载入参考基因组</strong></p>
+<p>我们需要准备一个物种的基因组 fasta 文件，在其他应用场景下 RNA 和 protein 都没有问题。通过 <code>prepare-refseqs.pl</code> 格式化生成的track，这为后续所有添加的文件提供一个坐标系，在网页端参考序列就可以被加载浏览，放大后连碱基序列可以显示出来。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># jbrowse家目录：/var/www/html/jbrowse</span><br><span class="line"># 以下操作在jbrowse家目录，序列文件根据实际情况修改</span><br><span class="line">./bin/prepare-refseqs.pl --fasta ~/database/Glycine_max/Gmax_275_Wm82_a2.v1/Gmax_275_v2.0.softmasked.fa</span><br><span class="line"># ./bin/prepare-refseqs.pl --fasta ~/lyrata/Sequence/Alyrata_384_v1.fa</span><br></pre></td></tr></table></figure>
+<p>这就会在当前目录（/var/www/html/jbrowse）生成一个 data 文件夹，直接访问IP地址所看到的序列就来源于该文件夹。</p>
+<p><strong>载入基因注释信息</strong></p>
+<p>特征序列一般以&quot;gff|gbk|bed&quot;格式存放，用于注明序列的信息。所需工具为 <a target="_blank" rel="noopener" href="http://flatfile-to-json.pl">flatfile-to-json.pl</a>，注意 <code>--trackLabel</code> 参数可以设置 Tracks。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./bin/flatfile-to-json.pl --gff /home/fenglei/database/Glycine_max/Gmax_275_Wm82_a2.v1/Gmax_275_Wm82.a2.v1.gene.gff3 --trackLabel &#x27;Gene_a2.v1&#x27;</span><br><span class="line"># ./bin/flatfile-to-json.pl --gff ~/Athalina/TAIR10/TAIR10_GFF3_genes.gtf --tracklabel gene --out ./Athaliana/   </span><br><span class="line"># 结果是在当前目录下生成data，data里包括序列track配置文件. 同样可以用--out参数输出到指定文件夹。</span><br></pre></td></tr></table></figure>
+<p>注意，基因组浏览器有一个搜索框，在完成上述操作之后可以浏览基因组和基因信息，也可以输入 <code>Chr02:123-456</code> 这样的坐标查看我们感兴趣的区域，但是还不能使用搜索功能。需要在上两步的基础上运行下面程序才可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/generate-names.pl</span><br></pre></td></tr></table></figure>
+<p><strong>载入bed格式数据</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./bin/flatfile-to-json.pl --bed ./ChIP_peaks/CCK9_peaks.xls.bed --trackType CanvasFeatures --trackLabel BED_CCK9_p0.01</span><br><span class="line">./bin/flatfile-to-json.pl --bed ./ChIP_peaks/CSK9_peaks.xls.bed --trackType CanvasFeatures --trackLabel BED_CSK9_p0.01</span><br><span class="line">./bin/flatfile-to-json.pl --bed ./ChIP_peaks/CCK9_peaks.unfilter.bed --trackType CanvasFeatures --trackLabel BED_CCK9_all</span><br><span class="line">./bin/flatfile-to-json.pl --bed ./ChIP_peaks/CSK9_peaks.unfilter.bed --trackType CanvasFeatures --trackLabel BED_CSK9_all</span><br></pre></td></tr></table></figure>
+<p><strong>载入bigwig格式的peak信息</strong></p>
+<p>直接在data目录下新建一个 histone_BigWig 文件夹，把需要展示的bigwig文件放置在里面。然后编辑 /var/www/html/jbrowse/data/trackList.json 文件，逐个设置。</p>
+<p>每一个bigwig文件，都需要增加下面这样的代码块。我针对样品设计和网页端展示效果，做了很多次调整。下面仅仅列出某个文件的配置信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   &quot;autoscale&quot; : &quot;local&quot;,</span><br><span class="line">   &quot;category&quot; : &quot;Histone&quot;,  # 设定文件所属的 Track</span><br><span class="line">   &quot;key&quot; : &quot;BigWig input control&quot;,</span><br><span class="line">   &quot;label&quot; : &quot;BigWig input control&quot;, # 设定在网页上显示的标签</span><br><span class="line">   &quot;logScaleOption&quot; : true,</span><br><span class="line">   &quot;maxExportSpan&quot; : 500000,</span><br><span class="line">   &quot;max_score&quot; : 6,  # 设定所需展示的最大数值。大于这个阈值的数字就按照该值展示。消除极大值带来的展示问题。</span><br><span class="line">   &quot;metadata&quot; : &#123;&#125;,</span><br><span class="line">   &quot;min_score&quot; : 0,</span><br><span class="line">   &quot;scale&quot; : &quot;log&quot;,  # 设定是否以log形式展示数值。因为测序数据经常有个别极大值，log处理更利于展示</span><br><span class="line">   &quot;storeClass&quot; : &quot;JBrowse/Store/SeqFeature/BigWig&quot;,  # 什么意思？表示这个代码块需要展示的是bigWig格式的文件。</span><br><span class="line">   &quot;style&quot; : &#123;</span><br><span class="line">      &quot;height&quot; : 60,  # 设定展示条带的高度。因为有多个文件要展示，如何设定其高度，将使浏览器打开后的视角比较舒适。</span><br><span class="line">      &quot;neg_color&quot; : &quot;red&quot;,  # 负值的颜色。</span><br><span class="line">      &quot;origin_color&quot; : &quot;#888&quot;,</span><br><span class="line">      &quot;pos_color&quot; : &quot;#DDB6A1&quot;,  # 正数值的颜色。</span><br><span class="line">      &quot;variance_band_color&quot; : &quot;rgba(0,0,0,0.3)&quot;</span><br><span class="line">   &#125;,</span><br><span class="line">   &quot;type&quot; : &quot;JBrowse/View/Track/Wiggle/XYPlot&quot;,</span><br><span class="line">   &quot;urlTemplate&quot; : &quot;histone_BigWig/CCinput.bw&quot;   # 这里指定文件路径。</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>配置完成之后就类似下面的结果了。</p>
+<p><img src="https://ics.hutton.ac.uk/wp-content/uploads/2015/07/jbrowse.png" alt="" /></p>
+<p><strong>参考资料</strong><br />
+<a target="_blank" rel="noopener" href="https://www.plob.org/article/14590.html">JBrowse使用说明：参考基因组格式化</a></p>
+<p>-END-</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/16/Visualization-Adobe-Illustrator-Learning-Usage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1354,103 +1502,6 @@ for(i in 1:length(data)){ pdf(out_filePath[i]) ; print(data[[i]]); dev.off() } #
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/02/Bioinfo-chipseeker-installation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/02/Bioinfo-chipseeker-installation/" class="post-title-link" itemprop="url">ChipSeeker的安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-02 20:02:42" itemprop="dateCreated datePublished" datetime="2020-03-02T20:02:42+08:00">2020-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我使用Linux CentOS 7系统，在ChipSeeker的安装过程中遇到了许多问题，这里做个记录。 <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d887.59.11.png" alt="截屏2020-03-02下午7.59.11" /> 在R （version 3.6）输入如下命令开始自动安装。安装命令：</p>
-<p>if (!requireNamespace(“BiocManager”, quietly = TRUE))<br />
-install.packages(“BiocManager”)</p>
-<p>BiocManager::install(“ChIPseeker”)</p>
-<p>部分报错信息：</p>
-<p>make：gfortran：命令未找到 │*** moving datasets to lazyload DB<br />
-ERROR: compilation failed for package ‘igraph’<br />
-installation of package ‘igraph’ had non-zero exit status<br />
-installation of package ‘tidygraph’ had non-zero exit status<br />
-installation of package ‘graphlayouts’ had non-zero exit status<br />
-installation of package ‘ggraph’ had non-zero exit status <br />
-installation of package ‘enrichplot’ had non-zero exit status<br />
-installation of package ‘ChIPseeker’ had non-zero exit status</p>
-<p>解决办法，先给centOS 7系统安装gfortran：</p>
-<p>yum install gcc-gfortran</p>
-<p>继续安装R包，遇到 libgfortran.so.4 文件缺失的问题。解决办法：用find命令在linux系统里面找，在anaconda 3.7的安装目录下找到一个，所以就用这个文件，做一个软链接到系统库（我是/home/xxx/local/lib），然后igraph这些包就安装好了。 后续还遇到了R packages无法下载的问题：</p>
-<p>package ‘xxxx-package’ is not available (for R version 3.6.0)</p>
-<p>直接在R的cran里面搜索包，手动下载之后，在R界面用下面的命令即可安装：</p>
-<p>install.packages(“/xxx/yy/xx/xxpackage.1.xx.0.tar.gz”)</p>
-<p>这些包也有可能在编译的过程遇到问题，我尝试过下载旧版本的包，有时候可以解决问题；也有更换不同版本的gcc才能编译成功的情况。 对于功能高级、复杂的R包的安装，有时候真的麻烦，花掉我不止一天时间。一个R包依赖其他多个不同R包，不一定每个R包都能顺利安装；具体到各个R包，他们有不同的版本，不是每个版本都能安装，可能要换不同的gcc来做编译；还有就是linux下面安装软件很多时候都是环境变量的问题，要根据具体情况做修改和调整。 终于安装成功： <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d888.00.55.png" alt="截屏2020-03-02下午8.00.55" /></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1522,7 +1573,7 @@ installation of package ‘ChIPseeker’ had non-zero exit status</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">178</span>
+          <span class="site-state-item-count">179</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

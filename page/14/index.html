@@ -189,6 +189,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/" class="post-title-link" itemprop="url">无root权限安装Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-26 16:21:28" itemprop="dateCreated datePublished" datetime="2016-02-26T16:21:28+08:00">2016-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>RedHat系统自带python2.6，一些用户程序的要求python2.7以上，但是2.6版本的python不能随便删除，因为系统程序会用到。 可以在用户目录下安装python2.7 方法： 1.安装python</p>
+<blockquote>
+<p>Python ： <a target="_blank" rel="noopener" href="http://www.python.org/getit/">http://www.python.org/getit/</a></p>
+<p>cd $HOME/local/app/</p>
+<p>tar -zxvf Python-2.7.11.tgz</p>
+<p>mv  Python-2.7.11 python</p>
+<p>cd python</p>
+<p>./configure –-prefix=<strong>$HOME/local</strong>（你准备安装的路径，可自己更改）</p>
+<p>make &amp;&amp; make install</p>
+</blockquote>
+<p>2. 将指定路径下的lib和bin分别加入环境变量中：</p>
+<blockquote>
+<p>echo “PYTHONPATH=$HOME/local/lib/python2.7/site-packages” &gt;&gt; .bashrc</p>
+<p>echo “export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">/</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>n</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">HOME/local/app/python:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal">c</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord">/</span><span class="mord mathnormal">a</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord">/</span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>PATH” &gt;&gt; .bashrc</p>
+<p>source ~/.bashrc</p>
+</blockquote>
+<p>这样就实现了在没有root权限的情况下安装python的模块。 3. 如何在无root权限下安装python模块呢？ 按照上面的方法安装python之后，再安装setuptools，（即easy_install），从而可以使用easy_install来自动安装python包。</p>
+<blockquote>
+<p>tar -zxvf setuptools-0.6c11.tar.gz</p>
+<p>cd setuptools-0.6c11</p>
+<p>/your_python_dir/bin/python2.7 <a target="_blank" rel="noopener" href="http://setup.py">setup.py</a> build</p>
+<p>/your_python_dir/bin/python2.7 <a target="_blank" rel="noopener" href="http://setup.py">setup.py</a> install</p>
+</blockquote>
+<p>4. 安装其他python模块/套件 先使用easy_install安装pip工具：</p>
+<blockquote>
+<p>easy_install pip</p>
+</blockquote>
+<p>在安裝python套件的时候用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 查看目前已有的模块：</p>
+<blockquote>
+<p>pip list</p>
+</blockquote>
+<p>pip查看需要更新的package</p>
+<blockquote>
+<p>pip list --outdated</p>
+</blockquote>
+<h3 id="下面是更详细的pip介绍"><a class="markdownIt-Anchor" href="#下面是更详细的pip介绍"></a> 下面是更详细的pip介绍：</h3>
+<h3 id="pip安装"><a class="markdownIt-Anchor" href="#pip安装"></a> pip安装</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1103,84 +1220,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/07/%E7%A1%AC%E5%AE%9E%E7%A7%8D%E5%AD%90%E7%9A%84%E5%A4%84%E7%90%86%E4%B8%8E%E5%82%AC%E8%8A%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/07/%E7%A1%AC%E5%AE%9E%E7%A7%8D%E5%AD%90%E7%9A%84%E5%A4%84%E7%90%86%E4%B8%8E%E5%82%AC%E8%8A%BD/" class="post-title-link" itemprop="url">硬实种子的处理与催芽</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-07 20:38:44" itemprop="dateCreated datePublished" datetime="2015-12-07T20:38:44+08:00">2015-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>1.1热水浸种 分别用始温70度、80度、90度、1OO度浸泡硬实种子。24h观测浸种效果，发现1O0度水浸泡对硬实有较好的软化作用，但对正常种子的伤害较大;90度水既能软化种皮又对种子伤害较小，相对效果较好，但仍有一小部分硬实不能吸胀;70度水对硬实种皮软化效果差，但能使非硬实种子免受伤害。由于刺槐种子硬实和非硬实混杂，建议生产上采用逐次增温的方法处理其种子，这样效果最好。即先用始温7O度热水浸种24h,将吸胀种子筛选出催芽，未吸胀种子用始温90度水浸种24h，选出吸胀种子催芽，最后对未吸胀种子用1OO度水温处理，亦能获得较好的发芽结果。 在浸种时，种子与水的容积比以1:3为宜。将热水倒入盛种子的容器中，不断搅拌使其自然冷却。浸种过程中，要每隔12h换1次冷水。 1.2酸蚀种子 用98%浓硫酸分别处理硬实种子3Omin、2Omin、1Omin，浸种后摆盘进行发芽试验。结果表明，处理2Omin的效果最好，发芽率可达70%以上，活力指数也比较高。处理30分钟的发芽率次之，处理10min的发芽率最低。故用浓硫酸处理硬实种子时间以20min为佳。 2种子催芽 目前常用&quot;生豆芽&quot;法和层积催芽法，以层积催芽法效果好。把经过浸种的种子捞出，混以3倍湿沙(沙子的湿度为其饱和含水量的60%)。为了保持种子的湿度，上面要加覆盖物，再将种沙混合物放在温暖处催芽，并插入温度计，以观测催芽温度。刺槐种子一般在25度左右发芽快而整齐。如果超过35度，发芽受到抑制，因此，催芽的温度以不超过25度为宜。 转自：<a target="_blank" rel="noopener" href="http://www.ly.lf.gov.cn/ArticleShow.asp?ArticleID=2191">http://www.ly.lf.gov.cn/ArticleShow.asp?ArticleID=2191</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1252,7 +1291,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">178</span>
+          <span class="site-state-item-count">179</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

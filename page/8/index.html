@@ -189,6 +189,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/02/Bioinfo-chipseeker-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/02/Bioinfo-chipseeker-installation/" class="post-title-link" itemprop="url">ChipSeeker的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-02 20:02:42" itemprop="dateCreated datePublished" datetime="2020-03-02T20:02:42+08:00">2020-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我使用Linux CentOS 7系统，在ChipSeeker的安装过程中遇到了许多问题，这里做个记录。 <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d887.59.11.png" alt="截屏2020-03-02下午7.59.11" /> 在R （version 3.6）输入如下命令开始自动安装。安装命令：</p>
+<p>if (!requireNamespace(“BiocManager”, quietly = TRUE))<br />
+install.packages(“BiocManager”)</p>
+<p>BiocManager::install(“ChIPseeker”)</p>
+<p>部分报错信息：</p>
+<p>make：gfortran：命令未找到 │*** moving datasets to lazyload DB<br />
+ERROR: compilation failed for package ‘igraph’<br />
+installation of package ‘igraph’ had non-zero exit status<br />
+installation of package ‘tidygraph’ had non-zero exit status<br />
+installation of package ‘graphlayouts’ had non-zero exit status<br />
+installation of package ‘ggraph’ had non-zero exit status <br />
+installation of package ‘enrichplot’ had non-zero exit status<br />
+installation of package ‘ChIPseeker’ had non-zero exit status</p>
+<p>解决办法，先给centOS 7系统安装gfortran：</p>
+<p>yum install gcc-gfortran</p>
+<p>继续安装R包，遇到 libgfortran.so.4 文件缺失的问题。解决办法：用find命令在linux系统里面找，在anaconda 3.7的安装目录下找到一个，所以就用这个文件，做一个软链接到系统库（我是/home/xxx/local/lib），然后igraph这些包就安装好了。 后续还遇到了R packages无法下载的问题：</p>
+<p>package ‘xxxx-package’ is not available (for R version 3.6.0)</p>
+<p>直接在R的cran里面搜索包，手动下载之后，在R界面用下面的命令即可安装：</p>
+<p>install.packages(“/xxx/yy/xx/xxpackage.1.xx.0.tar.gz”)</p>
+<p>这些包也有可能在编译的过程遇到问题，我尝试过下载旧版本的包，有时候可以解决问题；也有更换不同版本的gcc才能编译成功的情况。 对于功能高级、复杂的R包的安装，有时候真的麻烦，花掉我不止一天时间。一个R包依赖其他多个不同R包，不一定每个R包都能顺利安装；具体到各个R包，他们有不同的版本，不是每个版本都能安装，可能要换不同的gcc来做编译；还有就是linux下面安装软件很多时候都是环境变量的问题，要根据具体情况做修改和调整。 终于安装成功： <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d888.00.55.png" alt="截屏2020-03-02下午8.00.55" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/20/%E8%B4%A8%E7%B2%92dna%E6%B5%8B%E5%BA%8F%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1264,95 +1361,6 @@ AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/09/Bioinfo-diamond-vs-blast/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/07/09/Bioinfo-diamond-vs-blast/" class="post-title-link" itemprop="url">Diamond: 比BLAST更快速的比对工具</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-07-09 13:36:29" itemprop="dateCreated datePublished" datetime="2018-07-09T13:36:29+08:00">2018-07-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Diamond简介</strong> 序列比对软件，能输出与BLAST类似的结果，但是速度快了数百倍。 <strong>安装</strong> 二进制可以直接解压使用：</p>
-<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz">http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz</a><br />
-tar xzf diamond-linux64.tar.gz</p>
-<p>源码则用cmake安装：</p>
-<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz">http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz</a><br />
-tar xzf v0.9.22.tar.gz<br />
-cd diamond-0.9.22<br />
-mkdir bin<br />
-cd bin<br />
-cmake …<br />
-make install</p>
-<p><strong>使用</strong> 1 建立index</p>
-<p>diamond makedb --in swissprot.fasta -d swissprot</p>
-<p>2 比对</p>
-<p>diamond blastp --db ./index/swissprot --query putative_proteins.fa --threads 10 --out proteins-BLASTP-swissprot.m8 -e 0.00001 --max-target-seqs 1</p>
-<p>建立index的过程就6秒钟（Processed 557491 sequences, 199978344 letters. Total time = 6.64576s）。比对过程也极快，几分钟跑完了。 <strong>与其他软件的比较</strong> “生信技能树”论坛有人讲Diamond与BLAST进行比较，26740个蛋白序列与NR的蛋白库（animal）作比对，运行DIAMOND仅需要3小时，运行BLASTP则需要2周。存在的问题是同一个蛋白序列在两个比对软件下得到的最高分比对结果通常不一样（可能跟参数设置有关？）。第二个问题是输出的tabular格式结果不能被blast2go识别（可能需要调整输出格式的参数）。 <strong>参考资料</strong> [1] <a target="_blank" rel="noopener" href="https://github.com/bbuchfink/diamond/releases/">https://github.com/bbuchfink/diamond/releases/</a> [2] <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-1465-1-1.html">http://www.biotrainee.com/thread-1465-1-1.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1424,7 +1432,7 @@ make install</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">178</span>
+          <span class="site-state-item-count">179</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

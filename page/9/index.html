@@ -189,6 +189,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/09/Bioinfo-diamond-vs-blast/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/09/Bioinfo-diamond-vs-blast/" class="post-title-link" itemprop="url">Diamond: 比BLAST更快速的比对工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-09 13:36:29" itemprop="dateCreated datePublished" datetime="2018-07-09T13:36:29+08:00">2018-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>Diamond简介</strong> 序列比对软件，能输出与BLAST类似的结果，但是速度快了数百倍。 <strong>安装</strong> 二进制可以直接解压使用：</p>
+<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz">http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz</a><br />
+tar xzf diamond-linux64.tar.gz</p>
+<p>源码则用cmake安装：</p>
+<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz">http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz</a><br />
+tar xzf v0.9.22.tar.gz<br />
+cd diamond-0.9.22<br />
+mkdir bin<br />
+cd bin<br />
+cmake …<br />
+make install</p>
+<p><strong>使用</strong> 1 建立index</p>
+<p>diamond makedb --in swissprot.fasta -d swissprot</p>
+<p>2 比对</p>
+<p>diamond blastp --db ./index/swissprot --query putative_proteins.fa --threads 10 --out proteins-BLASTP-swissprot.m8 -e 0.00001 --max-target-seqs 1</p>
+<p>建立index的过程就6秒钟（Processed 557491 sequences, 199978344 letters. Total time = 6.64576s）。比对过程也极快，几分钟跑完了。 <strong>与其他软件的比较</strong> “生信技能树”论坛有人讲Diamond与BLAST进行比较，26740个蛋白序列与NR的蛋白库（animal）作比对，运行DIAMOND仅需要3小时，运行BLASTP则需要2周。存在的问题是同一个蛋白序列在两个比对软件下得到的最高分比对结果通常不一样（可能跟参数设置有关？）。第二个问题是输出的tabular格式结果不能被blast2go识别（可能需要调整输出格式的参数）。 <strong>参考资料</strong> [1] <a target="_blank" rel="noopener" href="https://github.com/bbuchfink/diamond/releases/">https://github.com/bbuchfink/diamond/releases/</a> [2] <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-1465-1-1.html">http://www.biotrainee.com/thread-1465-1-1.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,95 +1129,6 @@ Paper：<a target="_blank" rel="noopener" href="http://www.plantcell.org/content
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/23/shell-get-prefix-of-file-name/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/23/shell-get-prefix-of-file-name/" class="post-title-link" itemprop="url">Shell编程：获取文件前缀字符串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-08-23 15:03:52" itemprop="dateCreated datePublished" datetime="2017-08-23T15:03:52+08:00">2017-08-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>比如处理名为 /xxx/yyy/zzz/abc2017.1.fq.gz 的文件，我们需要获取abc2017这个文件名。</p>
-<p>i=/xxx/yyy/zzz/abc2017.1.fq.gz</p>
-<p>IN=$i</p>
-<h1 id="read1文件绝对路径xxxyyyzzzabc20171fqgz"><a class="markdownIt-Anchor" href="#read1文件绝对路径xxxyyyzzzabc20171fqgz"></a> read1文件绝对路径：/xxx/yyy/zzz/abc2017.1.fq.gz</h1>
-<p>path=${IN%/*}</p>
-<h1 id="read1文件的绝对路径前缀以作为分隔界限并获取界限之前的字符串xxxyyyzzz"><a class="markdownIt-Anchor" href="#read1文件的绝对路径前缀以作为分隔界限并获取界限之前的字符串xxxyyyzzz"></a> Read1文件的绝对路径前缀，以“/”作为分隔界限并获取界限之前的字符串：/xxx/yyy/zzz</h1>
-<p>sample=${path##*/}</p>
-<h1 id="read1所在文件夹名称即-zzz"><a class="markdownIt-Anchor" href="#read1所在文件夹名称即-zzz"></a> Read1所在文件夹名称，即 zzz</h1>
-<p>prefix=${IN%.1*}</p>
-<h1 id="read1与read2两个文件共有的路径前缀即以1作为分隔界限并获取界限之前的字符串-xxxyyyzzzabc2017"><a class="markdownIt-Anchor" href="#read1与read2两个文件共有的路径前缀即以1作为分隔界限并获取界限之前的字符串-xxxyyyzzzabc2017"></a> Read1与Read2两个文件共有的路径前缀，即以“.1”作为分隔界限并获取界限之前的字符串 /xxx/yyy/zzz/abc2017</h1>
-<p>sample=${prefix##*/}</p>
-<h1 id="sample的名称-abc2017"><a class="markdownIt-Anchor" href="#sample的名称-abc2017"></a> sample的名称 abc2017</h1>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1200,7 +1200,7 @@ Paper：<a target="_blank" rel="noopener" href="http://www.plantcell.org/content
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">178</span>
+          <span class="site-state-item-count">179</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

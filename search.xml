@@ -8939,7 +8939,7 @@ Node.js下载地址：Node.js官网</p>
   </entry>
   <entry>
     <title>Plant | 霍格兰营养液的配置</title>
-    <url>/2022/10/14/Hoagland-%20Solution/</url>
+    <url>/2022/10/14/Hoagland-Solution/</url>
     <content><![CDATA[<p>霍格兰营养液配方，记录在此，留存备用。</p>
 <span id="more"></span>
 <p>霍格兰营养液看似简单，实际上配制不妥的话会严重影响植物生长，尤其是水培植物，完全依赖霍格兰营养液提供营养。霍格兰营养液包括两个组分：“主要元素”和“微量元素”。微量元素可以混合成 1000 倍的母液（stock），每次量取母液按照倍数稀释即可使用。而主要元素不可以提前混合成高浓度母液，否则会出现钙质沉淀，且稀释之后也不溶于水。所以我的经验是使用的时候逐个称取主要元素（下表中 1—5 号元素）装入不同的 50 mL 管，直接溶于大量水中配制成霍格兰溶液。下表列出了配制 80 升 1/2 Hoagland 营养液需要的各种化合物成分的质量，根据实际用量进行调整即可。溶解的过程也有技巧，比如我需要配 80 升 1/2 Hoagland 营养液，那我可以先在大桶里放入 40 升自来水，然后每加入一种化合物，搅拌溶解之后再加另一种。特别注意硝酸钙，如果此时水量较少，非常容易形成硫酸钙沉淀。配制完成之后应该是见不到明显的絮状沉淀才好。</p>
@@ -9064,6 +9064,68 @@ Node.js下载地址：Node.js官网</p>
 <p><img src="https://i.imgur.com/JjOMmQv.jpeg" alt="" /></p>
 <p>下图中水培装置是我种植的植物，一盆 20 升 1/2 Hoagland 培养液，每周更换两次，植物可以正常生长。右侧是其他人没有及时更换营养液的植物，可见明显生长缓慢，叶片发黄。</p>
 <p><img src="https://i.imgur.com/5YhT1CL.jpeg" alt="" /></p>
+]]></content>
+      <categories>
+        <category>Plant</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Plant | 拟南芥种子灭菌</title>
+    <url>/2022/10/20/Sterilization-of-Arabidopsis-seeds/</url>
+    <content><![CDATA[<p>拟南芥等植物的种子灭菌播种的方法，记录在此，留存备用。</p>
+<span id="more"></span>
+<h3 id="氯气灭菌法-vapor-phase-sterilization-of-arabidopsis-seed"><a class="markdownIt-Anchor" href="#氯气灭菌法-vapor-phase-sterilization-of-arabidopsis-seed"></a> 氯气灭菌法 Vapor-Phase Sterilization of Arabidopsis Seed</h3>
+<p>Steve Clough and Andrew Bent, University of Illinois at Urbana-Champaign.</p>
+<p>The following protocol contains a convenient method for surface-sterilization of plant seeds. In particular, the method does not require all of the soaking and rinsing of liquid-phase bleach-sterilization methods. While this protocol substantially reduces hands-on manipulations, it does require some incubation<br />
+time (a few hours to overnight).</p>
+<p>We often use this protocol in conjunction with selection of Arabidopsis transformants on MS medium + antibiotics. See the related “Simplified Arabidopsis Transformation Protocol.” This vapor-phase sterilization protocol was adapted from a version supplied by Maud Hinchee and colleagues at Monsanto.</p>
+<ol>
+<li>Obtain a vessel for seed sterilization, typically a dessicator jar. Place in fume hood.</li>
+<li>Place seed that is to be sterilized into appropriate resealable containers (for example, microcentrifuge tubes).</li>
+<li>Place open containers of seed into a rack or stand inside the dessicator jar.</li>
+<li>Place a 250 ml beaker containing 100 ml bleach into the dessicator jar.</li>
+<li>Immediately prior to sealing the jar, carefully add 3 ml concentrated HCl to the bleach.</li>
+<li>Seal jar and allow sterilization by chlorine fumes to proceed for a period of between three and sixteen hours. The time needed will vary based on the configuration of seed and the extent to which seed is contaminated. Three to four hours is often sufficient for reasonably clean seed. Overnight is usually acceptable although some seed killing may occur, especially if seed is not fully mature and dry.</li>
+<li>Depending on the application, open container in fume hood or in sterile laminar flow hood, seal microfuge tubes or other seed containers, and remove surface-sterilized seed for use.</li>
+</ol>
+<p>NOTES:<br />
+* Some lab members suspect that sterilization in 15 ml orange-cap tubes is more likely to result in seed mortality? We welcome your feedback on this or other aspects of this protocol.<br />
+* Obtain proper approval for transformation work from institutional authorities.<br />
+Autoclave and properly dispose of all materials.<br />
+* Chlorine gas is poisonous to humans - work with proper ventilation.</p>
+<p>Reference: <a href="http://plantpath.wisc.edu/~afb/vapster.html">http://plantpath.wisc.edu/~afb/vapster.html</a></p>
+<h3 id="酒精灭菌法拟南芥种子"><a class="markdownIt-Anchor" href="#酒精灭菌法拟南芥种子"></a> 酒精灭菌法（拟南芥种子）</h3>
+<p>该方法适用于少量品种的灭菌，或者每管的种子量太大，不适宜用上述氯气灭菌法。</p>
+<ol>
+<li>拟南芥种子装入 2-mL Eppendorf 管；加入 1 mL 70% 酒精，置于旋转机或摇床 10 min；</li>
+<li>在超净台吸走 70% 酒精，加入 1 mL 100% 酒精，吸走酒精；重复加入一次 100% 酒精，并吸走酒精，换用 200 uL 枪头可以抵达管底小心尽可能吸走酒精，此时种子表面仍然残留酒精；</li>
+<li>管子平放于超净台靠近出风口的地方，吹 30 min 左右，种子表面就干燥了；</li>
+<li>种子直接撒在 1/2 MS 培养基，黑暗 4 °C 春化 3——4 天，然后转移到 22 °C 光照培养箱即可萌芽。</li>
+</ol>
+<h3 id="消毒水灭菌法适用于某豆科植物"><a class="markdownIt-Anchor" href="#消毒水灭菌法适用于某豆科植物"></a> 消毒水灭菌法（适用于某豆科植物）</h3>
+<p>Surface sterilization of seeds includes:</p>
+<ol>
+<li>10 min in 70% ethanol; washing 3 times with distilled water;</li>
+<li>30 min in bleach（bleach可用自来水稀释一倍，灭菌时间 15 min 亦可）; washing 5 times with distilled water.</li>
+<li>Sterilized seeds were germinated on 1% Agar (or 1/2 MS medium) (20 seeds/petri dish, 10 × 25 mm) in darkness at 28 °C.</li>
+<li>Two days after gemination, seedlings were transferred into flasks with ½ MS for further growth in the dark. Or transfer to soil for further growth, and water plants with 1/2 Hoagland solution.</li>
+</ol>
+<h3 id="异丙醇灭菌法"><a class="markdownIt-Anchor" href="#异丙醇灭菌法"></a> 异丙醇灭菌法</h3>
+<p>该方法是浏览 <a href="http://clough.cropsci.illinois.edu/pages/protocols.html">Clough Lab</a> 时候偶然看到他们分享的液体灭菌法，也可参考。</p>
+<p>Seed Sterilization by Liquid Method</p>
+<ol>
+<li>Rinse seed with 100% Isopropanol for 30 to 60 seconds.  Spin down, and discard supernatant.</li>
+<li>Rinse with 50% bleach containing 0.05% Tween for 5 minutes with gentle rocking.  Spin, and discard supernatant.</li>
+<li>Rinse with sterile water, spin down, and discard supernatant.</li>
+<li>Repeat 3 to 5 times (until a bleach odor is not detected).</li>
+<li>Use seeds immediately.</li>
+</ol>
+<p>Notes:</p>
+<p>Approximately:  1 mg = 50 seeds<br />
+40 mg = 2000 seeds</p>
+<p>If plating seeds out, resuspend seed in 0.1% sterile agarose.</p>
+<p>From:  Liquid Method: Eric Baima 6/97<br />
+See Methods in Clough and Bent (1998) Plant Journal 16, 735-743.</p>
 ]]></content>
       <categories>
         <category>Plant</category>

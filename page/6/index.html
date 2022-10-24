@@ -189,6 +189,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/15/Bioinfo-FASTA-FASTQ-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/15/Bioinfo-FASTA-FASTQ-tools/" class="post-title-link" itemprop="url">一些FASTA/FASTQ序列处理工具</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-15 11:47:04 / Modified: 13:20:23" itemprop="dateCreated datePublished" datetime="2020-12-15T11:47:04+08:00">2020-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>序列分析的常见操作包括：序列长度统计（包括总长度、N50 length等），序列提取（根据序列名称或ID、根据序列坐标范围），序列格式转换（fasta-&gt;tab，调整fasta每行碱基数，序列翻转），序列重新命名，序列重新排序，序列切割与重新组合。下面的几个工具就像瑞士军刀一样灵活，基本能满足这些分析需求。</p>
+<h3 id="1-seqtk"><a class="markdownIt-Anchor" href="#1-seqtk"></a> 1. seqtk</h3>
+<p>Seqtk is a fast and lightweight tool for processing sequences in the FASTA or FASTQ format.<br />
+It seamlessly parses both FASTA and FASTQ files which can also be optionally compressed by gzip.<br />
+To install seqtk,</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/lh3/seqtk.git;</span><br><span class="line">cd seqtk; make</span><br></pre></td></tr></table></figure>
+<p>Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Usage:   seqtk &lt;command&gt; &lt;arguments&gt;</span><br><span class="line">Version: 1.3-r114-dirty</span><br><span class="line"></span><br><span class="line">Command: seq       common transformation of FASTA/Q</span><br><span class="line">         comp      get the nucleotide composition of FASTA/Q</span><br><span class="line">         sample    subsample sequences</span><br><span class="line">         subseq    extract subsequences from FASTA/Q</span><br><span class="line">         fqchk     fastq QC (base/quality summary)</span><br><span class="line">         mergepe   interleave two PE FASTA/Q files</span><br><span class="line">         trimfq    trim FASTQ using the Phred algorithm</span><br><span class="line"></span><br><span class="line">         hety      regional heterozygosity</span><br><span class="line">         gc        identify high- or low-GC regions</span><br><span class="line">         mutfa     point mutate FASTA at specified positions</span><br><span class="line">         mergefa   merge two FASTA/Q files</span><br><span class="line">         famask    apply a X-coded FASTA to a source FASTA</span><br><span class="line">         dropse    drop unpaired from interleaved PE FASTA/Q</span><br><span class="line">         rename    rename sequence names</span><br><span class="line">         randbase  choose a random base from hets</span><br><span class="line">         cutN      cut sequence at long N</span><br><span class="line">         gap       get the gap locations</span><br><span class="line">         listhet   extract the position of each het</span><br></pre></td></tr></table></figure>
+<h3 id="2-seqkit"><a class="markdownIt-Anchor" href="#2-seqkit"></a> 2. seqkit</h3>
+<p>To install, type <code>conda install -c bioconda seqkit</code>.<br />
+Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">SeqKit -- a cross-platform and ultrafast toolkit for FASTA/Q file manipulation</span><br><span class="line"></span><br><span class="line">Version: 0.14.0</span><br><span class="line"></span><br><span class="line">Author: Wei Shen &lt;shenwei356&gt;</span><br><span class="line"></span><br><span class="line">Documents  : http://bioinf.shenwei.me/seqkit</span><br><span class="line">Source code: https://github.com/shenwei356/seqkit</span><br><span class="line">Please cite: https://doi.org/10.1371/journal.pone.0163962</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">  seqkit [command]</span><br><span class="line"></span><br><span class="line">Available Commands:</span><br><span class="line">  amplicon        retrieve amplicon (or specific region around it) via primer(s)</span><br><span class="line">  bam             monitoring and online histograms of BAM record features</span><br><span class="line">  common          find common sequences of multiple files by id/name/sequence</span><br><span class="line">  concat          concatenate sequences with same ID from multiple files</span><br><span class="line">  convert         convert FASTQ quality encoding between Sanger, Solexa and Illumina</span><br><span class="line">  duplicate       duplicate sequences N times</span><br><span class="line">  faidx           create FASTA index file and extract subsequence</span><br><span class="line">  fish            look for short sequences in larger sequences using local alignment</span><br><span class="line">  fq2fa           convert FASTQ to FASTA</span><br><span class="line">  fx2tab          convert FASTA/Q to tabular format (with length/GC content/GC skew)</span><br><span class="line">  genautocomplete generate shell autocompletion script</span><br><span class="line">  grep            search sequences by ID/name/sequence/sequence motifs, mismatch allowed</span><br><span class="line">  head            print first N FASTA/Q records</span><br><span class="line">  help            Help about any command</span><br><span class="line">  locate          locate subsequences/motifs, mismatch allowed</span><br><span class="line">  mutate          edit sequence (point mutation, insertion, deletion)</span><br><span class="line">  pair            match up paired-end reads from two fastq files</span><br><span class="line">  range           print FASTA/Q records in a range (start:end)</span><br><span class="line">  rename          rename duplicated IDs</span><br><span class="line">  replace         replace name/sequence by regular expression</span><br><span class="line">  restart         reset start position for circular genome</span><br><span class="line">  rmdup           remove duplicated sequences by id/name/sequence</span><br><span class="line">  sample          sample sequences by number or proportion</span><br><span class="line">  sana            sanitize broken single line fastq files</span><br><span class="line">  scat            real time recursive concatenation and streaming of fastx files</span><br><span class="line">  seq             transform sequences (revserse, complement, extract ID...)</span><br><span class="line">  shuffle         shuffle sequences</span><br><span class="line">  sliding         sliding sequences, circular genome supported</span><br><span class="line">  sort            sort sequences by id/name/sequence/length</span><br><span class="line">  split           split sequences into files by id/seq region/size/parts (mainly for FASTA)</span><br><span class="line">  split2          split sequences into files by size/parts (FASTA, PE/SE FASTQ)</span><br><span class="line">  stats           simple statistics of FASTA/Q files</span><br><span class="line">  subseq          get subsequences by region/gtf/bed, including flanking sequences</span><br><span class="line">  tab2fx          convert tabular format to FASTA/Q format</span><br><span class="line">  translate       translate DNA/RNA to protein sequence (supporting ambiguous bases)</span><br><span class="line">  version         print version information and check for update</span><br><span class="line">  watch           monitoring and online histograms of sequence features</span><br></pre></td></tr></table></figure>
+<h3 id="3-itools-reseqtools"><a class="markdownIt-Anchor" href="#3-itools-reseqtools"></a> 3. iTools (Reseqtools)</h3>
+<p>To install, use <code>git clone git@github.com:BGI-shenzhen/Reseqtools.git</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Program: iTools (ReSeqtools)</span><br><span class="line">Version: 0.25   author:hewm2008      Oct 23 2018</span><br><span class="line"></span><br><span class="line">        Usage:</span><br><span class="line"></span><br><span class="line">                Fatools        Tools For Fasta</span><br><span class="line">                Fqtools        Tools For Fastq</span><br><span class="line">                SOAPtools      Tools For SOAP </span><br><span class="line">                Vartools       Tools For SOAP Variant</span><br><span class="line">                CNStools       Tools For CNS</span><br><span class="line">                Xamtools       Tools For Sam/Bam</span><br><span class="line">                Gfftools       Tools For Gff</span><br><span class="line">                Formtools      Tools For Form convert</span><br><span class="line">                Filetools      Tools For Specified File</span><br><span class="line">                Othertools     Tools For Other</span><br><span class="line">                Gametools      Tools For Game</span><br></pre></td></tr></table></figure>
+<h3 id="4-ngsqctoolkit"><a class="markdownIt-Anchor" href="#4-ngsqctoolkit"></a> 4. NGSQCToolkit</h3>
+<p>A toolkit for the quality control (QC) of next generation sequencing (NGS) data. The toolkit comprises of user-friendly stand alone tools for quality control of the sequence data generated using Illumina and Roche 454 platforms with detailed results in the form of tables and graphs, and filtering of high-quality sequence data. It also includes few other tools, which are helpful in NGS data quality control and analysis.<br />
+原下载链接已经失效：<a target="_blank" rel="noopener" href="http://www.nipgr.ac.in/ngsqctoolkit.html">http://www.nipgr.ac.in/ngsqctoolkit.html</a><br />
+我把它上传到GitHub了：<code>git clone git@github.com:bioinfx/NGSQCToolkit.git</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl   </span><br><span class="line">Usage: perl /home/fenglei/local/app/NGSQCToolkit/Statistics/N50Stat.pl &lt;options&gt;</span><br><span class="line"></span><br><span class="line">\### Input reads/sequences (FASTA) (Required)</span><br><span class="line">  -i &lt;Read/Sequence file&gt;</span><br><span class="line">    Read/Sequence in fasta format</span><br><span class="line">\### Other options [Optional]</span><br><span class="line">  -h | -help</span><br><span class="line">    Prints this help</span><br><span class="line">  -o | -outputFile &lt;Output file name&gt;</span><br><span class="line">    Output will be stored in the given file</span><br><span class="line">    default: By default, N50 statistics file will be stored where the input file is</span><br></pre></td></tr></table></figure>
+<h3 id="5-fastx-toolkit"><a class="markdownIt-Anchor" href="#5-fastx-toolkit"></a> 5. FASTX-Toolkit</h3>
+<p><a target="_blank" rel="noopener" href="http://hannonlab.cshl.edu/fastx_toolkit/">http://hannonlab.cshl.edu/fastx_toolkit/</a><br />
+Usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">FASTQ-to-FASTA converter</span><br><span class="line">	Convert FASTQ files to FASTA files.</span><br><span class="line">FASTQ Information</span><br><span class="line">	Chart Quality Statistics and Nucleotide Distribution</span><br><span class="line">FASTQ/A Collapser</span><br><span class="line">	Collapsing identical sequences in a FASTQ/A file into a single sequence (while maintaining reads counts)</span><br><span class="line">FASTQ/A Trimmer</span><br><span class="line">	Shortening reads in a FASTQ or FASTQ files (removing barcodes or noise).</span><br><span class="line">FASTQ/A Renamer</span><br><span class="line">	Renames the sequence identifiers in FASTQ/A file.</span><br><span class="line">FASTQ/A Clipper</span><br><span class="line">	Removing sequencing adapters / linkers</span><br><span class="line">FASTQ/A Reverse-Complement</span><br><span class="line">	Producing the Reverse-complement of each sequence in a FASTQ/FASTA file.</span><br><span class="line">FASTQ/A Barcode splitter</span><br><span class="line">	Splitting a FASTQ/FASTA files containning multiple samples</span><br><span class="line">FASTA Formatter</span><br><span class="line">	changes the width of sequences line in a FASTA file</span><br><span class="line">FASTA Nucleotide Changer</span><br><span class="line">	Convets FASTA sequences from/to RNA/DNA</span><br><span class="line">FASTQ Quality Filter</span><br><span class="line">	Filters sequences based on quality</span><br><span class="line">FASTQ Quality Trimmer</span><br><span class="line">	Trims (cuts) sequences based on quality</span><br><span class="line">FASTQ Masker</span><br><span class="line">	Masks nucleotides with &#x27;N&#x27; (or other character) based on quality</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/12/Plant-Soybean-introduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1192,103 +1283,6 @@ Gene    cluster cell_ct cell_exp_ct   count Group</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/15/Others-NAS-set-up/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/15/Others-NAS-set-up/" class="post-title-link" itemprop="url">NAS 安装与使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-15 11:38:06" itemprop="dateCreated datePublished" datetime="2020-10-15T11:38:06+08:00">2020-10-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Life/" itemprop="url" rel="index"><span itemprop="name">Life</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我主要用NAS做数据存储和备份，一些生物实验的原始数据比较大。<br />
-<strong>一 组装</strong><br />
-NAS型号：群晖 DS918+，有四个硬盘卡槽，底部还有一个内存卡插槽。买了两块IronWolf的NAS专用硬盘，各8 TB，一起16 TB。网络上有大量教程参考，组装完毕就是下图。</p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg"><img src="https://genehub.files.wordpress.com/2020/10/81yfruavezl._ac_sl1500_.jpg?w=1024" alt="" /></a></p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/synology-ds918-installing-hard-drive.jpg"><img src="https://genehub.files.wordpress.com/2020/10/synology-ds918-installing-hard-drive.jpg?w=800" alt="" /></a></p>
-<p><strong>二 系统安装与配置</strong></p>
-<p>在官网下载相应的系统安装文件 <a target="_blank" rel="noopener" href="https://www.synology.com/zh-tw/support/download/DS918+#firmware">https://www.synology.com/zh-tw/support/download/DS918+#firmware</a> 。安裝 DSM （DiskStation Manager）。</p>
-<p>[安装过程：<a target="_blank" rel="noopener" href="https://ningselect.com/11397/40/%5C">https://ningselect.com/11397/40/\</a>]</p>
-<p><strong>三 使用</strong></p>
-<p>1 在任意位置使用web登入NAS服务器</p>
-<p>2 在内网web浏览器输入IP即可登录使用</p>
-<p>3 FTP连接。在FTP客户端（FileZilla）输入 sftp://admin@192.168.x.y 即可，后面不用加端口号。</p>
-<p>4 将NAS挂载到本地网络的一个个人电脑下。这样相当于将NAS作为个人电脑的硬盘使用。先在NAS管理界面设置NFS，参考：<a target="_blank" rel="noopener" href="https://www.synology.com/zh-cn/knowledgebase/DSM/tutorial/File%5C_Sharing/How%5C_to%5C_access%5C_files%5C_on%5C_Synology%5C_NAS%5C_within%5C_the%5C_local%5C_network%5C_NFS%E3%80%82%E7%84%B6%E5%90%8E%E5%9C%A8%E4%B8%AA%E4%BA%BA%E7%94%B5%E8%84%91%EF%BC%88%E6%88%91%E7%94%A8%E7%9A%84windows">https://www.synology.com/zh-cn/knowledgebase/DSM/tutorial/File\_Sharing/How\_to\_access\_files\_on\_Synology\_NAS\_within\_the\_local\_network\_NFS。然后在个人电脑（我用的windows</a> 10）设置，将群晖NAS映射为网络驱动器。在“我的电脑”右键，选择“映射网络驱动器”，驱动器选“Y”（随便选都可，一般考虑Z-&gt;A的顺序），文件夹地址输入“\\192.168.x.x\share_name”（192.168.x.x是NAS的IP地址，视具体情况而定；share_name就是NAS里面盘阵的名称，视具体情况而定），点击“完成”并输入账户名和密码。依次映射了两个硬盘，我得到了下面的界面，可见“网络位置”下方出现了相应的磁盘，这样就像使用本机硬盘一样的，很方便。</p>
-<p>参考 <a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/e75057f22d7901ebc81a8966.html">https://jingyan.baidu.com/article/e75057f22d7901ebc81a8966.html</a></p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201015112922.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201015112922.png?w=702" alt="" /></a></p>
-<p><strong>四 空间清理</strong></p>
-<p>收到系统提醒说存储空间将满，删除了一部分文件，并清空回收站，但是空间还是没有释放。查询资料之后发现是 Synology Drive 这个应用的缘故，它会将已删除的文件保留备份，所以占用大量空间，将其卸载可以释放哪些空间。</p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026162623.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026162623.png?w=831" alt="" /></a></p>
-<p>Use a terminal (eg. Putty, SecureCRT) to connect Synology through SSH.<br />
-ie: 192.168.x.x port 22<br />
-Login ID: admin; Password: admin password.<br />
-Switch to ROOT by “sudo -i”, type a new password for root user. Then detect space usage by “du -h -d 1”</p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026160121.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201026160121.png?w=1024" alt="" /></a></p>
-<p>进入 Synology Drive Sever，选择“版本资源管理器”，勾选“显示已删除文件”，可见到那些被删除的文件实际上还保存在硬盘里，所以占用大量空间。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1360,7 +1354,7 @@ Switch to ROOT by “sudo -i”, type a new password for root user. Then detect 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

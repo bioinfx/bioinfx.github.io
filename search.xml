@@ -9074,7 +9074,7 @@ Node.js下载地址：Node.js官网</p>
     <url>/2022/10/20/Sterilization-of-Arabidopsis-seeds/</url>
     <content><![CDATA[<p>拟南芥等植物的种子灭菌播种的方法，记录在此，留存备用。</p>
 <span id="more"></span>
-<h3 id="氯气灭菌法-vapor-phase-sterilization-of-arabidopsis-seed"><a class="markdownIt-Anchor" href="#氯气灭菌法-vapor-phase-sterilization-of-arabidopsis-seed"></a> 氯气灭菌法 Vapor-Phase Sterilization of Arabidopsis Seed</h3>
+<h3 id="氯气灭菌法拟南芥种子-vapor-phase-sterilization-of-arabidopsis-seed"><a class="markdownIt-Anchor" href="#氯气灭菌法拟南芥种子-vapor-phase-sterilization-of-arabidopsis-seed"></a> 氯气灭菌法（拟南芥种子） Vapor-Phase Sterilization of Arabidopsis Seed</h3>
 <p>Steve Clough and Andrew Bent, University of Illinois at Urbana-Champaign.</p>
 <p>The following protocol contains a convenient method for surface-sterilization of plant seeds. In particular, the method does not require all of the soaking and rinsing of liquid-phase bleach-sterilization methods. While this protocol substantially reduces hands-on manipulations, it does require some incubation<br />
 time (a few hours to overnight).</p>
@@ -9110,7 +9110,7 @@ Autoclave and properly dispose of all materials.<br />
 <li>Sterilized seeds were germinated on 1% Agar (or 1/2 MS medium) (20 seeds/petri dish, 10 × 25 mm) in darkness at 28 °C.</li>
 <li>Two days after gemination, seedlings were transferred into flasks with ½ MS for further growth in the dark. Or transfer to soil for further growth, and water plants with 1/2 Hoagland solution.</li>
 </ol>
-<h3 id="异丙醇灭菌法"><a class="markdownIt-Anchor" href="#异丙醇灭菌法"></a> 异丙醇灭菌法</h3>
+<h3 id="异丙醇加消毒水灭菌法适用于拟南芥"><a class="markdownIt-Anchor" href="#异丙醇加消毒水灭菌法适用于拟南芥"></a> 异丙醇加消毒水灭菌法（适用于拟南芥）</h3>
 <p>该方法是浏览 <a href="http://clough.cropsci.illinois.edu/pages/protocols.html">Clough Lab</a> 时候偶然看到他们分享的液体灭菌法，也可参考。</p>
 <p>Seed Sterilization by Liquid Method</p>
 <ol>
@@ -9120,12 +9120,72 @@ Autoclave and properly dispose of all materials.<br />
 <li>Repeat 3 to 5 times (until a bleach odor is not detected).</li>
 <li>Use seeds immediately.</li>
 </ol>
-<p>Notes:</p>
-<p>Approximately:  1 mg = 50 seeds<br />
-40 mg = 2000 seeds</p>
-<p>If plating seeds out, resuspend seed in 0.1% sterile agarose.</p>
-<p>From:  Liquid Method: Eric Baima 6/97<br />
-See Methods in Clough and Bent (1998) Plant Journal 16, 735-743.</p>
+<p>Notes:<br />
+Approximately:  1 mg = 50 seeds; 40 mg = 2000 seeds.<br />
+If plating seeds out, resuspend seed in 0.1% sterile agarose.<br />
+From:  Liquid Method: Eric Baima 6/97. See Methods in Clough and Bent (1998) Plant Journal 16, 735-743.</p>
+]]></content>
+      <categories>
+        <category>Plant</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Plant | MS 培养基的配方</title>
+    <url>/2022/10/24/Murashige-Skoog-MS-Medium/</url>
+    <content><![CDATA[<p>Murashige and Skoog medium，在实验室植物培养中通常使用减半的浓度，即 1/2 MS 培养基，记录在此，留存备用。</p>
+<span id="more"></span>
+<p>MS 培养基是 Murashige 和 Skoog 于 1962 年为烟草细胞培养设计的，其特点是无机盐和离子浓度较高，是较稳定的离子平衡溶液，它的硝酸盐含量高，其养分的数量和比例合适，能满足植物细胞的营养和生理需要，因而适用范围比较广，多数植物组织培养快速繁殖用它作为培养基的基本培养基，也是目前使用最普遍的植物组织培养基。</p>
+<p>MS 培养基具有较高的无机盐浓度，能够保证组织生长所需的矿质营养还能加速愈伤组织的生长。由于配方中的离子浓度高，在配制、贮存和消毒等过程中，即使有些成分略有出入，也不会影响离子间的平衡。由于植物的多样性和生长环境复杂性和多变性，所以不可能有一种能够适应所有类型的植物组织和器官，满足所有植物并实现其培养材料的再生，通常需要根据材料来源、培养目的等的不同，选择不同的培养基或者对培养成分做适当的改良。</p>
+<p>MS 固体培养基可用于诱导愈伤组织，也可用于胚、茎段、茎尖及花药的培养，其液体培养基用于细胞悬浮培养时能获得明显的成功。其养分的数量和比例较合适，可满足植物的营养和生理需要，一般情况下，无须再添加氨基酸、酪蛋白水解物、酵母提取物及椰子汁等有机附加成分。</p>
+<p>对于 MS 植物组织培养基的配制，由于 MS 培养基含有近 30 种营养成分，为了避免每次配制培养基都要对这几十种成分进行称量，可将培养基中的各种成分，按原量的 20 倍或 200 倍分别称量，配成浓缩液，这种浓缩液叫做培养基母液。这样每次使用时，取其总量的 1/20(50 mL) 或 1/200(5 mL)，加水稀释，制成混合培养液，再加入到煮沸的琼脂中，最后使用蒸馏水定容后搅拌均匀。美国植物培养专家 Caisson 的 MS 植物组织培养基粉末，这是因为商业化的培养基产品能确保批次的一致性，以及各组分的有效性。从而确保每个培养批次之间的数据有效且一致，培养效果具有可比对性。</p>
+<p>Caisson 根据客户不同的需求提供不同等级和规格的 MS 培养基，包括 MS 基本培养基、含维生素的 MS 基本培养基、不含甘氨酸的 MS 基本培养基、不含氮磷钾的 MS 基本培养基，以及含蔗糖的 MS 基本培养基等不同产品。产品规格从 10 L、50 L 到 100 L 甚至更大的定制规格。</p>
+<p>下面以使用 Caisson 品牌的 MS 培养基浓缩产品为例，配制实验室用到的植物培养基。我一般以 1.2 L 为配制量，因为这个体积刚好分装到 3 个 500 mL 尺寸的瓶子，每个瓶子 400 mL 培养基。</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>成分</th>
+<th>货号</th>
+<th>保存环境</th>
+<th>称取质量(for 1 L 1/2MS)</th>
+<th>称取质量(for 1.2 L 1/2MS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>MS (Murashige &amp; Skoog)</td>
+<td>Caisson Ref:MSP06-50LT</td>
+<td>4 °C</td>
+<td>2.22 g</td>
+<td>2.664 g</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sucrose</td>
+<td>usb?</td>
+<td>常温</td>
+<td>10 g</td>
+<td>12 g</td>
+</tr>
+<tr>
+<td>3</td>
+<td>MES</td>
+<td>SIGMA Ref:M2933-100G</td>
+<td>常温</td>
+<td>0.25 g</td>
+<td>0.3 g</td>
+</tr>
+</tbody>
+</table>
+<p>配制 1.2 L 培养基的过程：</p>
+<ol>
+<li>先往 2 L 大小的塑料杯中加入 1 L milliQ water，在搅拌仪上搅动；</li>
+<li>按照上方表格依次称量 3 种物质加入上一步的杯中，搅拌均匀；</li>
+<li>测量 pH 值，初始值大约在 4 左右，使用 KOH 溶液调整 pH 值至 5.7——5.8，并加水定容到 1.2 L。对于 2 M 浓度的 KOH，大约需要加 400 uL 就接近目的 pH 值；</li>
+<li>取 3 个 500 mL 容量的瓶子，每个瓶子加入 0.7—0.8 g 左右的 Phytoblend (Caisson Ref:PTP01-1KG)；</li>
+<li>再往每个瓶子里加入 400 mL 配制好的 MS 液体，灭菌之后即可使用；或常温保存，再次使用的时候用微波炉熔化即可。</li>
+</ol>
 ]]></content>
       <categories>
         <category>Plant</category>

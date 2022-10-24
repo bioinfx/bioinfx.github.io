@@ -189,6 +189,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/04/17/Linux-R-3-3-3-linux-redhat-without-root/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/04/17/Linux-R-3-3-3-linux-redhat-without-root/" class="post-title-link" itemprop="url">GCC与R 3.3.3升级与安装 — Linux (RedHat)无root 权限</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-04-17 22:36:04" itemprop="dateCreated datePublished" datetime="2017-04-17T22:36:04+08:00">2017-04-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-29 17:37:54" itemprop="dateModified" datetime="2020-12-29T17:37:54+08:00">2020-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="非root权限下安装gcc的方法"><a class="markdownIt-Anchor" href="#非root权限下安装gcc的方法"></a> 非root权限下安装gcc的方法</h3>
+<p>系统自带的GCC版本太低了（gcc version 4.4.7），不能够编译最新的 R 3.3.3</p>
+<p>首先在个人目录下安装了较新版本的GCC（gcc version 6.3.0），无需root权限。</p>
+<p>在安装GCC之前，必要条件是先要先依次安装gmp、mpfr和mpc。注意这三个软件configure的时候设定–with-gmp和–with-mpfr等参数。 然后安装GCC的命令是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/home/fenglei/local/ --with-mpc=/home/fenglei/local/ --with-mpfr=/home/fenglei/local/ --with-gmp=/home/fenglei/local/ --with-libelf=/home/fenglei/local/ --disable-multilib </span><br><span class="line">make -j 10 &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p><em>2017-04-17 备注：</em> Red hat 系统安装 gcc<br />
+make的时候报错，经过查询是路径问题。安装完上述三个依赖包后设置环境变量 $LD_LIBRARY_PATH，即在bashrc文件添加如下内容： 因为系统的LD_LIBRARY_PATH中有两个相邻的冒号，编译gcc的导致通不过，所以先把这个变量自己重新定义一下，然后将上面装的三个包添加到该变量中。</p>
+<p>bashrc中的内容</p>
+<p>找到动态链接库的路径<br />
+LD_LIBRARY_PATH=/xxx/xxx:/share/raid12/c-fenglei/local/lib<br />
+export LD_LIBRARY_PATH</p>
+<p>找到静态库的路径<br />
+LIBRARY_PATH=$LD_LIBRARY_PATH<br />
+export LIBRARY_PATH</p>
+<p>这样更新bashrc之后，顺利make -j 20 &amp;&amp; make install，测试gcc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) -bash-4.1$ gcc --version</span><br><span class="line">gcc (GCC) 9.1.0</span><br><span class="line">Copyright © 2019 Free Software Foundation, Inc.</span><br><span class="line">本程序是自由软件；请参看源代码的版权声明。本软件没有任何担保；</span><br><span class="line">包括没有适销性和某一专用目的下的适用性担保。</span><br></pre></td></tr></table></figure>
+<p><em>2020-12-29 更新</em> CentOS 7 系统安装 gcc</p>
+<p>在一台机器上安装新版gcc，遇到问题：libiconv.so.2: cannot open shared object file<br />
+下载安装 <a target="_blank" rel="noopener" href="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz">libiconv</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make -j 20</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>在/etc/ld.so.conf中加一行/usr/local/lib，執行<code>ldconfig</code>，随后gcc就可以顺利make了。</p>
+<p>make的时候加上-j 20参数，大大减少等待的时间。否则安装的时候等挺长时间，差不多两个小时。</p>
+<p>make install 完成后，将下面的参数加入环境变量（编辑.bashrc文件）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/home/user/local/gcc-9.2.0/bin/:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/home/user/local/gcc-9.2.0/lib/:/home/user/local/gcc-9.2.0/lib64/:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+<p>测试gcc：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost gnuplot-5.4.1]$ gcc --version</span><br><span class="line">gcc (GCC) 10.2.0</span><br><span class="line">Copyright (C) 2020 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+<h3 id="安装-r"><a class="markdownIt-Anchor" href="#安装-r"></a> 安装 R</h3>
+<p>（2020-12-29 备注：其实安装R还有另一个选项，通过conda安装，很方便，<code>conda install R</code> 一句话命令就安装好了。它自动解决依赖的其他程序，甚至都不需要关心gcc版本这些问题。）</p>
+<p>下面记录的是手动安装R的过程。(2017-04-17)</p>
+<p>随后开始准备安装R 3.3.3，下载了源码并在用户目录下安装，configure的过程遇到了缺失zlib、bzip2、xz、pcre、openssl和curl等问题。需要逐个下载并安装这些包。 在R的configure之前注意设定环境变量。具体如下。或者将其写入~/.bash_profile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD\_LIBRARY\_PATH=/home/fenglei/local/lib:/home/fenglei/local/lib64 export CFLAGS=&quot;-I/home/fenglei/local/include&quot; export LDFLAGS=&quot;-L/home/fenglei/local/lib&quot;</span><br></pre></td></tr></table></figure>
+<p>R的安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/home/fenglei/local/ --enable-R-shlib make -j 10 &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>现在R终于可以启动了，然而在安装devtools等包的时候还是报错！错误信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ibssl.so.1.0.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>我猜想可能是openssl软件版本的问题，于是卸载openssl.1.1.0，安装openssl.1.0.0。然而编译openssl.1.0.0时还是报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POD document had syntax errors</span><br></pre></td></tr></table></figure>
+<p>参考网上的文章解决了该问题，网上（<a target="_blank" rel="noopener" href="http://www.linuxdiyf.com/linux/20869.html">链接一</a>、<a target="_blank" rel="noopener" href="http://blog.csdn.net/zsl10/article/details/52145657">链接二</a>）的建议是删除 pod2man文件。我的解决方法是对pod2man文件进行了重命名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv  /usr/bin/pod2man  /usr/bin/pod2man~</span><br></pre></td></tr></table></figure>
+<p>这时候再启动R软件，还是不能安装devtools，想到curl包是依赖openssl的，那么重新安装openssl之后也同样需要重新安装curl。卸载原来的curl，并且重新安装。然后启动R ，终于可以安装git2r和devtools了！ 附安装zlib和bzip2等软件包的流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># step1:下载安装zlib </span><br><span class="line">$ wget http://www.zlib.net/zlib-1.2.11.tar.gz </span><br><span class="line">$ tar zlib-1.2.11.tar.gz $ cd zlib-1.2.11.tar.gz </span><br><span class="line">$ ./configure --prefix=/opt/packages </span><br><span class="line">$ make </span><br><span class="line">$ make install </span><br><span class="line"># step2:下载和安装bzip2： </span><br><span class="line"># bzip2不是标准的GNU包，根据下载的安装文件的说明文档，执行以下命令： </span><br><span class="line">$ wget http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz </span><br><span class="line">$ tar xzvf bzip2-1.0.6.tar.gz $ cd bzip2-1.0.6 </span><br><span class="line">$ make -f Makefile-libbz2\_so </span><br><span class="line">$ make clean </span><br><span class="line">$ make </span><br><span class="line">$ make install PREFIX=/opt/packages </span><br><span class="line"># 注意：这里下载完bzip2后，需要修改Makefile文件，在CFLAGS这个变量后面添加:-fPIC，否则后面安装R的时候会报错。 export CFLAGS=&quot;-fPIC -I/home/fenglei/local/include&quot; export LDFLAGS=&quot;-fPIC -L/home/fenglei/local/lib&quot; </span><br><span class="line"># step3:安装xz包： </span><br><span class="line">$ wget http://tukaani.org/xz/xz-5.2.2.tar.gz </span><br><span class="line">$ tar xzvf xz-5.2.2.tar.gz $ cd xz-5.2.2 </span><br><span class="line">$ ./configure --prefix=/opt/packages </span><br><span class="line">$ make -j3 $ make install # step4:安装pcre包： </span><br><span class="line">$ wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz </span><br><span class="line">$ tar xzvf pcre-8.38.tar.gz $ cd pcre-8.38 </span><br><span class="line">$ ./configure --enable-utf8 --prefix=/opt/packages </span><br><span class="line">$ make -j3 </span><br><span class="line">$ make install OPENSSL ./config -fPIC --prefix=/home/fenglei/local/ enable-shared ./config -t make make install </span><br><span class="line"># 如何安装OPENSSL  http://www.jianshu.com/p/291294ad0ee7 </span><br><span class="line"># step5:安装curl包： </span><br><span class="line">$ wget --no-check-certificate http://curl.haxx.se/download/curl-7.51.0.tar.gz </span><br><span class="line">$ tar -zxf curl-7.51.0.tar.gz $ cd curl-7.51.0 $ ./configure --prefix=/opt/packages $ make -j3 </span><br><span class="line">$ make install </span><br><span class="line"># step6:设置安装好的包的环境变量，将下面命令写入~/.bash\_profile（这步重要）： </span><br><span class="line"># 前两个是“configure”过程需要用到的，后一个是安装R的“make”过程需要用到的。 </span><br><span class="line">export CFLAGS=&quot;-I/home/fenglei/local/include&quot; </span><br><span class="line">export LDFLAGS=&quot;-L/home/fenglei/local/lib&quot; </span><br><span class="line">LD_LIBRARY_PATH=/home/fenglei/local/lib:/home/fenglei/local/lib64</span><br></pre></td></tr></table></figure>
+<p>-END-</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/31/Linux-shell-find-files-based-on-their-edited-time/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1040,284 +1155,6 @@ chmod a+x my_mysql_stop</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/08/22/Plant-SCI-impact-factors-top50/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/08/22/Plant-SCI-impact-factors-top50/" class="post-title-link" itemprop="url">2015年度植物学科杂志的影响因子Top50</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-08-22 23:01:43" itemprop="dateCreated datePublished" datetime="2016-08-22T23:01:43+08:00">2016-08-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p></p>
-<p>排名</p>
-<p>期刊名</p>
-<p>IF2015</p>
-<p>IF2015-5Y</p>
-<p>1</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=1&amp;journal=ANNU+REV+PLANT+BIOL">ANNU REV PLANT BIOL</a></p>
-<p>22.131</p>
-<p>25.829</p>
-<p>2</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=2&amp;journal=TRENDS+PLANT+SCI">TRENDS PLANT SCI</a></p>
-<p>10.899</p>
-<p>14.191</p>
-<p>3</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=3&amp;journal=ANNU+REV+PHYTOPATHOL">ANNU REV PHYTOPATHOL</a></p>
-<p>9.308</p>
-<p>11.959</p>
-<p>4</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=4&amp;journal=PLANT+CELL">PLANT CELL</a></p>
-<p>8.538</p>
-<p>9.88</p>
-<p>5</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=5&amp;journal=NEW+PHYTOL">NEW PHYTOL</a></p>
-<p>7.21</p>
-<p>7.554</p>
-<p>6</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=6&amp;journal=MOL+PLANT">MOL PLANT</a></p>
-<p>7.142</p>
-<p>6.885</p>
-<p>7</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=7&amp;journal=CURR+OPIN+PLANT+BIOL">CURR OPIN PLANT BIOL</a></p>
-<p>6.78</p>
-<p>7.843</p>
-<p>8</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=8&amp;journal=PLANT+PHYSIOL">PLANT PHYSIOL</a></p>
-<p>6.28</p>
-<p>7.367</p>
-<p>9</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=9&amp;journal=J+ECOL">J ECOL</a></p>
-<p>6.18</p>
-<p>6.409</p>
-<p>10</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=10&amp;journal=PLANT+CELL+ENVIRON">PLANT CELL ENVIRON</a></p>
-<p>6.169</p>
-<p>6.443</p>
-<p>11</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=11&amp;journal=PLANT+BIOTECHNOL+J">PLANT BIOTECHNOL J</a></p>
-<p>6.09</p>
-<p>5.951</p>
-<p>12</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=12&amp;journal=J+EXP+BOT">J EXP BOT</a></p>
-<p>5.677</p>
-<p>6.229</p>
-<p>13</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=13&amp;journal=PLANT+J">PLANT J</a></p>
-<p>5.468</p>
-<p>6.468</p>
-<p>14</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=14&amp;journal=CRIT+REV+PLANT+SCI">CRIT REV PLANT SCI</a></p>
-<p>4.81</p>
-<p>6.028</p>
-<p>15</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=15&amp;journal=FRONT+PLANT+SCI">FRONT PLANT SCI</a></p>
-<p>4.495</p>
-<p>4.461</p>
-<p>16</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=16&amp;journal=MOL+PLANT+PATHOL">MOL PLANT PATHOL</a></p>
-<p>4.335</p>
-<p>4.819</p>
-<p>17</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=17&amp;journal=PLANT+CELL+PHYSIOL">PLANT CELL PHYSIOL</a></p>
-<p>4.319</p>
-<p>4.847</p>
-<p>18</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=18&amp;journal=MOL+PLANT+MICROBE+IN">MOL PLANT MICROBE IN</a></p>
-<p>4.145</p>
-<p>4.328</p>
-<p>19</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=19&amp;journal=PHOTOSYNTH+RES">PHOTOSYNTH RES</a></p>
-<p>4.122</p>
-<p>3.6</p>
-<p>20</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=20&amp;journal=ANN+BOT-LONDON">ANN BOT-LONDON</a></p>
-<p>3.982</p>
-<p>4.088</p>
-<p>21</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=21&amp;journal=PLANT+MOL+BIOL">PLANT MOL BIOL</a></p>
-<p>3.905</p>
-<p>3.874</p>
-<p>22</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=22&amp;journal=THEOR+APPL+GENET">THEOR APPL GENET</a></p>
-<p>3.9</p>
-<p>4.115</p>
-<p>23</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=23&amp;journal=ENVIRON+EXP+BOT">ENVIRON EXP BOT</a></p>
-<p>3.712</p>
-<p>3.707</p>
-<p>24</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=24&amp;journal=J+INTEGR+PLANT+BIOL">J INTEGR PLANT BIOL</a></p>
-<p>3.67</p>
-<p>3.993</p>
-<p>25</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=25&amp;journal=J+NAT+PROD">J NAT PROD</a></p>
-<p>3.662</p>
-<p>3.644</p>
-<p>26</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=26&amp;journal=BMC+PLANT+BIOL">BMC PLANT BIOL</a></p>
-<p>3.631</p>
-<p>4.604</p>
-<p>27</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=27&amp;journal=PERSPECT+PLANT+ECOL">PERSPECT PLANT ECOL</a></p>
-<p>3.578</p>
-<p>4.619</p>
-<p>28</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=28&amp;journal=PHYSIOL+PLANTARUM">PHYSIOL PLANTARUM</a></p>
-<p>3.52</p>
-<p>3.799</p>
-<p>29</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=29&amp;journal=PLANT+GENOME-US">PLANT GENOME-US</a></p>
-<p>3.509</p>
-<p>5</p>
-<p>30</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=30&amp;journal=PLANT+METHODS">PLANT METHODS</a></p>
-<p>3.449</p>
-<p>3.627</p>
-<p>31</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=31&amp;journal=PLANT+SCI">PLANT SCI</a></p>
-<p>3.362</p>
-<p>3.981</p>
-<p>32</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=32&amp;journal=PLANTA">PLANTA</a></p>
-<p>3.239</p>
-<p>3.593</p>
-<p>33</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=33&amp;journal=PLANT+DIS">PLANT DIS</a></p>
-<p>3.192</p>
-<p>3.268</p>
-<p>34</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=34&amp;journal=J+VEG+SCI">J VEG SCI</a></p>
-<p>3.151</p>
-<p>3.31</p>
-<p>35</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=35&amp;journal=PLANT+CELL+REP">PLANT CELL REP</a></p>
-<p>3.088</p>
-<p>3.187</p>
-<p>36</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=36&amp;journal=J+ETHNOPHARMACOL">J ETHNOPHARMACOL</a></p>
-<p>3.055</p>
-<p>3.333</p>
-<p>37</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=37&amp;journal=PHYTOPATHOLOGY">PHYTOPATHOLOGY</a></p>
-<p>3.011</p>
-<p>3.248</p>
-<p>38</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=38&amp;journal=J+PLANT+PHYSIOL">J PLANT PHYSIOL</a></p>
-<p>2.971</p>
-<p>3.241</p>
-<p>39</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=39&amp;journal=PLANT+SOIL">PLANT SOIL</a></p>
-<p>2.969</p>
-<p>3.581</p>
-<p>40</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=40&amp;journal=PHYTOMEDICINE">PHYTOMEDICINE</a></p>
-<p>2.937</p>
-<p>3.343</p>
-<p>41</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=41&amp;journal=PLANT+PHYSIOL+BIOCH">PLANT PHYSIOL BIOCH</a></p>
-<p>2.928</p>
-<p>3.434</p>
-<p>42</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=42&amp;journal=TAXON">TAXON</a></p>
-<p>2.907</p>
-<p>2.926</p>
-<p>43</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=43&amp;journal=AM+J+BOT">AM J BOT</a></p>
-<p>2.811</p>
-<p>2.794</p>
-<p>44</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=44&amp;journal=PHYTOCHEMISTRY">PHYTOCHEMISTRY</a></p>
-<p>2.779</p>
-<p>3.218</p>
-<p>45</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=45&amp;journal=PRESLIA">PRESLIA</a></p>
-<p>2.711</p>
-<p>3.285</p>
-<p>46</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=46&amp;journal=PHYTOCHEM+REV">PHYTOCHEM REV</a></p>
-<p>2.686</p>
-<p>3.883</p>
-<p>47</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=47&amp;journal=J+PHYCOL">J PHYCOL</a></p>
-<p>2.536</p>
-<p>2.747</p>
-<p>48</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=48&amp;journal=BOT+J+LINN+SOC">BOT J LINN SOC</a></p>
-<p>2.523</p>
-<p>2.333</p>
-<p>49</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=49&amp;journal=PHYTOCHEM+ANALYSIS">PHYTOCHEM ANALYSIS</a></p>
-<p>2.497</p>
-<p>2.479</p>
-<p>50</p>
-<p><a target="_blank" rel="noopener" href="http://admin-apps.webofknowledge.com/JCR/JCR?RQ=RECORD&amp;rank=50&amp;journal=FUNCT+PLANT+BIOL">FUNCT PLANT BIOL</a></p>
-<p>2.491</p>
-<p>3.015</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1389,7 +1226,7 @@ chmod a+x my_mysql_stop</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">179</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

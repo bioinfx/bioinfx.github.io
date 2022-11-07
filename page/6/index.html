@@ -189,6 +189,223 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/25/Linux-vim-setting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/25/Linux-vim-setting/" class="post-title-link" itemprop="url">Linux：vim设置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-25 23:26:27 / Modified: 23:47:25" itemprop="dateCreated datePublished" datetime="2020-12-25T23:26:27+08:00">2020-12-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>以前是用spf13-vim方案的，运行一个安装命令就可以使用了。最喜欢的功能是自动缩进，还有代码块高亮显示（比如while循环下面的每行子命令左侧都会有一个高亮的方块）。</p>
+<p>今天不知道为什么在tmux下面用vim出现问题，很多字段有莫名其妙的红色背景，而且鼠标左键选中字符的时候无法选中，反而是将光标移过去了。</p>
+<p>于是换了一个vim设置，如下的代码（<a target="_blank" rel="noopener" href="https://blog.csdn.net/geng823/article/details/41804399">代码来源</a>），新建<code>~/.vimrc</code>文件，将下面的代码写入这个文件，保存退出即可，代码中有几行是作者email等信息可以改掉。测试了一下，下方的代码可以用，至少有了我需要自动缩进功能，且不会有上述问题，另外还有新建.sh代码的时候，会自动生成一个包含作者信息和新建文件时间的几行注释信息，很实用的小功能。记录在此。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br></pre></td><td class="code"><pre><span class="line">&quot; An example for a vimrc file.</span><br><span class="line">&quot;</span><br><span class="line">&quot; Maintainer:	Bram Moolenaar &lt;Bram@vim.org&gt;</span><br><span class="line">&quot; Last change:	2001 Jul 18</span><br><span class="line">&quot;</span><br><span class="line">&quot; To use it, copy it to</span><br><span class="line">&quot;     for Unix and OS/2:  ~/.vimrc</span><br><span class="line">&quot;	      for Amiga:  s:.vimrc</span><br><span class="line">&quot;  for MS-DOS and Win32:  $VIM\_vimrc</span><br><span class="line">&quot;	    for OpenVMS:  sys$login:.vimrc</span><br><span class="line"></span><br><span class="line">set encoding=utf-8</span><br><span class="line">set fileencodings=utf-8,gbk,gb2312,gb18030,ucs-bom,latin1</span><br><span class="line"></span><br><span class="line">set tags=tags;</span><br><span class="line">set shiftwidth=4 </span><br><span class="line">set ts=4</span><br><span class="line">&quot;set nu</span><br><span class="line">set vb t_vb=</span><br><span class="line">&quot; When started as &quot;evim&quot;, evim.vim will already have done these settings.</span><br><span class="line">if v:progname =~? &quot;evim&quot;</span><br><span class="line">  finish</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Use Vim settings, rather then Vi settings (much better!).</span><br><span class="line">&quot; This must be first, because it changes other options as a side effect.</span><br><span class="line">set nocompatible</span><br><span class="line"></span><br><span class="line">&quot; allow backspacing over everything in insert mode</span><br><span class="line">set backspace=indent,eol,start</span><br><span class="line"></span><br><span class="line">set autoindent		&quot; always set autoindenting on</span><br><span class="line">set nobackup		&quot; do not keep a backup file, use versions instead</span><br><span class="line">&quot;if has(&quot;vms&quot;)</span><br><span class="line">&quot;  set nobackup		&quot; do not keep a backup file, use versions instead</span><br><span class="line">&quot;else</span><br><span class="line">&quot;  set backup		&quot; keep a backup file</span><br><span class="line">&quot;endif</span><br><span class="line">set history=50		&quot; keep 50 lines of command line history</span><br><span class="line">set ruler		&quot; show the cursor position all the time</span><br><span class="line">set showcmd		&quot; display incomplete commands</span><br><span class="line">set incsearch		&quot; do incremental searching</span><br><span class="line"></span><br><span class="line">set nobackup		&quot; do not keep a backup file, use versions instead</span><br><span class="line"></span><br><span class="line">&quot; For Win32 GUI: remove &#x27;t&#x27; flag from &#x27;guioptions&#x27;: no tearoff menu entries</span><br><span class="line">&quot; let &amp;guioptions = substitute(&amp;guioptions, &quot;t&quot;, &quot;&quot;, &quot;g&quot;)</span><br><span class="line"></span><br><span class="line">&quot; Don&#x27;t use Ex mode, use Q for formatting</span><br><span class="line">map Q gq</span><br><span class="line"></span><br><span class="line">&quot; Make p in Visual mode replace the selected text with the &quot;&quot; register.</span><br><span class="line">vnoremap p &lt;Esc&gt;:let current_reg = @&quot;&lt;CR&gt;gvs&lt;C-R&gt;=current_reg&lt;CR&gt;&lt;Esc&gt;</span><br><span class="line"></span><br><span class="line">&quot; This is an alternative that also works in block mode, but the deleted</span><br><span class="line">&quot; text is lost and it only works for putting the current register.</span><br><span class="line">&quot;vnoremap p &quot;_dp</span><br><span class="line"></span><br><span class="line">&quot; Switch syntax highlighting on, when the terminal has colors</span><br><span class="line">&quot; Also switch on highlighting the last used search pattern.</span><br><span class="line">if &amp;t_Co &gt; 2 || has(&quot;gui_running&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">  set hlsearch</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; Only do this part when compiled with support for autocommands.</span><br><span class="line">if has(&quot;autocmd&quot;)</span><br><span class="line"></span><br><span class="line">  &quot; Enable file type detection.</span><br><span class="line">  &quot; Use the default filetype settings, so that mail gets &#x27;tw&#x27; set to 72,</span><br><span class="line">  &quot; &#x27;cindent&#x27; is on in C files, etc.</span><br><span class="line">  &quot; Also load indent files, to automatically do language-dependent indenting.</span><br><span class="line">  filetype plugin indent on</span><br><span class="line"></span><br><span class="line">  &quot; For all text files set &#x27;textwidth&#x27; to 78 characters.</span><br><span class="line">  autocmd FileType text setlocal textwidth=78</span><br><span class="line"></span><br><span class="line">  &quot; When editing a file, always jump to the last known cursor position.</span><br><span class="line">  &quot; Don&#x27;t do it when the position is invalid or when inside an event handler</span><br><span class="line">  &quot; (happens when dropping a file on gvim).</span><br><span class="line">  autocmd BufReadPost *</span><br><span class="line">    \ if line(&quot;&#x27;\&quot;&quot;) &gt; 0 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) |</span><br><span class="line">    \   exe &quot;normal g`\&quot;&quot; |</span><br><span class="line">    \ endif</span><br><span class="line"></span><br><span class="line">endif &quot; has(&quot;autocmd&quot;)</span><br><span class="line"></span><br><span class="line">if has(&quot;cscope&quot;)</span><br><span class="line">	let current = &quot;.&quot;</span><br><span class="line">	let num = 1</span><br><span class="line">	while num &lt; 20 </span><br><span class="line">		if filereadable(current . &quot;/cscope.out&quot;)</span><br><span class="line">			let $CSCOPE_DB = current . &quot;/cscope.out&quot;</span><br><span class="line">			cs add $CSCOPE_DB</span><br><span class="line">			break</span><br><span class="line">		else</span><br><span class="line">			let current = current . &quot;/..&quot;</span><br><span class="line">			let num = num + 1</span><br><span class="line">		endif</span><br><span class="line">	endwhile</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">syntax enable</span><br><span class="line">syntax on</span><br><span class="line">colorscheme desert</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filetype plugin indent on</span><br><span class="line">set completeopt=longest,menu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">set cst</span><br><span class="line">set csto=1</span><br><span class="line">set cscopequickfix=s-,c-,d-,i-,t-,e-,f-</span><br><span class="line">&quot; cs add /home/yangxl/readcode/cscope-kernel/cscope.out</span><br><span class="line">&quot; cs add /home/yangxl/readcode/cscope-app/cscope.out</span><br><span class="line">let Tlist_Enable_Fold_Column = 0</span><br><span class="line">let Tlist_WinWidth = 30</span><br><span class="line">let Tlist_Show_One_File = 1</span><br><span class="line">let g:miniBufExplMapCTabSwitchBufs = 1</span><br><span class="line">let g:miniBufExplMapWindowNavVim = 1</span><br><span class="line">let g:miniBufExplMapWindowNavArrows = 1</span><br><span class="line">let g:winManagerWindowLayout=&#x27;FileExplorer|TagList&#x27;</span><br><span class="line">let g:SuperTabRetainCompletionType=2</span><br><span class="line">nmap wm :WMToggle&lt;cr&gt;</span><br><span class="line">set tabstop=4</span><br><span class="line">&quot;nmap &lt;F2&gt; :cs find d &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F3&gt; :cs find c &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F4&gt; :cs find t &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F5&gt; :cs find e &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F6&gt; :cs find f &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F7&gt; :cs find i &lt;C-R&gt;&lt;C-W&gt;&lt;CR&gt;</span><br><span class="line">nmap &lt;F5&gt; :TlistToggle &lt;CR&gt;</span><br><span class="line"></span><br><span class="line">nmap &lt;F2&gt; :cs find c &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">nmap &lt;F3&gt; :cs find s &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">nmap &lt;F4&gt; :cs find g &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">nmap &lt;F6&gt; :cs find f </span><br><span class="line">nmap &lt;C-n&gt; :cn&lt;CR&gt;</span><br><span class="line">nmap &lt;C-p&gt; :cp&lt;CR&gt;</span><br><span class="line">&quot;nmap  :cs find t &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap  :cs find e &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap  :cs find f &lt;C-R&gt;=expand(&quot;&lt;cfile&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap  :cs find i ^&lt;C-R&gt;=expand(&quot;&lt;cfile&gt;&quot;)&lt;CR&gt;$&lt;CR&gt;</span><br><span class="line">&quot;nmap  :cs find d &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot; Using &#x27;CTRL-spacebar&#x27; then a search type makes the vim window</span><br><span class="line">&quot; split horizontally, with search result displayed in</span><br><span class="line">&quot; the new window.</span><br><span class="line"></span><br><span class="line">&quot;nmap &lt;C-Space&gt;s :scs find s &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;g :scs find g &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;c :scs find c &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;t :scs find t &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;e :scs find e &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;f :scs find f &lt;C-R&gt;=expand(&quot;&lt;cfile&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;i :scs find i ^&lt;C-R&gt;=expand(&quot;&lt;cfile&gt;&quot;)&lt;CR&gt;$&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F2&gt; :scs find d &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">&quot; Hitting CTRL-space *twice* before the search type does a vertical</span><br><span class="line">&quot; split instead of a horizontal one</span><br><span class="line"></span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;s</span><br><span class="line">        \:vert scs find s &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;g</span><br><span class="line">        \:vert scs find g &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;c</span><br><span class="line">        \:vert scs find c &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;t</span><br><span class="line">        \:vert scs find t &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;e</span><br><span class="line">        \:vert scs find e &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;C-Space&gt;&lt;C-Space&gt;i</span><br><span class="line">        \:vert scs find i ^&lt;C-R&gt;=expand(&quot;&lt;cfile&gt;&quot;)&lt;CR&gt;$&lt;CR&gt;</span><br><span class="line">&quot;nmap &lt;F2&gt; </span><br><span class="line">        \:vert scs find d &lt;C-R&gt;=expand(&quot;&lt;cword&gt;&quot;)&lt;CR&gt;&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">set nu</span><br><span class="line">set mouse=a</span><br><span class="line">set autoindent</span><br><span class="line">set cindent</span><br><span class="line"></span><br><span class="line">filetype plugin indent on </span><br><span class="line">&quot;打开文件类型检测, 加了这句才可以用智能补全</span><br><span class="line">set completeopt=longest,menu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;新文件标题</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;新建.c,.h,.sh,.java文件，自动插入文件头 </span><br><span class="line">autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec &quot;:call SetTitle()&quot; </span><br><span class="line">&quot;&quot;定义函数SetTitle，自动插入文件头 </span><br><span class="line">func SetTitle() </span><br><span class="line">	&quot;如果文件类型为.sh文件 </span><br><span class="line">	if &amp;filetype == &#x27;sh&#x27; </span><br><span class="line">		call setline(1,&quot;\#########################################################################&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;), &quot;\# File Name: &quot;.expand(&quot;%&quot;)) </span><br><span class="line">		call append(line(&quot;.&quot;)+1, &quot;\# Author: xx&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+2, &quot;\# Mail: xx@163.com&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+3, &quot;\# Created Time: &quot;.strftime(&quot;%c&quot;)) </span><br><span class="line">		call append(line(&quot;.&quot;)+4, &quot;\#########################################################################&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+5, &quot;\#!/bin/bash&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+6, &quot;&quot;) </span><br><span class="line">	else </span><br><span class="line">		call setline(1, &quot;/*************************************************************************&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;), &quot;	&gt; File Name: &quot;.expand(&quot;%&quot;)) </span><br><span class="line">		call append(line(&quot;.&quot;)+1, &quot;	&gt; Author: xx&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+2, &quot;	&gt; Mail: xx@163.com&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+3, &quot;	&gt; Created Time: &quot;.strftime(&quot;%c&quot;)) </span><br><span class="line">		call append(line(&quot;.&quot;)+4, &quot; ************************************************************************/&quot;) </span><br><span class="line">		call append(line(&quot;.&quot;)+5, &quot;&quot;)</span><br><span class="line">	endif</span><br><span class="line">	if &amp;filetype == &#x27;cpp&#x27;</span><br><span class="line">		call append(line(&quot;.&quot;)+6, &quot;#include&lt;iostream&gt;&quot;)</span><br><span class="line">		call append(line(&quot;.&quot;)+7, &quot;using namespace std;&quot;)</span><br><span class="line">		call append(line(&quot;.&quot;)+8, &quot;&quot;)</span><br><span class="line">	endif</span><br><span class="line">	if &amp;filetype == &#x27;c&#x27;</span><br><span class="line">		call append(line(&quot;.&quot;)+6, &quot;#include&lt;stdio.h&gt;&quot;)</span><br><span class="line">		call append(line(&quot;.&quot;)+7, &quot;&quot;)</span><br><span class="line">	endif</span><br><span class="line">	&quot;	if &amp;filetype == &#x27;java&#x27;</span><br><span class="line">	&quot;		call append(line(&quot;.&quot;)+6,&quot;public class &quot;.expand(&quot;%&quot;))</span><br><span class="line">	&quot;		call append(line(&quot;.&quot;)+7,&quot;&quot;)</span><br><span class="line">	&quot;	endif</span><br><span class="line">	&quot;新建文件后，自动定位到文件末尾</span><br><span class="line">	autocmd BufNewFile * normal G</span><br><span class="line">endfunc </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot; 显示相关  </span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;set shortmess=atI   &quot; 启动的时候不显示那个援助乌干达儿童的提示  </span><br><span class="line">&quot;winpos 5 5          &quot; 设定窗口位置  </span><br><span class="line">&quot;set lines=40 columns=155    &quot; 设定窗口大小  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;</span><br><span class="line">set go=             &quot; 不要图形按钮  </span><br><span class="line">&quot;color asmanian2     &quot; 设置背景主题  </span><br><span class="line">&quot;set guifont=Courier_New:h10:cANSI   &quot; 设置字体  </span><br><span class="line">&quot;syntax on           &quot; 语法高亮  </span><br><span class="line">&quot;</span><br><span class="line">&quot;autocmd InsertLeave * se nocul  &quot; 用浅色高亮当前行  </span><br><span class="line">&quot;autocmd InsertEnter * se cul    &quot; 用浅色高亮当前行 </span><br><span class="line">set ruler           &quot; 显示标尺  </span><br><span class="line">set showcmd         &quot; 输入的命令显示出来，看的清楚些  </span><br><span class="line">&quot;set cmdheight=1     &quot; 命令行（在状态行下）的高度，设置为1  </span><br><span class="line">&quot;set whichwrap+=&lt;,&gt;,h,l   &quot; 允许backspace和光标键跨越行边界(不建议)  </span><br><span class="line">&quot;set scrolloff=3     &quot; 光标移动到buffer的顶部和底部时保持3行距离  </span><br><span class="line">&quot;</span><br><span class="line">set novisualbell    &quot; 不要闪烁(不明白)  </span><br><span class="line">set statusline=%F%m%r%h%w\ [FORMAT=%&#123;&amp;ff&#125;]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %&#123;strftime(\&quot;%d/%m/%y\ -\ %H:%M\&quot;)&#125;   &quot;状态行显示的内容  </span><br><span class="line">set laststatus=1    &quot; 启动显示状态行(1),总是显示状态行(2)  </span><br><span class="line">set foldenable      &quot; 允许折叠  </span><br><span class="line">set foldmethod=manual   &quot; 手动折叠  </span><br><span class="line">&quot;set background=dark &quot;背景使用黑色 </span><br><span class="line">&quot;</span><br><span class="line">set nocompatible  &quot;去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  </span><br><span class="line">&quot; 显示中文帮助</span><br><span class="line">if version &gt;= 603</span><br><span class="line">	set helplang=cn</span><br><span class="line">	set encoding=utf-8</span><br><span class="line">endif</span><br><span class="line">&quot; 设置配色方案</span><br><span class="line">&quot;colorscheme murphy</span><br><span class="line">&quot;字体 </span><br><span class="line">&quot;if (has(&quot;gui_running&quot;)) </span><br><span class="line">&quot;   set guifont=Bitstream\ Vera\ Sans\ Mono\ 10 </span><br><span class="line">&quot;endif </span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line">&quot;键盘命令</span><br><span class="line">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">nmap &lt;leader&gt;w :w!&lt;cr&gt;</span><br><span class="line">nmap &lt;leader&gt;f :find&lt;cr&gt;</span><br><span class="line"></span><br><span class="line">&quot; 映射全选+复制 ctrl+a</span><br><span class="line">map &lt;C-A&gt; ggVGY</span><br><span class="line">map! &lt;C-A&gt; &lt;Esc&gt;ggVGY</span><br><span class="line">map &lt;F12&gt; gg=G</span><br><span class="line">&quot; 选中状态下 Ctrl+c 复制</span><br><span class="line">vmap &lt;C-c&gt; &quot;+y</span><br><span class="line">&quot;去空行  </span><br><span class="line">nnoremap &lt;F2&gt; :g/^\s*$/d&lt;CR&gt; </span><br><span class="line">&quot;比较文件  </span><br><span class="line">nnoremap &lt;C-F2&gt; :vert diffsplit </span><br><span class="line">&quot;新建标签  </span><br><span class="line">map &lt;M-F2&gt; :tabnew&lt;CR&gt;  </span><br><span class="line">&quot;列出当前目录文件  </span><br><span class="line">map &lt;F3&gt; :tabnew .&lt;CR&gt;  </span><br><span class="line">&quot;打开树状文件目录  </span><br><span class="line">map &lt;C-F3&gt; \be  </span><br><span class="line">&quot;C，C++ 按F5编译运行</span><br><span class="line">map &lt;F5&gt; :call CompileRunGcc()&lt;CR&gt;</span><br><span class="line">func! CompileRunGcc()</span><br><span class="line">	exec &quot;w&quot;</span><br><span class="line">	if &amp;filetype == &#x27;c&#x27;</span><br><span class="line">		exec &quot;!g++ % -o %&lt;&quot;</span><br><span class="line">		exec &quot;! ./%&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &#x27;cpp&#x27;</span><br><span class="line">		exec &quot;!g++ % -o %&lt;&quot;</span><br><span class="line">		exec &quot;! ./%&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &#x27;java&#x27; </span><br><span class="line">		exec &quot;!javac %&quot; </span><br><span class="line">		exec &quot;!java %&lt;&quot;</span><br><span class="line">	elseif &amp;filetype == &#x27;sh&#x27;</span><br><span class="line">		:!./%</span><br><span class="line">	elseif &amp;filetype == &#x27;py&#x27;</span><br><span class="line">		exec &quot;!python %&quot;</span><br><span class="line">		exec &quot;!python %&lt;&quot;</span><br><span class="line">	endif</span><br><span class="line">endfunc</span><br><span class="line">&quot;C,C++的调试</span><br><span class="line">map &lt;F8&gt; :call Rungdb()&lt;CR&gt;</span><br><span class="line">func! Rungdb()</span><br><span class="line">	exec &quot;w&quot;</span><br><span class="line">	exec &quot;!g++ % -g -o %&lt;&quot;</span><br><span class="line">	exec &quot;!gdb ./%&lt;&quot;</span><br><span class="line">endfunc</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/15/Bioinfo-HiC-3d-dna-for-chromosome-assembly/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/15/Bioinfo-HiC-3d-dna-for-chromosome-assembly/" class="post-title-link" itemprop="url">Hi-C：3d-dna挂载染色体</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-15 14:24:17" itemprop="dateCreated datePublished" datetime="2020-12-15T14:24:17+08:00">2020-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-29 18:01:27" itemprop="dateModified" datetime="2020-12-29T18:01:27+08:00">2020-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用二代数据或三代数据得到contig后，下一步就是将contig提升到染色体水平。有很多策略可以做到这一点，比如说遗传图谱，BioNano, HiC, 参考近源物种。如果利用HiC进行准染色体水平，那么目前常见的组装软件有下面几个。</p>
+<ul>
+<li>HiRise: 2015年后的GitHub就不再更新</li>
+<li>LACHESIS: 发表在NBT，2017年后不再更新</li>
+<li>SALSA: 发表在BMC genomics, 仍在更新中</li>
+<li>3D-DNA: 发表在science，仍在更新中</li>
+<li>ALLHiC: 发表在Nature Plants, 用于解决植物多倍体组装问题</li>
+</ul>
+<p>对于二倍体物种而言，目前3D-DNA应该是组装效果最好的一个软件。<a target="_blank" rel="noopener" href="https://github.com/theaidenlab/3d-dna">3d-dna</a>是一款简单、方便的处理Hi-C软件，可将contig提升到染色体水平。3D-DNA流程简介:</p>
+<ul>
+<li>将Hi-C数据比对到draft.genome.fa。（利用Juicer分析Hi-C数据）</li>
+<li>利用自动化流程进行纠错（misjoin），排序（order），确定正确方向（orient），最后scaffolding，得到染色体水平的组装结果（3D-DNA分析）</li>
+<li>Juicebox 进行人工纠错</li>
+</ul>
+<h3 id="一-分析软件安装"><a class="markdownIt-Anchor" href="#一-分析软件安装"></a> 一、分析软件安装</h3>
+<p>依赖的软件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LastZ (version 1.03.73 released 20150708) – for diploid mode only</span><br><span class="line">Java version &gt;=1.8</span><br><span class="line">Bash &gt;=4</span><br><span class="line">GNU Awk &gt;=4.0.2</span><br><span class="line">GNU coreutils sort &gt;=8.11</span><br><span class="line">Python &gt;=2.7 - for chromosome number-aware splitter module only</span><br><span class="line">scipy numpy matplotlib - for chromosome number-aware splitter module only</span><br><span class="line">GUN Parallel &gt;=20150322 (可选，建议装)</span><br><span class="line">bwa</span><br></pre></td></tr></table></figure>
+<p>安装Juicer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theaidenlab/juicer.git</span><br><span class="line">cd juicer</span><br><span class="line">ln -s CPU scripts</span><br><span class="line">cd scripts/common</span><br><span class="line">wget https://hicfiles.tc4ga.com/public/juicer/juicer_tools.1.9.9_jcuda.0.8.jar</span><br><span class="line"># wget https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar</span><br><span class="line">ln -s juicer_tools.1.9.9_jcuda.0.8.jar  juicer_tools.jar</span><br></pre></td></tr></table></figure>
+<p>安装3D-DNA</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theaidenlab/3d-dna.git</span><br></pre></td></tr></table></figure>
+<p>数据准备<br />
+<code>ref</code>文件夹： 存放<code>draft.genome.fa</code><br />
+<code>fastq</code>文件夹: 存放Hi-C测序双端reads, 注意reads文件名的格式 <code>*_R1.fastq, *_R2.fastq</code>。<br />
+否则报错<code>Failed to find any files matching /xxx/fastq/*_R*.fastq*</code>。</p>
+<h3 id="二-利用-juicer-分析将hi-c数据比对到contigsscaffolds"><a class="markdownIt-Anchor" href="#二-利用-juicer-分析将hi-c数据比对到contigsscaffolds"></a> 二、利用 Juicer 分析将Hi-C数据比对到contigs/scaffolds</h3>
+<ol>
+<li>基因组建立索引</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bwa index draft.genome.fa</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>创建可能的酶切位点文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python ~/software/juicer/misc/generate_site_positions.py  MboI  draft.genome  draft.genome.fa</span><br><span class="line">\# 如果使用的是 HindIII 进行酶切，就设定为HindIII；这里我设定为MboI</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>获取每条contig的长度</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;BEGIN&#123;OFS=&quot;\t&quot;&#125;&#123;print $1, $NF&#125;&#x27; draft.genome_MboI.txt &gt; draft.genome.chrom.sizes</span><br></pre></td></tr></table></figure>
+<p>设置当前工作目录的文件结构如下，目录存在fastq和ref文件夹。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ref</span><br><span class="line">├── draft.genome.chrom.sizes</span><br><span class="line">├── draft.genome.fa -&gt; ../draft.genome.fa</span><br><span class="line">├── draft.genome.fa.amb</span><br><span class="line">├── draft.genome.fa.ann</span><br><span class="line">├── draft.genome.fa.bwt</span><br><span class="line">├── draft.genome.fa.pac</span><br><span class="line">├── draft.genome.fa.sa</span><br><span class="line">├── draft.genome_MboI.txt</span><br><span class="line">└── opt.sh</span><br><span class="line">fastq</span><br><span class="line">├── XXX_R1.fastq.gz -&gt; /PATH/TO/XXX_R1.fastq.gz</span><br><span class="line">└── XXX_R2.fastq.gz -&gt; /PATH/TO/XXX_R2.fastq.gz</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>运行juicer<br />
+注意：必须在当前目录存在fastq和ref文件夹， -z,-p,-y,-D是必须参数</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">~/software/juicer/scripts/juicer.sh -g draft_genome -s HindIII -z ./ref/draft.genome.fa -y ./ref/draft.genome_HindIII.txt -p ./ref/draft.genome.chrom.sizes -D /PATH/TO/juicer -t 8</span><br><span class="line"></span><br><span class="line">\## juicer 参数</span><br><span class="line">-g： 定义一个物种名</span><br><span class="line">-s：酶切类型, HindIII(AAGCTAGCTT), MboI(GATCGATC) , DpnII(GATCGATC), NcoI(CCATGCATGG)</span><br><span class="line">-z : 参考基因组文件</span><br><span class="line">-y: 限制性酶切位点可能出现位置文件</span><br><span class="line">-p: 染色体大小文件</span><br><span class="line">-C: 将原来的文件进行拆分，必须是4的倍数，默认是90000000, 即22.5M reads</span><br><span class="line">-S: 和任务重运行有关，从中途的某一步开始,&quot;merge&quot;, &quot;dedup&quot;, &quot;final&quot;, &quot;postproc&quot; 或 &quot;early&quot;</span><br><span class="line">-d: juicer的目录</span><br><span class="line">-D: juicer scripts的目录</span><br><span class="line">-t: 线程数</span><br></pre></td></tr></table></figure>
+<p>运行记录。（5G Hi-C数据 + 900 Mb contigs 耗时6 h。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Using ./ref/draft.genome_MboI.txt as site file</span><br><span class="line">(-: Looking for fastq files...fastq files exist</span><br><span class="line">(-: Aligning files matching /PATH/TO/WORK/DIRECTORY/fastq/\*_R\*.fastq*</span><br><span class="line"> to genome draft_genome with site file ./ref/draft.genome_MboI.txt</span><br><span class="line">(-: Created /PATH/TO/WORK/DIRECTORY/splits and /PATH/TO/WORK/DIRECTORY/aligned.</span><br><span class="line">(...  ...)</span><br><span class="line">(-: Postprocessing successfully completed, maps too sparse to annotate or GPUs unavailable (-:</span><br><span class="line">(-: Pipeline successfully completed (-:</span><br><span class="line">Run cleanup.sh to remove the splits directory</span><br><span class="line">Check /PATH/TO/WORK/DIRECTORY/aligned for results</span><br></pre></td></tr></table></figure>
+<p>结果：结果文件在aligned目录下，其中“<code>merged_nodups.txt</code>”就是下一步3D-DNA的输入文件之一。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">splits/</span><br><span class="line">├── MySample.fastq.gz_abnorm.sam</span><br><span class="line">├── MySample.fastq.gz_linecount.txt</span><br><span class="line">├── MySample.fastq.gz_norm.txt.res.txt</span><br><span class="line">├── MySample.fastq.gz.sam</span><br><span class="line">├── MySample.fastq.gz.sort.txt</span><br><span class="line">├── MySample.fastq.gz_unmapped.sam</span><br><span class="line">├── MySample_R1.fastq.gz -&gt; /PATH/TO/WORK/DIRECTORY/fastq/MySample_R1.fastq.gz</span><br><span class="line">└── MySample_R2.fastq.gz -&gt; /PATH/TO/WORK/DIRECTORY/fastq/MySample_R2.fastq.gz</span><br><span class="line">aligned/</span><br><span class="line">├── abnormal.sam</span><br><span class="line">├── collisions_nodups.txt</span><br><span class="line">├── collisions.txt</span><br><span class="line">├── dups.txt</span><br><span class="line">├── header</span><br><span class="line">├── inter_30_contact_domains</span><br><span class="line">├── inter_30.hic</span><br><span class="line">├── inter_30_hists.m</span><br><span class="line">├── inter_30.txt</span><br><span class="line">├── inter.hic</span><br><span class="line">├── inter_hists.m</span><br><span class="line">├── inter.txt</span><br><span class="line">├── merged_nodups.txt</span><br><span class="line">├── merged_sort.txt</span><br><span class="line">├── opt_dups.txt</span><br><span class="line">└── unmapped.sam</span><br></pre></td></tr></table></figure>
+<p>Note: 测试的过程中遇到报错信息，原来是默认的“/opt/juicer/scripts/”需要根据实际安装路径，通过设定<code>-D</code>参数修改之。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(-:  Align of /PATH/TO/WORK/DIRECTORY/splits/XXX.fastq.gz.sam done successfully</span><br><span class="line">awk: fatal: can&#x27;t open source file `/opt/juicer/scripts/common/chimeric_blacklist.awk&#x27; for reading (No such file or directory)</span><br><span class="line">***! Failure during chimera handling of /PATH/TO/WORK/DIRECTORY/splits/MySample.fastq.gz</span><br></pre></td></tr></table></figure>
+<p>原来是<code>-D</code>参数指定juicer目录（包含script文件夹那个路径），<code>vi juicer.sh</code> 可见到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">75 # Juicer directory, contains scripts/, references/, and restriction_sites/</span><br><span class="line">76 # can also be set in options via -D</span><br><span class="line">77 juiceDir=&quot;/opt/juicer&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="三-运行3d-dna对contigscaffolds进行组装"><a class="markdownIt-Anchor" href="#三-运行3d-dna对contigscaffolds进行组装"></a> 三、运行3D-DNA，对contig/scaffolds进行组装</h3>
+<p>使用默认参数进行3D-DNA</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~/software/3d-dna/run-asm-pipeline.sh ./ref/draft.genome.fa ./aligned/merged_nodups.txt</span><br><span class="line"># 通过-i参数设定允许挂载的最小尺寸</span><br><span class="line">~/software/3d-dna/run-asm-pipeline.sh -i 8000 ./ref/draft.genome.fa ./aligned/merged_nodups.txt</span><br></pre></td></tr></table></figure>
+<p>最后输出文件中，包含 final 字样的文件就是我们需要的结果：<code>draft.genome.final.hic</code> 和 <code>draft.genome.final.assembly</code>。将这两个文件从服务器下载到客户端（我是win 10），并导入 JuiceBox 浏览器。</p>
+<p>注意，生成的文件中，draft.genome.final.assembly 与 draft.genome.FINAL.assembly 是不同的文件。“FINAL” – chromosome-length scaffolds; “final” – input with all the misjoin correction introduced。<br />
+这两个文件： draft.genome.final.hic 和 draft.genome.final.assembly，同时导入 JuiceBox 才可以进行人工手动矫正。我最初错误地导入了 draft.genome.FINAL.assembly 文件，就遇到了问题。</p>
+<h3 id="四-juicebox进行手动纠错"><a class="markdownIt-Anchor" href="#四-juicebox进行手动纠错"></a> 四、JuiceBox进行手动纠错</h3>
+<p>不少人将软件名写成juicerbox，其实正确写法是juicebox。下载该软件：<a target="_blank" rel="noopener" href="https://github.com/aidenlab/Juicebox/wiki/Download">https://github.com/aidenlab/Juicebox/wiki/Download</a>。直接下载exe可执行程序，不用安装，双击即可进入界面。</p>
+<p><img src="https://oscimg.oschina.net/oscnet/d8e47314-9ca7-409e-9293-614ba5f561b3.png" alt="juicebox" /></p>
+<p>一般组装错误为：misjoin、translocations、inversions 和 chromosome boundaries。<br />
+关于该软件用法，可看视频：油管地址 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Nj7RhQZHM18">Tutorial video for Juicebox Assembly Tools</a> 或 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av65134634">B 站</a></p>
+<p>通过<code>File</code>-&gt;<code>open</code>可以导入后缀为.hic的文件<code>draft.genome.final.hic</code>，随后<code>Assembly</code>-&gt;<code>select</code>，选择<code>draft.genome.final.assembly</code>文件，这时候能看到“染色体”组装图（还不是完美的染色体，只是初步的scaffolds排序，但是我的数据里可看到9条染色体雏形，此外还有一部分没有定位到染色体上的contigs/scaffolds，但是从heatmap中可以看到他们中的大部分与某条染色体会有互作）。</p>
+<p>怎么手动调整？左上角到右下角这一条线作为对角线，在对角线任选取两个点，就可以形成一个正方形，两点之间的线段就是“染色体”的一段。如果需要移动某个方形区域，按住shift键不动，在需要挪动的染色体区域左上角点击一次，即可看到一个黑色十字固定在此处，随后在右下角再单击一次，再次出现一个黑色十字，松开shift键，两个黑色十字即包围了这一段待调整的染色体，可以适当调整黑框大小。此时将鼠标移到另一个染色体位置，可见到鼠标白色图标变成黑色箭头，单击，上述的黑色框便移动到了这里，完成了移动选取的操作。如果需要对选择进行翻转呢？则只需要将鼠标移动到黑色框的右上角区域，这时候鼠标图标会变成黑色环状，单击，即可使之翻转。</p>
+<p>纠错完以后，单击上方功能区<code>Assembly</code>-&gt;<code>Export Assembly</code>，导出<code>draft.genome.final.review.assembly</code>，或命名为<code>genome.review.assembly</code>，用于下一步的分析</p>
+<h3 id="五-再次运行3d-dna"><a class="markdownIt-Anchor" href="#五-再次运行3d-dna"></a> 五、再次运行3D-DNA</h3>
+<p>Generate a fasta sequence after JBAT review. In addition to the chromosome-length genome sequence (<em>.FINAL.fasta</em>), the pipeline will produce a new <em>.final.hic</em> file for concluding quality control.</p>
+<p>会重新生成 draft.genome.rawchrom.* 和 draft.genome.final.* 这些文件，覆盖掉原来的文件。如果要避免覆盖。就需要另起一个目录运行程序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/software/3d-dna/run-asm-pipeline-post-review.sh -r genome.review.assembly ./ref/draft.genome.fa aligned/merged_nodups.txt</span><br></pre></td></tr></table></figure>
+<p>结果文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">draft.genome.FINAL.fasta</span><br><span class="line">draft.genome.FINAL.hic</span><br><span class="line">draft.genome.FINAL_asm.superscaf_track.txt</span><br><span class="line">draft.genome.FINAL_asm.scaffold_track.txt</span><br><span class="line">draft.genome.FINAL.assembly</span><br><span class="line">draft.genome.rawchrom.fasta</span><br><span class="line">draft.genome.rawchrom.hic</span><br><span class="line">draft.genome.final_asm.superscaf_track.txt</span><br><span class="line">draft.genome.final_asm.scaffold_track.txt</span><br><span class="line">draft.genome.final.asm</span><br><span class="line">draft.genome.mnd.txt</span><br><span class="line">draft.genome.rawchrom.asm</span><br><span class="line">draft.genome.rawchrom.cprops</span><br><span class="line">draft.genome.60G.final.review.assembly</span><br><span class="line">draft.genome.cprops</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/15/Bioinfo-FASTA-FASTQ-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1080,213 +1297,10 @@ Gene    cluster cell_ct cell_exp_ct   count Group</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/14/R-How-to-remove-rows-with-NA-values/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/14/R-How-to-remove-rows-with-NA-values/" class="post-title-link" itemprop="url">R：删除包含缺失值NA的行</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-14 18:08:01" itemprop="dateCreated datePublished" datetime="2020-11-14T18:08:01+08:00">2020-11-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 17:18:12" itemprop="dateModified" datetime="2020-12-08T17:18:12+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>R数据框，如何删除包含NA的行？</strong></p>
-<p>在进行统计建模时，通常需要用到的因变量和自变量都不包含缺失值。tidyr 包的 drop_na() 函数可以对数据框 指定一到多个变量，删去指定的变量有缺失值的行。不指定变量时有任何变量缺失的行都会被删去。</p>
-<p>例如，将 NHANES 中所有存在缺失值的行删去后数出保留的行数，原来有 10000 行：</p>
-<p>NHANES <strong>%&gt;%</strong> <strong>drop_na</strong>() <strong>%&gt;% nrow</strong>()</p>
-<p>## [1] 0 可见所有行都有缺失值。</p>
-<p>下面仅剔除 AlcoholDay 缺失的观测并计数：</p>
-<p>NHANES <strong>%&gt;% drop_na</strong>(AlcoholDay) <strong>%&gt;% nrow</strong>()</p>
-<p>## [1] 4914</p>
-<p>基本 stats 包的 complete.cases 函数返回是否无缺失值的逻辑向量，na.omit 函数则返回无缺失值的观测的子集。</p>
-<p><strong>如何删除全部为NA的行？只要有非缺省值，可保留对应行。</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> testmatrix &lt;- matrix(nrow=6, ncol=4)</span><br><span class="line">testmatrix</span><br><span class="line">[,1] [,2] [,3] [,4]</span><br><span class="line">[1,] NA NA NA NA</span><br><span class="line">[2,] NA NA NA NA</span><br><span class="line">[3,] NA NA NA NA</span><br><span class="line">[4,] NA NA NA NA</span><br><span class="line">[5,] NA NA NA NA</span><br><span class="line">[6,] NA NA NA NA</span><br><span class="line">testmatrix[2:5,2:3] &lt;- seq(2)</span><br><span class="line">testmatrix</span><br><span class="line">[,1] [,2] [,3] [,4]</span><br><span class="line">[1,] NA NA NA NA</span><br><span class="line">[2,] NA 1 1 NA</span><br><span class="line">[3,] NA 2 2 NA</span><br><span class="line">[4,] NA 1 1 NA</span><br><span class="line">[5,] NA 2 2 NA</span><br><span class="line">[6,] NA NA NA NA</span><br><span class="line">tm1&lt;-testmatrix[,-which(apply(testmatrix,2,function(x)all(is.na(x))))]</span><br><span class="line">tm1</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] NA NA</span><br><span class="line">[2,] 1 1</span><br><span class="line">[3,] 2 2</span><br><span class="line">[4,] 1 1</span><br><span class="line">[5,] 2 2</span><br><span class="line">[6,] NA NA</span><br><span class="line">tm2&lt;-tm1[-which(apply(testmatrix,1,function(x)all(is.na(x)))),]</span><br><span class="line">tm2</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] 1 1</span><br><span class="line">[2,] 2 2</span><br><span class="line">[3,] 1 1</span><br><span class="line">[4,] 2 2</span><br><span class="line">testmatrix[-which(apply(testmatrix,1,function(x)all(is.na(x)))), -which(apply(testmatrix,2,function(x)all(is.na(x))))]</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] 1 1</span><br><span class="line">[2,] 2 2</span><br><span class="line">[3,] 1 1</span><br><span class="line">[4,] 2 2 </span><br></pre></td></tr></table></figure>
-<p>Ref: <a target="_blank" rel="noopener" href="http://azaleasays.com/2008/02/06/r-remove-row-column-all-na-value/">http://azaleasays.com/2008/02/06/r-remove-row-column-all-na-value/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/28/Linux-Run-windows-programs-inlinux-mono/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/28/Linux-Run-windows-programs-inlinux-mono/" class="post-title-link" itemprop="url">在Linux平台运行windows程序：mono</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-10-28 11:11:10" itemprop="dateCreated datePublished" datetime="2020-10-28T11:11:10+08:00">2020-10-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-20 02:11:00" itemprop="dateModified" datetime="2020-12-20T02:11:00+08:00">2020-12-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在Windows系统，最常见的就是Windows Forms程序（以下简称WinForm程序），也就是窗体应用程序，比如MS Office，媒体播放器软件等，WinForm程序比起Web应用程序，明显在实时性，用户亲和度和操作便捷能力方面强很多。在Linux系统下，虽然也有桌面窗体应用程序，但应用很少。能否将WinForm程序移植到Linux系统上面呢？目前，Novell公司的开源项目mono提供了将.NET程序运行在各种非Windows平台的能力，例如控制台程序，WinForm程序和ASP.NET等。(摘抄自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq%5C_21153619/article/details/81459359">https://blog.csdn.net/qq\_21153619/article/details/81459359</a>)</p>
-<p>如何在linux安装mono？我主要目的是在Linux下调用Windows程序做批量文件的处理。因为windows的cmd窗口操作真的不好用，相比之下Linux命令行就好用多了。</p>
-<h3 id="1-安装依赖组件"><a class="markdownIt-Anchor" href="#1-安装依赖组件"></a> 1 安装依赖组件</h3>
-<p>yum -y install gcc gcc-c++ bison pkgconfig glib2-devel gettext make libpng-devel libjpeg-devel libtiff-devel libexif-devel giflib-devel libX11-devel freetype-devel fontconfig-devel  cairo-devel</p>
-<h3 id="2-安装libgdiplus"><a class="markdownIt-Anchor" href="#2-安装libgdiplus"></a> 2 安装libgdiplus</h3>
-<ul>
-<li><code>wget http://download.mono-project.com/sources/libgdiplus/libgdiplus-4.2.tar.gz</code></li>
-<li><code>tar zxf libgdiplus-4.2.tar.gz</code></li>
-<li><code>cd libgdiplus-4.2</code></li>
-<li><code>./configure --prefix=/home/fenglei/local</code></li>
-<li><code>make</code></li>
-<li><code>make install</code></li>
-</ul>
-<h3 id="3-安装mono"><a class="markdownIt-Anchor" href="#3-安装mono"></a> 3 安装mono</h3>
-<p>版本选择：<a target="_blank" rel="noopener" href="http://download.mono-project.com/sources/mono/">http://download.mono-project.com/sources/mono/</a></p>
-<ul>
-<li><code>wget http://download.mono-project.com/sources/mono/mono-4.6.0.125.tar.bz2</code></li>
-<li><code>tar jxf mono-4.6.0.125.tar.bz2</code></li>
-<li><code>cd mono-4.6.0</code></li>
-<li><code>./configure --prefix=/home/fenglei/local</code></li>
-<li><code>make -j2</code></li>
-<li><code>make install</code></li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028105649.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028105649.png?w=1015" alt="" /></a></p>
-<h3 id="4-软件测试我用了informedproteomics和rawtools软件做测试"><a class="markdownIt-Anchor" href="#4-软件测试我用了informedproteomics和rawtools软件做测试"></a> 4 软件测试，我用了InformedProteomics和rawTools软件做测试</h3>
-<p>下载rawTools: <a target="_blank" rel="noopener" href="https://github.com/kevinkovalchik/RawTools/releases/download/2.0.2/RawTools-2.0.2.zip">https://github.com/kevinkovalchik/RawTools/releases/download/2.0.2/RawTools-2.0.2.zip</a></p>
-<p>rawTools其他版本选择：<a target="_blank" rel="noopener" href="https://github.com/kevinkovalchik/RawTools/releases/tag/2.0.2">https://github.com/kevinkovalchik/RawTools/releases/tag/2.0.2</a></p>
-<p><code>mkdir RawTools</code></p>
-<p><code>unzip RawTools-2.0.2.zip -d RawTools</code></p>
-<p><code>mono ~/local/app/RawTools/RawTools.exe</code></p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110306.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110306.png?w=1024" alt="" /></a></p>
-<p>下载InformedProteomics：<a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics/releases/download/v1.0.7569/InformedProteomics%5C_Program.zip">https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics/releases/download/v1.0.7569/InformedProteomics\_Program.zip</a></p>
-<p>版本选择：<a target="_blank" rel="noopener" href="https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics/releases">https://github.com/PNNL-Comp-Mass-Spec/Informed-Proteomics/releases</a></p>
-<p><code>mkdir InformedProteomics</code></p>
-<p><code>unzip InformedProteomics_Program.zip -d InformedProteomics</code></p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110657.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110657.png?w=1024" alt="" /></a></p>
-<p>mono ~/local/app/InformedProteomics/ProMex.exe</p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110926.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110926.png?w=1024" alt="" /></a></p>
-<p>mono ~/local/app/InformedProteomics/MSPathFinderT.exe</p>
-<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110955.png"><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201028110955.png?w=1024" alt="" /></a></p>
-<h3 id="报错"><a class="markdownIt-Anchor" href="#报错"></a> 报错</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mono ~/local/app/InformedProteomics/ProMex.exe -i xxx.raw -csv n -maxThreads 6                                                       </span><br><span class="line">************ ProMex version 1.0.7569 (September 21, 2020) ************</span><br><span class="line">InputPath    xxx.raw</span><br><span class="line">OutputPath   </span><br><span class="line">MinMass       2,000 Da</span><br><span class="line">MaxMass      50,000 Da</span><br><span class="line">MinCharge     1</span><br><span class="line">MaxCharge    60</span><br><span class="line">FeatureMap   True</span><br><span class="line">ScoreReport  False</span><br><span class="line">LikelihoodRatioThreshold -10</span><br><span class="line">MaxThreads   4</span><br><span class="line">Exception while processing: The type initializer for &#x27;InformedProteomics.Backend.MassSpecData.MassSpecDataReaderFactory&#x27; threw an exception.</span><br><span class="line">  at InformedProteomics.FeatureFinding.LcMsFeatureFinderLauncher.Run () [0x00011] in &lt;filename unknown&gt;:0 </span><br><span class="line">  at ProMex.Program.Main (System.String[] args) [0x000f1] in &lt;filename unknown&gt;:0 </span><br><span class="line">[MVID] 0604fddcd448487d905c1e71f6809d88 0</span><br><span class="line">[MVID] 072679dfee414eaab286f6a82270167b 1</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1354,7 +1368,7 @@ Gene    cluster cell_ct cell_exp_ct   count Group</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

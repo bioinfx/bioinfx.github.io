@@ -189,6 +189,169 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/29/Linux-python2-6-python2-7-in-a-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/29/Linux-python2-6-python2-7-in-a-system/" class="post-title-link" itemprop="url">Linux系统：Python2.6和Python2.7同时存在</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-29 21:01:19" itemprop="dateCreated datePublished" datetime="2016-02-29T21:01:19+08:00">2016-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>CENTOS 6.X 系列默认安装的 Python 2.6 ，目前开发中主要是使用 Python 2.7 ，这两个版本之间还是有不少差异的，程序在 Python 2.6 下经常会出问题。 比如： <code>re.sub</code> 函数 ，2.7 支持 <code>flags</code> 参数，而 2.6 却不支持。 所以，打算安装 Python 2.7 来运行 Flask 应用程序，但 2.6 不能删除，因为系统对它有依赖。</p>
+<h2 id="1-安装-sqlite-devel"><a class="markdownIt-Anchor" href="#1-安装-sqlite-devel"></a> 1、安装 sqlite-devel</h2>
+<p>因为 Flask 应用程序可能使用能 Sqlite 数据库，所以这个得装上（之前因为没装这个，导致 Python 无法导入 sqlite3 库。 当然，也可以从源码编译安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install sqlite-devel -y</span><br></pre></td></tr></table></figure>
+<h2 id="2-安装-python-27"><a class="markdownIt-Anchor" href="#2-安装-python-27"></a> 2、安装 Python 2.7</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz</span><br><span class="line">tar xf Python-2.7.8.tgz</span><br><span class="line">cd Python-2.7.8</span><br><span class="line">./configure --prefix=/usr/local</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>安装成功之后，你可以在 <code>/usr/local/bin/python2.7</code> 找到 Python 2.7。</p>
+<h2 id="3-安装-setuptools-pip"><a class="markdownIt-Anchor" href="#3-安装-setuptools-pip"></a> 3、安装 setuptools + pip</h2>
+<p>这里需要注意，一定要使用 python2.7 来执行相关命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># First get the setup script for Setuptools:</span><br><span class="line">wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py</span><br><span class="line"></span><br><span class="line"># Then install it for Python 2.7 :</span><br><span class="line">python2.7 ez_setup.py</span><br><span class="line"></span><br><span class="line"># Now install pip using the newly installed setuptools:</span><br><span class="line">easy_install-2.7 pip</span><br><span class="line"></span><br><span class="line"># With pip installed you can now do things like this:</span><br><span class="line">pip2.7 install [packagename]</span><br><span class="line">pip2.7 install --upgrade [packagename]</span><br><span class="line">pip2.7 uninstall [packagename]</span><br></pre></td></tr></table></figure>
+<h2 id="4-使用-virtualenv"><a class="markdownIt-Anchor" href="#4-使用-virtualenv"></a> 4、使用 virtualenv</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># Install virtualenv for Python 2.7 and create a sandbox called my27project:</span><br><span class="line">pip2.7 install virtualenv</span><br><span class="line">virtualenv-2.7 my27project</span><br><span class="line"></span><br><span class="line"># Check the system Python interpreter version:</span><br><span class="line">python --version</span><br><span class="line"># This will show Python 2.6.6</span><br><span class="line"></span><br><span class="line"># Activate the my27project sandbox and check the version of the default Python interpreter in it:</span><br><span class="line">source my27project/bin/activate</span><br><span class="line">python --version</span><br><span class="line"># This will show Python 2.7.X</span><br><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+<p>基本就是这些了，网上很多教程都说要做软链接，但我感觉那样做或多或少会对系统有一些未知的影响。这个方法能尽量保持系统的完整性，很多自带 Python 程序其实在头部都指定了 <code>#!/usr/bin/python</code> ，所以它们用的其实是 Python 2.6 ，而不是新安装的 Python 2.7 。 原文：<a target="_blank" rel="noopener" href="http://digwtx.duapp.com/54.html">http://digwtx.duapp.com/54.html</a> 参考： <a target="_blank" rel="noopener" href="http://toomuchdata.com/2014/02/16/how-to-install-python-on-centos/">http://toomuchdata.com/2014/02/16/how-to-install-python-on-centos/</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000654227">2014年08月31日发布</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/28/Bioinfo-cuffmerge-merge-genes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/28/Bioinfo-cuffmerge-merge-genes/" class="post-title-link" itemprop="url">cuffmerge的结果中将相邻的基因merge成一个“基因”</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-28 22:23:27" itemprop="dateCreated datePublished" datetime="2016-02-28T22:23:27+08:00">2016-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>cuffmerge combining genes from adjacent loci?? <a target="_blank" rel="noopener" href="https://www.biostars.org/p/104551/">https://www.biostars.org/p/104551/</a> <a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=19772">http://seqanswers.com/forums/showthread.php?t=19772</a> <a target="_blank" rel="noopener" href="http://seqanswers.com/forums/showthread.php?t=48571">http://seqanswers.com/forums/showthread.php?t=48571</a> <a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!searchin/tuxedo-tools-users/cuffmerge/tuxedo-tools-users/HSZmU%5C_KDflo/Zz5mMtZkW6wJ">https://groups.google.com/forum/#!searchin/tuxedo-tools-users/cuffmerge/tuxedo-tools-users/HSZmU\_KDflo/Zz5mMtZkW6wJ</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/28/Bioinfo-RNA-seq-QC-by-kraken/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1058,169 +1221,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/01/04/%E6%B2%99%E6%BC%A0%E4%B8%AD%E9%82%A3%E9%81%93%E7%BE%8E%E4%B8%BD%E7%9A%84%E9%A3%8E%E6%99%AF%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/01/04/%E6%B2%99%E6%BC%A0%E4%B8%AD%E9%82%A3%E9%81%93%E7%BE%8E%E4%B8%BD%E7%9A%84%E9%A3%8E%E6%99%AF%E7%BA%BF/" class="post-title-link" itemprop="url">沙漠中那道美丽的风景线</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-01-04 10:30:01" itemprop="dateCreated datePublished" datetime="2016-01-04T10:30:01+08:00">2016-01-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>沙漠中那道美丽的风景线</p>
-<p>文章来源：新疆生态与地理研究所</p>
-<p>发布时间：2010-10-28</p>
-<p>【字号： 小  中  大 】</p>
-<p>荒芜的沙漠，并不只有一望无际的沙。即使在冬季也会有道风景让你眼前一亮，那就是一株株沙漠中的常青树。不要以为只有裸子植物才会不畏寒冬，即使有些被子植物，在严寒下仍旧可以绽放它那娇艳欲滴却又写满沧桑的绿，比如沙冬青。 沙冬青，姓沙，名冬青，多么富有寓意，名字就告诉别人它们是沙漠中常绿的成员。现在，我们就来扒一扒沙冬青的故事。 沙冬青属植物出身豆科，兄弟两个。一个蒙古沙冬青（也称沙冬青或蒙古黄花木，蒙古语称萌合—哈日尕纳），在我国主要分布于内蒙古西部的库布齐沙漠、乌兰布和沙漠以及狼山和贺兰山山前的荒漠平原、内蒙古南部的戈壁荒漠。此外，甘肃中条山附近亦有分布。国外仅分布到蒙古国的南部以及与内蒙古相邻地区。垂直分布范围在1000-2200米之间，生长在石质、沙砾质、沙质（覆沙）荒漠地带，常常在低山带或山前、山间谷地形成带状或团状群落。另一个是新疆沙冬青（又称小沙冬青、矮沙冬青或矮黄花木，柯尔克孜语称忒斯肯），分布区位于亚洲中部地区的喀什噶尔和伊朗之间。新疆沙冬青在中国分布面积十分狭小，仅见于新疆西南部天山南麓乌恰县的西南部山地（乌恰－康苏间和巴音布鲁提山）。邻国吉尔吉斯斯坦有少量分布，垂直分布在海拔1800-2800米的干旱山谷地带的山坡、残丘或干河床上生卵石河床上或剥蚀严重的石质坡地。 从形态上来看，蒙古沙冬青和新疆沙冬青的主要区别为：蒙古沙冬青叶常为复叶，具3小叶；新疆沙冬青的叶常为单叶，极少有3小叶。植株相对较矮。 沙冬青是亚洲中部的旱生植物区系中的特有成份，是在亚热带常绿阔叶林南退后，历尽沧桑，残留在中亚适应旱化环境的第三纪残遗种群，被称为荒漠中的活化石。在研究豆科植物的系统发育、古植物区系、古气候变化和古地理环境变迁、特别是研究亚洲中部荒漠植被的起源和形成等方面有重要的价值，已被列为国家级珍稀濒危和重点保护植物物种。 为什么沙冬青对土壤水分亏缺、高温寒冷和风蚀沙埋等极端环境有特殊的忍耐力呢？这得从沙冬青的生理结构说起。 沙冬青具有的典型的超旱生结构，叶片上表皮毛密集，角质层很厚。叶片细胞在冬季大量出现抗冻蛋白，以应对低温对植株造成的冻害，使得沙冬青具有很强的抗旱抗寒性。 沙冬青在固定、半固定沙丘、基岩裸露的山顶和石缝中以及干旱的黄土丘陵顶部都能正常生长。此外，它耐沙埋，枝条被沙埋后生长更好，分枝萌生力强，抗风蚀，其根部外露，地上部分仍然正常生长。沙冬青属的冠幅较大，尤其是生长在半固定沙丘的沙冬青，地上部分分枝多，阻沙能力强，其周围可形成一个极大的沙堆。两种沙冬青群落具有较强的相似性，共有的科属较多，均表现出草原化荒漠的特征。二者地理成分组成都以温带分布和泛地中海分布为主。二者生活型谱基本相同，灌木、半灌木及多年生草本占有较大比重，都以旱生和超旱生的物种为主。二者结构均较简单，群落均一性差，物种丰富度、盖度都较低，反映出二者对于干旱荒漠环境的适应。 两种沙冬青群落也有许多不同之处：从区系上看，蒙古沙冬青群落要比新疆沙冬青群落更复杂，组成的物种数也较多。二者共有的科属虽然较多，但共有的种数较少。前者群落均一性差于后者，前者灌木、半灌木及多年生草本生活型的比重低于后者。与前者相比，新疆沙冬青群落旱化程度较高，二者的常见种存在差异，群落类型上前者多于后者，前者结构比后者复杂，但不是普遍现象，前者的物种丰富度和盖度总体上高于后者，这些差异反映了二者在分布及生境上的差异。新疆沙冬青荒漠所处海拔要高于蒙古沙冬青荒漠，且蒙古沙冬青荒漠处于荒漠带与草原带交汇地，也是各种区系相互交汇的地区，且由于其位于荒漠带的东部水分条件较好，造成了二者之间的差异。 两种沙冬青都被列入《中国植物红皮书》，为重点保护对象，但是，新疆沙冬青自然分布的数量比蒙古沙冬青要少得多，而且新疆沙冬青种群自然繁衍较为困难，仅仅靠种子更新。荚果在种子成熟前蛀虫率达90％以上，极少数完好种子成熟后又遭鸟食，落入土中的完好种子只有3％左右。自然分布区环境恶劣，年降水量少于250毫米。夏季酷热，冬季寒冷，多风沙，土层薄，大部分种子不能发育成幼苗，只有极个别在一定的环境中才能长成植株。天然繁殖具有小片状零散分布和沿季节水径流方向条状分布的特点。因此，更应重视对新疆沙冬青的保护。与蒙古沙冬青相比，新疆沙冬青群落更容易被破坏，且由于他的分布海拔较高，土壤贫瘠，降水量少，一旦破坏很难自然恢复。 令人欣慰的是，两种沙冬青都已异地保育成功，不仅吐鲁番沙漠植物园大量种植，甘肃民勤沙生植物园、宁夏沙坡头沙漠研究站等地也引种成功。 <img src="http://www.cas.cn/kxcb/kpwz/201010/W020101028421554162420.jpg" alt="" /> 沙冬青植物属的枝叶含多种生物碱，牲畜不啃食，但可供药用。具有祛风湿、舒筋活血、止痛的作用，可治冻伤，还可作杀虫剂。沙冬青属植物是西北荒漠区有开发潜力的油脂植物资源，种子含油量为13.4%，其亚油酸含量达87.5%。 <img src="http://www.cas.cn/kxcb/kpwz/201010/W020101028421554160469.jpg" alt="" /> 蒙古沙冬青 <img src="http://www.cas.cn/kxcb/kpwz/201010/W020101028421554168804.jpg" alt="" /> 新疆沙冬青</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/14/Bioinfo-annotate-RNA-seq-by-NR-database/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/14/Bioinfo-annotate-RNA-seq-by-NR-database/" class="post-title-link" itemprop="url">转录组数据分析之nr数据库注释</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-14 01:50:34" itemprop="dateCreated datePublished" datetime="2015-12-14T01:50:34+08:00">2015-12-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-14 18:26:38" itemprop="dateModified" datetime="2022-07-14T18:26:38+08:00">2022-07-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如果分析的对象是植物，如何只对nr数据库中的植物序列进行检索？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/12/14/Bioinfo-annotate-RNA-seq-by-NR-database/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1288,7 +1292,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

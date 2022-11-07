@@ -189,6 +189,267 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/03/Bioinfo-jcvi-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/03/Bioinfo-jcvi-installation/" class="post-title-link" itemprop="url">jcvi 安装与使用，报错以及解决办法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-03 17:36:50" itemprop="dateCreated datePublished" datetime="2021-06-03T17:36:50+08:00">2021-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-07 23:04:42" itemprop="dateModified" datetime="2021-06-07T23:04:42+08:00">2021-06-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>jcvi 是 Haibao Tang 开发的基因组组装注释与比较基因组分析工具，比如可以用于可视化 synteny blocks。原理是依据物种之间基因编码序列相似性比较，如果若干个连续的基因在两个基因组之间都有出现，那这若干个基因就是一个 synteny block，可能是从祖先染色体上继承下来的，物种之间的亲缘关系越近，synteny blocks 数目越多。</p>
+<p>之前<a target="_blank" rel="noopener" href="https://genehub.wordpress.com/2019/07/05/mcscanx-%e6%b5%8b%e8%af%95/">测试过 MCScanX</a>，其实 jcvi 和 MCScanX 就是一回事，是同一个作者开发的，jcvi 是升级版，操作更加便利，生成的图片更加精美。回去 <a target="_blank" rel="noopener" href="https://github.com/wyp1125/MCScanX#installation">MCScanX</a> 看了一下开发时间，最后更新大约是 2014 年，但是里面有的程序还是很实用的，比如可以计算共线性区块之间的基因对的 Ka/Ks value（add_kaks_to_synteny.pl）.</p>
+<h3 id="安装-jcvi"><a class="markdownIt-Anchor" href="#安装-jcvi"></a> 安装 jcvi</h3>
+<p>jcvi 软件推荐使用 pip 安装，也可以选择使用 conda 安装。我是 anaconda3 下面建立了 python 2.7 和 python 3.7 两个环境，分别进行了测试，最后发现 python2.7 环境下 jcvi 可以正常运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">source activate python27</span><br><span class="line">conda install -c bioconda jcvi</span><br><span class="line">conda install -c bioconda last</span><br><span class="line">conda install scipy</span><br><span class="line"># 但是运行序列比对时候报错！--&gt; 经过查询是 lastal 的问题，也就是别用 conda 安装的 last，自己去 last 网站下载源码，安装到用户目录下，然后将其bin路径写入环境变量bashrc文件，然后就可以解决比对报错的问题。</span><br></pre></td></tr></table></figure>
+<h3 id="安装-lastal"><a class="markdownIt-Anchor" href="#安装-lastal"></a> 安装 lastal</h3>
+<p>手动安装 last 软件，并将其路径写入环境变量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitlab.com/mcfrith/last.git</span><br><span class="line">cd last</span><br><span class="line">mdke</span><br><span class="line"># then we can see lastal in ./last/bin/</span><br><span class="line"># put /PATH/TO/last/bin into ~/.bashrc</span><br><span class="line">which lastal</span><br><span class="line">(python37) [fenglei@localhost cds]$ which lastal</span><br><span class="line">~/local/app/anaconda3/envs/python37/bin/lastal</span><br><span class="line">(python37) [fenglei@localhost cds]$ source ~/.bashrc</span><br><span class="line">(base) [fenglei@localhost cds]$ which lastal</span><br><span class="line">~/local/app/last/bin/lastal</span><br></pre></td></tr></table></figure>
+<p>下面开始做一个数据测试，参考：<a target="_blank" rel="noopener" href="https://github.com/tanghaibao/jcvi/wiki/MCscan-(Python-version)">https://github.com/tanghaibao/jcvi/wiki/MCscan-(Python-version)</a></p>
+<h3 id="基因坐标与基因序列数据准备"><a class="markdownIt-Anchor" href="#基因坐标与基因序列数据准备"></a> 基因坐标与基因序列数据准备</h3>
+<p>原始数据：（1）gff3 格式的基因坐标；（2）fasta 格式的基因 CDS 序列。使用 jcvi 内置程序对这两个文件做格式整理。以大豆（Glycine max）和野生豆（Glycine soja）为例，这一步需要得到四个文件：gma.bed gma.cds gso.bed gso.cds</p>
+<p>如下图所示，要注意同一个物种的 bed 文件和 cds 文件的基因 ID 要相互匹配。由于基因 ID 通常带有“.1”或“.2p”这样的后缀，需要注意，必要的时候自己写脚本处理数据。</p>
+<p><img src="https://i.imgur.com/RYAdtK3.jpg" alt="" /></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">### BED FORMAT FILES FOR GENES</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=transcript_id Gmax_508_Wm82.a4.v1.gene.gff3.gz &gt; gma.bed</span><br><span class="line">11:12:31 [base] Load file `Gmax_508_Wm82.a4.v1.gene.gff3.gz`</span><br><span class="line">11:13:30 [gff] Extracted 86256 features (type=mRNA id=transcript_id)</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=Name Gmax_508_Wm82.a4.v1.gene.gff3.gz &gt; gma.bed2</span><br><span class="line">11:20:14 [base] Load file `Gmax_508_Wm82.a4.v1.gene.gff3.gz`</span><br><span class="line">11:21:13 [gff] Extracted 86256 features (type=mRNA id=Name)</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=transcript_id Gsoja.W05.gene.gff.gz &gt; gso.bed</span><br><span class="line">11:14:15 [base] Load file `Gsoja.W05.gene.gff.gz`</span><br><span class="line">11:15:31 [gff] Extracted 89477 features (type=mRNA id=transcript_id)</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=Name Gsoja.W05.gene.gff.gz &gt; gso.bed2             </span><br><span class="line">11:22:16 [base] Load file `Gsoja.W05.gene.gff.gz`</span><br><span class="line">11:23:32 [gff] Extracted 89477 features (type=mRNA id=Name)</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.gff bed --type=mRNA --key=ID Gsoja.W05.gene.gff.gz &gt; gso.bed3    </span><br><span class="line">11:27:42 [base] Load file `Gsoja.W05.gene.gff.gz`</span><br><span class="line">11:28:58 [gff] Extracted 89477 features (type=mRNA id=ID)</span><br><span class="line"></span><br><span class="line">### REMOVE DUPLICATIONS</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.bed uniq gma.bed2 </span><br><span class="line">11:35:34 [base] Load file `gma.bed2`</span><br><span class="line">11:35:37 [bed] Imported: 86256, Exported: 51013</span><br><span class="line"></span><br><span class="line">python -m jcvi.formats.bed uniq gso.bed3</span><br><span class="line">11:37:25 [base] Load file `gso.bed3`</span><br><span class="line">11:37:29 [bed] Imported: 89477, Exported: 55103</span><br><span class="line"></span><br><span class="line">### CDS FORMAT FILE FOR UNIQ GENES</span><br><span class="line"></span><br><span class="line">seqkit grep -f &lt;(cut -f 4 gma.uniq.bed ) Gmax_508_Wm82.a4.v1.cds.fa.gz |  seqkit seq -i &gt; gma.cds</span><br><span class="line">seqkit grep -f &lt;(cut -f 4 gso.uniq.bed ) Gsoja.W05.gene.cds.fa.gz |  seqkit seq -i &gt; gso.cds</span><br><span class="line"></span><br><span class="line">seqkit grep -f &lt;(cut -f 4 gma.uniq.bed ) Gmax_508_Wm82.a4.v1.protein.fa |  seqkit seq -i &gt; gma.pep  # ERROR due to id isuues</span><br><span class="line">seqkit grep -f &lt;(cut -f 4 gso.uniq.bed ) Gsoja.W05.gene.protein.fa.gz |  seqkit seq -i &gt; gso.pep</span><br><span class="line"></span><br><span class="line"># TROUBLESHOOTING</span><br><span class="line">awk &#x27;&#123;if($0~/&gt;/)&#123;gsub(/\.p/,&quot;&quot;,$1)&#125;; &#123;print&#125;&#125;&#x27; Gmax_508_Wm82.a4.v1.protein.fa &gt; Gmax_508_Wm82.a4.v1.protein.new.fa</span><br><span class="line">seqkit grep -f &lt;(cut -f 4 gma.uniq.bed ) Gmax_508_Wm82.a4.v1.protein.new.fa |  seqkit seq -i &gt; gma.pep</span><br></pre></td></tr></table></figure>
+<h3 id="apairwise_synteny_searchsh"><a class="markdownIt-Anchor" href="#apairwise_synteny_searchsh"></a> a.pairwise_synteny_search.sh</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/local/app/anaconda3/envs/python27/bin/python -m jcvi.compara.catalog ortholog gma gso --no_strip_names</span><br></pre></td></tr></table></figure>
+<p>该命令直接对物种间基因序列进行比较，将生成一个 gma.gso.pdf 文件，打开如下。</p>
+<p><img src="https://i.imgur.com/Ly4FSpT.png" alt="" /></p>
+<p>同时生成一堆文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw-r-- 1 fenglei fenglei    139507 Jun  3 12:09 gma.gso.pdf</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   5333469 Jun  3 12:09 gma.gso.lifted.anchors</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   2931001 Jun  3 12:08 gma.gso.anchors</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   5953786 Jun  3 12:08 gma.gso.last.filtered</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  97488440 Jun  3 12:08 gma.gso.last</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  58121140 Jun  3 12:08 gso.bck</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei       515 Jun  3 12:08 gso.prj</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei 264000792 Jun  3 12:08 gso.suf</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei   1101303 Jun  3 12:07 gso.des</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    220416 Jun  3 12:07 gso.sds</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    220416 Jun  3 12:07 gso.ssp</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  66055302 Jun  3 12:07 gso.tis</span><br></pre></td></tr></table></figure>
+<p>The <code>.last</code> file is raw LAST output, <code>.last.filtered</code> is filtered LAST output, <code>.anchors</code> is the seed synteny blocks (high quality), <code>.lifted.anchors</code> recruits additional anchors to form the final synteny blocks.</p>
+<p>查看了一下 .lifted.anchors 与 .anchors 的区别，如下看到两个文件都有 551 个 synteny blocks，只是 blocks 内部的基因配对数目不同，应该就是后者有更严格的筛选条件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(python27) [fenglei@localhost gma-gso]$ cat gma.gso.lifted.anchors | grep -v &#x27;###&#x27; | wc -l</span><br><span class="line">124133</span><br><span class="line">(python27) [fenglei@localhost gma-gso]$ cat gma.gso.lifted.anchors | grep &#x27;###&#x27; | wc -l   </span><br><span class="line">551</span><br><span class="line">(python27) [fenglei@localhost gma-gso]$ cat gma.gso.anchors | grep -v &#x27;###&#x27; | wc -l        </span><br><span class="line">68549</span><br><span class="line">(python27) [fenglei@localhost gma-gso]$ cat gma.gso.anchors | grep &#x27;###&#x27; | wc -l   </span><br><span class="line">551</span><br></pre></td></tr></table></figure>
+<h3 id="bdepth_visualiztionsh"><a class="markdownIt-Anchor" href="#bdepth_visualiztionsh"></a> b.depth_visualiztion.sh</h3>
+<p>We could also quick test if the synteny pattern is indeed 1:1, by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m jcvi.compara.synteny depth --histogram gma.gso.anchors</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/BB2UsVk.jpg" alt="" /></p>
+<h3 id="canchorssimple_file_generationsh"><a class="markdownIt-Anchor" href="#canchorssimple_file_generationsh"></a> c.anchors.simple_file_generation.sh</h3>
+<p>This command generates a .simple file which is a more succinct form than the .anchors file.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m jcvi.compara.synteny screen --minspan=30 --simple gma.gso.anchors gma.gso.anchors.new</span><br></pre></td></tr></table></figure>
+<p>将 <code>gma.gso.anchors</code> 文件转化成 <code>gma.gso.anchors.simple</code> 文件。有什么不同？见下面的文本框。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(python27) [fenglei@localhost gma-gso]$ head gma.gso.anchors</span><br><span class="line">###</span><br><span class="line">Glyma.01G000100.1       Glysoja.01G000001.1     496</span><br><span class="line">Glyma.01G000322.1       Glysoja.01G000002.1     775</span><br><span class="line">Glyma.01G000400.1       Glysoja.01G000003.1     2600</span><br><span class="line">Glyma.01G001000.2       Glysoja.01G000010.2     984</span><br><span class="line">Glyma.01G001100.3       Glysoja.01G000011.2     1490</span><br><span class="line">Glyma.01G001300.3       Glysoja.01G000013.2     3560</span><br><span class="line">Glyma.01G001350.1       Glysoja.01G000014.1     381</span><br><span class="line">Glyma.01G001500.1       Glysoja.01G000015.3     2880</span><br><span class="line">Glyma.01G001700.1       Glysoja.01G000017.1     1650</span><br><span class="line">(python27) [fenglei@localhost gma-gso]$ head gma.gso.anchors.simple</span><br><span class="line">Glyma.01G000100.1       Glyma.01G245700.6       Glysoja.01G000001.1     Glysoja.01G002529.1     2354    +</span><br><span class="line">Glyma.01G023500.1       Glyma.01G044800.1       Glysoja.02G002717.1     Glysoja.02G002929.1     209     -</span><br><span class="line">Glyma.01G045100.2       Glyma.01G071700.1       Glysoja.02G003545.1     Glysoja.02G003757.1     210     +</span><br><span class="line">Glyma.01G083700.1       Glyma.01G090200.1       Glysoja.02G003470.1     Glysoja.02G003510.1     46      +</span><br><span class="line">Glyma.01G098400.6       Glyma.01G106600.2       Glysoja.03G006294.1     Glysoja.03G006391.1     76      +</span><br><span class="line">Glyma.01G125600.2       Glyma.01G145000.1       Glysoja.03G005845.1     Glysoja.03G006096.1     198     -</span><br><span class="line">Glyma.01G118000.1       Glyma.01G122800.1       Glysoja.03G006181.1     Glysoja.03G006214.2     37      +</span><br><span class="line">Glyma.01G107000.1       Glyma.01G113400.1       Glysoja.03G006412.2     Glysoja.03G006472.1     56      +</span><br><span class="line">Glyma.01G003900.1       Glyma.01G008500.1       Glysoja.05G013057.1     Glysoja.05G013097.1     40      +</span><br><span class="line">Glyma.01G001900.2       Glyma.01G007300.1       Glysoja.07G017673.1     Glysoja.07G017734.1     56      -</span><br></pre></td></tr></table></figure>
+<h3 id="dmacrosynteny_visualizationsh"><a class="markdownIt-Anchor" href="#dmacrosynteny_visualizationsh"></a> d.Macrosynteny_visualization.sh</h3>
+<p>准备一个 <code>seqids</code> 文件，定义哪些染色体需要展示出来。文件内容是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Gm01,Gm02,Gm03,Gm04,Gm05,Gm06,Gm07,Gm08,Gm09,Gm10,Gm11,Gm12,Gm13,Gm14,Gm15,Gm16,Gm17,Gm18,Gm19,Gm20</span><br><span class="line">Chr01,Chr02,Chr03,Chr04,Chr05,Chr06,Chr07,Chr08,Chr09,Chr10,Chr11,Chr12,Chr13,Chr14,Chr15,Chr16,Chr17,Chr18,Chr19,Chr20</span><br></pre></td></tr></table></figure>
+<p>可以用 shell 代码生成上面的文件，我的命令如下。注意 seqids 内容上下行代表两个物种，跟下文出现的 layout 文件要顺序对应。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq 1 20); do printf &quot;Gm&quot;%02d&quot;,&quot; $i ; done; echo </span><br><span class="line">for i in $(seq 1 20); do printf &quot;Chr&quot;%02d&quot;,&quot; $i ; done; echo</span><br></pre></td></tr></table></figure>
+<p>再准备一个 <code>layout</code> 文件。定义染色体出现的位置，角度。文件内容是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># y, xstart, xend, rotation, color, label, va,  bed</span><br><span class="line"> .6,     .1,    .8,       0,      , gma, top, gma.bed</span><br><span class="line"> .4,     .1,    .8,       0,      , gso, top, gso.bed</span><br><span class="line"># edges</span><br><span class="line">e, 0, 1, gma.gso.anchors.simple</span><br></pre></td></tr></table></figure>
+<h3 id="ekaryotypesh"><a class="markdownIt-Anchor" href="#ekaryotypesh"></a> <a target="_blank" rel="noopener" href="http://e.karyotype.sh">e.karyotype.sh</a></h3>
+<p>画图文件准备完毕，运行画图命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m jcvi.graphics.karyotype seqids layout</span><br></pre></td></tr></table></figure>
+<p>将生成一个 karyotype.pdf 文件，打开如下。</p>
+<p><img src="https://i.imgur.com/Bugyz9W.jpeg" alt="" /></p>
+<p>以上就是两个物种间的共线性比较分析。</p>
+<h3 id="同一个物种内部的-synteny-呢"><a class="markdownIt-Anchor" href="#同一个物种内部的-synteny-呢"></a> 同一个物种内部的 synteny 呢？</h3>
+<p>由于大豆在近期经历了 WGD 事件，导致很多基因都有双拷贝，所以内部就有 synteny，我做了测试分析，用与上文相同的代码，得到图片如下。看来 jcvi 程序会自动滤掉基因的自我比较，而是做 paralog 的比较。</p>
+<p><img src="https://i.imgur.com/9QhsL89.jpg" alt="" /></p>
+<h3 id="其他案例"><a class="markdownIt-Anchor" href="#其他案例"></a> 其他案例</h3>
+<p>软件的文档里面还列出了三个物种的比较、对某些 synteny 区段进行高亮、只展示特定染色体区间的方法。下面直接摘抄原作者的图片，留作参考。</p>
+<p><img src="https://camo.githubusercontent.com/833e373b369f1c221132d729e1cf0128a8cd638fc04c90782ad7d5e9d30867db/68747470733a2f2f7777772e64726f70626f782e636f6d2f732f39766c337973336e6476696d6734632f67726170652d70656163682d636163616f2e706e673f7261773d31" alt="" /></p>
+<p><img src="https://camo.githubusercontent.com/5b300c541bd65669e40cf15f7e496fd0a63a0a47ecb4c80a8f5641e9253c9981/68747470733a2f2f7777772e64726f70626f782e636f6d2f732f736f3274643065716b6c626b6c6e6c2f67726170652e70656163682e6b6172796f747970652d677265656e2e706e673f7261773d31" alt="" /></p>
+<p><img src="https://camo.githubusercontent.com/7a878ab0e1aa1221d9c4af36a4d0f131eb43f8ddb10caea79e53366d6797cd92/68747470733a2f2f7777772e64726f70626f782e636f6d2f732f696d646f7539756b6e74743474616d2f67726170652d70656163682d636163616f2d626c6f636b732e706e673f7261773d31" alt="" /></p>
+<h3 id="其他笔记"><a class="markdownIt-Anchor" href="#其他笔记"></a> 其他笔记</h3>
+<p>下面是软件安装调试的一些笔记。python3.7 环境我也测试了，可以安装 jcvi，而且我发现 python3.7 的 jcvi 与 python2.7 下面的 jcvi 的屏幕输出不同。但是 pyton2.7 jcvi 运行过程中有些步骤报错（[Errno 13] Permission denied: ‘dvipng’）导致缺失一些数据结果，所以我放弃了python3.7 jcvi，转而用 python2.7 jcvi 来做分析。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">conda install scipy</span><br><span class="line">conda install -c bioconda last</span><br><span class="line">conda install -c bioconda jcvi  # 这一条就报错！</span><br><span class="line"># 于是从github手动下载软件尝试</span><br><span class="line">cd ~/local/app  # or any directory of your choice</span><br><span class="line">git clone git://github.com/tanghaibao/jcvi.git</span><br><span class="line">pip install -e .</span><br><span class="line"># 安装成功。能否运行数据比对？</span><br><span class="line"># 依然不能，经查是 lastal 的问题！！！</span><br><span class="line">## lastal: I was installed here with multi-threading disabled  # 运行到lastal就报错，根本没有比对结果输出。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">conda create -n jcvi python=2.7</span><br><span class="line">source activate jcvi</span><br><span class="line"># 安装前需要确认存在bioconda和r channel，安装前先更新conda</span><br><span class="line"># conda --add-channel r</span><br><span class="line"># conda install jcvi last</span><br><span class="line">conda install -c bioconda last</span><br></pre></td></tr></table></figure>
+<p>后续还可能会由于缺少 scipy 在绘图时报错 ImportError: No module named scipy.spatial ，因此可提<br />
+前安装</p>
+<p><strong>安装scipy</strong><br />
+#conda-forge scipy-1.2.0<br />
+conda install scipy</p>
+<p><strong>问题一</strong></p>
+<p>File “/biosoft/python/Python-v2.7.11/lib/python2.7/site-packages/subprocess32.py”, line 1393, in _execute_child<br />
+    raise child_exception_type(errno_num, err_msg)<br />
+OSError: [Errno 2] No such file or directory: ‘kpsewhich’</p>
+<p>解决办法：linux中缺少kpsewhich命令导致的，于是安装该命令，CentOS系统方法如下：</p>
+<p>sudo yum install tetex-latex tetex-doc tetex-fonts<br />
+sudo yum install texlive tex-live-latex</p>
+<p>安装好后再次运行，顺利通过。</p>
+<p>我的系统是redhat，没有安yum，所以下载了textlive的源码编译，但是一直不能通过，后来重装了一个centOS系统才可以用。</p>
+<p><strong>问题二</strong></p>
+<p>原来在用户目录下安装了GCC-6.5.0，可以正常使用jcvi的；但是昨天升级到了GCC-9.2.0之后，今天用jcvi 画synteny图的时候遇到下面的问题。</p>
+<p>ImportError: /home/fenglei/local/lib64/libstdc++.so.6: undefined symbol: libiconv</p>
+<p>将libstdc++.so.6这个软连接重新指向旧版GCC对应的libstdc++.so.6.0.22，然后jcvi就没有报错了。</p>
+<p><img src="https://genehub.files.wordpress.com/2019/09/e5beaee4bfa1e688aae59bbe_20190906173207.png" alt="微信截图_20190906173207" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/02/Bioinfo-Installation-of-OrthoMCL-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/02/Bioinfo-Installation-of-OrthoMCL-pipeline/" class="post-title-link" itemprop="url">Bioinfo | Installation of OrthoMCL-pipeline</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-02 13:36:29" itemprop="dateCreated datePublished" datetime="2021-06-02T13:36:29+08:00">2021-06-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-14 18:33:24" itemprop="dateModified" datetime="2022-07-14T18:33:24+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>OrthoMCL (<a target="_blank" rel="noopener" href="http://orthomcl.org/orthomcl/">http://orthomcl.org/orthomcl/</a>) 是现在用的最多的一款来找直系同源基因（Orthologs）以及旁系同源基因 (Paralog) 的软件。OrthoMCL 原始软件安装比较繁琐，根据官网的教程至少得十多步才能完成整个运行流程，包括Mysql数据库配置、修改OrthoMCL配置文件、转换序列格式、过滤、比对、解析结果和聚类等步骤，特别麻烦。有更方便的途径来完成安装：OrthoMCL Pipeline (<a target="_blank" rel="noopener" href="https://github.com/apetkau/orthomcl-pipeline">https://github.com/apetkau/orthomcl-pipeline</a>)。Pipeline安装有点复杂，但是安装完成后，使用就方便了。</p>
+<p>两年多前使用过 OrthoMCL-pipeline 流程来寻找一个物种内部的同源基因（paralogs）和物种间的同源基因（othologs）。物种内部的同源基因之间的碱基差别可能是若干年演化的结果，比如染色体倍增或基因扩张，导致出现同源基因，随后由于演化导致某些突变，尤其是同义替换（Ks 或称为 synonymous）不会引起氨基酸序列变化，常作为分子钟，也比如基因组分析种常见的 4dtv（四倍简并位点），也是用需要依靠同源基因的序列来做分析。</p>
+<blockquote>
+<p>2021.06.25 备注：OrthoMCL-pipeline 安装测试失败。改用 OrthoFinder 则十分顺利，只需要切换到 python37 环境，用 conda 一键安装 OrthoFinder，然后一句命令即可运行物种之间的同源基因比较与归类。下面的代码示例，orthofinder_data 目录下存放蛋白序列，比如含有若干序列比较的物种的蛋白序列集合:ath.fasta, gma.fasta等等，每个物种可以用一个序列文件。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">orthofinder -t 6 -f orthofinder_data -S diamond</span><br></pre></td></tr></table></figure>
+<p>有哪些文章的示例？可以便于记忆与理解。</p>
+<p><img src="https://i.imgur.com/aDN8Pcn.jpg" alt="Fig. 1" /></p>
+<p>上图是 2011 年发表于 Nature 期刊的土豆基因组（<a target="_blank" rel="noopener" href="https://www.nature.com/articles/nature10158">https://www.nature.com/articles/nature10158</a>），使用 OrthoMCL 分析 12 个植物之间的直系同源基因和旁系同源基因，统计数目并制作了条形图。</p>
+<p><img src="https://i.imgur.com/XpDMtM8.jpg" alt="Fig. 2" /></p>
+<p>上图是 2018 年发表于 PBJ 期刊的西葫芦基因组（<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5978595/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5978595/</a>）。使用 OrthoMCL 分析五个植物的同源基因，并且基于同源基因信息计算四倍简并位点（4tdv），推算基因组是否加倍。</p>
+<h3 id="安装-orthomlc-pipeline"><a class="markdownIt-Anchor" href="#安装-orthomlc-pipeline"></a> 安装 OrthoMLC-pipeline</h3>
+<p>下面是安装OrthoMCL的记录，其实可以不用看了。<br />
+先下载 <strong>OrthoMCL-pipeline</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/apetkau/orthomcl-pipeline.git</span><br></pre></td></tr></table></figure>
+<p>再安装 <strong>Perl 以及若干相关模块</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpanm BioPerl DBD::mysql DBI Parallel::ForkManager YAML::Tiny Set::Scalar Text::Table Exception::Class Test::Most Test::Warn Test::Exception Test::Deep Moose SVG Algorithm::Combinatorics</span><br></pre></td></tr></table></figure>
+<p>实际上在安装 Perl 模块的过程中遇到问题，主要是 BioPerl 安装失败，报错信息：<code>Installing the dependencies failed: Module 'Alien::Libxml2' is not installed</code>。并且我发现不能通过 cpanm 来安装 Alien::Libxml2。经过检索，在一个论坛（<a target="_blank" rel="noopener" href="https://github.com/PerlAlien/Alien-Libxml2/issues/7">https://github.com/PerlAlien/Alien-Libxml2/issues/7</a>）找到方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ which perl</span><br><span class="line"> ~/local/bin/perl</span><br><span class="line"></span><br><span class="line">$ perl --version</span><br><span class="line"> This is perl 5, version 30, subversion 3 (v5.30.3) built for x86_64-linux</span><br><span class="line"></span><br><span class="line">$ curl -O https://cpan.metacpan.org/authors/id/P/PL/PLICEASE/Alien-Build-1.71_01.tar.gz</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100  257k  100  257k    0     0  1764k      0 --:--:-- --:--:-- --:--:-- 1775k</span><br><span class="line">$ tar xf Alien-Build-1.71_01.tar.gz </span><br><span class="line">$ cd Alien-Build-1.71_01</span><br><span class="line">$ perl Makefile.PL </span><br><span class="line">Checking if your kit is complete...</span><br><span class="line">Looks good</span><br><span class="line">Generating a Unix-style Makefile</span><br><span class="line">Writing Makefile for Alien::Build</span><br><span class="line">Writing MYMETA.yml and MYMETA.json</span><br><span class="line">...</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br><span class="line"># 最后这样就安装成功了</span><br><span class="line"># Appending installation info to /home/fenglei/local/lib/perl5/5.30.3/x86_64-linux/perllocal.pod</span><br></pre></td></tr></table></figure>
+<p><strong><a target="_blank" rel="noopener" href="http://orthomcl.org/common/downloads/software/v2.0/">OrthoMCL</a></strong> 或 OrthoMCL Custom （能够自定义序列识别符的修改版本）。OrhtoMCL 下载并解压之后，bin目录下的Perl程序首行是 <code>#!/usr/bin/perl</code>，我将其全部改为用户的 perl 了，因为我自己安装的perl位置是 <code>/home/fenglei/local/bin/perl</code>。</p>
+<p><strong><a target="_blank" rel="noopener" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&amp;PAGE_TYPE=BlastDocs&amp;DOC_TYPE=Download">BLAST</a></strong> (blastall, formatdb) 注意不是NCBI-blast+, 推荐使用 2.2.26 版本。由于我之前下载过 interproscan，在 interproscan 安装目录下游 blastall 和 formatdb 等程序，直接将其路径加入环境变量即可！</p>
+<p><strong><a target="_blank" rel="noopener" href="https://www.micans.org/mcl/src/">MCL</a></strong> The MCL algorithm is short for the Markov Cluster Algorithm, a fast and scalable unsupervised cluster algorithm for graphs (also known as networks) based on simulation of (stochastic) flow in graphs.</p>
+<p>依赖环境解决后能够顺利运行设置脚本:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ perl scripts/orthomcl-pipeline-setup.pl</span><br><span class="line">Checking for Software dependencies...</span><br><span class="line">Checking for OthoMCL ... OK</span><br><span class="line">Checking for formatdb ... OK</span><br><span class="line">Checking for blastall ... OK</span><br><span class="line">Checking for mcl ... OK</span><br><span class="line">Wrote new configuration to orthomcl-pipeline/scripts/../etc/orthomcl-pipeline.conf</span><br><span class="line">Wrote executable file to orthomcl-pipeline/scripts/../bin/orthomcl-pipeline</span><br><span class="line">Please add directory orthomcl-pipeline/scripts/../bin to PATH</span><br></pre></td></tr></table></figure>
+<p>然而，我重复以前的流程失败，还是卡在 BioPerl 安装失败。看来问题跟我使用 Anaconda3 有关，下面的错误提示信息种出现的 make 是来自 python37 环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">make: *** [Makefile:3290: test_dynamic] Error 255</span><br><span class="line">  CJFIELDS/BioPerl-1.7.8.tar.gz</span><br><span class="line">  /home/fenglei/local/app/anaconda3/envs/python37/bin/make test -- NOT OK</span><br><span class="line">//hint// to see the cpan-testers results for installing this module, try:</span><br><span class="line">  reports CJFIELDS/BioPerl-1.7.8.tar.gz</span><br><span class="line">Failed during this command:</span><br><span class="line"> (optional) CJFIELDS/BioPerl-1.7.8.tar.gz     : make_test NO</span><br></pre></td></tr></table></figure>
+<h3 id="20210615-再次尝试安装测试"><a class="markdownIt-Anchor" href="#20210615-再次尝试安装测试"></a> 20210615 再次尝试安装测试</h3>
+<p>由于系统自带了 Perl（/usr/bin/perl），我安装的Anaconda3下面的不同环境也分别有 Perl（<sub>/local/app/anaconda3/envs/python37/bin/perl、</sub>/local/app/anaconda3/envs/python27/bin/perl），另外自己又在用户目录下安装了 Perl（~/local/bin/perl），多个版本导致冲突。</p>
+<p>软件测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">PERL5LIB=/home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0  </span><br><span class="line"># 上面其实应该设为 /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/</span><br><span class="line"># 此时直接用 cpan -i 或者 perl -MCPAN -s shell 均无法安装 perl 模块，于是尝试 conda，conda基本可以安装这些模块</span><br><span class="line"> conda install -c bioconda perl-Moo</span><br><span class="line"> conda install -c bioconda perl-DBD::mysql # ERROR: Wrong command</span><br><span class="line"> conda install -c bioconda perl-DBD-mysql</span><br><span class="line"> conda install -c bioconda perl-Parallel-ForkManager</span><br><span class="line"> conda install -c bioconda perl-YAML-Tiny</span><br><span class="line"> conda install -c bioconda perl-Set-Scalar</span><br><span class="line"> conda install -c bioconda perl-Text-Table  # ERROR: PackagesNotFoundError</span><br><span class="line"> conda install -c bioconda perl-Exception-Class</span><br><span class="line"> conda install -c bioconda perl-Test-Most</span><br><span class="line"> conda install -c bioconda perl-Test-Warn</span><br><span class="line"> conda install -c bioconda perl-Test-Exception</span><br><span class="line"> conda install -c bioconda perl-Test-Deep</span><br><span class="line"> conda install -c bioconda perl-Moose</span><br><span class="line"> conda install -c bioconda perl-SVG</span><br><span class="line"> conda install -c bioconda perl-Algorithm-Combinatorics  # ERROR: PackagesNotFoundError</span><br></pre></td></tr></table></figure>
+<p>conda 安装perl模块有两个安不上，所以手动尝试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">wget https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Text-Aligner-0.16.tar.gz</span><br><span class="line">perl Makefile.PL &amp;&amp; make &amp;&amp; make install</span><br><span class="line">## Installing /home/fenglei/perl5/man/man3/Text::Aligner.3</span><br><span class="line">## Appending installation info to /home/fenglei/perl5/lib/perl5/x86_64-linux-thread-multi/perllocal.pod</span><br><span class="line"></span><br><span class="line">conda install -c bioconda  perl-Module-Build</span><br><span class="line"></span><br><span class="line">wget https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Text-Table-1.134.tar.gz</span><br><span class="line">perl Makefile.PL &amp;&amp; make &amp;&amp; make install</span><br><span class="line">## Installing /home/fenglei/perl5/man/man3/Text::Table.3</span><br><span class="line">## Appending installation info to /home/fenglei/perl5/lib/perl5/x86_64-linux-thread-multi/perllocal.pod</span><br><span class="line"></span><br><span class="line">## 安装上述模块之后， perl lib 路径下根本没有出现pm文件，我手动拷贝过去，为了保险，拷贝到两个位置：</span><br><span class="line">cp Aligner.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi/auto/Text/</span><br><span class="line">cp Aligner.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/Text/</span><br><span class="line">cp Table.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi/auto/Text/</span><br><span class="line">cp Table.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/Text/</span><br><span class="line">PERL5LIB=/home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/x86_64-linux-thread-multi/auto/:$PERL5LIB</span><br><span class="line"></span><br><span class="line">wget https://cpan.metacpan.org/authors/id/F/FX/FXN/Algorithm-Combinatorics-0.27.tar.gz</span><br><span class="line">## make 失败</span><br><span class="line">## 报错：unable to execute &#x27;x86_64-conda_cos6-linux-gnu-gcc&#x27;: No such file or directory  </span><br></pre></td></tr></table></figure>
+<p>这次卡在了 Algorithm-Combinatorics。</p>
+<p>在base环境下，自己安装的perl可以编译Algorithm-Combinatorics。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">source activate base</span><br><span class="line">which perl</span><br><span class="line"># ~/local/bin/perl</span><br><span class="line">PERL5LIB=/home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0  </span><br><span class="line">cp Combinatorics.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi/auto/</span><br><span class="line">cp Combinatorics.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi/auto/Algorithm/</span><br><span class="line">cp Combinatorics.pm /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/Algorithm/</span><br></pre></td></tr></table></figure>
+<p>更改前后，都有报错，看来直接复制Combinatorics.pm也不行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost orthomcl-pipeline]$ perl ./scripts/orthomcl-pipeline-setup.pl</span><br><span class="line">Can&#x27;t locate Algorithm/Combinatorics.pm in @INC (you may need to install the Algorithm::Combinatorics module) (@INC contains: /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/x86_64-linux-thread-multi/auto/ /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0 /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2 /home/fenglei/local/app/anaconda3/envs/python37/lib/5.26.2/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/5.26.2 .) at ./scripts/orthomcl-pipeline-setup.pl line 21.</span><br><span class="line">BEGIN failed--compilation aborted at ./scripts/orthomcl-pipeline-setup.pl line 21.</span><br><span class="line"></span><br><span class="line">(python37) [fenglei@localhost orthomcl-pipeline]$ perl ./scripts/orthomcl-pipeline-setup.pl</span><br><span class="line">Can&#x27;t locate loadable object for module Algorithm::Combinatorics in @INC (@INC contains: /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/x86_64-linux-thread-multi/auto/ /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/perl5/site_perl/5.22.0 /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/site_perl/5.26.2 /home/fenglei/local/app/anaconda3/envs/python37/lib/5.26.2/x86_64-linux-thread-multi /home/fenglei/local/app/anaconda3/envs/python37/lib/5.26.2 .) at ./scripts/orthomcl-pipeline-setup.pl line 21.</span><br><span class="line">Compilation failed in require at ./scripts/orthomcl-pipeline-setup.pl line 21.</span><br><span class="line">BEGIN failed--compilation aborted at ./scripts/orthomcl-pipeline-setup.pl line 21.</span><br></pre></td></tr></table></figure>
+<h3 id="orthofinder-测试"><a class="markdownIt-Anchor" href="#orthofinder-测试"></a> orthofinder 测试</h3>
+<p>安装可以很方便，就是conda：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">source  activate python37</span><br><span class="line">conda install -c bioconda -y orthofinder</span><br><span class="line"></span><br><span class="line">(python37) [fenglei@localhost Results_Apr24]$ orthofinder -help</span><br><span class="line"></span><br><span class="line">OrthoFinder version 2.5.2 Copyright (C) 2014 David Emms</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1001,192 +1262,10 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Proteomics-Protein-Persulfidation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/04/Proteomics-Protein-Persulfidation/" class="post-title-link" itemprop="url">Proteomics | 蛋白质硫巯基化修饰</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-04 17:02:00 / Modified: 17:14:19" itemprop="dateCreated datePublished" datetime="2021-03-04T17:02:00+08:00">2021-03-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>随着对硫化氢（hydrogen sulfide，H<sub>2</sub>S）生理效应的研究，蛋白质硫巯基化（S-sulfhydration，Protein Persulfidation）修饰已进入人们的视野。已知依赖于 H<sub>2</sub>S 的蛋白质硫巯基化是继磷酸化（phosphorylation）、泛素化（ubiquitylation）、乙酰化（acetylation）和 S-亚硝基化（S-nitrosylation）等之后的一种新的蛋白质翻译后修饰方式。对动物的研究表明，蛋白质硫巯基化修饰通过影响蛋白质活性和功能，从而在细胞内信号通路中发挥重要的调控作用。最近的研究结果提示，硫巯基化修饰还参与调节植物新陈代谢和形态建成。硫巯基化修饰也可能参与植物细胞信号转导。</p>
-<p>硫化氢（hydrogen sulfide, H<sub>2</sub>S）是一种无色、具有臭鸡蛋气味的气体。在人们的传统观念中，硫化氢一直被认为是一种有毒有害的气体。然而随着科技发展，关于生物体内产生硫化氢的现象被陆续报道，这暗示着硫化氢在某些生理代谢过程中可能发挥着重要作用。硫化氢可自由通过生物膜，以信号分子的角色参与信号传递。最近的发现表明，H<sub>2</sub>S 具有促使蛋白质 Cys 残基的硫醇基团（R-SH）转变为过硫化基团（R-SSH）的能力，这种翻译后修饰作用被称为 蛋白质过硫化/硫巯基化修饰（persulfidation）。蛋白质过硫化修饰是一种基于氧化还原状态的修饰，然而在高等植物中这一翻译后修饰的机制仍然知之甚少。</p>
-<p>当植物受到干旱、高低温、高盐、重金属等非生物胁迫刺激时，体内的硫化氢含量会显著提高，暗示硫化氢参与植物非生物胁迫响应过程。研究表明，在这一过程中硫化氢与多种信号分子，如活性氧（ROS）、一氧化氮（NO）、脱落酸（ABA）、乙烯等信号交叉对话，共同调节植物对胁迫的耐受性。</p>
-<p>脱落酸（ABA）作为一种重要的植物激素，在种子的成熟和休眠，气孔关闭和植物生长中起关键作用。同时，ABA也是增强植物对非生物胁迫如干旱，盐碱和寒冷的适应性的核心调节因子，而这些非生物胁迫是导致全球农作物减产的主要原因，因此研究植物体内ABA信号转导途径具有重要的实践意义。ABA促进气孔关闭并抑制气孔开放，从而在植物缺水时保留水分。SnRK2.6蛋白在植物气孔的保卫细胞中表达，是ABA信号通路中调节植物气孔开合的关键调节因子。硫化氢（H2S）是一种水溶性的气体信号分子，在调节植物对环境胁迫和生长的适应性方面发挥重要功能。Cys残基的翻译后修饰（Cys-SH基团转换为Cys-SSH基团）引起的过硫基团的形成直接受硫化氢调节，被称为S-硫巯基化修饰作用。研究首先在SnRK2.6中发现了两个S-硫巯基化修饰位点，并且发现这两个Cys残基暴露在SnRK2.6表面并且与激酶的催化环和关键的磷酸化位点相邻。研究表明当这两个Cys残基被S-硫巯基化修饰后，促进了SnRK2.6的活性及其与ABA信号下游的转录因子的相互作用。当将SnRK2.6中的Cys131，Cys137或两者均被丝氨酸部分或者全部取代时：SnRK2.6C131S和SnRK2.6C137S或SnRK2.6C131SC137S突变基因转入到ost1-3突变体中，这些点突变的基因无法恢复ost1-3突变体表型，显示出对ABA和H2S诱导的气孔关闭和Ca2+流入的敏感性降低，并增加了水分流失和抗旱性下降。此外，该研究还表明ABA诱导保卫细胞中的DES1酶催化产生硫化氢，随后硫化氢又通过SnRK2.6的过硫化反应过来正调控ABA信号传导，并影响钙离子流，最终调控气孔运动。因此该研究提出了一种新的调控ABA信号通路的机制，其中硫化氢通过S-硫巯基化SnRK2.6在保卫细胞中正调控ABA信号传导。</p>
-<p><img src="https://news.nwafu.edu.cn/images/content/2020-02/20200219193146422506.png" alt="" /></p>
-<p>参考资料</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/426629232_732029">2020 南农综述：气体信号分子——硫化氢在植物适应非生物胁迫中的生理功能及作用机制 </a></li>
-<li><a target="_blank" rel="noopener" href="https://news.nwafu.edu.cn/xnxw/95411.htm">2020 西农文章：硫化氢介导的S-硫巯基化修饰促进气孔闭合关键调控蛋白SnRK2.6/OST1的活性从而参与调控脱落酸信号诱导植物气孔闭合的分子机制</a></li>
-<li><a target="_blank" rel="noopener" href="http://cjbmb.bjmu.edu.cn/CN/abstract/abstract24425.shtml">2018 生物化学与分子生物学报：《硫巯基化：一种新的蛋白质翻译后修饰》</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/03/Proteomics-Common-reagents-and-their-functions-in-LC-MS-MS-proteomics/" class="post-title-link" itemprop="url">Proteomics | Common reagents and their functions in LC-MS/MS proteomics</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-03 23:08:17" itemprop="dateCreated datePublished" datetime="2021-03-03T23:08:17+08:00">2021-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-04 14:04:42" itemprop="dateModified" datetime="2021-03-04T14:04:42+08:00">2021-03-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>蛋白质组学实验 LC-MS/MS “液相色谱法-质谱联用”中，常见的试剂的功能是什么？</p>
-<h3 id="acetone-丙酮"><a class="markdownIt-Anchor" href="#acetone-丙酮"></a> Acetone 丙酮</h3>
-<p>使用场景：提取组蛋白的过程中，当用 TCA 三氯乙酸沉淀组蛋白之后，加入预冷的丙酮清洗组蛋白沉淀。</p>
-<p>丙酮是最简单的酮，化学式 CH<sub>3</sub>COCH<sub>3</sub>。由于甲醇、乙醇、丙酮等有机溶剂加入水中使容积介电常数降低，增加了相反电荷的吸引力，另一方面因为这些有机溶剂是强亲水试剂，争夺蛋白质分子表面的水化水，破坏蛋白质胶体分子表面的水化层而使分子聚集沉淀。当蛋白沉淀后，立即分离蛋白和丙酮并复溶蛋白完成提取。丙酮在提取蛋白质中的主要作用是通过有机溶剂破坏蛋白质的水化层，降低介电常数 增强带电蛋白质分子的相互作用，促进蛋白颗粒的聚集沉淀。<br />
-丙酮要求低温操作且尽量缩短时间，避免蛋白变性。丙酮容易挥发。在提取大分子蛋白质时，TCA使蛋白沉淀之后，使用丙酮尽量将TCA抽提干净，</p>
-<h3 id="acetonitrile-乙腈"><a class="markdownIt-Anchor" href="#acetonitrile-乙腈"></a> Acetonitrile 乙腈</h3>
-<p>使用场景一：HPLC 实验中，ACN 可以与水分别作为流动相 B 与 A，用来洗脱不同种类的蛋白分子。<br />
-使用场景二：SDS-PAGE 胶，切下目的条带之后，加入ACN，无色透明的胶块会迅速失水，皱缩成白色不透明状。</p>
-<p>乙腈（英语：Acetonitrile，又称氰基甲烷），化学式 CH<sub>3</sub>CN，英文缩写：ACN 或 AeCN。乙腈是无色的液体，是最简单的有机腈，并广泛用作极性非质子溶剂。对于 HPLC 级溶剂（我们在 HPLC 分析中应始终使用 HPLC 级溶液），<u>乙腈的吸光度在这两种溶剂中最低</u>，非常适合低紫外光分析。作为比较，甲醇在 205–210 nm 左右有较高的紫外光吸收值，在非常低的紫外光范围内略有限制。注意乙腈可以燃烧，并且有毒性。</p>
-<h3 id="ammonium-acetate"><a class="markdownIt-Anchor" href="#ammonium-acetate"></a> Ammonium acetate</h3>
-<p>乙酸铵是一个有机盐，分子式为CH<sub>3</sub>COONH<sub>4</sub>。</p>
-<h3 id="ammonium-sulfate"><a class="markdownIt-Anchor" href="#ammonium-sulfate"></a> Ammonium sulfate</h3>
-<p>使用场景：在配制考马斯亮蓝染色液的时候，需要准备2% (wt/vol) phosphoric acid and 20% (wt/vol) ammonium sulfate 溶液。</p>
-<p>硫酸铵，简称硫铵，又称硫酸铔，化学式为(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub>，无色斜方晶体，易溶于水，水溶液为酸性。</p>
-<h3 id="ammonium-hydrogen-carbonate-abc"><a class="markdownIt-Anchor" href="#ammonium-hydrogen-carbonate-abc"></a> Ammonium hydrogen carbonate （ABC）</h3>
-<p>使用场景： In-gel digestion 的 buffer，即 100 mM ABC</p>
-<p>碳酸氢铵 (Ammonium bicarbonate), 碳酸氢铵是氨的碳酸盐，分子式为NH<sub>4</sub>HCO<sub>3</sub>。用 Trypsin 酶解蛋白质时，碳酸氢氨的浓度应该是多少？酶解时碳酸氢氨的浓度一般在 10 ～ 50 mM 之间。碳酸氢氨的作用主要是提供一个碱性的水解环境，因为 Typsin 的活力在 pH8 ～ 9 之间最高。最常用的碳酸氢氨浓度有 20 mM ， 40 mM 。盐浓度过大时，后续的冻干过程中会有较多的盐析出；盐浓度过小时，则不能有效的提供碱性 pH 的水解环境（尤其是在样品的 pH 值低，而且体积大时）。</p>
-<h3 id="ammonium-persulfate"><a class="markdownIt-Anchor" href="#ammonium-persulfate"></a> Ammonium persulfate</h3>
-<p>过硫酸铵（APS）是一种白色晶体，分子式为(NH<sub>4</sub>)<sub>2</sub>S<sub>2</sub>O<sub>8</sub>，具有强氧化性和腐蚀性，易溶于水。其干品具有良好的稳定性，保存在防潮箱中。聚丙烯酰胺（PAGE）是由丙烯酰胺聚合形成的高分子，这个聚合反应是自由基聚合，需要有引发剂产生自由基将反应引发过硫酸铵就是引发剂，而 TEMED 可以催化过硫酸铵产生自由基，从而加速丙烯酰胺凝胶的聚合。过硫酸铵配制成 10%溶液后，应当-20℃保存。同时应尽量减少室温存放时间，以防失效。保存不能超过两周。最好现配现用。</p>
-<h3 id="tca-三氯乙酸"><a class="markdownIt-Anchor" href="#tca-三氯乙酸"></a> TCA 三氯乙酸</h3>
-<p>使用场景：用硫酸溶液破裂细胞核，释放组蛋白之后，加入 TCA 使组蛋白沉淀，为什么用 TCA 呢？</p>
-<p>TCA 化学式 CCl<sub>3</sub>COOH，其作用主要是在酸性条件下可与蛋白质形成不溶性盐。同时作为蛋白质变性剂使蛋白质构象发生改变，暴露出较多的疏水性基团，使之聚集沉淀。但是 TCA 可能渗入蛋白质分子内部而使之较难被完全除去，在电泳前样品加热处理时可能使蛋白质结构发生酸水解而形成碎片，所以在提取大分子蛋白质时要使用丙酮（Acetone）尽量将 TCA 抽提干净。</p>
-<h3 id="acetic-acid-乙酸"><a class="markdownIt-Anchor" href="#acetic-acid-乙酸"></a> Acetic acid 乙酸</h3>
-<p>使用场景：SDS-PAGE胶脱色液，即考马斯亮蓝染色脱色液，配方为：40%乙醇，10%乙酸，50%蒸馏水。也可以使用其它适当的脱色液。</p>
-<p>乙酸也叫做醋酸，化学式 CH<sub>3</sub>COOH，甲醇是为了更容易洗脱考马斯亮蓝，加得越多洗脱越容易，结合在蛋白上的染料也容易洗下来。冰乙酸是固定蛋白的，防止蛋白扩散。两者作用完全不同。</p>
-<h3 id="tfa-trifluoroacetic-acid-三氟乙酸"><a class="markdownIt-Anchor" href="#tfa-trifluoroacetic-acid-三氟乙酸"></a> TFA (trifluoroacetic acid ) 三氟乙酸</h3>
-<p>使用场景：组蛋白的 HPLC 纯化过程中，流动相 A 和 B 里面都会添加 0.1% TFA。</p>
-<p>三氟乙酸化学式 CF<sub>3</sub>COOH，在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸 (TFA) 作为离子对试剂是常见的手段。流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。三氟乙酸与多肽上的正电荷及极性基团相结合以减少极性保留，并把多肽带回到疏水的反相表面。以同样的方式，三氟乙酸屏蔽了固定相上残留的极性表面。三氟乙酸的行为可以理解为它滞留在反相固定相的表面，同时与多肽及柱床作用。三氟乙酸优于其他离子修饰剂的原因是它容易挥发，可以方便地从制备样品中除去。另一方面，三氟乙酸的紫外最大吸收峰低于 200 nm，对多肽在低波长处的检测干扰很小。改变三氟乙酸的浓度，可以细微地调整多肽在反相色谱上的选择性。这一影响对于优化分离条件、增大复杂色谱分析（如多肽的指纹图谱）的信息量是非常有益的。三氟乙酸添加在流动相中的浓度一般为 0.1%，在这个浓度下，大部分的反相色谱柱都可以产生良好的峰形，当三氟乙酸浓度大大低于这个水平时，峰的展宽和拖尾就变得十分明显。</p>
-<h3 id="fa-formic-acid-甲酸"><a class="markdownIt-Anchor" href="#fa-formic-acid-甲酸"></a> FA (Formic acid) 甲酸</h3>
-<p>使用场景：经过酶解和纯化的短肽，溶解于 0.1% FA 然后在 Orbitrap 质谱仪进行 LC-MS/MS 分析。</p>
-<p>甲酸又称作蚁酸，化学式为HCOOH。在反相色谱分离多肽和蛋白质的实验中，使用三氟乙酸(TFA) 作为离子对试剂是常见的手段，流动相中的三氟乙酸通过与疏水键合相和残留的极性表面以多种模式相互作用，来改善峰形、克服峰展宽和拖尾问题。同时反相色谱与电喷雾质谱联用已成为多肽和蛋白质的分子量测定和结构分析的重要工具，但是含有三氟乙酸的流动相对质谱离子的产生具有抑制作用，一定程度上降低了液质联用技术的灵敏性和分析可靠性。目前常用的方法是降低流动相中 TFA 浓度， 达到降低这种抑制作用，但是也会造成色谱分析质量的降低；而如果用甲酸代替 TFA, 会造成色谱分离柱效降低，达不到理想的分离效果。本文采用双三元液相色谱系统 (DGLC)，充分利用双泵的优势，将两个泵分别作为流动相的输液泵和柱后溶液的传输泵，实现与质谱的全自动连接。采用 TFA-Fix 技术或者抑制器技术降低流动相中 TFA 对 MS 的离子产生的抑制作用，尤其是柱后抑制器技术大大提高了多肽样品在质谱上的灵敏度。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1254,7 +1333,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

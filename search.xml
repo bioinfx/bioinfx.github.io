@@ -9191,4 +9191,108 @@ From:  Liquid Method: Eric Baima 6/97. See Methods in Clough and Bent (1998) Pla
         <category>Plant</category>
       </categories>
   </entry>
+  <entry>
+    <title>Bioinfo | 提交蛋白质组学原始数据到公共数据库</title>
+    <url>/2022/11/07/submit-proteomics-raw-data-to-PRIDE/</url>
+    <content><![CDATA[<p>蛋白组学原始数据如何提交？投文章的过程中，杂志反馈说：“We note that your manuscript contains RNA sequencing and LC-MS/MS data. Before publication, you must deposit this data in a public, community-supported repository. Your manuscript will not be held and you can resolve this query alongside review. Authors are required to deposit the following mandatory data types in public, community-supported repositories, such as those listed below, prior to publication of an associated manuscript. Proteome profiling data, PRIDE, PeptideAtlas, ProteomeXchange.”</p>
+<p>虽然上面提到有多个数据库可以选择，比如 PRIDE 和 ProteomeXchange。但是我发现进入 ProteomeXchange 之后其实也是链接到了 PRIDE，所以这里以 PRIDE 为例做个记录。</p>
+<span id="more"></span>
+<h3 id="注册-pride-数据库的账户"><a class="markdownIt-Anchor" href="#注册-pride-数据库的账户"></a> 注册 PRIDE 数据库的账户</h3>
+<p>PRIDE 数据库主页是 <a href="https://www.ebi.ac.uk/pride/">https://www.ebi.ac.uk/pride/</a>，按照主页提供的信息操作，比如在该页面下下拉有提供“Submission Tool”和“Documentation: How to Submit data”。如果没有注册过账户，需要有email地址注册账户，注册之后会收到通知邮件，包含账户密码的信息。</p>
+<h3 id="在本地电脑安装数据提交软件"><a class="markdownIt-Anchor" href="#在本地电脑安装数据提交软件"></a> 在本地电脑安装数据提交软件</h3>
+<p>PRIDE Submission Tool: <a href="https://www.ebi.ac.uk/pride/markdownpage/pridesubmissiontool#submission_tool">https://www.ebi.ac.uk/pride/markdownpage/pridesubmissiontool#submission_tool</a></p>
+<p>The PRIDE Submission Tool is the main tool used to submit proteomics datasets to PRIDE Archive. This tool has been implemented as a wizard, guiding submitters through a set of simple steps to complete each dataset submission.</p>
+<p><a href="https://ftp.pride.ebi.ac.uk/pub/databases/pride/resources/tools/submission-tool/latest/desktop/px-submission-tool.zip">DOWNLOAD TOOL</a></p>
+<p>下载这个文件 <code>px-submission-tool.zip</code>，解压之后有一个 <code>px-submission-tool-2.5.7.jar</code> 文件，双击即可运行数据提交程序，注意这里要求电脑已经安装 Java。</p>
+<p><img src="https://i.imgur.com/XUwfpMW.jpeg" alt="" /></p>
+<h3 id="填写实验相关信息并上传原始数据"><a class="markdownIt-Anchor" href="#填写实验相关信息并上传原始数据"></a> 填写实验相关信息并上传原始数据</h3>
+<p>进入软件之后，按照网站提供的流程逐步操作：<a href="https://www.ebi.ac.uk/pride/markdownpage/pridesubmissiontool#submission_tool">https://www.ebi.ac.uk/pride/markdownpage/pridesubmissiontool#submission_tool</a>。还需要填写实验相关的信息：研究摘要、实验设计，以及数据分析方法等。选择“Partial Submission”开始吧。</p>
+<p><img src="https://i.imgur.com/Owm6MsJ.jpeg" alt="" /></p>
+<p>除了原始 raw 文件，还需要搜库的结果（Peptide/protein identification files (called ‘SEARCH’) (Mandatory for Partial Submissions, Optional for Complete Submissions): These are the files output by the software used to perform the data analysis - Mascot .dat, ProteomeDiscover .msf - check the full list here. Each SEARCH file needs to be related with at least one RAW file.）。</p>
+<p>我有若干个质谱样品，对应多个 raw 文件，搜库的结果为“dia-proteinSummary.txt”，另外，我还提交了一个“sample_information.xls”和“md5sum.txt”</p>
+<p>SampleInformation.xls 就是类似下面的表格。（我忘记是否来源于软件生成的模板？）</p>
+<table>
+<thead>
+<tr>
+<th>plant_sample</th>
+<th>MS_raw_file</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Col_ck</td>
+<td>P1805080001.raw</td>
+<td>Col-0; normal conditions</td>
+</tr>
+<tr>
+<td>Col_ck</td>
+<td>P1805080002.raw</td>
+<td>Col-0; normal conditions</td>
+</tr>
+<tr>
+<td>Col_ck</td>
+<td>P1805080002.raw</td>
+<td>Col-0; normal conditions</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://i.imgur.com/Kcl2gSn.jpeg" alt="" /></p>
+<p>数据上传完毕，还需要对数据进行核对，再选择确认提交，能收到一封提交通知的邮件。</p>
+<p><img src="https://i.imgur.com/wQDVXOA.jpeg" alt="" /></p>
+<h3 id="收到数据库编号"><a class="markdownIt-Anchor" href="#收到数据库编号"></a> 收到数据库编号</h3>
+<p>过一两天，如果一切正常，就会收到 PRIDE 的通知，并提供一个数据库编号，这个编号投文章的时候要用到。此时该数据集并未公开，可以等文章发表的时候通知 PRIDE 进行公开。</p>
+<p><img src="https://i.imgur.com/8dbR1JR.jpeg" alt="" /></p>
+<p>如图，下面就是登录自己账户之后的界面，数据集的信息状态为“PRIVATE”，我发现右上角有一个“Publish”按钮，如果该数据集相关文章发表，可能可以点击此处进行数据公开。</p>
+<p><img src="https://i.imgur.com/Gm1PXIK.jpeg" alt="" /></p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a href="https://zhuanlan.zhihu.com/p/468439344">教你如何上传蛋白质组学原始数据 – 联川生物</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Bioinformatics</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Bioinfo | 使用 Trimmomatic 软件对 Illumina 测序数据进行过滤</title>
+    <url>/2022/11/07/Illumina-raw-reads-filtering/</url>
+    <content><![CDATA[<p>Illumina 测序产生大量的短片段　DNA　序列，即 Reads。如果是下机原始数据 Raw data，通常需要进行过滤得到 Clean data，才能用于正式的组装和比对等数据分析。好几年没做过过滤，因为好多次收到公司交付的数据已经是过滤后的高质量数据，今年收到一批 Raw data，需要自己过滤，这里参考其他资料做个小结。</p>
+<span id="more"></span>
+<h3 id="为什么需要过滤低质量-reads"><a class="markdownIt-Anchor" href="#为什么需要过滤低质量-reads"></a> 为什么需要过滤低质量 Reads？</h3>
+<p>下图为例，可以用来理解 Illumina 的测序原理，待测 DNA 片段两端连接有 Adapter（这就是通常所称的“文库”），上机的过程中，测序引物结合在 Adapter 的特定区域并且通过“边合成、边测序”的原理逐个碱基向未知的待测片段读取碱基信息，从而获得所谓的 Reads。目前，拿到的 Reads 长度通常为 100 bp 和 150 bp 两种规格。设想，如果文库中某些片段小于 Reads 长度，那么测序的过程中将“测通”整个待测 DNA，甚至读到另一端的 Adapter，这就使我们获得的 Reads 序列包含 Adapter 序列。另一个情况就是 Illumina 对每个碱基会生成质量值，如果某个碱基质量值很低，就不可靠，可以过滤掉。还有一个情况，根据我的经验，基因组测序的 Reads 集中会包括一部分简单重复序列，比如大量重复的 AAAAAA，这种简单序列对组装可能没什么用，可以滤掉。</p>
+<p><img src="https://i.imgur.com/SMmxiuX.png" alt="" /></p>
+<p>其实对于转录组测序而言，如果不经过过滤，对基因组比对的影响也很小，因为低质量的 Reads 在比对的过程中很可能使无法比对到基因组序列的。</p>
+<h3 id="过滤软件的选择"><a class="markdownIt-Anchor" href="#过滤软件的选择"></a> 过滤软件的选择</h3>
+<p>早期（2014年）的文献中有各种不同的过滤软件，我甚至拿不少软件做过测试，后来 Trimmomatic 软件发表，我发现非常好用。该文章至今已被大量引用，是一个广受欢迎的 Illumina 平台数据过滤工具。Trimmomatic 支持多线程，处理数据速度快，主要用来去除 Illumina 平台的 Fastq 序列中的接头，并根据碱基质量值对 Fastq 进行修剪。软件有两种过滤模式，分别对应 SE 和 PE 测序数据，同时支持 gzip 和 bzip2 压缩文件。另外也支持 phred-33 和 phred-64 格式互相转化，现在之所以会出现 phred-33 和 phred-64 格式的不同，是 Illumina 公司的不同质量体系，不过现在绝大部分 Illumina 平台的产出数据也都转为使用 phred-33 格式。下面的脚本代码可以快速识别具体的质量格式。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat 00.fq_qual_type.sh </span><br><span class="line">less $1 | head -n 1000 | awk &#x27;&#123;if(NR%4==0) printf(&quot;%s&quot;,$0);&#125;&#x27; \</span><br><span class="line">        | od -A n -t u1 -v \</span><br><span class="line">        | awk &#x27;BEGIN&#123;min=100;max=0;&#125; \</span><br><span class="line">        &#123;for(i=1;i&lt;=NF;i++) &#123;if($i&gt;max) max=$i; if($i&lt;min) min=$i;&#125;&#125;END \</span><br><span class="line">                &#123;if(max&lt;=126 &amp;&amp; min&lt;59) print &quot;Phred33&quot;; \</span><br><span class="line">                        else if(max&gt;73 &amp;&amp; min&gt;=64) print &quot;Phred64&quot;; \</span><br><span class="line">                        else if(min&gt;=59 &amp;&amp; min&lt;64 &amp;&amp; max&gt;73) print &quot;Solexa64&quot;; \</span><br><span class="line">                        else print &quot;Unknown score encoding&quot;; \</span><br><span class="line">                print &quot;( &quot; min &quot;, &quot; max, &quot;)&quot;;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="trimmomatic-的安装与运行"><a class="markdownIt-Anchor" href="#trimmomatic-的安装与运行"></a> Trimmomatic 的安装与运行</h3>
+<p>官网：<a href="http://www.usadellab.org/cms/?page=trimmomatic">http://www.usadellab.org/cms/?page=trimmomatic</a>，我直接下载<a href="http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.39.zip">二进制文件</a>，解压即可使用。官网也提供详细的<a href="http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf">《Trimmomatic 使用说明书》</a>。</p>
+<p>官网提供的一个示范：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># for reference only (less sensitive for adapters)</span><br><span class="line"></span><br><span class="line">java -jar trimmomatic-0.35.jar PE -phred33 \</span><br><span class="line">    input_forward.fq.gz input_reverse.fq.gz \</span><br><span class="line">    output_forward_paired.fq.gz output_forward_unpaired.fq.gz \</span><br><span class="line">    output_reverse_paired.fq.gz output_reverse_unpaired.fq.gz \</span><br><span class="line">    ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36</span><br><span class="line"></span><br><span class="line"># This will perform the following:</span><br><span class="line"># Remove adapters (ILLUMINACLIP:TruSeq3-PE.fa:2:30:10)</span><br><span class="line"># Remove leading low quality or N bases (below quality 3) (LEADING:3)</span><br><span class="line"># Remove trailing low quality or N bases (below quality 3) (TRAILING:3)</span><br><span class="line"># Scan the read with a 4-base wide sliding window, cutting when the average quality per base drops below 15 (SLIDINGWINDOW:4:15)</span><br><span class="line"># Drop reads below the 36 bases long (MINLEN:36)</span><br></pre></td></tr></table></figure>
+<p>我根据该示范的实际操作代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java -jar /home/fenglei/local/app/Trimmomatic/trimmomatic-0.39.jar PE \</span><br><span class="line">        -threads $NUMCPUS -phred33 -summary $CLEANDATAPATH/$&#123;sample&#125;_trim.summary \</span><br><span class="line">        $&#123;prefix&#125;_1.fq.gz $&#123;prefix&#125;_2.fq.gz \</span><br><span class="line">        $CLEANDATAPATH/$&#123;sample&#125;_pass_1.fq.gz $CLEANDATAPATH/$&#123;sample&#125;_unpass_1.fq.gz \</span><br><span class="line">        $CLEANDATAPATH/$&#123;sample&#125;_pass_2.fq.gz $CLEANDATAPATH/$&#123;sample&#125;_unpass_2.fq.gz \</span><br><span class="line">        ILLUMINACLIP:TruSeq3-PE.fa:2:30:10:2:True LEADING:3 TRAILING:3 MINLEN:36</span><br><span class="line"># 这个参数别用：-trimlog $CLEANDATAPATH/$&#123;sample&#125;_trim.log  ### DO NOT USE THIS PARAMETER! IT WILL GENERATE A HUGE FILE WITH ALL RAED NAMES.</span><br><span class="line"># 这个参数可用：SLIDINGWINDOW:4:15</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ol>
+<li>Adpater 序列文件 <code>TruSeq3-PE.fa</code> 默认在当前目录，如果文件在其他位置就需要添加路径，比如 <code>ILLUMINACLIP:/PATH/TO/TruSeq3-PE.fa:2:30:10:2:True</code>。</li>
+<li>Adpater 序列文件里面序列名称有讲究，Naming of the sequences indicates how they should be used. For ‘Palindrome’ clipping, the sequence names should both start with ‘Prefix’, and end in ‘/1’ for the forward adapter and ‘/2’ for the reverse adapter. All other sequences are checked using ‘simple’ mode. Sequences with names ending in ‘/1’ or ‘/2’ will be checked only against the forward or reverse read. Sequences not ending in ‘/1’ or ‘/2’ will be checked against both the forward and reverse read. If you want to check for the reverse-complement of a specific sequence, you need to specifically include the reverse-complemented form of the sequence as well, with another name.</li>
+<li>生成的质量过关的文件，包括 <code>$CLEANDATAPATH/$&#123;sample&#125;_pass_1.fq.gz</code> 和 <code>$CLEANDATAPATH/$&#123;sample&#125;_pass_2.fq.gz</code>，这两个文件的序列数目是一致的。但是里面有部分序列的长度是经过修剪的，因为设置了 <code>MINLEN:36</code> 参数，去掉 Adapter 污染的序列变短。</li>
+<li>生成的 <code>$CLEANDATAPATH/$&#123;sample&#125;_unpass_1.fq.gz</code> 和 <code>$CLEANDATAPATH/$&#123;sample&#125;_unpass_2.fq.gz</code> 两个文件，大小是不一样的，打开查看，这两个文件包含主要是一些低质量的简单重复序列。</li>
+</ol>
+<p><img src="https://i.imgur.com/ppkg0Pu.png" alt="Flow of reads in Trimmomatic Paired End mode" /></p>
+<h3 id="trimmomatic-软件参数的解释"><a class="markdownIt-Anchor" href="#trimmomatic-软件参数的解释"></a> Trimmomatic 软件参数的解释</h3>
+<p>Trimmomatic 过滤数据的步骤与命令行中过滤参数的顺序有关，通常的过滤步骤如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ILLUMINACLIP: 过滤 reads 中的 Illumina 测序接头和引物序列，并决定是否去除反向互补的 R1/R2 中的 R2。</span><br><span class="line">SLIDINGWINDOW: 从 reads 的 5’ 端开始，进行滑窗质量过滤，切掉碱基质量平均值低于阈值的滑窗。</span><br><span class="line">MAXINFO: 一个自动调整的过滤选项，在保证 reads 长度的情况下尽量降低测序错误率，最大化 reads 的使用价值。</span><br><span class="line">LEADING: 从 reads 的开头切除质量值低于阈值的碱基。</span><br><span class="line">TRAILING: 从 reads 的末尾开始切除质量值低于阈值的碱基。</span><br><span class="line">CROP: 从 reads 的末尾切掉部分碱基使得 reads 达到指定长度。</span><br><span class="line">HEADCROP: 从 reads 的开头切掉指定数量的碱基。</span><br><span class="line">MINLEN: 如果经过剪切后 reads 的长度低于阈值则丢弃这条 reads。</span><br><span class="line">AVGQUAL: 如果 reads 的平均碱基质量值低于阈值则丢弃这条 reads。</span><br><span class="line">TOPHRED33: 将 reads 的碱基质量值体系转为 phred-33。</span><br><span class="line">TOPHRED64: 将 reads 的碱基质量值体系转为 phred-64。</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic: A flexible read trimming tool for Illumina NGS data</a></li>
+<li><a href="http://www.biotrainee.com/thread-1484-1-1.html">生信技能树：NGS 数据过滤之 Trimmomatic 详细说明</a></li>
+<li><a href="https://www.modb.pro/db/376116">生信洞：Trimmomatic 使用简介</a></li>
+<li><a href="https://www.cnblogs.com/Sunny-King/p/Bioinformatics-Trimmomatic.html">Sunny King：Trimmomatic 安装和使用</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Bioinformatics</category>
+      </categories>
+  </entry>
 </search>

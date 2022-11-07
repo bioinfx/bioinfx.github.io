@@ -189,6 +189,172 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/" class="post-title-link" itemprop="url">Gene Counts Table of RNA seq: The sam/bam file for HTseq should be sorted</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-10-06 23:54:41" itemprop="dateCreated datePublished" datetime="2015-10-06T23:54:41+08:00">2015-10-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Posted on <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/" title="23:44">2015-10-06</a> by <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/author/fengleiluck/" title="查看该作者所有主题 FENG Lei">FENG Lei</a> — <a target="_blank" rel="noopener" href="https://fengleiblog.wordpress.com/2015/10/06/gene-counts-table-of-rna-seq-the-sambam-file-for-htseq-should-be-sorted/#respond">发表评论</a></p>
+<p>下面摘抄自网络。实际使用中，转录组比对使用tophat或者hisat，注意tophat输出的bam文件未经排序，而hisat输出的sam文件已经排序。<strong>HTseq进行reads count时候，要求输入的sam/bam文件是经过排序的。</strong> ————————</p>
+<p><strong>A. Counting reads</strong></p>
+<p>DEseq uses a table of raw counts as the basis of DE calls. Any transformed counts, such as FPKM counts will not work with this package. The top row of the table can be a descriptor, these can be imported into R to act as column labels. Gene names should be column 1 (remember R counting starts from 1 rather than 0), each column after that should be a raw count for each biological replicate and for each treatment. Note that if technical reps are performed, these should be merged based on the sum of the two runs (they will be normalised by read count latter).</p>
+<p>Here I used BWA to align the reads to my reference and generate SAM files that are then processed by <a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/overview.html">HTseq</a> count. Note that you have to run this on each sample, so in this current example I will generate 6 sam files, 1 for each treatment and condition. Also, see that I used the<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">intersection-strict</a> mode for HTseq. &gt;bwa aln sarcop_pep_rnaseqfiltered.fa Sample_ST72-1/ST72-1.subset.fastq &gt; ST72-1.subset.sai</p>
+<p>&gt;bwa samse sarcop_pep_rnaseqfiltered.fa ST72-1.subset.sai Sample_ST72-1/ST72-1.subset.fastq &gt; ST72-1.subset.sam</p>
+<p>&gt;htseq-count -m intersection-strict –stranded=no ST72-1.subset.sam sarcop_pep_rnaseqfiltered.gtf &gt; ST72-1.subset.counts</p>
+<p>In the above ST72-1.subset.counts is a table of counts that can be merged with the other count data before being imported into DEseq as a R data table. Here is a <a target="_blank" rel="noopener" href="https://docs.google.com/file/d/0B99ewTsEZTkidElVekliSUxldW8/edit?usp=sharing">python script</a> for merging, see the header of the script for usage, if that helps. For full detailed explanation of HTseq see (<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/install.html#installation-on-linux">http://www-huber.embl.de/users/anders/HTSeq/doc/install.html#installation-on-linux</a>) and this seems to be the default way of doing it (instructions :<a target="_blank" rel="noopener" href="http://www-huber.embl.de/users/anders/HTSeq/doc/count.html">http://www-huber.embl.de/users/anders/HTSeq/doc/count.html</a>).</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/09/25/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/09/25/%E5%9F%BA%E5%9B%A0%E7%BB%84%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-title-link" itemprop="url">基因组浏览器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-09-25 11:42:37" itemprop="dateCreated datePublished" datetime="2015-09-25T11:42:37+08:00">2015-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>1 GBrowse</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://gmod.org/wiki/GBrowse">http://gmod.org/wiki/GBrowse</a> <img src="http://gmod.org/mediawiki/images/thumb/0/04/GBrowseLogo.png/400px-GBrowseLogo.png" alt="" /></p>
+</blockquote>
+<p><strong>2. JBrowse</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://jbrowse.org/">http://jbrowse.org/</a> [embed]<a target="_blank" rel="noopener" href="https://youtu.be/NE8TBTbvDfM%5C%5B/embed%5C%5D">https://youtu.be/NE8TBTbvDfM\[/embed\]</a></p>
+</blockquote>
+<p><strong>3. UCSC</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://genome.ucsc.edu/">https://genome.ucsc.edu/</a> <img src="https://genome.ucsc.edu/images/title.jpg" alt="" /></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/09/25/%E8%BD%AC%E5%BD%95%E7%BB%84%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -908,174 +1074,10 @@ listhet extract the position of each het</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/02/05/could-not-find-function-sqlitequicksql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/02/05/could-not-find-function-sqlitequicksql/" class="post-title-link" itemprop="url">could not find function \"sqliteQuickSQL\"</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-02-05 22:41:23" itemprop="dateCreated datePublished" datetime="2015-02-05T22:41:23+08:00">2015-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>问题描述：转录组测序数据分析，使用cummeRbund的过程中报错： &gt; library(cummeRbund) Loading required package: BiocGenerics Loading required package: parallel Attaching package: ‘BiocGenerics’ The following objects are masked from ‘package:parallel’: clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, clusterExport, clusterMap, parApply, parCapply, parLapply, parLapplyLB, parRapply, parSapply, parSapplyLB The following object is masked from ‘package:stats’: xtabs The following objects are masked from ‘package:base’: anyDuplicated, append, as.data.frame, as.vector, cbind, colnames, do.call, duplicated, eval, evalq, Filter, Find, get, intersect, is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce, rep.int, rownames, sapply, setdiff, sort, table, tapply, union, unique, unlist Loading required package: RSQLite Loading required package: DBI Loading required package: ggplot2 Loading required package: reshape2 Loading required package: fastcluster Attaching package: ‘fastcluster’ The following object is masked from ‘package:stats’: hclust Loading required package: rtracklayer Loading required package: GenomicRanges Loading required package: IRanges Loading required package: GenomeInfoDb Loading required package: Gviz Loading required package: grid Attaching package: ‘cummeRbund’ The following object is masked from ‘package:GenomicRanges’: promoters The following object is masked from ‘package:IRanges’: promoters &gt; cuff_data &lt;- readCufflinks(‘diff_out_CM_c.vs.m’) Creating database diff_out_CM_c.vs.m/cuffData.db Error in FUN(c(“n-- Creator: MySQL Workbench 5.2.33/ExportSQLite plugin 2009.12.02n-- Author: Loyal Goffn-- Caption: New Modeln-- Project: Name of the projectn-- Changed: 2012-04-30 22:21n-- Created: 2011-05-02 12:52nPRAGMA foreign_keys = OFF”, : could not find function “sqliteQuickSQL” ======================================= 失败的解决方法： &gt; remove.packages(“RSQLite”) &gt;install.packages(“/home/fenglei/Downloads/RSQLite_0.9-0.tar.gz”) &gt; library(RSQLite) Loading required package: DBI &gt; install.packages(“DBI”) 成功解决方法 First, upgrade biocLite: &gt;source(“<a target="_blank" rel="noopener" href="http://www.bioconductor.org/biocLite.R">http://www.bioconductor.org/biocLite.R</a>”) &gt;biocLite(“BiocUpgrade”) Then, install “cummeRbund” &gt;biocLite(“cummeRbund”) Last, install or reinstall “RSQLite” &gt;biocLite(“RSQLite”) I hope it works for you.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/" class="post-title-link" itemprop="url">使用ReSeqTools/iTools进行fastq数据统计、质检、过滤</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-01-02 12:48:36" itemprop="dateCreated datePublished" datetime="2015-01-02T12:48:36+08:00">2015-01-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>重测序分析集成工具包 linux 64位平台 静态编译 chmod 便可以直接运行了。 （ReSeqTools/iTools） 即在linux64机上只须</p>
-<blockquote>
-<ul>
-<li>tar -zxvf ReSeqTools_XXX.tar.gz ;</li>
-<li>cd iTools_Code; chmod 775 iTools ;</li>
-<li>./ iTools -h ;</li>
-<li>无须重新make</li>
-</ul>
-</blockquote>
-<p>QQ交流群 群名称是Reseqtools QQ群号： 125293663</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/01/02/%E4%BD%BF%E7%94%A8reseqtoolsitools%E8%BF%9B%E8%A1%8Cfastq%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E3%80%81%E8%B4%A8%E6%A3%80%E3%80%81%E8%BF%87%E6%BB%A4/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1143,7 +1145,7 @@ listhet extract the position of each het</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-count">182</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

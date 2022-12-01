@@ -189,6 +189,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/R-corrplot-coefficient-correlation-/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/R-corrplot-coefficient-correlation-/" class="post-title-link" itemprop="url">R：corrplot 相关系数矩阵</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-16 12:03:31" itemprop="dateCreated datePublished" datetime="2020-11-16T12:03:31+08:00">2020-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">install.packages(&quot;corrplot&quot;)</span><br><span class="line">library(&quot;corrplot&quot;)</span><br><span class="line">M = cor(mtcars)</span><br><span class="line">#corrplot(M, order = &quot;hclust&quot;, addrect = 2)</span><br><span class="line">#head(mtcars)</span><br><span class="line">#</span><br><span class="line">#corrplot(M, order = &quot;hclust&quot;, addrect = 2)</span><br><span class="line"># 只需要下半部分三角形</span><br><span class="line">corrplot(M, order = &quot;hclust&quot;, addrect = 2, type=&quot;lower&quot;)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116095756.png"><img src="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116095756.png?w=894" alt="" /></a></p>
+<p>参考资料：</p>
+<p>[1] corrplot函数参数调整 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28076189">https://zhuanlan.zhihu.com/p/28076189</a></p>
+<p>[2] 图形元素设定 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Mao1518202/p/11270767.html">https://www.cnblogs.com/Mao1518202/p/11270767.html</a></p>
+<p>搜资料的时候看到与上述图形类似的点阵图（dot plot），还可以结合聚类分析，顺便记录一下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># install.packages(&#x27;tidyverse&#x27;)</span><br><span class="line">library(&#x27;tidyverse&#x27;)</span><br><span class="line"># -- Attaching packages ----------------------------------------------------# -------------------------------------------------------- tidyverse 1.3.0</span><br><span class="line"># √ tibble  3.0.4     √ stringr 1.4.0</span><br><span class="line"># √ readr   1.4.0     √ forcats 0.5.0</span><br><span class="line"># √ purrr   0.3.4     </span><br><span class="line"># -- Conflicts -------------------------------------------------------------#-------------------------------------------------- tidyverse_conflicts() --</span><br><span class="line"># x dplyr::filter() masks stats::filter()</span><br><span class="line"># x dplyr::lag()    masks stats::lag()</span><br><span class="line"></span><br><span class="line"># install.packages(&#x27;ggdendro&#x27;)</span><br><span class="line">library(ggdendro)</span><br><span class="line"></span><br><span class="line">library(cowplot)</span><br><span class="line"></span><br><span class="line"># BiocManager::install(&#x27;ggtree&#x27;)</span><br><span class="line">library(ggtree)</span><br><span class="line"></span><br><span class="line">library(patchwork) </span><br><span class="line"></span><br><span class="line">gene_cluster &lt;- read_tsv(&#x27;https://github.com/davemcg/davemcg.github.io/raw/master/content/post/scRNA_dotplot_data.tsv.gz&#x27;)</span><br><span class="line"></span><br><span class="line">gene_cluster %&gt;% sample_n(5)</span><br><span class="line"></span><br><span class="line">markers &lt;- gene_cluster$Gene %&gt;% unique()</span><br></pre></td></tr></table></figure>
+<p>#    gene_cluster %&gt;% sample_n(5)</p>
+<h1 id="gene_cluster-6列-888行-的矩阵下面显示前5行"><a class="markdownIt-Anchor" href="#gene_cluster-6列-888行-的矩阵下面显示前5行"></a> gene_cluster 6列 888行 的矩阵，下面显示前5行</h1>
+<p>A tibble: 5 x 6<br />
+Gene    cluster cell_ct cell_exp_ct   count Group</p>
+<p>1 CELA1   c16        1278          87 0.0826  Neuron<br />
+2 NDUFA1  c13        1725           5 0.00290 Neuron<br />
+3 IGFBP7  c13        1725        1013 1.54    Neuron<br />
+4 IGFBP7  c09        2124          29 0.0154  Astrocyte<br />
+5 SLC10A7 c13        1725          59 0.0413  Neuron</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   gene_cluster %&gt;% filter(Gene %in% markers) %&gt;% </span><br><span class="line">      mutate(% Expressing = (cell_exp_ct/cell_ct) * 100) %&gt;% </span><br><span class="line">   ggplot(aes(x=cluster, y = Gene, color = count, size = % Expressing)) + </span><br><span class="line">   geom_point()     </span><br><span class="line"># mutate函数来自dplyr，功能是Create, modify, and delete columns</span><br><span class="line"># mutate函数计算一个比例数值，作为矩阵第七列，名称为“% Expression”。</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/01.png"><img src="https://genehub.files.wordpress.com/2020/11/01.png?w=1024" alt="" /></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 用dplyr包的filter功能，筛选条件：矩阵中“count”列中大于0，“% expression”列中大于1%。</span><br><span class="line">gene_cluster %&gt;% filter(Gene %in% markers) %&gt;%    </span><br><span class="line">mutate(`% Expressing` = (cell_exp_ct/cell_ct) * 100) %&gt;%    </span><br><span class="line">filter(count &gt; 0, `% Expressing` &gt; 1) %&gt;%    </span><br><span class="line">ggplot(aes(x=cluster, y = Gene, color = count, size = `% Expressing`)) +    geom_point() </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/02.png"><img src="https://genehub.files.wordpress.com/2020/11/02.png?w=1024" alt="" /></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 图形调整与美化。使用“theme(axis.line  = element_blank())”取消显示xy坐标轴。“theme(axis.ticks = element_blank()) ”去掉坐标轴的刻度值。</span><br><span class="line"># cowplot包是ggplot2的简单附加组件。它旨在为ggplot2提供一个出版物就绪的主题，一个需要最小量的轴标签尺寸，情节背景等。它的主要目的是方便制作符合要求的图片。除了提供修改的绘图主题外，此包还提供了对ggplot2绘图的自定义注释的功能。</span><br><span class="line"></span><br><span class="line">gene_cluster %&gt;% filter(Gene %in% markers) %&gt;%    </span><br><span class="line">mutate(`% Expressing` = (cell_exp_ct/cell_ct) * 100) %&gt;%    </span><br><span class="line">filter(count &gt; 0, `% Expressing` &gt; 1) %&gt;%    </span><br><span class="line">ggplot(aes(x=cluster, y = Gene, color = count, size = `% Expressing`)) +    geom_point() +    </span><br><span class="line">scale_color_viridis_c(name = &#x27;log2 (count + 1)&#x27;) +    cowplot::theme_cowplot() +    </span><br><span class="line">theme(axis.line  = element_blank()) +   </span><br><span class="line">theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +   ylab(&#x27;&#x27;) +   </span><br><span class="line">theme(axis.ticks = element_blank()) </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/03.png"><img src="https://genehub.files.wordpress.com/2020/11/03.png?w=1024" alt="" /></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gene_cluster %&gt;% </span><br><span class="line">filter(Gene %in% markers) %&gt;%    </span><br><span class="line">mutate(`% Expressing` = (cell_exp_ct/cell_ct) * 100) %&gt;%    </span><br><span class="line">filter(count &gt; 0, `% Expressing` &gt; 1) %&gt;%    </span><br><span class="line">ggplot(aes(x=cluster, y = Gene, color = count, size = `% Expressing`)) +    geom_point() +    </span><br><span class="line">cowplot::theme_cowplot() +    </span><br><span class="line">theme(axis.line  = element_blank()) +   </span><br><span class="line">theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +   ylab(&#x27;&#x27;) +   </span><br><span class="line">theme(axis.ticks = element_blank()) +   </span><br><span class="line">scale_color_gradientn(colours = viridis::viridis(20), limits = c(0,4), oob = scales::squish, name = &#x27;log2 (count + 1)&#x27;)</span><br></pre></td></tr></table></figure>
+<p>前面的图中，对所有圆点颜色进行观察，可见整体偏向深蓝，只有一个位于坐标c15 * KCNQ1 的圆点是黄色，其count数值4.94，比其他坐标的数值大了不少。通常绘制热图的时候也会因为这种值（甚至更大的极值，因为大部分基因的表达值FPKM通常小于100，但是少数基因的表达值会接近10000）导致画面颜色不够均匀。 参考原文的做法，调用 <code>scale_color_gradientn</code> 将 <code>c(0,4)</code> 数字范围的圆点进行着色，对于大于4的极值， 调用scales函数的squish功能将其“压碎”成为4（即“squished” down） <code>oob = scales::squish</code></p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/05.png"><img src="https://genehub.files.wordpress.com/2020/11/05.png?w=1024" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/04.png"><img src="https://genehub.files.wordpress.com/2020/11/04.png?w=1024" alt="" /></a></p>
+<p>进一步的，可以将基因进行聚类，并调用ggtree进行树形图绘制。先对原始数据进行整理，提取三列：Gene、cluster、count。调用pivot_wider功能，将其转换为行为gene，列为cluster的矩阵。（tidyr包的 <code>pivot_wider</code> 函数可以将长表变成宽表。 这适用于将多个变量保存到了一列的情况。—— 摘抄自<a target="_blank" rel="noopener" href="https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/%5C_Rbook/summary-manip.html%EF%BC%89">https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/\_Rbook/summary-manip.html）</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># make data square to calculate euclidean distance </span><br><span class="line">mat &lt;- gene_cluster %&gt;%    </span><br><span class="line">filter(Gene %in% markers) %&gt;%    </span><br><span class="line">select(-cell_ct, -cell_exp_ct, -Group) %&gt;%  # drop unused columns to faciliate widening   </span><br><span class="line">pivot_wider(names_from = cluster, values_from = count) %&gt;%    </span><br><span class="line">data.frame() # make df as tibbles -&gt; matrix annoying </span><br><span class="line"></span><br><span class="line">row.names(mat) &lt;- mat$Gene  # put gene in `row` </span><br><span class="line"></span><br><span class="line">mat &lt;- mat[,-1] #drop gene column as now in rows </span><br><span class="line"></span><br><span class="line">clust &lt;- hclust(dist(mat %&gt;% as.matrix())) # hclust with distance matrix</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/06.png"><img src="https://genehub.files.wordpress.com/2020/11/06.png?w=1024" alt="" /></a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ddgram &lt;- as.dendrogram(clust) # create dendrogram </span><br><span class="line">ggtree_plot &lt;- ggtree::ggtree(ddgram) </span><br><span class="line">ggtree_plot</span><br><span class="line">ggtree::ggtree(ddgram, size=1) + geom_tiplab() </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/07-1.png"><img src="https://genehub.files.wordpress.com/2020/11/07-1.png?w=1024" alt="" /></a></p>
+<p>（右侧的名称有问题）</p>
+<p>将树形图和点状图拼接组合。下面的操作只是将两幅图拼起来，基因名并没有对应关系。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">dotplot &lt;- gene_cluster %&gt;% filter(Gene %in% markers) %&gt;% </span><br><span class="line">   mutate(% Expressing = (cell_exp_ct/cell_ct) * 100) %&gt;% </span><br><span class="line">   filter(count &gt; 0, % Expressing &gt; 1) %&gt;% </span><br><span class="line">   ggplot(aes(x=cluster, y = Gene, color = count, size = % Expressing)) + </span><br><span class="line">   geom_point() + </span><br><span class="line">   cowplot::theme_cowplot() + </span><br><span class="line">   theme(axis.line  = element_blank()) +</span><br><span class="line">   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +</span><br><span class="line">   ylab(&#x27;&#x27;) +</span><br><span class="line">   theme(axis.ticks = element_blank()) +</span><br><span class="line">   scale_color_gradientn(colours = viridis::viridis(20), limits = c(0,4), oob = scales::squish, name = &#x27;log2 (count + 1)&#x27;)   </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   plot_grid(ggtree_plot, dotplot, nrow = 1, rel_widths = c(0.5,2), align = &#x27;h&#x27;) </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/08.png"><img src="https://genehub.files.wordpress.com/2020/11/08.png?w=1024" alt="" /></a></p>
+<p>使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dotplot &lt;- gene_cluster %&gt;% filter(Gene %in% markers) %&gt;% </span><br><span class="line">mutate(% Expressing = (cell_exp_ct/cell_ct) * 100,</span><br><span class="line">   Gene = factor(Gene, levels = clust$labels[clust$order])) %&gt;% </span><br><span class="line">   #filter(count &gt; 0, % Expressing &gt; 1) %&gt;% </span><br><span class="line">   ggplot(aes(x=cluster, y = Gene, color = count, size = % Expressing)) + </span><br><span class="line">   geom_point() + </span><br><span class="line">   cowplot::theme_cowplot() + </span><br><span class="line">   theme(axis.line  = element_blank()) +</span><br><span class="line">   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +</span><br><span class="line">   ylab(&#x27;&#x27;) +</span><br><span class="line">   theme(axis.ticks = element_blank()) +</span><br><span class="line">   scale_color_gradientn(colours = viridis::viridis(20), limits = c(0,4), oob = scales::squish, name = &#x27;log2 (count + 1)&#x27;)   </span><br><span class="line">   plot_grid(ggtree_plot, NULL, dotplot, nrow = 1, rel_widths = c(0.5,-0.05, 2), align = &#x27;h&#x27;) </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/10.png"><img src="https://genehub.files.wordpress.com/2020/11/10.png?w=1024" alt="" /></a></p>
+<p>代码摘抄自：<a target="_blank" rel="noopener" href="https://davemcg.github.io/post/lets-plot-scrna-dotplots/">https://davemcg.github.io/post/lets-plot-scrna-dotplots/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/16/R-Empirical-cumulative-distribution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/R-Empirical-cumulative-distribution/" class="post-title-link" itemprop="url">R：经验分布函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-16 09:45:08" itemprop="dateCreated datePublished" datetime="2020-11-16T09:45:08+08:00">2020-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 16:47:12" itemprop="dateModified" datetime="2020-12-08T16:47:12+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>经验分布函数（Empirical cumulative distribution (ECDF)），是统计学中一个与样本<strong>经验</strong>测度有关的<strong>分布函数</strong>。 该累积<strong>分布函数</strong>是在所有n个数据点上都跳跃 1/n的阶跃<strong>函数</strong>。 对被测变量的某个值而言，该值的<strong>分布函数</strong>值表示所有观测样本中小于或等于该值的样本所占的比例。</p>
+<p>在一个网站看到大量ggplot的画图案例，值得收藏：<a target="_blank" rel="noopener" href="https://www.datanovia.com/en/blog/ggplot-examples-best-reference/">https://www.datanovia.com/en/blog/ggplot-examples-best-reference/</a></p>
+<p>以 R 内置数据集 iris 为例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ggplot(iris, aes(Sepal.Length)) +</span><br><span class="line">stat_ecdf(aes(color = Species), size=3) +</span><br><span class="line">scale_color_viridis_d() </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116093707.png"><img src="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116093707.png?w=708" alt="" /></a></p>
+<p>便于理解，用了一个简化的数据集画图。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">k=read.table(&quot;test.txt&quot;, head=T)</span><br><span class="line">ggplot(k, aes(Sepal.Length)) +</span><br><span class="line">   stat_ecdf(aes(color = Species), size=3) +</span><br><span class="line">   scale_color_viridis_d()    </span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116094244.png"><img src="https://genehub.files.wordpress.com/2020/11/e5beaee4bfa1e688aae59bbe_20201116094244.png?w=697" alt="" /></a></p>
+<p>计算公式</p>
+<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/68f10704c974630c3b15d009b884366d2bcbf685" alt="" /></p>
+<p>可以理解为将数据按照从小到大排序，然后分布统计不同大小的数字出现的比例，（其实就是histgram？），那么横坐标就是数据从小到大的范围，纵坐标就是0~100%。图形相当于把histgram的柱形顶端和左侧画出来了。</p>
+<p>附数据集test.txt：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">Sepal.Length    Species</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 10    setosa</span><br><span class="line"> 1    versicolor</span><br><span class="line"> 2    versicolor</span><br><span class="line"> 3    versicolor</span><br><span class="line"> 4    versicolor</span><br><span class="line"> 5    versicolor</span><br><span class="line"> 6    versicolor</span><br><span class="line"> 7    versicolor</span><br><span class="line"> 8    versicolor</span><br><span class="line"> 9    versicolor</span><br><span class="line"> 10    versicolor</span><br><span class="line"> 11    versicolor</span><br><span class="line"> 12    versicolor</span><br><span class="line"> 13    versicolor</span><br><span class="line"> 14    versicolor</span><br><span class="line"> 15    versicolor</span><br><span class="line"> 16    versicolor</span><br><span class="line"> 17    versicolor</span><br><span class="line"> 18    versicolor</span><br><span class="line"> 19    versicolor</span><br><span class="line"> 20    versicolor</span><br><span class="line"> 1    virginica</span><br><span class="line"> 1    virginica</span><br><span class="line"> 2    virginica</span><br><span class="line"> 2    virginica</span><br><span class="line"> 3    virginica</span><br><span class="line"> 2    virginica</span><br><span class="line"> 4    virginica</span><br><span class="line"> 5    virginica</span><br><span class="line"> 4    virginica</span><br><span class="line"> 3    virginica</span><br><span class="line"> 2    virginica</span><br><span class="line"> 4    virginica</span><br><span class="line"> 5    virginica</span><br><span class="line"> 7    virginica</span><br><span class="line"> 6    virginica</span><br><span class="line"> 8    virginica</span><br><span class="line"> 6    virginica</span><br><span class="line"> 15    virginica</span><br><span class="line"> 16    virginica</span><br><span class="line"> 19    virginica</span><br><span class="line"> 13    kaka</span><br><span class="line"> 14    kaka</span><br><span class="line"> 16    kaka</span><br><span class="line"> 15    kaka</span><br><span class="line"> 15    kaka</span><br><span class="line"> 17    kaka</span><br><span class="line"> 18    kaka</span><br><span class="line"> 19    kaka</span><br><span class="line"> 20    kaka</span><br><span class="line"> 13    kaka</span><br><span class="line"> 15    kaka</span><br><span class="line"> 12    kaka</span><br><span class="line"> 16    kaka</span><br><span class="line"> 18    kaka</span><br><span class="line"> 15    kaka</span><br><span class="line"> 13    kaka</span><br><span class="line"> 15    kaka</span><br><span class="line"> 2    kaka</span><br><span class="line"> 4    kaka</span><br><span class="line"> 5    kaka</span><br><span class="line"> 1    kaka</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/14/R-How-to-remove-rows-with-NA-values/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1208,175 +1405,6 @@ xlab(“”)<br />
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AF%B9%E5%A4%9A%E9%87%8D%E6%A3%80%E9%AA%8C%E5%BE%97%E5%88%B0%E7%9A%84p%E5%80%BC%E8%BF%9B%E8%A1%8C%E6%A0%A1%E6%AD%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AF%B9%E5%A4%9A%E9%87%8D%E6%A3%80%E9%AA%8C%E5%BE%97%E5%88%B0%E7%9A%84p%E5%80%BC%E8%BF%9B%E8%A1%8C%E6%A0%A1%E6%AD%A3/" class="post-title-link" itemprop="url">为什么要对多重检验得到的P值进行校正</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-05 11:32:06" itemprop="dateCreated datePublished" datetime="2020-08-05T11:32:06+08:00">2020-08-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在生物学数据（例如转录组）分析中，对两组数据做比较，比较的结果包含数万个基因的倍数关系（Fold change）与 P 值，通常还会有一个 Q value，即对每个基因的 P value 进行校正。为什么要做校正？</p>
-<p>上述提到的数万个基因分别做比较与统计学检验，就是一个多重检验的过程，而多重检验会增加一类错误的概率。通俗地说，本来原假设是小概率事件， 但是夜路走多了也会遇到鬼。抽样多了小概率事件发生几率就高了。</p>
-<p>下面是摘抄自 Zhihu 的一段解释，帮助理解。</p>
-<p>以猜硬币正反面的游戏为例，如果一人在连猜五次，每次都准确猜中。我们认为他在做假，因为如果他没做假的话，连续猜对五次的概率只有 1/32 = 0.03125，小于我们预先定义的小概率（比如说0.05）。（如果知道什么是p值的话，这里我们定义的零假设H0为某甲没有做假，p=0.03125表示我们拒绝 H0 只有约 3% 的犯错几率。如果不知道什么是 P 值的话也没关系，在这里并不重要。）<br />
-上面这个判断没有问题，但如果涉及到多重比较（multiple comparison）的话就不一样了。前面的例子只用了一枚硬币，而这次我们改用 100 枚不同颜色的硬币（这就是所谓的多重比较），有红色硬币、黄色硬币、绿色硬币、粉色硬币、紫色硬币等等。实验中，我们让此人每枚硬币各猜五次，然后我们发现，在猜其他颜色的硬币时他都有猜错，但在猜绿色硬币时他连猜五次都猜对了。那么，我们是不是能像前面一样，认为他虽然在猜其他硬币时没做假，但在猜绿色硬币时做假了呢？简单计算一下就可以发现，当我们用100枚硬币做实验时，出现一枚或以上硬币五次都猜对的概率为 1-(1-1/32)^100 = 0.958。显然，这时我们就不能再说某甲在猜绿色硬币时做假了，即便单就那一枚绿色硬币来说，连续猜对五次的概率还是只有0.03125。<br />
-避免此问题的方法包括控制 FWER（<a href="https://link.zhihu.com/?target=http%3A//en.wikipedia.org/wiki/Familywise_error_rate">Familywise error rate</a>）、FDR（<a href="https://link.zhihu.com/?target=http%3A//en.wikipedia.org/wiki/False_discovery_rate">False discovery rate</a>）等。最简单的控制FWER的方法是 Bonferroni 校正，是指 P 值应该除以比较的次数，在上面的例子中为100。</p>
-<p>R 里面 <code>p.adjust</code> 函数可以对多重检验的 P value 进行校正。</p>
-<p>p=c(0.0003,0.0001,0.02, 0.1, 0.3, 0.001)<br />
-p.adjust(p, method=“fdr”, length(p))<br />
-[1] 0.0009 0.0006 0.0300 0.1200 0.3000 0.0020<br />
-p.adjust(p, method=“bonferroni”, length(p))<br />
-[1] 0.0018 0.0006 0.1200 0.6000 1.0000 0.0060</p>
-<p>END</p>
-<p>参考资料</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/95530040">https://zhuanlan.zhihu.com/p/95530040</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/24/Linux-How-to-set-vim-by-spf13-vim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/24/Linux-How-to-set-vim-by-spf13-vim/" class="post-title-link" itemprop="url">Linux编辑器vim配置：spf13-vim</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-24 17:32:21" itemprop="dateCreated datePublished" datetime="2020-04-24T17:32:21+08:00">2020-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>spf13懒人工具（<a target="_blank" rel="noopener" href="http://vim.spf13.com/%EF%BC%89%E6%98%AF%E4%B8%80%E5%A5%97vim%E6%8F%92%E4%BB%B6%E7%BB%84%E6%88%90%E7%9A%84%E6%8F%92%E4%BB%B6%E9%9B%86%EF%BC%8C%E5%AE%89%E8%A3%85spf13%E5%8D%B3%E6%98%AF%E5%AE%89%E8%A3%85%E4%B8%80%E5%A5%97%E6%8F%92%E4%BB%B6">http://vim.spf13.com/）是一套vim插件组成的插件集，安装spf13即是安装一套插件</a>. 安装过程：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</span><br></pre></td></tr></table></figure>
-<p>安装之后，home目录下会多出一系列文件 <img src="https://genehub.files.wordpress.com/2020/04/e5beaee4bfa1e688aae59bbe_20200424171301.png" alt="微信截图_20200424171301" /> 安装完毕之后，我使用vim编辑脚本，发现并没有语法高亮，我用的两个系统分别是CentOS7和Ubuntu。于是参考资料，在home目录新增了一 <code>.vimrc.local</code> 文件，写入个性化设置的内容，然后打开编辑器就可以看到语法高亮了！</p>
-<h2 id="customization"><a class="markdownIt-Anchor" href="#customization"></a> Customization</h2>
-<p>Create <code>~/.vimrc.local</code> and <code>~/.gvimrc.local</code> for any local customizations. For example, to override the default color schemes，新建 <code>~/.vimrc.local</code> 文件并写入以下内容。</p>
-<p>set t_Co=256 &quot; required&quot;<br />
-colorscheme desert</p>
-<p>[caption id=“attachment_1091” align=“alignleft” width=“403”]<img src="https://genehub.files.wordpress.com/2020/04/e5beaee4bfa1e688aae59bbe_20200424171937.png" alt="微信截图_20200424171937" /> 个性化配置之前[/caption]                     [caption id=“attachment_1092” align=“alignleft” width=“399”]<img src="https://genehub.files.wordpress.com/2020/04/e5beaee4bfa1e688aae59bbe_20200424172602.png" alt="微信截图_20200424172602" /> 个性化配置之后[/caption]                     其实有多种配色主题可以选择，我直接用了desert测试就很满意，所以没有测试其他的。 参考资料： <a target="_blank" rel="noopener" href="https://blog.csdn.net/simple%5C_the%5C_best/article/details/51901361">https://blog.csdn.net/simple\_the\_best/article/details/51901361</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1448,7 +1476,7 @@ colorscheme desert</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">182</span>
+          <span class="site-state-item-count">184</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

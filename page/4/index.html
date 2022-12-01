@@ -189,6 +189,239 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/Linux-Gene-Ontology-GOMAP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/17/Linux-Gene-Ontology-GOMAP/" class="post-title-link" itemprop="url">Bioinfo | Gene Ontology - GOMAP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-17 10:59:17" itemprop="dateCreated datePublished" datetime="2021-06-17T10:59:17+08:00">2021-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-29 11:40:34" itemprop="dateModified" datetime="2021-06-29T11:40:34+08:00">2021-06-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Gene Ontology Meta Annotator for Plants</p>
+<p>GOMAP 主要是给植物基因集做 Gene Ontology 注释信息匹配，它综合了多个数据库，所以得到的信息会全面一些。早年将基因对应到GO用的工具是Blast2GO，这个软件linux版本安装比较麻烦，基于mysql数据库，而且后面它商业化之后要收费。后来的策略是用diamond的快速blastp将基因集与SwissProt数据库进行比较，得到每个基因最相近的Uniprot ID，再依靠id-mapping文件将基因与GO对应起来，本文最后有简单介绍基于SwissProt做GO注释的流程。</p>
+<p>What is GOMAP-Singularity? GOMAP-Singularity is the containerized version of the Gene Ontology Meta Annotator for Plants (GOMAP) pipeline. GOMAP is a high-throughput pipeline to annotate GO terms to plant protein sequences. The pipeline uses three different approaches to annotate GO terms to plant protein sequences, and compile the annotations together to generate an aggregated dataset. GOMAP uses Python code to run the component tools to generate the GO annotations, and R code to clean and aggregate the GO annotations from the component tools.</p>
+<p>How do I use GOMAP-Singularity?</p>
+<p>Please check &lt;<a target="_blank" rel="noopener" href="http://bioinformapping.com/gomap">bioinformapping.com/gomap</a>&gt; for detailed documentation on how to use the container.</p>
+<h3 id="install-system-dependencies"><a class="markdownIt-Anchor" href="#install-system-dependencies"></a> Install system dependencies</h3>
+<p>You must first install development tools and libraries to your host.<br />
+On Debian-based systems:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update &amp;&amp; \</span><br><span class="line">  sudo apt-get install -y build-essential \</span><br><span class="line">  libseccomp-dev pkg-config squashfs-tools cryptsetup</span><br></pre></td></tr></table></figure>
+<p>On CentOS/RHEL:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum groupinstall -y &#x27;Development Tools&#x27; &amp;&amp; \</span><br><span class="line">  sudo yum install -y epel-release &amp;&amp; \</span><br><span class="line">  sudo yum install -y golang libseccomp-devel \  </span><br><span class="line">  squashfs-tools cryptsetup</span><br><span class="line">  yum remove golang # 后面手动安装</span><br></pre></td></tr></table></figure>
+<h3 id="install-golang"><a class="markdownIt-Anchor" href="#install-golang"></a> Install Golang</h3>
+<p>Golang 有多种安装方法，我是在其官网(<a target="_blank" rel="noopener" href="https://golang.org/doc/install#download">https://golang.org/doc/install#download</a>)下载<a target="_blank" rel="noopener" href="https://golang.org/dl/go1.16.5.linux-amd64.tar.gz">源文件</a>到本地，然后安装到用户目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz</span><br><span class="line">tar -zxvf go1.16.5.linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line"># 将 “export PATH=&quot;/home/fenglei/local/app/go/bin&quot;:$PATH” 写入bashrc</span><br><span class="line">source ~/.bashrc</span><br><span class="line">which go</span><br><span class="line"># ~/local/app/go/bin/go</span><br><span class="line"></span><br><span class="line"># Verify that you&#x27;ve installed Go by opening a command prompt and typing the following command:</span><br><span class="line">go version</span><br><span class="line"># go version go1.16.5 linux/amd64</span><br></pre></td></tr></table></figure>
+<h3 id="compiling-singularityce"><a class="markdownIt-Anchor" href="#compiling-singularityce"></a> Compiling SingularityCE</h3>
+<p>参考安装方法如下</p>
+<p>You can build SingularityCE using the following commands:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd $&#123;GOPATH&#125;/src/github.com/sylabs/singularity &amp;&amp; \</span><br><span class="line">  ./mconfig &amp;&amp; \</span><br><span class="line">  cd ./builddir &amp;&amp; \</span><br><span class="line">  make &amp;&amp; \</span><br><span class="line">  sudo make install</span><br></pre></td></tr></table></figure>
+<p>And that’s it! Now you can check your SingularityCE version by running:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ singularity version</span><br></pre></td></tr></table></figure>
+<p>To build in a different folder and to set the install prefix to a different path:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./mconfig -b ./buildtree -p /usr/local</span><br></pre></td></tr></table></figure>
+<p>我的安装如下。</p>
+<p>系统自带的gcc（版本4.8.5）编译报错，提示找不到config.c文件。我切换成用户的gcc（版本10.2.0），就可以安装。<br />
+启动用户gcc的办法，修改bashrc文件，将下面三行的注释符号去掉，然后source ~/.bashrc即可。以后有必要再回来将这几行注释掉，就恢复系统自带的老版本gcc。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/home/fenglei/local/gcc-10.2.0/bin/:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/home/fenglei/local/gcc-10.2.0/lib/:/home/fenglei/local/gcc-10.2.0/lib64/:$LD_LIBRARY_PATH</span><br><span class="line">export LD_LIBRARY_PATH=/home/fenglei/local/lib/:/home/fenglei/local/lib64/:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/sylabs/singularity.git</span><br><span class="line">$ cd singularity  # 该目录下有一个 mconfig 文件</span><br><span class="line"># ./mconfig -b ./buildtree -p /home/fenglei/local</span><br><span class="line"># ./mconfig -b ./buildtree -p /home/fenglei/local --without-suid</span><br><span class="line">$ ./mconfig    # 默认的安装位置是 /usr/local</span><br><span class="line">$ cd /home/fenglei/local/app/singularity/buildtree</span><br><span class="line">$ make</span><br><span class="line"># make install</span><br><span class="line">$ sudo make install</span><br><span class="line"></span><br><span class="line">$ which singularity</span><br><span class="line">/usr/local/bin/singularity</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ singularity version                                                                                        </span><br><span class="line">3.8.0-rc.1+107-g8b21e5a16</span><br></pre></td></tr></table></figure>
+<h3 id="gomap-singularity"><a class="markdownIt-Anchor" href="#gomap-singularity"></a> GOMAP-singularity</h3>
+<ol>
+<li>Singularity 安装</li>
+</ol>
+<p>上面已经完成。也可参考：<a target="_blank" rel="noopener" href="https://bioinformapping.com/gomap/master/RUNNING.html">https://bioinformapping.com/gomap/master/RUNNING.html</a></p>
+<ol start="2">
+<li>从 git 下载 GOMAP-singularity</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Dill-PICL/GOMAP-singularity.git</span><br><span class="line">cd GOMAP-singularity</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>配置并下载相关参考数据集</li>
+</ol>
+<p>Run the setup step to make necessary directories and download data files from CyVerse. The pipeline download is large and would require ~40GB of free hard drive space during the setup step.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ ./setup.sh </span><br><span class="line"># 由于GO没安好，导致这一步报错，后面重新安装了GO，并重装singularity</span><br><span class="line"># ERROR  : No setuid installation found, for unprivileged installation use: ./mconfig --without-suid</span><br><span class="line"></span><br><span class="line">$ ./setup.sh </span><br><span class="line">0/1 -  0.00% of files done   0.000/39254.793 MB -  0.00% of file sizes done</span><br><span class="line">Processing GOMAP.sif - 39254.793 MB   2021-06-17.15:58:52</span><br><span class="line">GOMAP.sif - 40.000/39254.793 MB -  0.10% done   2021-06-17.16:00:53</span><br><span class="line">GOMAP.sif - 680.000/39254.793 MB -  1.73% done   2021-06-17.16:02:47</span><br><span class="line">GOMAP.sif - 1360.000/39254.793 MB -  3.46% done   2021-06-17.16:04:49</span><br><span class="line">GOMAP.sif - 2000.000/39254.793 MB -  5.09% done   2021-06-17.16:06:40</span><br><span class="line">GOMAP.sif - 2400.000/39254.793 MB -  6.11% done   2021-06-17.16:08:32</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">...</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">The client/server socket connection has been renewed</span><br><span class="line">GOMAP.sif - 30880.000/39254.793 MB - 78.67% done   2021-06-17.17:59:30</span><br><span class="line">GOMAP.sif - 31520.000/39254.793 MB - 80.30% done   2021-06-17.18:01:43</span><br><span class="line">GOMAP.sif - 32040.000/39254.793 MB - 81.62% done   2021-06-17.18:03:45</span><br><span class="line">GOMAP.sif - 32640.000/39254.793 MB - 83.15% done   2021-06-17.18:05:31</span><br><span class="line">GOMAP.sif - 33200.000/39254.793 MB - 84.58% done   2021-06-17.18:07:27</span><br><span class="line">GOMAP.sif - 33373.426/39254.793 MB - 85.02% done   2021-06-17.18:08:24</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">The client/server socket connection has been renewed</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">The client/server socket connection has been renewed</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">The client/server socket connection has been renewed</span><br><span class="line">cliReconnManager: Reconnecting clientState = 0</span><br><span class="line">The client/server socket connection has been renewed</span><br><span class="line">GOMAP.sif - 39254.793/39254.793 MB - 100.00% done   2021-06-17.18:45:46</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>测试 GOMAP 注释流程</li>
+</ol>
+<p>[optional]: Test whether the container and the data files are working as intended.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ ./test.sh</span><br><span class="line"></span><br><span class="line">Running Sequence-similarity based Annotation Step</span><br><span class="line">/usr/local/lib/python2.7/dist-packages/Bio/SearchIO/__init__.py:211: BiopythonExperimentalWarning: Bio.SearchIO is an experimental submodule which may undergo significant changes prior to its future official release.</span><br><span class="line">  BiopythonExperimentalWarning)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Building a new DB, current time: 06/17/2021 20:59:09</span><br><span class="line">New DB name:   /workdir/test/GOMAP-0.3_GOMAP-input/input/0.3_GOMAP-input.fa</span><br><span class="line">New DB title:  /workdir/test/GOMAP-0.3_GOMAP-input/input/0.3_GOMAP-input.fa</span><br><span class="line">Sequence type: Protein</span><br><span class="line">...</span><br><span class="line">Checking gaf file for simple errors and fixing them</span><br><span class="line">There were 34 warnings (use warnings() to see them)</span><br><span class="line">[1] &quot;Checking if data/data/go/go.obo.data exists&quot;</span><br><span class="line">[1] &quot;data/data/go/go.obo.data exists so loading R object&quot;</span><br><span class="line">   user  system elapsed </span><br><span class="line">  2.547   0.078   2.624 </span><br><span class="line">[1] &quot;Reading All Datasets&quot;</span><br><span class="line">Checking gaf file for simple errors and fixing them</span><br><span class="line">[1] 1714</span><br><span class="line">[1] &quot;Removing Redundancy&quot;</span><br><span class="line">[1] 18</span><br><span class="line">Compiling Non-Redundant Comprehensive Data</span><br><span class="line">There were 50 or more warnings (use warnings() to see the first 50)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>实战篇：学习自定义配置文件 Edit the config file</li>
+</ol>
+<p>a. Declare export GOMAP_LOC environment variable. Edit <code>~/.bashrc</code> as below:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export GOPATH=&quot;/home/fenglei/local/app/go&quot;</span><br><span class="line">export GOMAP_LOC=&quot;/home/fenglei/local/app/GOMAP-singularity/install/location&quot;</span><br></pre></td></tr></table></figure>
+<p>b. Download the <a target="_blank" rel="noopener" href="https://bioinformapping.com/gomap/master/_static/min-config.yml">config.yml</a> file and make necessary changes. Change the highlighted lines to fit your input data.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#Input section </span><br><span class="line">input:</span><br><span class="line">  #input fasta file name</span><br><span class="line">  fasta: GOMAP-input.fa</span><br><span class="line">  # output file basename</span><br><span class="line">  basename: GOMAP_output</span><br><span class="line">  #input NCBI taxonomy id</span><br><span class="line">  taxon: &quot;123456&quot;</span><br><span class="line">  # Name of the species</span><br><span class="line">  species: &quot;Glycine max&quot;</span><br><span class="line">  # Email is mandatory</span><br><span class="line">  email: myname#gmail.com</span><br><span class="line">  #Number of CPUs used for tools</span><br><span class="line">  cpus: 4</span><br><span class="line">  #Whether openmpi should be used</span><br><span class="line">  mpi: False</span><br><span class="line">  #what the name of the temporary directory is</span><br><span class="line">  tmpdir: &quot;/tmpdir&quot;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>Run pipeline</li>
+</ol>
+<p>可直接修改 <a target="_blank" rel="noopener" href="http://test.sh">test.sh</a> 并运行该脚本。也可参考软件手册分步骤运行。<br />
+下面摘抄的是在单机（SINGLE）运行的模式，软件手册里也有在集群（MPI）运行的示范代码。<br />
+<a target="_blank" rel="noopener" href="http://test.sh">test.sh</a> 与 test目录在同一个路径。GOMAP-input.fa 与 config.yml 都在test目录下。输入的蛋白序列，其尾部如果有表示stop codon的星号，要移除星号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># seqsim</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=seqsim --config=test/config.yml</span><br><span class="line"># domain</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=domain --config=test/config.yml</span><br><span class="line"># fanngo</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=fanngo --config=test/config.yml</span><br><span class="line"># mixmeth-blast</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=mixmeth-blast --config=test/config.yml</span><br><span class="line"># mixmeth-preproc</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=mixmeth-preproc --config=test/config.yml</span><br><span class="line"># mixmeth</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=mixmeth --config=test/config.yml</span><br><span class="line"># aggregate</span><br><span class="line"># Attention: Please wait for all your Argot2.5 jobs to finish before running this step. You will get emails from Argot2.5 when your jobs are submitted and when they are finished. You can also check the status of all current jobs from all users here.</span><br><span class="line">./run-GOMAP-SINGLE.sh --step=aggregate --config=test/config.yml</span><br></pre></td></tr></table></figure>
+<h3 id="附注用-swissprot-与-idmapping-来做-go"><a class="markdownIt-Anchor" href="#附注用-swissprot-与-idmapping-来做-go"></a> 附注：用 SwissProt 与 idmapping 来做 GO</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">## SwissProt 文件是氨基酸序列，比较大</span><br><span class="line">wget ftp://ftp.ncbi.nih.gov/blast/db/FASTA/swissprot.gz</span><br><span class="line">## idmapping.tb.gz 文件可能下载链接有变化</span><br><span class="line">wget ftp://ftp.pir.georgetown.edu/databases/idmapping/idmapping.tb.gz</span><br><span class="line">## swissprot index 建立</span><br><span class="line">diamond makedb --in swissprot -d swissprot</span><br><span class="line">## 序列比对</span><br><span class="line">diamond blastp -d /PATH/TO/index/swissprot -q input.proteins.fa -k 1 -e 0.00001 -o swissprot_blastp.out</span><br><span class="line">## idmapping 文件整理，下文有摘抄文件具体内容</span><br><span class="line">awk -F &quot;\t&quot;  &#x27;&#123;print $1&quot;\t&quot;$8&#125;&#x27; idmapping.tb &gt; uniprotID-GOnumber.tab</span><br><span class="line">## 将“基因-Uniprot-GO”的关系建立起来</span><br><span class="line">perl UniProt2GO_annotate.pl uniprotID-GOnumber.tab swiss_dia_matches.m8 swiss_GO_matches.tab</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ head idmapping.tb </span><br><span class="line">Q6GZX4  001R_FRG3G      2947773 YP_031579.1     81941549; 49237298              PF04947 GO:0006355; GO:0046782; GO:0006351                      UniRef100_Q6GZX4        UniRef90_Q6GZX4 UniRef50_Q6GZX4 UPI00003B0FD4           65492415165820 AY548484        AAT09660.1</span><br><span class="line">Q6GZX3  002L_FRG3G      2947774 YP_031580.1     49237299; 81941548; 47060117            PF03003 GO:0033644; GO:0016021                  UniRef100_Q6GZX3        UniRef90_Q6GZX3 UniRef50_Q6GZX3 UPI00003B0FD5           654924        15165820 AY548484        AAT09661.1</span><br><span class="line">Q197F8  002R_IIV3       4156251 YP_654574.1     109287880; 123808694; 106073503                                         UniRef100_Q197F8        UniRef90_Q197F8 UniRef50_Q197F8 UPI0000D83464           345201                        16912294 DQ643392        ABF82032.1</span><br><span class="line">Q197F7  003L_IIV3       4156252 YP_654575.1     106073504; 109287881; 123808693                                         UniRef100_Q197F7        UniRef90_Q197F7 UniRef50_Q197F7 UPI0000D83465           345201                        16912294 DQ643392        ABF82033.1</span><br><span class="line">Q6GZX2  003R_FRG3G      2947775 YP_031581.1     81941547; 49237300                                              UniRef100_Q6GZX2        UniRef90_Q6GZX2 UniRef50_Q6GZX2 UPI00003B0FD6           654924                          15165820       AY548484        AAT09662.1</span><br><span class="line">Q6GZX1  004R_FRG3G      2947776 YP_031582.1     49237301; 81941546                      GO:0033644; GO:0016021                  UniRef100_Q6GZX1        UniRef90_Q6GZX1 UniRef50_Q6GZX1 UPI00003B0FD7           654924                15165820 AY548484        AAT09663.1</span><br><span class="line">Q197F5  005L_IIV3       4156254 YP_654577.1     123808691; 109287883; 106073506                                         UniRef100_Q197F5        UniRef90_Q197F5 UniRef50_Q197F5 UPI0000D83467           345201                        16912294 DQ643392        ABF82035.1</span><br><span class="line">Q6GZX0  005R_FRG3G      2947777 YP_031583.1     47060120; 49237302; 81941545            PF02393                         UniRef100_Q6GZX0        UniRef90_Q6GZX0 UniRef50_Q6GZX0 UPI00003B0FD8           654924                        15165820 AY548484        AAT09664.1</span><br><span class="line">Q91G88  006L_IIV6       1733056 NP_149469.1     82012333; 15078718; 15042163            PF04383; PF12299                                UniRef100_Q91G88        UniRef90_Q91G88 UniRef50_Q91G88 UPI00000F3D32           176652        2820141; 3959991; 7698884; 8492091; 17239238; 8021587; 10456793; 8121799; 9926400; 16789247; 11448171; 1475907; 3201750; 9482589; 1549908; 8073636       AF303741        AAK81943.1</span><br><span class="line">Q6GZW9  006R_FRG3G      2947778 YP_031584.1     81941544; 49237303                                              UniRef100_Q6GZW9        UniRef90_Q6GZW9 UniRef50_Q6GZW9 UPI00003B0FD9           654924                          15165820       AY548484        AAT09665.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ head swiss_GO_matches.tab</span><br><span class="line">Q6GZX4  GO:0006355; GO:0046782; GO:0006351</span><br><span class="line">Q6GZX3  GO:0033644; GO:0016021</span><br><span class="line">Q197F8</span><br><span class="line">Q197F7</span><br><span class="line">Q6GZX2</span><br><span class="line">Q6GZX1  GO:0033644; GO:0016021</span><br><span class="line">Q197F5</span><br><span class="line">Q6GZX0</span><br><span class="line">Q91G88</span><br><span class="line">Q6GZW9</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ head swiss_GO_matches.tab</span><br><span class="line">gene1 Q9M9M9  GO:0050897; GO:0009055; GO:0008137; GO:0009735; GO:0006979; GO:0005747; GO:0005739</span><br><span class="line">gene2 Q9LP77  GO:0005524; GO:0004672; GO:0016021; GO:0005886; GO:0009506; GO:0005774</span><br><span class="line">gene3 Q9CAL2  GO:0005524; GO:0004674; GO:0016021; GO:0005886</span><br><span class="line">gene4 A4FLF6</span><br><span class="line">gene5 Q8RY67  GO:0005524; GO:0004674; GO:0007166; GO:0016021; GO:0005886</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ cat UniProt2GO_annotate.pl</span><br><span class="line">#!/usr/bin/perl</span><br><span class="line">use warnings;</span><br><span class="line">use strict;</span><br><span class="line"></span><br><span class="line">open IDMAPPING, $ARGV[0] or die $!;</span><br><span class="line">open BLASTOUT, $ARGV[1] or die $!;</span><br><span class="line">open OUT, &quot;&gt;$ARGV[2]&quot; or die $!;</span><br><span class="line">select OUT;</span><br><span class="line"></span><br><span class="line">my %id2go;</span><br><span class="line"></span><br><span class="line">while(&lt;IDMAPPING&gt;)&#123;</span><br><span class="line">        chomp $_;</span><br><span class="line">        my @array1=split(/\t/);</span><br><span class="line">        $id2go&#123;$array1[0]&#125;=$array1[1];</span><br><span class="line">#       print &quot;$array1[1]\n&quot;; exit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">while(&lt;BLASTOUT&gt;)&#123;</span><br><span class="line">        chomp $_;</span><br><span class="line">        my @array2=split(/\t/);</span><br><span class="line">        my $geneid=$array2[0];</span><br><span class="line">        my $UniprotID=$array2[1];</span><br><span class="line">#       print &quot;$UniprotID\n&quot;;</span><br><span class="line">        $UniprotID =~ s/\.[0-9]$//;</span><br><span class="line">#       print &quot;$geneid\t$&#123;UniprotID&#125;test\n&quot;; exit;</span><br><span class="line">        if(exists $id2go&#123;$UniprotID&#125;)&#123; print &quot;$geneid\t$UniprotID\t$id2go&#123;$UniprotID&#125;\n&quot;;&#125;</span><br><span class="line">        else&#123;print &quot;$geneid\t$UniprotID\n&quot;;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">close IDMAPPING;</span><br><span class="line">close BLASTOUT;</span><br><span class="line">close OUT;</span><br></pre></td></tr></table></figure>
+<p>经过一系列的转换，得到下面格式的文件，就可以在R程序里面用于GO数据库的构建。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ zcat GMA_GO_TERM.txt.gz | head</span><br><span class="line">GID     GO      ONTOLOGY        EVIDENCE</span><br><span class="line">Glyma.01G000100 GO:0006412      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009063      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009234      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0016021      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0031969      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0016835      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0030976      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0070204      F       IEA</span><br><span class="line">Glyma.01G000137 GO:0016043      P       IEA</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/08/Linux-PKG-CONFIG-PATH/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/08/Linux-PKG-CONFIG-PATH/" class="post-title-link" itemprop="url">Linux | 认识 PKG_CONFIG_PATH</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-08 15:55:09 / Modified: 16:21:29" itemprop="dateCreated datePublished" datetime="2021-06-08T15:55:09+08:00">2021-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>安装 <a target="_blank" rel="noopener" href="https://github.com/agordon/fastx_toolkit/releases/download/0.0.14/fastx_toolkit-0.0.14.tar.bz2">Fastx-Toolkit</a> 的过程中遇问题：No package ‘gtextutils’ found. Consider adjusting the PKG_CONFIG_PATH environment variable if you.</p>
+<p>实际上我已经安装 <a target="_blank" rel="noopener" href="https://github.com/agordon/libgtextutils/releases/download/0.7/libgtextutils-0.7.tar.gz">libgtextutils</a></p>
+<p>解决办法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /usr/local/lib/pkgconfig/gtextutils.pc /usr/lib64/pkgconfig/</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1490">参考资料</a>：</p>
+<p>安装源码包，进行 configure 步骤，提示某依赖的软件包找不到或软件包版本太低；或某一个库文件找不到。而实际上却已经安装好了相应的软件。这两种情况的处理方法分别为：</p>
+<ol>
+<li>设置环境变量 PKG_CONFIG_PATH</li>
+</ol>
+<p>.pc 文件是安装软件后生成的一个文件，其中包含该软件的信息；该 .pc 文件一般统一存放于名为 pkgconfig 的目录下。命令 pkg-config 按照系统设置路径（CentOS6 x64_86 系统默认为 /usr/lib64/pkgconfig/）的先后顺序来搜索 .pc 文件，从而或得到软件的版本号、头文件和库文件位置等信息。</p>
+<p>因此当把软件包安装到默认位置 /usr/local/ 位置后，则其 .pc 文件会生成到 /usr/local/lib/pkgconfig/ 或 /usr/local/lib64/pkgconfig/ 文件夹下，此时只需要将相应的 .pc 文件复制到 /usr/lib64/pkgconfig/ 中即可。</p>
+<p>或者，在安装软件包的时候，使用 “./configure –prefix=/usr/” 将软件直接安装到 /usr/ 目录下。这时有可能会将 .pc 文件生成到 /usr/lib/pkgconfig/ 中，依然导致问题出现，只需将该目录中的 .pc 文件复制到 /usr/lib64/pkgconfig/ 中即可。</p>
+<p>或者，设置环境变量PKG_CONFIG_PATH，加入含有相应的.pc文件的路径。注意要使用命令 ‘export’ 。比如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH</span><br></pre></td></tr></table></figure>
+<p>使用以上3种方法，能解决软件版本不符或系统找不到依赖的软件包的问题。</p>
+<ol start="2">
+<li>设置环境变量 LD_LIBRARY_PATH</li>
+</ol>
+<p>Linux 系统默认把 /lib 和 /usr/lib 两个目录作为默认的库搜索路径。而修改库搜索路径有两个方法：</p>
+<p>(1) 在 /etc/ld.so.conf 文件中添加库的搜索路径。</p>
+<p>(2) 在环境变量 LD_LIBRARY_PATH 中指明库的搜索路径。</p>
+<p>将库的路径设置好后，需要使用 /sbin/ldconfig 命令来将这些搜索路径下的共享库文件集中在一起而生成 /etc/ld.so.cache。该 cache 用于快速定位共享库。</p>
+<p>特别是新安装了软件后，即使其库文件明明就在库搜索路径下，但是编译的时候依然报错，提示缺少该库。则需要使用 ldconfig 命令来更新缓存。</p>
+<p>更详细信息，可参考：<a target="_blank" rel="noopener" href="http://www.mike.org.cn/articles/description-configure-pkg-config-pkg_config_path-of-the-relations-between/">简述configure、pkg-config、pkg_config_path三者的关系</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/03/Bioinfo-jcvi-installation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1093,175 +1326,6 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/05/Proteomics-Serotonylation-A-novel-histone-H3-marker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/Proteomics-Serotonylation-A-novel-histone-H3-marker/" class="post-title-link" itemprop="url">Proteomics | 组蛋白五羟色胺化修饰 H3Q5ser 及其生物学功能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-05 10:43:58 / Modified: 13:55:58" itemprop="dateCreated datePublished" datetime="2021-03-05T10:43:58+08:00">2021-03-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>五羟色胺是人体重要的一种神经递质与激素，在中枢神经系统中控制着认知、学习、感情、情绪等脑神经活动；在外周神经系统中，五羟色胺控制着生殖、代谢、血管收缩、骨骼发育等生理功能。因此，五羟色胺系统一直是药物研究与开发的热点，作用于该系统的药物广泛用于抗精神分裂症、偏头痛、抗呕吐及肥胖症等疾病。</p>
-<p><img src="https://cdn.shopify.com/s/files/1/0511/1981/6889/articles/a58d3fb0a0a9ce4fa1c5d180b499130c_1440x.png" alt="" /></p>
-<p>五羟色胺，又称血清素 (serotonin)，是一类神经递质，对情绪等神经生物学事件有重要的调控作用。五羟色胺广泛存在于哺乳动物组织中，除中枢神经组织外，其主要外周产生部位是胃肠道，约 90% 合成和分布于肠嗜铬细胞。Ian Maze 课题组曾于 2019 年在 Nature 杂志发表论文，首次报道了 H3Q5ser 修饰的存在，以及“H3K4me3Q5ser”修饰组合对基因表达和神经发育的影响（Nature，2019，567：535–539）。该工作把五羟色胺这一内源生物活性小分子与表观遗传修饰调控联系了起来，启示了营养代谢除为细胞活动提供物质、能量和信号之外的“信息”功能。由于 H3Q5 紧邻 H3K4 位点，因此 H3Q5ser 修饰很可能对 H3K4me3 修饰的催化和识别产生影响。</p>
-<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41392-019-0048-7/MediaObjects/41392_2019_48_Fig1_HTML.png" alt="Regulation model of serotonin. a Serotonin, a neurotransmitter, functions through the serotonergic signaling pathway. b MLL and SET1 mediate H3K4me3 methylation and regulate gene expression. c The H3K4me3Q5ser double modification enhances the interaction of histone with certain H3K4me3 ‘reader’ proteins, such as TFIID, and then reinforces permissive patterns of gene expression" /></p>
-<p>2021年2月2日，清华大学医学院李海涛课题组携手普林斯顿大学 Tom Muir 课题组和西奈山医学院 Ian Maze 课题组于《美国科学院院刊》（PNAS）在线发表题为“Histone H3Q5 serotonylation stabilizes H3K4 methylation and potentiates its readout”（组蛋白 H3Q5 五羟色胺化修饰稳定 H3K4 甲基化修饰并强化其识别）的研究论文，报道了组蛋白 H3Q5 五羟色胺化修饰（H3Q5ser）对于转录起始标志 H3K4 三甲基化（H3K4me3）修饰的影响。该研究发现 H3Q5Ser 不影响邻近 H3K4me3 的酶促产生，可促进 H3K4me3 下游阅读器的识别，但抑制了 H3K4me3 的酶促消除，从而稳定 H3K4me3 修饰并强化其基因活化功能。</p>
-<p><img src="http://www.med.tsinghua.edu.cn/__local/F/EE/A8/7E72FE89E5984EFB6A2E622C1AE_39F33F28_37F347.png" alt="组蛋白H3Q5ser稳定H3K4me3修饰并强化其功能" /></p>
-<p>该研究探究 H3Q5ser 修饰与 H3K4me3 修饰的交叉会话（crosstalk）机制。首先，研究人员利用表面等离子体共振成像（SPRi）技术，对目前已知的代表性 H3K4me3 阅读器（如BPTF，CHD1，DIDO1，ING2，KDM5A，KDM4A，MLL5，PHF13，PHF2，RAG2，SET3，SGF29，SPIN1，TAF3，和ZCWPW1)，进行了基于蛋白质芯片阵列的互作表征。研究发现，组蛋白 H3Q5ser 修饰并不会打破这些下游效应因子对于 H3K4me3 修饰的识别。其中，对于 TAF3 的 PHD 结构域来说，无论 K4 的甲基化状态如何（K4me0，K4me1，K4me2，K4me3），H3Q5ser 修饰都可以增强结合强度，甚至达到 9 倍。如果将五羟色胺化修饰替换五羟色胺的类似物（如 H3Q5（tryptamine），H3Q5（5-methoxytryptamine），H3Q5（7-azatryptamine），H3Q5（6-hydroxytryptamine），则会不同程度地削弱与 TAF3 的结合。这表明组蛋白同 TAF3 结合强度的增强是五羟色胺修饰依赖的。</p>
-<p>对于 H3K4me3 修饰因子 MLL1 甲基转移酶复合物来讲，H3Q5ser 修饰不会对其活性产生明显影响。更进一步的酶反应动力学分析发现，H3Q5ser 修饰对于 MLL1 催化 H3K4me0 到 H3K4me1 没有影响，对于催化 H3K4me1 到 H3K4me2 有轻微的抑制作用。因此，总体来讲H3Q5ser修饰对于MLL1复合物的酶活没有产生明显的影响。</p>
-<p>有趣的是，对于 H3K4me3 的酶促消除而言，由于存在空间位阻效应，H3Q5ser 修饰可以完全打破 H3K4 去甲基化酶 KDM5 和 LSD1 的活性。在多肽和重构染色质水平的实验都表明 H3Q5ser 修饰可以使 LSD1 及 KDM5 无法催化 H3K4me3 的去甲基化反应。进一步的重构染色质水平的酶活实验表明 H3Q5ser 修饰影响了 KDM5 催化结构域的活性而非 PHD 结构域的结合能力。值得一提的是，KDM5 家族成员通过负调控增强子与启动子区 H3K4me3 水平，发挥着转录抑制分子功能，在肿瘤转录异质性调控、肿瘤免疫逃逸、肠道微生物组稳态调节、神经系统发育等过程中发挥着重要作用。本研究所揭示的 H3Q5ser 修饰对 KDM5 的拮抗作用对于进一步理解 KDM5 去甲基化酶的生理功能与调控提供了新视角。</p>
-<p>组蛋白修饰交叉会话是一类重要的表观调控机制，在表观景观建立和基因开关切换等细胞进程中扮演着重要角色，彰显了表观调控的层次性和精密性。李海涛课题组与 Josefowicz 课题组合作，曾在去年报道组蛋白 H3.3S31ph 修饰同 H3.3K36me3 之间的交叉会话（Nature, 2020, 583：852-857），揭示 H3.3S31ph 通过强化 H3.3K36me3 的转录延伸功能，实现刺激诱导型基因的快速转录延伸。在本工作中，研究人员揭示了H3Q5ser对转录起始标志性修饰H3K4me3的调制作用，即在H3Q5ser存在情况下，H3K4me3无法被“擦除器”（eraser）有效去除，而H3K4me3“阅读器”（reader）如 TAF3 却可以被更有效的招募，提示 H3Q5ser 可以通过强化 H3K4me3 的功能，实现 H3K4me3 靶基因的转录起始活化。</p>
-<p><font color=blue>越来越多的研究表明，类似 H3K4me3 和 H3K36me3 等甲基化修饰单独不足以代表基因的激活表达，通过产生 H3Q5ser 和 H3.3S31ph 等邻近修饰而拮抗负调控因子的沉默作用，对于完全释放 H3K4me3 和 H3K36me3 修饰的转录激活功能发挥着重要正向调控作用。</font></p>
-<p>参考资料</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://biokplus.com/blogs/news/serotonin-the-happy-hormone-produced-in-our-gut">Serotonin: The Happy Hormone Produced In Our Gut</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.nature.com/articles/s41586-019-1024-7">2019 Nature: Histone serotonylation is a permissive modification that enhances TFIID binding to H3K4me3</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/59800502">2019 知乎专栏：Nature重磅+点评丨你的情绪信号或可印记到组蛋白上——首次报道组蛋白五羟色胺化修饰及其生物学功能</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.med.tsinghua.edu.cn/info/1028/2827.htm">2021 清华大学：李海涛团队揭示五羟色胺活化基因表达的组蛋白修饰会话机制</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.thepaper.cn/newsDetail_forward_11197874">2021 澎湃新闻：李海涛团队揭示五羟色胺活化基因表达的组蛋白修饰会话机制</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/04/Proteomics-What-the-differences-between-DDA-and-DIA-in-mass-spectrometer/" class="post-title-link" itemprop="url">Proteomics | 质谱分析中DDA与DIA有什么不同？</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-04 17:16:31 / Modified: 19:02:28" itemprop="dateCreated datePublished" datetime="2021-03-04T17:16:31+08:00">2021-03-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Proteomics/" itemprop="url" rel="index"><span itemprop="name">Proteomics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>液相色谱与串联质谱（LC-MS/MS）相结合的技术成为蛋白质组研究的主要研究手段。在自下而上的蛋白质组学中，蛋白质通过蛋白水解酶消化成肽段，这些肽段通过高效液相分离后经电喷雾电离源（ESI）加上电荷，发射到质谱仪中进行一级质谱（MS）和二级质谱（MS/MS）的分析。一级质谱由肽段离子的质荷比和信号强度组成，二级质谱由肽段碎裂后的碎片离子质荷比和信号强度组成。</p>
-<p>DDA 为数据依赖性采集方式，选择一级质谱中特定数量的肽段分子（如信号强度最强的前 10 个离子）进行高能碰撞碎裂，产生的碎片离子送入二级质谱检测。</p>
-<p>DIA 为数据非依赖性采集方式，随着时间连续设置一定范围的质荷比窗口，对将通过窗口的全部肽段离子进行碎裂并用二级质谱检测碎片离子的信号。相比之下，DIA 模式不涉及到对肽段离子的限制性筛选，<u>定量准确性和重复性都要优于 DDA 模式</u>。但 DIA 模式产生的碎片离子谱图过于复杂，丢失了肽段及碎片离子的对应关系，对其结果的解析较为困难。目前的方法是通过建立样本的参考库（如同一样本的 DDA 数据），对 DIA 的混合数据进行去卷积分析来鉴定和定量肽段。</p>
-<p>DDA 模式对肽段离子的选择具有限制性和随机性，存在较多的数据信息缺失，而 DIA 模式的目标则是获得完整的数据，实现蛋白质的深度覆盖和精准定量。此外在复杂样品中，二级信号的定量比一级信号更为灵敏（例如一级质谱信号可能存在相似质荷比离子的干扰）。DDA模 式为一级质谱信号定量，而 DIA 模式为二级质谱信号定量，因此 DIA 模式的定量准确性和重现性都更好。</p>
-<p>DDA 模式下肽段分子和其二级碎片离子有着对应关系，通过对已知数据库的搜索匹配，即可得到样本中的肽段及相关蛋白质信息。而 DIA 模式下肽段离子与其碎片离子之间的直接关系丢失（DIA 光谱中的碎片离子可能是由多个肽段离子），复杂的谱图仍然给后续的数据分析和统计学检验带来很多挑战。对此目前已有多个团队开发出 DIA 分析的软件，例如 OpenSWATH 和 Skyline，这些软件通过建立样本的参考库，对色谱峰进行抽提并分析。此外也有研发团队提出不需要参考库的数据分析方法 DIA-Umpire，通过对肽段离子和碎片离子的匹配合成产生虚拟谱图进而搜库分析。因此，DIA 技术非常适合一次性获取数百上千种蛋白质更为全面信息（高覆盖率，高准确度，高重复性）的研究。</p>
-<p><img src="https://pic1.zhimg.com/80/v2-42e5990e613ffb77de82db5ad6aca80c_720w.jpg" alt="DIA与DDA对比" /></p>
-<p><img src="http://wayen.ezweb1-3.35.com/htdocs/d/2/wayen/resource/rich/99c6d7e97d73a0c753a8e5ed2f3c4756.png" alt="DIA技术原理图（来源：LCGC North America.Volume 35, Issue 10, pg 756–759）" /></p>
-<p><img src="https://f1000researchdata.s3.amazonaws.com/manuscripts/7580/6631ee4c-6910-44ec-a8cc-c8bdb77fc401_figure1.gif" alt="" /></p>
-<p>参考资料</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/131977">2018 一篇SCI来看蛋白DIA技术如何完胜DDA</a> （这里面有个DIA与DDA对比的图，也可帮助理解，但是因网站设置导致图片链接过不来。）</li>
-<li><a target="_blank" rel="noopener" href="http://html.rhhz.net/SWJSTB/html/2017-9-73.htm">2017 《生物技术通报》基于质谱的定量蛋白质组学技术发展现状</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/47994226">2018 知乎专栏：学会DIA技术</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.wayenbiotech.com/danbaizhizuxue-316395-151150-item-683817.html">简介：DIA蛋白质组学技术</a></li>
-<li><a target="_blank" rel="noopener" href="https://chemistry.fudan.edu.cn/a9/84/c21871a240004/page.htm">2020 复旦化学系：基于深度学习的DIA蛋白质组分析新方法</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1333,7 +1397,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">182</span>
+          <span class="site-state-item-count">184</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="用软件处理 gff3 格式的文件报错。为什么会报错？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bioinfo | gff3 格式">
+<meta property="og:url" content="http://example.com/2022/11/22/gff3-format/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="用软件处理 gff3 格式的文件报错。为什么会报错？">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/psjLK2i.jpeg">
+<meta property="og:image" content="https://i.imgur.com/lkk3KPb.png">
+<meta property="article:published_time" content="2022-11-22T06:10:07.000Z">
+<meta property="article:modified_time" content="2022-12-01T01:46:33.875Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/psjLK2i.jpeg">
+
+<link rel="canonical" href="http://example.com/2022/11/22/gff3-format/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bioinfo | gff3 格式 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/22/gff3-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bioinfo | gff3 格式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-11-22 14:10:07" itemprop="dateCreated datePublished" datetime="2022-11-22T14:10:07+08:00">2022-11-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-12-01 09:46:33" itemprop="dateModified" datetime="2022-12-01T09:46:33+08:00">2022-12-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinfo/" itemprop="url" rel="index"><span itemprop="name">Bioinfo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>用软件处理 gff3 格式的文件报错。为什么会报错？</p>
+<span id="more"></span>
+<p>下面是罂粟的 gff3 文件摘录。gff3 原始文件下载自 <a target="_blank" rel="noopener" href="https://ftp.ensemblgenomes.org/pub/plants/release-55/gff3/papaver_somniferum">Ensembl</a>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">##gff-version 3</span><br><span class="line">##sequence-region   1 1 248500730</span><br><span class="line">##sequence-region   10 1 166527240</span><br><span class="line">##sequence-region   11 1 140193751</span><br><span class="line">##sequence-region   2 1 219560757</span><br><span class="line">##sequence-region   3 1 229600373</span><br><span class="line">##sequence-region   4 1 163710198</span><br><span class="line">##sequence-region   5 1 216867838</span><br><span class="line">##sequence-region   6 1 180516484</span><br><span class="line">##sequence-region   7 1 270405062</span><br><span class="line">##sequence-region   8 1 176451499</span><br><span class="line">##sequence-region   9 1 204470928</span><br><span class="line">#!genome-build Xi&#x27;an Jiaotong University ASM357369v1</span><br><span class="line">#!genome-version ASM357369v1</span><br><span class="line">#!genome-build-accession GCA_003573695.1</span><br><span class="line">#!genebuild-last-updated 2019-06</span><br><span class="line">1       ASM357369v1     chromosome      1       248500730       .       .       .       ID=chromosome:1;Alias=CM010715.1</span><br><span class="line">###</span><br><span class="line">1       ena     gene    272248  278625  .       +       .       ID=gene:C5167_036297;biotype=protein_coding;description=hypothetical protein;gene_id=C5167_036297;logic_name=ena</span><br><span class="line">1       ena     mRNA    272248  278625  .       +       .       ID=transcript:RZC43352;Parent=gene:C5167_036297;biotype=protein_coding;tag=Ensembl_canonical;transcript_id=RZC43352</span><br><span class="line">1       ena     five_prime_UTR  272248  272375  .       +       .       Parent=transcript:RZC43352</span><br><span class="line">1       ena     exon    272248  272747  .       +       .       Parent=transcript:RZC43352;Name=RZC43352-1;constitutive=1;ensembl_end_phase=0;ensembl_phase=0;exon_id=RZC43352-1;rank=1</span><br><span class="line">1       ena     CDS     272376  272747  .       +       0       ID=CDS:RZC43352;Parent=transcript:RZC43352;protein_id=RZC43352</span><br><span class="line">1       ena     exon    273021  273108  .       +       .       Parent=transcript:RZC43352;Name=RZC43352-2;constitutive=1;ensembl_end_phase=1;ensembl_phase=0;exon_id=RZC43352-2;rank=2</span><br><span class="line">1       ena     CDS     273021  273108  .       +       0       ID=CDS:RZC43352;Parent=transcript:RZC43352;protein_id=RZC43352</span><br><span class="line">1       ena     exon    274314  274443  .       +       .       Parent=transcript:RZC43352;Name=RZC43352-3;constitutive=1;ensembl_end_phase=2;ensembl_phase=1;exon_id=RZC43352-3;rank=3</span><br><span class="line">1       ena     CDS     274314  274443  .       +       2       ID=CDS:RZC43352;Parent=transcript:RZC43352;protein_id=RZC43352</span><br><span class="line">1       ena     CDS     275008  275584  .       +       1       ID=CDS:RZC43352;Parent=transcript:RZC43352;protein_id=RZC43352</span><br><span class="line">1       ena     exon    275008  278625  .       +       .       Parent=transcript:RZC43352;Name=RZC43352-4;constitutive=1;ensembl_end_phase=2;ensembl_phase=2;exon_id=RZC43352-4;rank=4</span><br><span class="line">1       ena     three_prime_UTR 275585  278625  .       +       .       Parent=transcript:RZC43352</span><br><span class="line">###</span><br></pre></td></tr></table></figure>
+<p>对于摘录的这个基因，一共九列，每一列代表什么意思呢？GFF3 has 9 required fields, though not all are utilized (either blank or a default value of ‘.’).</p>
+<ol>
+<li>Sequence ID</li>
+<li>Source<br />
+Describes the algorithm or the procedure that generated this feature. Typically Genescane or Genebank, respectively.</li>
+<li>Feature Type<br />
+Describes what the feature is (mRNA, domain, exon, etc.).<br />
+These terms are constrained to the <a target="_blank" rel="noopener" href="http://www.sequenceontology.org/">Sequence Ontology terms</a>.</li>
+<li>Feature Start</li>
+<li>Feature End</li>
+<li>Score<br />
+Typically E-values for sequence similarity and P-values for predictions.</li>
+<li>Strand</li>
+<li>Phase<br />
+Indicates where the feature begins with reference to the reading frame. The phase is one of the integers 0, 1, or 2, indicating the number of bases that should be removed from the beginning of this feature to reach the first base of the next codon.</li>
+<li>Atributes<br />
+A semicolon-separated list of tag-value pairs, providing additional information about each feature. Some of these tags are predefined, e.g. ID, Name, Alias, Parent . You can see the full list <a target="_blank" rel="noopener" href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">here</a>.</li>
+</ol>
+<p>那么第八列的“Phase”到底是什么呢？</p>
+<p>我看的一个<a target="_blank" rel="noopener" href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">网站</a>对此的解释是：For features of type “CDS”, the phase indicates where the next codon begins relative to the 5’ end (where the 5’ end of the CDS is relative to the strand of the CDS feature) of the current CDS feature. For clarification the 5’ end for CDS features on the plus strand is the feature’s start and and the 5’ end for CDS features on the minus strand is the feature’s end. The phase is one of the integers 0, 1, or 2, indicating the number of bases forward from the start of the current CDS feature the next codon begins. A phase of “0” indicates that a codon begins on the first nucleotide of the CDS feature (i.e. 0 bases forward), a phase of “1” indicates that the codon begins at the second nucleotide of this CDS feature and a phase of “2” indicates that the codon begins at the third nucleotide of this region. Note that ‘Phase’ in the context of a GFF3 CDS feature should not be confused with the similar concept of frame that is also a common concept in bioinformatics. Frame is generally calculated as a value for a given base relative to the start of the complete open reading frame (ORF) or the codon (e.g. modulo 3) while CDS phase describes the start of the next codon relative to a given CDS feature. The phase is REQUIRED for all CDS features.</p>
+<p>以本文最开始摘录的罂粟基因为例，下图是我的笔记，CDS 区域一共包含四个片段，分别长度为 372，88，130 和 577 bp。DNA 总长度 1167 bp，对应 389 aa 长度的蛋白。注意第二个 CDS 翻译之后多出一个碱基，需要与第三个 CDS 的首二位碱基组成密码子，也就是说第三个 CDS 的翻译起始标记点是第三位碱基（由于基因组坐标的起始点为 0，所以该翻译标记点在基因组坐标为 2）。第三个 CDS 翻译之后多出两个碱基，需要与第四个 CDS 的首位碱基组成密码子，也就是说第四个 CDS 的翻译起始标记点是第二位碱基（在基因组坐标为 1）。</p>
+<p><img src="https://i.imgur.com/psjLK2i.jpeg" alt="" /></p>
+<p>有时候基因有多个转录本，如下所示，下面摘抄的 gff3 信息来自：<a target="_blank" rel="noopener" href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> 0  ##gff-version 3.1.26</span><br><span class="line"> 1  ##sequence-region ctg123 1 1497228</span><br><span class="line"> 2  ctg123 . gene            1000  9000  .  +  .  ID=gene00001;Name=EDEN</span><br><span class="line"> 3  ctg123 . TF_binding_site 1000  1012  .  +  .  ID=tfbs00001;Parent=gene00001</span><br><span class="line"> 4  ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00001;Parent=gene00001;Name=EDEN.1</span><br><span class="line"> 5  ctg123 . mRNA            1050  9000  .  +  .  ID=mRNA00002;Parent=gene00001;Name=EDEN.2</span><br><span class="line"> 6  ctg123 . mRNA            1300  9000  .  +  .  ID=mRNA00003;Parent=gene00001;Name=EDEN.3</span><br><span class="line"> 7  ctg123 . exon            1300  1500  .  +  .  ID=exon00001;Parent=mRNA00003</span><br><span class="line"> 8  ctg123 . exon            1050  1500  .  +  .  ID=exon00002;Parent=mRNA00001,mRNA00002</span><br><span class="line"> 9  ctg123 . exon            3000  3902  .  +  .  ID=exon00003;Parent=mRNA00001,mRNA00003</span><br><span class="line">10  ctg123 . exon            5000  5500  .  +  .  ID=exon00004;Parent=mRNA00001,mRNA00002,mRNA00003</span><br><span class="line">11  ctg123 . exon            7000  9000  .  +  .  ID=exon00005;Parent=mRNA00001,mRNA00002,mRNA00003</span><br><span class="line">12  ctg123 . CDS             1201  1500  .  +  0  ID=cds00001;Parent=mRNA00001;Name=edenprotein.1</span><br><span class="line">13  ctg123 . CDS             3000  3902  .  +  0  ID=cds00001;Parent=mRNA00001;Name=edenprotein.1</span><br><span class="line">14  ctg123 . CDS             5000  5500  .  +  0  ID=cds00001;Parent=mRNA00001;Name=edenprotein.1</span><br><span class="line">15  ctg123 . CDS             7000  7600  .  +  0  ID=cds00001;Parent=mRNA00001;Name=edenprotein.1</span><br><span class="line">16  ctg123 . CDS             1201  1500  .  +  0  ID=cds00002;Parent=mRNA00002;Name=edenprotein.2</span><br><span class="line">17  ctg123 . CDS             5000  5500  .  +  0  ID=cds00002;Parent=mRNA00002;Name=edenprotein.2</span><br><span class="line">18  ctg123 . CDS             7000  7600  .  +  0  ID=cds00002;Parent=mRNA00002;Name=edenprotein.2</span><br><span class="line">19  ctg123 . CDS             3301  3902  .  +  0  ID=cds00003;Parent=mRNA00003;Name=edenprotein.3</span><br><span class="line">20  ctg123 . CDS             5000  5500  .  +  1  ID=cds00003;Parent=mRNA00003;Name=edenprotein.3</span><br><span class="line">21  ctg123 . CDS             7000  7600  .  +  1  ID=cds00003;Parent=mRNA00003;Name=edenprotein.3</span><br><span class="line">22  ctg123 . CDS             3391  3902  .  +  0  ID=cds00004;Parent=mRNA00003;Name=edenprotein.4</span><br><span class="line">23  ctg123 . CDS             5000  5500  .  +  1  ID=cds00004;Parent=mRNA00003;Name=edenprotein.4</span><br><span class="line">24  ctg123 . CDS             7000  7600  .  +  1  ID=cds00004;Parent=mRNA00003;Name=edenprotein.4</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/lkk3KPb.png" alt="" /></p>
+<p>我现在遇到一个问题，手上一个基因组 gff3 文件报错。经过探究，我发现染色体负链上的 Phase 信息有误，“2”其实应该写成“1”；而“1”则应该是“2”，我在下面摘录的内容里做了批注，注意坐标出现的顺序，我用 <code>#1 #2 #3</code> 字样标记。。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost AM]$ awk &#x27;NR&lt;=526 &amp;&amp; NR&gt;=509&#x27; AMO.protein.gff_6 | grep CDS</span><br><span class="line">scaffold_1      EVM     CDS     83908   85562   .       -       0       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     83193   83430   .       -       2       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     82539   82811   .       -       0       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     82210   82453   .       -       0       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     81891   82129   .       -       1       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     81688   81762   .       -       0       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">scaffold_1      EVM     CDS     81403   81594   .       -       0       ID=scaffold_1.g00002.m1.cds;Parent=scaffold_1.g00002.m1;</span><br><span class="line">(python37) [fenglei@localhost AM]$ awk &#x27;NR&lt;=526 &amp;&amp; NR&gt;=509&#x27; AMO.protein.gff_6 | grep CDS | awk &#x27;&#123;a=$5-$4+1; print $3&quot;\t&quot;$4&quot;\t&quot;$5&quot;\t&quot;$7&quot;\t&quot;$8&quot;\t&quot;a &#125;&#x27;</span><br><span class="line">CDS     83908   85562   -       0       1655 #1 CDS 1655 / 3 = 551  ... 2</span><br><span class="line">CDS     83193   83430   -       2       238  #2 CDS (238 - 1) / 3 = 79 括号里“-1”表示该CDS的首位碱基与上游CDS的末两位碱基组成密码子，所以这里Phase值理论上应该是1</span><br><span class="line">CDS     82539   82811   -       0       273  #3 CDS 273 / 3 = 91</span><br><span class="line">CDS     82210   82453   -       0       244  #4 CDS 244 / 3 = 81  ... 1</span><br><span class="line">CDS     81891   82129   -       1       239  #5 CDS (239 -2) / 3 = 79 括号里“-2”表示该CDS的首两位碱基与上游CDS的末位碱基组成密码子，所以这里Phase值理论上应该是2</span><br><span class="line">CDS     81688   81762   -       0       75   #6 CDS 75 / 3 = 25</span><br><span class="line">CDS     81403   81594   -       0       192  #7 CDS 192 / 3 = 64</span><br></pre></td></tr></table></figure>
+<p>另一个没有报错的基因组 gff 文件摘录如下。手动计算 Phase 值，确实是能与 gff3 文件匹配的。注意坐标出现的顺序，我用 <code>#1 #2 #3</code> 字样标记。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost opium_poppy_Papaver_somniferum]$ awk &#x27;NR&gt;=82 &amp;&amp; NR&lt;=95&#x27; Papaver_somniferum.ASM357369v1.55.chr.gff3 | grep CDS</span><br><span class="line">1       ena     CDS     276433  276552  .       -       0       ID=CDS:RZC43353;Parent=transcript:RZC43353;protein_id=RZC43353</span><br><span class="line">1       ena     CDS     276665  276747  .       -       2       ID=CDS:RZC43353;Parent=transcript:RZC43353;protein_id=RZC43353</span><br><span class="line">1       ena     CDS     276870  276953  .       -       2       ID=CDS:RZC43353;Parent=transcript:RZC43353;protein_id=RZC43353</span><br><span class="line">1       ena     CDS     278336  278468  .       -       0       ID=CDS:RZC43353;Parent=transcript:RZC43353;protein_id=RZC43353</span><br><span class="line">(base) [fenglei@localhost opium_poppy_Papaver_somniferum]$ awk &#x27;NR&gt;=82 &amp;&amp; NR&lt;=95&#x27; Papaver_somniferum.ASM357369v1.55.chr.gff3 | grep CDS | awk &#x27;&#123;a=$5-$4+1; print $3&quot;\t&quot;$4&quot;\t&quot;$5&quot;\t&quot;$7&quot;\t&quot;$8&quot;\t&quot;a &#125;&#x27;            </span><br><span class="line">CDS     276433  276552  -       0       120 #4 CDS 120 / 3 = 40</span><br><span class="line">CDS     276665  276747  -       2       83  #3 CDS (83-2) / 3 = 27 括号里“-2”表示该CDS的首两位碱基与上游CDS的末位碱基组成密码子</span><br><span class="line">CDS     276870  276953  -       2       84  #2 CDS (84-2) / 3 = 27 ... 1 括号里“-2”表示该CDS的首两位碱基与上游CDS的末位碱基组成密码子</span><br><span class="line">CDS     278336  278468  -       0       133 #1 CDS 133 / 3 = 44 ... 1</span><br></pre></td></tr></table></figure>
+<p>我以为我终于发现问题所在，既然是 Phase 值问题，那我统一将1改成2，将2改成1，那不就行了？结果改完发现还是有报错，原来旧 gff3 文件也有一部分是正确标记的。所以其实是最初生成的 gff3 文件本身比较“混乱”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost AM]$ awk &#x27;$0~/Chr01.g00017.m3.cds/&#123;print NR&quot;\t&quot;$0&#125;&#x27; AMO.protein.gff_6</span><br><span class="line">727     Chr01   EVM     CDS     56788   57559   .       -       0       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">729     Chr01   EVM     CDS     56395   56647   .       -       2       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">731     Chr01   EVM     CDS     55428   56244   .       -       1       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">733     Chr01   EVM     CDS     53917   54041   .       -       0       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">735     Chr01   EVM     CDS     53661   53745   .       -       1       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">737     Chr01   EVM     CDS     52591   52756   .       -       0       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">739     Chr01   EVM     CDS     52448   52488   .       -       2       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">741     Chr01   EVM     CDS     52094   52361   .       -       0       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">743     Chr01   EVM     CDS     47492   47615   .       -       2       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">745     Chr01   EVM     CDS     47048   47408   .       -       1       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br><span class="line">747     Chr01   EVM     CDS     36866   37144   .       -       0       ID=Chr01.g00017.m3.cds;Parent=Chr01.g00017.m3;</span><br></pre></td></tr></table></figure>
+<p>修复工具：GFF3 Toolkit <a target="_blank" rel="noopener" href="https://gff3toolkit.readthedocs.io/en/latest/index.html">https://gff3toolkit.readthedocs.io/en/latest/index.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(python27) [fenglei@localhost AM]$ pip install gff3tool</span><br><span class="line">(python27) [fenglei@localhost AM]$ # conda install -c bioconda gff3tool</span><br><span class="line">(python27) [fenglei@localhost AM]$ gff3_QC -g genes.gff3 -f genome_softmasked.fa -o gff3_QC_statistic.txt</span><br><span class="line">(python27) [fenglei@localhost AM]$ le gff3_QC_statistic.txt</span><br><span class="line">      1 Error_code      Number_of_problematic_models    Error_level     Error_tag</span><br><span class="line">      2 Emr0003 171368  Error   Duplicate ID</span><br><span class="line">      3 Esf0012 4       Info    Found Ns in a feature using the external FASTA</span><br><span class="line">      4 Ema0002 96      Warning Protein sequence contains internal stop codons</span><br><span class="line">      5 Emr0002 5       Warning Incorrectly split gene parent?</span><br><span class="line">      6 Ema0001 3148    Warning Parent feature start and end coordinates exceed those of child features</span><br></pre></td></tr></table></figure>
+<p>我自己编写了一个专门修复 Phase 值的 Perl 程序，将 gff3 文件按照每个基因依次进行修复，代码此处未附上。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/20/gene-clusters-analysis-by-plantiSMASH/" rel="prev" title="Bioinfo | plantiSMASH 软件鉴定生物合成相关的基因簇">
+      <i class="fa fa-chevron-left"></i> Bioinfo | plantiSMASH 软件鉴定生物合成相关的基因簇
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">184</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -189,6 +189,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/" class="post-title-link" itemprop="url">Bioinfo | Gene Ontology - Enrichment Analysis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-06-29 11:14:12 / Modified: 23:44:19" itemprop="dateCreated datePublished" datetime="2021-06-29T11:14:12+08:00">2021-06-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>下面是我做的大豆GO数据库（version Gmax_508_Wm82_a4.v1）构建与富集分析。数据文件在：<a target="_blank" rel="noopener" href="https://github.com/bioinfx/Glycine_max_Gene_Ontology">https://github.com/bioinfx/Glycine_max_Gene_Ontology</a>。</p>
+<p>经过前期数据比对和整理（比如依据 swissprot、blast2GO，或 GOMAP），得到下面“基因——GO号——Ontology 类别——证据”这四列格式的文件 GMA_GO_TERM.txt，就可以在R程序里面用于 GO 数据库的构建。</p>
+<h3 id="数据库源文件准备"><a class="markdownIt-Anchor" href="#数据库源文件准备"></a> 数据库源文件准备</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ zcat GMA_GO_TERM.txt.gz | head</span><br><span class="line">GID     GO      ONTOLOGY        EVIDENCE</span><br><span class="line">Glyma.01G000100 GO:0006412      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009063      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0009234      P       IEA</span><br><span class="line">Glyma.01G000100 GO:0016021      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0031969      C       IEA</span><br><span class="line">Glyma.01G000100 GO:0016835      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0030976      F       IEA</span><br><span class="line">Glyma.01G000100 GO:0070204      F       IEA</span><br><span class="line">Glyma.01G000137 GO:0016043      P       IEA</span><br></pre></td></tr></table></figure>
+<h3 id="数据库导入-r"><a class="markdownIt-Anchor" href="#数据库导入-r"></a> 数据库导入 R</h3>
+<p>构建过程如下，调用 makeOrgPackage 函数构建 GO 数据库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">## Makes an organism package for Glycine max data.frames:</span><br><span class="line"></span><br><span class="line">library(RSQLite)</span><br><span class="line">library(AnnotationForge)</span><br><span class="line"></span><br><span class="line">## Now prepare some data.frames</span><br><span class="line">fGO &lt;- read.table(&quot;../3_final-result/GMA_GO_TERM.txt&quot;, sep=&quot;\t&quot;, head=TRUE)</span><br><span class="line"></span><br><span class="line">## remove duplication in the table</span><br><span class="line">go_df &lt;- fGO[!duplicated(fGO),]</span><br><span class="line"></span><br><span class="line">## only tree coloums are needed: GID, GO, EVIDENCE</span><br><span class="line">go_df &lt;- go_df[,c(1,2,4)]</span><br><span class="line"></span><br><span class="line">## Making Organism packages </span><br><span class="line">makeOrgPackage(go=go_df,</span><br><span class="line">    version = &quot;0.0.1&quot;,</span><br><span class="line">    maintainer = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">    author = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">    outputDir = &quot;./&quot;,</span><br><span class="line">    tax_id = &quot;3847&quot;,</span><br><span class="line">    genus = &quot;Glycine&quot;,</span><br><span class="line">    species = &quot;max&quot;,</span><br><span class="line">    goTable = &quot;go&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">## then you can call install.packages based on the return value</span><br><span class="line">install.packages(&quot;./org.Gmax.eg.db&quot;, repos = NULL, type=&quot;source&quot;)</span><br><span class="line">library(org.Gmax.eg.db)</span><br><span class="line">org &lt;- org.Gmax.eg.db</span><br><span class="line"></span><br><span class="line">## A demo for using the database</span><br><span class="line"># BiocManager::install(&quot;Rgraphviz&quot;)</span><br><span class="line"># BiocManager::install(&quot;topGO&quot;)</span><br><span class="line">library()</span><br><span class="line">geneTable = read.table(&quot;./Gmax_ABA_exp.xls&quot;, head=T)</span><br><span class="line">geneList=geneTable[,5]</span><br><span class="line">geneList=geneList[!duplicated(geneList)]</span><br><span class="line"># Biology process</span><br><span class="line">ego_up &lt;-enrichGO(gene = geneList, OrgDb = org, keyType = &quot;GID&quot;, ont = &quot;BP&quot;)</span><br><span class="line">pdf(&quot;up_GO_BP_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_up, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;up_GO_BP_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;up_GO_BP_tree.pdf&quot;)</span><br><span class="line">plotGOgraph(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_up@result ), file=&quot;up_GO_BP.csv&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="数据库开启与富集分析"><a class="markdownIt-Anchor" href="#数据库开启与富集分析"></a> 数据库开启与富集分析</h1>
+<p>下面代码示范如何引用上构建的数据库，并且开展 GO 分析：BP、MF 和 CC 三个类别。<br />
+图片可输出为柱状图 barplot 和点状图 dotplot，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">library(org.Gmax.eg.db)</span><br><span class="line">org &lt;- org.Gmax.eg.db</span><br><span class="line"></span><br><span class="line">## A demo for using the database</span><br><span class="line"># BiocManager::install(&quot;Rgraphviz&quot;)</span><br><span class="line"># BiocManager::install(&quot;topGO&quot;)</span><br><span class="line">library(topGO)</span><br><span class="line">library(clusterProfiler)</span><br><span class="line">geneTable = read.table(&quot;./gene_table.txt&quot;, head=T, sep=&quot;\t&quot;)</span><br><span class="line">#geneTable = geneTable[!apply(geneTable == &quot;&quot;, 1, all),]</span><br><span class="line">geneList=geneTable[,5]</span><br><span class="line"></span><br><span class="line">geneList=geneList[!duplicated(geneList)]</span><br><span class="line"># Biology process</span><br><span class="line">b=geneList</span><br><span class="line"></span><br><span class="line"># biological progress</span><br><span class="line">ego_up &lt;-enrichGO(</span><br><span class="line">                  gene = b, </span><br><span class="line">                  OrgDb = org, </span><br><span class="line">                  keyType = &quot;GID&quot;, </span><br><span class="line">                  ont = &quot;BP&quot;</span><br><span class="line">                  )</span><br><span class="line">pdf(&quot;test_GO_BP_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_up, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_BP_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_up)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;up_GO_BP_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_up)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_up@result ), file=&quot;test_GO_BP.csv&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># molecular function</span><br><span class="line">ego_down &lt;-enrichGO(</span><br><span class="line">                    gene = b,</span><br><span class="line">                    OrgDb = org,</span><br><span class="line">                    keyType = &quot;GID&quot;,</span><br><span class="line">                    ont = &quot;MF&quot;</span><br><span class="line">                    )</span><br><span class="line">pdf(&quot;test_GO_MF_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_down, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_MF_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_down)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;test_GO_MF_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_down)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_down@result), file=&quot;test_GO_MF.csv&quot;)</span><br><span class="line"></span><br><span class="line"># cellular component</span><br><span class="line">ego_down &lt;-enrichGO(</span><br><span class="line">                    gene = b,</span><br><span class="line">                    OrgDb = org,</span><br><span class="line">                    keyType = &quot;GID&quot;,</span><br><span class="line">                    ont = &quot;CC&quot;</span><br><span class="line">                    )</span><br><span class="line">pdf(&quot;test_GO_CC_barplot.pdf&quot;, height=10, width=15)</span><br><span class="line">barplot(ego_down, drop=TRUE, showCategory=12)</span><br><span class="line">dev.off()</span><br><span class="line">pdf(&quot;test_GO_CC_dotPlot.pdf&quot;, height=10, width=15)</span><br><span class="line">dotplot(ego_down)</span><br><span class="line">dev.off()</span><br><span class="line">#pdf(&quot;test_GO_CC_tree.pdf&quot;)</span><br><span class="line">#plotGOgraph(ego_down)</span><br><span class="line">#dev.off()</span><br><span class="line">write.csv(as.data.frame( ego_down@result), file=&quot;test_GO_CC.csv&quot;)</span><br></pre></td></tr></table></figure>
+<p>有时候 GO 项目的名称过长，基于默认作图代码出来的图片会出现文字将图形区域挤压得无法显示。</p>
+<p><img src="https://i.imgur.com/FlARCCO.jpeg" alt="" /></p>
+<p>有两种优化方案，一是将长的文字换行；二是只截取一部分文字显示。</p>
+<h3 id="一过长的文字换行显示"><a class="markdownIt-Anchor" href="#一过长的文字换行显示"></a> 一：过长的文字换行显示，</h3>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/songbiao/articles/12717670.html">songbiao: GO term name太长的处理</a><br />
+在使用clusterProfiler进行绘制GO dotplot时，会遇到 GO term 的 name 过长，压缩了图形区域的情况。<br />
+因为 clusterProfiler 作图是基于 ggplot2 的，所以这个处理办法也适用于其他 ggplot2 作图遇到此种情况。<br />
+解决文本过长的办法就是，用stringr包的str_wrap来完成文本自动换行。<br />
+效果如下图所示，其实还是不太完美，需要后期手工调整才美观。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)  # 需要开启 ggplot2 才可以使用 scale_y_discrete 函数</span><br><span class="line">library(stringr)</span><br><span class="line">dotplot(mf, showCategory=30) + scale_y_discrete(labels=function(mf) str_wrap(mf, width=40))</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/JRkomgm.jpeg" alt="" /></p>
+<h3 id="二只截取一部分文字显示"><a class="markdownIt-Anchor" href="#二只截取一部分文字显示"></a> 二：只截取一部分文字显示</h3>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://r.bio-spring.info/2018/11/26/enrichplot-fancy-label/">在enrichplot中使用更好的Label</a><br />
+该方法是定义一个截取短 label 的函数, 将其传递给 scale_y_discrete() 即可. 在输出 ggplot 对象时做修改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#&#x27; Truncate string vector of ggplot axis label</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @param label    a ordered string vector</span><br><span class="line">#&#x27; @param maxLen   max length of character (nchar) to show in label</span><br><span class="line">#&#x27; @param maxWord  max count of words allowed to show in label</span><br><span class="line">#&#x27; @param pattern  Word separater</span><br><span class="line">#&#x27; @param dot      If true, three dots will added to truncated label</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @return a vector of truncated strings</span><br><span class="line">#&#x27; @export</span><br><span class="line">#&#x27;</span><br><span class="line">#&#x27; @examples</span><br><span class="line"># 默认最多显示 50 个字符, 5 个单词.</span><br><span class="line">short_label &lt;- function(label, maxLen = 50, maxWord = 5, pattern = &quot; &quot;, dot = TRUE)&#123;</span><br><span class="line">  l &lt;- strsplit(label, pattern)</span><br><span class="line">  short_label &lt;- vector(&quot;character&quot;,length(l))</span><br><span class="line">  </span><br><span class="line">  for (i in seq_along(l))&#123;</span><br><span class="line">    truncated &lt;- FALSE</span><br><span class="line">    s &lt;- l[[i]]</span><br><span class="line">    if (length(s) &gt; maxWord)&#123;</span><br><span class="line">      ll &lt;- paste(s[1:maxWord], collapse = &quot; &quot;)</span><br><span class="line">      truncated &lt;- TRUE</span><br><span class="line">    &#125;</span><br><span class="line">    else&#123;</span><br><span class="line">      ll &lt;- paste(s, collapse = &quot; &quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (nchar(ll) &gt; maxLen)&#123;</span><br><span class="line">      ll &lt;- substr(ll, 1, maxLen)</span><br><span class="line">      truncated &lt;- TRUE</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (dot &amp; truncated) ll &lt;- paste(ll, &quot;...&quot;,sep = &quot; &quot;)</span><br><span class="line">    </span><br><span class="line">    short_label[[i]] &lt;- ll</span><br><span class="line">  &#125;</span><br><span class="line">  attr(short_label, &quot;pos&quot;) &lt;- attr(label,&quot;pos&quot;)</span><br><span class="line">  return(short_label)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>画图代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">dotplot(mf) + scale_y_discrete(label=short_label)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/pALA2H9.jpeg" alt="" /></p>
+<p>注意上面的图，其实很多项目都是高度近似的，怎么优化？对于模式物种而言，CytoScape的插件ClueGO有一个选项可以实现，就是设置Ontology的级别。因为Ontology的结构就是树状，从根部到.</p>
+<p>构建GO数据库的过程中，如果成功会输出下面的信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&gt; head(go_df)</span><br><span class="line">           GID         GO EVIDENCE</span><br><span class="line">1 Chr01.g00016 GO:0003676      IEA</span><br><span class="line">2 Chr01.g00016 GO:0003964      IEA</span><br><span class="line">3 Chr01.g00016 GO:0004190      IEA</span><br><span class="line">4 Chr01.g00016 GO:0004519      IEA</span><br><span class="line">5 Chr01.g00016 GO:0006310      IEA</span><br><span class="line">6 Chr01.g00016 GO:0015074      IEA</span><br><span class="line">&gt; makeOrgPackage(go=go_df,</span><br><span class="line">+                version = &quot;0.0.1&quot;,</span><br><span class="line">+                maintainer = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">+                author = &quot;FENG Lei &lt;fengleiluck@gmail.com&gt;&quot;,</span><br><span class="line">+                outputDir = &quot;.&quot;,</span><br><span class="line">+                tax_id = &quot;126911&quot;,</span><br><span class="line">+                genus = &quot;Ammopiptanthus&quot;,</span><br><span class="line">+                species = &quot;mongolicus&quot;,</span><br><span class="line">+                goTable = &quot;go&quot;</span><br><span class="line">+ )</span><br><span class="line">Populating genes table:</span><br><span class="line">genes table filled</span><br><span class="line">Populating go table:</span><br><span class="line">go table filled</span><br><span class="line">table metadata filled</span><br><span class="line">&#x27;select()&#x27; returned many:1 mapping between keys and columns</span><br><span class="line">Dropping GO IDs that are too new for the current GO.db</span><br><span class="line">Populating go table:</span><br><span class="line">go table filled</span><br><span class="line">Populating go_bp table:</span><br><span class="line">go_bp table filled</span><br><span class="line">Populating go_cc table:</span><br><span class="line">go_cc table filled</span><br><span class="line">Populating go_mf table:</span><br><span class="line">go_mf table filled</span><br><span class="line">&#x27;select()&#x27; returned many:1 mapping between keys and columns</span><br><span class="line">Populating go_bp_all table:</span><br><span class="line">go_bp_all table filled</span><br><span class="line">Populating go_cc_all table:</span><br><span class="line">go_cc_all table filled</span><br><span class="line">Populating go_mf_all table:</span><br><span class="line">go_mf_all table filled</span><br><span class="line">Populating go_all table:</span><br><span class="line">go_all table filled</span><br><span class="line">Creating package in ./org.Amongolicus.eg.db </span><br><span class="line">Now deleting temporary database file</span><br><span class="line">[1] &quot;./org.Amongolicus.eg.db&quot;</span><br><span class="line">There were 50 or more warnings (use warnings() to see the first 50)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/17/Linux-Gene-Ontology-GOMAP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1247,85 +1345,6 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/10/Bioinfo-Extracting-sequence-by-names/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/10/Bioinfo-Extracting-sequence-by-names/" class="post-title-link" itemprop="url">Bioinfo | 依据序列名字列表从 fasta 文件提取序列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-10 22:37:33" itemprop="dateCreated datePublished" datetime="2021-03-10T22:37:33+08:00">2021-03-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-14 18:28:12" itemprop="dateModified" datetime="2022-07-14T18:28:12+08:00">2022-07-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>依据序列名称从fasta文件提取序列是一个很常见的操作。seqkit 这个工具可以很方便地实现。<br />
-比如 input.fa 包含若干条序列，名称分别为 1、2、3……100 。而 name list 文件包含 40——49 这十个ID，那么通过下面的代码就可以提取编号 40——49 对应的序列。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r -f name_list.txt input.fa -o out.fa</span><br></pre></td></tr></table></figure>
-<p>上面只是一种简单的情况，而大部分原始 fasta 文件中，序列名除了 ID，还可能会包含其他信息（比如基因注释）。当输入的 name list 文件只有 ID，默认的“名称完全匹配”就提取不了，就需要加上 <code>-r</code> 参数来申明使用正则匹配（regular expression）进行提取。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r -f name_list.txt input.fa -o out.fa</span><br></pre></td></tr></table></figure>
-<p>另一种情况就是，对于拟南芥，每个基因有多个 isoforms，如果我们只需要依据基因 ID 输出一个 isoform，那么可以通过 <code>--delete-matched</code> 参数来控制，即当某个 ID 出现了一次匹配，则立即停止继续检索该 ID，进入下一个 ID 检索。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r --delete-matched -f Arabidopsis_name_list.txt Araport11_pep_20160703.pep.fa -o Arabidopsis_pep_list_nonrebundant.fa</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1397,7 +1416,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">184</span>
+          <span class="site-state-item-count">185</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1442,7 +1461,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

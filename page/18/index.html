@@ -189,6 +189,80 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2014/12/17/%E5%9F%BA%E4%BA%8Eillumina%E6%B5%8B%E5%BA%8F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%BF%E7%94%A8jellyfish%E4%BC%B0%E8%AE%A1%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%A4%A7%E5%B0%8F/" class="post-title-link" itemprop="url">基于illumina测序数据，使用Jellyfish估计基因组大小</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2014-12-17 12:09:33" itemprop="dateCreated datePublished" datetime="2014-12-17T12:09:33+08:00">2014-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一、数据 ① illumina测序数据：（细菌**<em>Staphylococcus aureus，</em>**基因组约3M，180bp文库，101PE测序，1294104条reads，测序碱基数据量约为130Mb，即基因组覆盖度45X。） <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus/Data.original/frag%5C_1.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_1.fastq.gz</a> <a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus/Data.original/frag%5C_2.fastq.gz">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus/Data.original/frag\_2.fastq.gz</a> ②  jellyfish 软件：（用来统计kmer频数。） <a href="ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz">ftp://ftp.genome.umd.edu/pub/jellyfish/jellyfish-2.1.4.tar.gz</a> ③jellyplot.pl软件：（用来画kmer图，以及估计基因组大小。） <a target="_blank" rel="noopener" href="https://github.com/josephryan/estimate%5C_genome%5C_size.pl">https://github.com/josephryan/estimate\_genome\_size.pl</a> ④fastx toolkit：（用来转换fastq和fasta格式文件。） <a target="_blank" rel="noopener" href="http://hannonlab.cshl.edu/">hannonlab.cshl.edu/</a><strong>fastx</strong>_<strong>toolkit</strong>/   ------------------ 下面是实际运行代码： cat frag_1.fastq frag_2.fastq &gt; all.fastq fastq_to_fasta -i all.fastq -o all.fasta jellyfish count -m 17 -s 100M -t 10 -C all.fasta jellyfish histo mer_counts.jf -o out.2.txt <a target="_blank" rel="noopener" href="http://jellyplot.pl">jellyplot.pl</a> out.2.txt estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz   结果：（预估基因组为7M，比实际大了一倍。可能是原始reads没有校正和过滤的原因。） $ estimate_genome_size.pl -kmer 17 -peak 15 -fastq all.fastq.gz # running version 0.04 of estimate_genome_size.pl # run with this command: estimate_genome_size.pl TOTAL_NTS: 131998608 Estimated Coverage: 17.7906976744186 Estimated Genome Size: 7419529.6 <a target="_blank" rel="noopener" href="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg"><img src="http://genehub.files.wordpress.com/2014/12/qqe688aae59c9620141217130925.jpg?w=300" alt="QQ截圖20141217130925" /></a> 使用校正之后的数据，（使用quake.py进行校正<a target="_blank" rel="noopener" href="http://gage.cbcb.umd.edu/data/Staphylococcus%5C_aureus%EF%BC%89">http://gage.cbcb.umd.edu/data/Staphylococcus\_aureus）</a> 估计基因组大小为： # running version 0.04 of estimate_genome_size.pl # run with this command: /home/fenglei/perl5/bin/estimate_genome_size.pl TOTAL_NTS: 59609610 Estimated Coverage: 15.3684210526316 Estimated Genome Size: 3878707.5 这次距离实际情况比较近。     =================== 附：jellyfish 参数意义 jellyfish count -m 17 -s 100M -t 10 -C all.fasta -m是kmer长度； -s是预估哈希表的大小，即G+G*c*e*k。G是Genome Size；c是coverage（genome survey测序通常低于100x）；e是测序错误率（illumina为1%）；k是kmer大小。 -C表示考虑DNA正义与反义链，遇到反义kmer时，计入正义kmer频数中。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/16/%E5%9F%BA%E5%9B%A0%E7%BB%84%E7%BB%84%E8%A3%85%E8%BD%AF%E4%BB%B6%E8%AF%84%E4%BC%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -909,87 +983,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/08/22/linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%A7%A3%E5%8E%8B-tgz-%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/08/22/linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%A7%A3%E5%8E%8B-tgz-%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">linux系统下解压 tgz 文件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2014-08-22 12:00:19" itemprop="dateCreated datePublished" datetime="2014-08-22T12:00:19+08:00">2014-08-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="解压-tgz-文件"><a class="markdownIt-Anchor" href="#解压-tgz-文件"></a> 解压 tgz 文件</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/08/22/linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E8%A7%A3%E5%8E%8B-tgz-%E6%96%87%E4%BB%B6/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1061,7 +1054,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">184</span>
+          <span class="site-state-item-count">185</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1106,7 +1099,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

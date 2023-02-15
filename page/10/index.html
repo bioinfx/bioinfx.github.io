@@ -189,6 +189,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/02/08/R-Gene-Ontology-hypergeometric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/02/08/R-Gene-Ontology-hypergeometric/" class="post-title-link" itemprop="url">R：超几何分布与基因功能富集分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-08 14:56:49" itemprop="dateCreated datePublished" datetime="2018-02-08T14:56:49+08:00">2018-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:47:19" itemprop="dateModified" datetime="2020-12-08T11:47:19+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GO功能显著性富集分析给出与基因组背景相比，在差异表达基因中显著富集的GO功能条目，从而给出差异表达基因与哪些生物学功能显著相关。该分析首先把所有差异表达基因向Gene Ontology数据库（<a target="_blank" rel="noopener" href="http://www.geneontology.org/">http://www.geneontology.org/</a>）的各个term映射，计算每个term的基因数目，然后应用超几何检验，找出与整个基因组背景相比，在差异表达基因中显著富集的GO条目，其计算公式为 <img src="https://genehub.files.wordpress.com/2018/02/hypergeometric.jpg" alt="hypergeometric" /> 其中，N为所有基因中具有GO注释的基因数目；n为N中差异表达基因的数目；M为所有基因中注释为某特定GO term的基因数目；m为注释为某特定GO term的差异表达基因数目。计算得到的p-value通过Bonferroni校正之后，以corrected p-value≤0.05为阈值，满足此条件的GO term定义为在差异表达基因中显著富集的GO term。通过GO功能显著性富集分析能确定差异表达基因行使的主要生物学功能。 例如，如下的结果： <img src="https://genehub.files.wordpress.com/2018/02/qqe688aae59bbe20180208115638.jpg" alt="QQ截图20180208115638" /> P值计算方法为（在R语言程序中调用phyper命令）：</p>
+<p>phyper(66-1, 2775, 20269-2775, 249, lower.tail=F)<br />
+[1] 5.546399e-08</p>
+<p>Q值计算方法： Q值则需要考虑到全部差异表达基因的P值。引用他人的解释：设总共有m个候选基因，每个基因对应的p值从小到大排列分别是p(1),p(2),…,p(m),则若想控制fdr不能超过q，则只需找到最大的正整数 i，使得 p(i)&lt;= (i*q)/m.然后，挑选对应p(1),p(2),…,p(i)的基因做为差异表达基因，这样就能从统计学上保证fdr不超过q。 例如</p>
+<p>&gt; p&lt;-c(0.0003,0.0001,0.02)</p>
+<blockquote>
+<p>p.adjust(p,method=“fdr”,length(p))<br />
+[1] 0.00045 0.00030 0.02000</p>
+</blockquote>
+<p>注： 一、什么是超几何分布 超几何分布的公式为：</p>
+<p>p(x) = choose(m, x) choose(n, k-x) / choose(m+n, k)<br />
+for x = 0, …, k.<br />
+其中, m 是桶里面白球的个数, n 是黑球的个数, k 是从桶中随机取出的球数, x 是取出球<br />
+中白球的个数.</p>
+<p>Fisher‘s Exact Test就是依据超几何概率分布得到的。 二、计算公式 公式：计算P值的代码也可以自己写：C(k,M)*C(n-k,N-M)/C(n,N) R语言的代码：</p>
+<p>dhyper(x, m, n, k, log = FALSE)<br />
+计算某一个点的p值<br />
+phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
+计算一个分布的p值，默认下计算P(X&lt;=x)<br />
+qhyper(p, m, n, k, lower.tail = TRUE, log.p = FALSE)<br />
+计算某一个p值对应的分位数<br />
+rhyper(nn, m, n, k)<br />
+按超几何分布给出nn的可能的模拟结果值</p>
+<p>三、运用案例 （见前文） 四、编程 参考： <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1122">http://www.chenlianfu.com/?p=1122</a> <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-749-1-1.html">http://www.biotrainee.com/thread-749-1-1.html</a> <a target="_blank" rel="noopener" href="http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814">http://fhqdddddd.blog.163.com/blog/static/1869915420169212398814</a> <a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog%5C_73e6125c01012412.html">http://blog.sina.com.cn/s/blog\_73e6125c01012412.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/09/Bioinfo-install-vcftools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -957,114 +1054,6 @@ Paper：<a target="_blank" rel="noopener" href="http://www.plantcell.org/content
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/08/07/Bioinfo-infernal-and-hmmer-installation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/07/Bioinfo-infernal-and-hmmer-installation/" class="post-title-link" itemprop="url">Infernal和hmmer程序的安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-08-07 16:21:56" itemprop="dateCreated datePublished" datetime="2017-08-07T16:21:56+08:00">2017-08-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>再Rfam数据库对small RNA进行注释的过程中需要用到Infernal，但是安装遇到问题。configure之后，make不成功，报错“fatal error: config.h: No such file”，下面是解决方案。 hmmer就是一款比对软件，类似于blast等，它使用马尔可夫概率模型的方法。HMMER的目的是更准确的探测到远程同源序列，它提供的比对结果要比blast更加精确，相应的速度也要慢。在功能基因研究中需要使用到序列搜索，比如从序列数据库中，找同源的序列，或者对一个新的基因功能进行鉴定，使用hmmer比使用blast有着更高的灵敏度以及更高的搜索速度，但其应用还远没有blast普及。 hmmer安装的参考资料是：</p>
-<p>curl -O <a href="ftp://selab.janelia.org/pub/software/hmmer3/3.1b1/hmmer%5C-3.1b1.tar.gz">ftp://selab.janelia.org/pub/software/hmmer3/3.1b1/hmmer\-3.1b1.tar.gz</a><br />
-tar xzf hmmer-3.1b1.tar.gz<br />
-cd hmmer-3.1b1/<br />
-./configure --prefix=/usr &amp;&amp; make &amp;&amp; make install</p>
-<p>但是我安装过程中报错：</p>
-<p>make[2]: Entering directory ‘/home/fenglei/local/app/infernal/easel/miniapps’<br />
-CC esl-afetch.o<br />
-GEN esl-afetch<br />
-CC esl-alimanip.o<br />
-In file included from /home/fenglei/local/include/assert.h:5:0,<br />
-from esl-alimanip.c:8:<br />
-/home/fenglei/local/include/except.h:5:44: fatal error: config.h: No such file or directory<br />
-#include  /* For HAVE_PTHREAD */<br />
-^<br />
-compilation terminated.<br />
-make[2]: *** [Makefile:123: esl-alimanip.o] Error 1<br />
-make[2]: Leaving directory ‘/home/fenglei/local/app/infernal/easel/miniapps’<br />
-make[1]: *** [Makefile:377: all] Error 2<br />
-make[1]: Leaving directory ‘/home/fenglei/local/app/infernal/easel’<br />
-make: *** [Makefile:103: all] Error 2</p>
-<p>原因： 现在较新的内核已经弃用了config.h，把这个文件新建上去即可。 解决办法：执行命令（注意路径的不同）：</p>
-<p>cd easel<br />
-vi config.h</p>
-<p>在vi界面输入下述内容，随后保存退出。</p>
-<p>#ifndef _LINUX_CONFIG_H<br />
- #define _LINUX_CONFIG_H<br />
- #endif</p>
-<p>随后成功安装。</p>
-<p>make &amp;&amp; make install</p>
-<p>参考资料 <a target="_blank" rel="noopener" href="http://2013-caltech-workshop.readthedocs.io/en/latest/prokka-annotation.html">http://2013-caltech-workshop.readthedocs.io/en/latest/prokka-annotation.html</a> <a target="_blank" rel="noopener" href="https://lzw.me/a/linux-config-no-such-file-or-directory.html/comment-page-1#comment-80998">https://lzw.me/a/linux-config-no-such-file-or-directory.html/comment-page-1#comment-80998</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1136,7 +1125,7 @@ vi config.h</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">184</span>
+          <span class="site-state-item-count">185</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1181,7 +1170,7 @@ vi config.h</p>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

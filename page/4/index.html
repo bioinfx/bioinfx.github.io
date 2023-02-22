@@ -189,6 +189,144 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/17/Bioinfo-LTR-identification-and-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/17/Bioinfo-LTR-identification-and-analysis/" class="post-title-link" itemprop="url">Bioinfo | LTR identification and analysis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-17 02:22:18" itemprop="dateCreated datePublished" datetime="2021-07-17T02:22:18+08:00">2021-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-27 11:08:06" itemprop="dateModified" datetime="2021-07-27T11:08:06+08:00">2021-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在植物基因组中，I 类转座因子，LTR-RT（LTR retrotransposons）是基因组扩张的主要原因。完整的LTR长度在 85 – 5000 bp 之间，下图表示的是一个完整的 LTR-RT，灰色框表示 TSD（target site duplications）, 红色三角形表示 LTR motif（长度在 2 bp 左右），蓝色框表示 LTR。LTR 中间序列长度在 1,000 – 15,000 之间波动。</p>
+<p>完整的LTR-RT主要归为两大类: Gypsy 和 Copia。如果 LTR 中间的序列不包含开放阅读框（ORF）, 那么所属的 LTR-RT 就无法独立的转座。</p>
+<p><img src="https://i.imgur.com/pDbuH66.jpeg" alt="" /></p>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
+<p>LTR_retriever 不是一个独立的工具，他的主要作用就是整合 LTRharvest, LTR_FINDER, MGEScan 3.0.0, LTR_STRUC, 和 LtrDetector 的结果，过滤其中的假阳性 LTR-RT，得到高质量的LTR-RT库。</p>
+<p>先下载 LTR_retriever：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/oushujun/LTR_retriever.git</span><br></pre></td></tr></table></figure>
+<p>之后修改 LTR_retriever 下的 paths, 提供 BLAST+, RepeatMasker， HMMER， CDHIT 这些工具的路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BLAST+=/your_path_to/BLAST+2.2.30/bin/</span><br><span class="line">RepeatMasker=/your_path_to/RepeatMasker4.0.0/</span><br><span class="line">HMMER=/your_path_to/HMMER3.1b2/bin/</span><br><span class="line">CDHIT=/your_path_to/CDHIT4.6.1/</span><br><span class="line">BLAST=/your_path_to/BLAST2.2.26/bin/ #not required if CDHIT provided</span><br></pre></td></tr></table></figure>
+<p>下面是我实际操作中填写的案例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 1 ##This file will provide LTR_retriever paths to dependent programs.</span><br><span class="line"> 2 ##You can leave the respective paths empty if programs are accessible through ENV (i.e. exported to .bashrc)</span><br><span class="line"> 3 ##If you specify a path, please make sure that the required program(s) is directly contained in that path but not in any child directories.</span><br><span class="line"> 4 ##e.g. BLAST+=/opt/software/BLAST+/2.2.30--GCC-4.4.5/bin/</span><br><span class="line"> 5 ##LTR_retriever is build based on GenomeTools/1.5.4, BLAST+/2.2.28, BLAST/2.2.26, CDHIT/4.6.1c, HMMER/3.1b2, RepeatMasker/4.0.0 and Tandem Repeats Finder 4.07b</span><br><span class="line"> 6 </span><br><span class="line"> 7 BLAST+=/home/fenglei/local/app/blast-2.11.0/bin     #a path that contains makeblastdb, blastn, blastx</span><br><span class="line"> 8 RepeatMasker=/home/fenglei/local/app/RepeatMasker   #a path that contains RepeatMasker</span><br><span class="line"> 9 HMMER=/home/fenglei/local/bin       #a path that contains hmmsearch</span><br><span class="line">10 CDHIT=/home/fenglei/local/app/cdhit     #a path that contains cd-hit-est (preferred). CDHIT and BLAST are replaceable</span><br><span class="line">11 BLAST=      #a path that contains blastclust (optional)</span><br></pre></td></tr></table></figure>
+<p>更加方便的安装方法用 Bioconda 安装好 cd-hit repeatmasker， 然后下载 LTR_retriever:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conda create -n LTR_retriever</span><br><span class="line">source activate LTR_retriever</span><br><span class="line">conda install -c conda-forge perl perl-text-soundex</span><br><span class="line">conda install -c bioconda cd-hit</span><br><span class="line">conda install -c bioconda/label/cf201901 repeatmasker</span><br><span class="line"></span><br><span class="line">git clone https://github.com/oushujun/LTR_retriever.git</span><br><span class="line">./LTR_retriever/LTR_retriever -h</span><br></pre></td></tr></table></figure>
+<p>此外还需要额外安装 LTRharvest, LTR_FINDER 和 MGEScan_LTR。</p>
+<p>LTRharverst: <a target="_blank" rel="noopener" href="http://genometools.org/">http://genometools.org/</a><br />
+LTR_FINDER: <a target="_blank" rel="noopener" href="https://github.com/xzhub/LTR_Finder">https://github.com/xzhub/LTR_Finder</a><br />
+LTR_FINDER_parallel: <a target="_blank" rel="noopener" href="https://github.com/oushujun/LTR_FINDER_parallel">https://github.com/oushujun/LTR_FINDER_parallel</a><br />
+修改版MGEScan_LTR: <a target="_blank" rel="noopener" href="http://dawgpaws.sourceforge.net">http://dawgpaws.sourceforge.net</a></p>
+<p>由于MGEScan_LTR装起来比我想象中麻烦，所以本文就仅使用LTRharverst和LTR_FINDER</p>
+<h3 id="使用篇"><a class="markdownIt-Anchor" href="#使用篇"></a> 使用篇</h3>
+<p>尽管 LTR_retriever 支持多个 LTR 工具的输入，但其实上 LTRharverst 和 LTR_FINDER 的结果就已经很不错了。</p>
+<p>以拟南芥的基因组序列为例，分别使用 LTRharverst 和 LTR_FINDER 来寻找拟南芥中潜在 LTR 序列，之后用 LTR_retreiver 来合并结果。<br />
+注意，也可以用 LTR-finder-parallel，应该会更快。</p>
+<p>注意：LTRharvest 输出的结果中会将染色体名称成数字编号，可能会对后续分析造成问题。Unfortunately, LTRharvest has an annoying habit of not using the scaffold/chromosome names you give it (it outputs scaffolds as “seqX” where X is the 0-base number of your scaffold), so I remove all scaffolds in my fasta file, remove newline (“\n”) characters, and add a single scaffold name so that getting the fasta sequence for regions in the output gff3 is painless. 有人的解决方案是将自己的基因组手动拼成一条序列，因为只需要找LTR序列而已。 This is useful if you just want the distribution of insertion times of your LTRs, but if you need location information you’ll either have to rerun LTRharvest with the regular fasta, or use the length of each scaffold to figure out the real scaffold from your concatenated fasta.</p>
+<p>20210719 备注：经过测试，LTRharvest输出的scn文件虽然有上面提到的问题，但是对后续导入LTR-retriever的整合分析不会造成影响。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># LTRharvest</span><br><span class="line">gt suffixerator \</span><br><span class="line">  -db TAIR10.fa \</span><br><span class="line">  -indexname TAIR10 \</span><br><span class="line">  -tis -suf -lcp -des -ssp -sds -dna</span><br><span class="line">gt ltrharvest \</span><br><span class="line">  -index TAIR10 \</span><br><span class="line">  -similar 90 -vic 10 -seed 20 -seqids yes \</span><br><span class="line">  -minlenltr 100 -maxlenltr 7000 -mintsd 4 -maxtsd 6 \</span><br><span class="line">  -motif TGCA -motifmis 1  &gt; TAIR10.harvest.scn &amp;</span><br><span class="line"></span><br><span class="line"># LTR_FINDER</span><br><span class="line"># ltr_finder -D 15000 -d 1000 -L 7000 -l 100 -p 20 -C -M 0.9 TAIR10.fa &gt; TAIR10.finder.scn &amp;</span><br><span class="line">~/local/app/LTR_FINDER_parallel/LTR_FINDER_parallel -seq genome.fasta -threads 10 -harvest_out -size 1000000 -time 300</span><br></pre></td></tr></table></figure>
+<p>LTR_retriever支持单个候选的LTR：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LTR_retriever -genome TAIR10.fa -inharvest TAIR10.harvest.scn</span><br></pre></td></tr></table></figure>
+<p>也支持多个候选LTR输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LTR_retriever -genome TAIR10.fa -inharvest TAIR10.harvest.scn -infinder TAIR10.finder.scn -threads 20</span><br></pre></td></tr></table></figure>
+<p>输出文件如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">(base) [fenglei@localhost 20210719_LTR_retriever_test]$ LTR_retriever -genome genome.fasta -inharvest genome.fasta.rawLTR.scn -threads 10</span><br><span class="line"></span><br><span class="line">##########################</span><br><span class="line">### LTR_retriever v2.9.0 ###</span><br><span class="line">##########################</span><br><span class="line"></span><br><span class="line">Contributors: Shujun Ou, Ning Jiang</span><br><span class="line"></span><br><span class="line">For LTR_retriever, please cite:</span><br><span class="line"></span><br><span class="line">        Ou S and Jiang N (2018). LTR_retriever: A Highly Accurate and Sensitive Program for Identification of Long Terminal Repeat Retrotransposons. Plant Physiol. 176(2): 1410-1422.</span><br><span class="line"></span><br><span class="line">For LAI, please cite:</span><br><span class="line"></span><br><span class="line">        Ou S, Chen J, Jiang N (2018). Assessing genome assembly quality using the LTR Assembly Index (LAI). Nucleic Acids Res. 2018;46(21):e126.</span><br><span class="line"></span><br><span class="line">Parameters: -genome genome.fasta -inharvest genome.fasta.rawLTR.scn -threads 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:09:05 CST 2021    Dependency checking: All passed!</span><br><span class="line">Mon Jul 19 09:09:24 CST 2021    LTR_retriever is starting from the Init step.</span><br><span class="line">Mon Jul 19 09:09:26 CST 2021    Start to convert inputs...</span><br><span class="line">                                Total candidates: 1110</span><br><span class="line">                                Total uniq candidates: 1045</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:09:28 CST 2021    Module 1: Start to clean up candidates...</span><br><span class="line">                                Sequences with 10 missing bp or 0.8 missing data rate will be discarded.</span><br><span class="line">                                Sequences containing tandem repeats will be discarded.</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:09:48 CST 2021    950 clean candidates remained</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:09:48 CST 2021    Modules 2-5: Start to analyze the structure of candidates...</span><br><span class="line">                                The terminal motif, TSD, boundary, orientation, age, and superfamily will be identified in this step.</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:16:20 CST 2021    Intact LTR-RT found: 230</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:16:24 CST 2021    Module 6: Start to analyze truncated LTR-RTs...</span><br><span class="line">                                Truncated LTR-RTs without the intact version will be retained in the LTR-RT library.</span><br><span class="line">                                Use -notrunc if you don&#x27;t want to keep them.</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:16:24 CST 2021    66 truncated LTR-RTs found</span><br><span class="line">Mon Jul 19 09:16:41 CST 2021    29 truncated LTR sequences have added to the library</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:16:41 CST 2021    Module 5: Start to remove DNA TE and LINE transposases, and remove plant protein sequences...</span><br><span class="line">                                Total library sequences: 355</span><br><span class="line">Mon Jul 19 09:18:52 CST 2021    Retained clean sequence: 348</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:18:52 CST 2021    Sequence clustering for genome.fasta.ltrTE ...</span><br><span class="line">Mon Jul 19 09:18:52 CST 2021    Unique lib sequence: 347</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:18:55 CST 2021    Module 6: Start to remove nested insertions in internal regions...</span><br><span class="line">Mon Jul 19 09:27:23 CST 2021    Raw internal region size (bit): 961029</span><br><span class="line">                                Clean internal region size (bit): 912840</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:27:24 CST 2021    Sequence number of the redundant LTR-RT library: 659</span><br><span class="line">                                The redundant LTR-RT library size (bit): 1422033</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:27:24 CST 2021    Module 8: Start to make non-redundant library...</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:27:27 CST 2021    Final LTR-RT library entries: 342</span><br><span class="line">                                Final LTR-RT library size (bit): 1025212</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:27:27 CST 2021    Total intact LTR-RTs found: 206</span><br><span class="line">                                Total intact non-TGCA LTR-RTs found: 43</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:27:28 CST 2021    Start to annotate whole-genome LTR-RTs...</span><br><span class="line">                                Use -noanno if you don&#x27;t want whole-genome LTR-RT annotation.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">######################################</span><br><span class="line">### LTR Assembly Index (LAI) beta3.2 ###</span><br><span class="line">######################################</span><br><span class="line"></span><br><span class="line">Developer: Shujun Ou</span><br><span class="line"></span><br><span class="line">Please cite:</span><br><span class="line"></span><br><span class="line">Ou S., Chen J. and Jiang N. (2018). Assessing genome assembly quality using the LTR Assembly Index (LAI). Nucleic Acids Res. gky730: https://doi.org/10.1093/nar/gky730</span><br><span class="line"></span><br><span class="line">Parameters: -genome genome.fasta -intact genome.fasta.pass.list -all genome.fasta.out -t 10 -q -blast /home/fenglei/local/app/blast-2.11.0/bin/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:32:57 CST 2021    Dependency checking: Passed!</span><br><span class="line">Mon Jul 19 09:32:57 CST 2021    Calculation of LAI will be based on the whole genome.</span><br><span class="line">                                Please use the -mono parameter if your genome is a recent ployploid, for high identity between homeologues will overcorrect raw LAI scores.</span><br><span class="line">Mon Jul 19 09:32:57 CST 2021    Estimate the identity of LTR sequences in the genome: quick mode</span><br><span class="line">Mon Jul 19 09:33:08 CST 2021    The identity of LTR sequences: 93.5158904793606%</span><br><span class="line">Mon Jul 19 09:33:08 CST 2021    Calculate LAI:</span><br><span class="line"></span><br><span class="line">                                                Done!</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:33:11 CST 2021    Result file: genome.fasta.out.LAI</span><br><span class="line"></span><br><span class="line">                                You may use either raw_LAI or LAI for intraspecific comparison</span><br><span class="line">                                but please use ONLY LAI for interspecific comparison</span><br><span class="line"></span><br><span class="line">Mon Jul 19 09:33:11 CST 2021    All analyses were finished!</span><br><span class="line"></span><br><span class="line">##############################</span><br><span class="line">####### Result files #########</span><br><span class="line">##############################</span><br><span class="line"></span><br><span class="line">Table output for intact LTR-RTs (detailed info)</span><br><span class="line">        genome.fasta.pass.list (All LTR-RTs)</span><br><span class="line">        genome.fasta.nmtf.pass.list (Non-TGCA LTR-RTs)</span><br><span class="line">        genome.fasta.pass.list.gff3 (GFF3 format for intact LTR-RTs)</span><br><span class="line"></span><br><span class="line">LTR-RT library</span><br><span class="line">        genome.fasta.LTRlib.redundant.fa (All LTR-RTs with redundancy)</span><br><span class="line">        genome.fasta.LTRlib.fa (All non-redundant LTR-RTs)</span><br><span class="line">        genome.fasta.nmtf.LTRlib.fa (Non-TGCA LTR-RTs)</span><br><span class="line"></span><br><span class="line">Whole-genome LTR-RT annotation by the non-redundant library</span><br><span class="line">        genome.fasta.LTR.gff3 (GFF3 format)</span><br><span class="line">        genome.fasta.out.fam.size.list (LTR family summary)</span><br><span class="line">        genome.fasta.out.superfam.size.list (LTR superfamily summary)</span><br><span class="line"></span><br><span class="line">LTR Assembly Index (LAI)</span><br><span class="line">        genome.fasta.out.LAI</span><br></pre></td></tr></table></figure>
+<h3 id="ltr-rts-insertion-time"><a class="markdownIt-Anchor" href="#ltr-rts-insertion-time"></a> LTR-RTs insertion time</h3>
+<p>根据LTR-RT的结构特点，即插入基因组新位置之后，反转录转座子的两端的LTR会独立进化，各自积累突变，计算出他们之间的遗传距离与进化时间，就可推断基因组里面大量LTR-RT出现的规律。“LTR-RTs are a case where we can exploit biology to provide insight into larger processes. LTR-RTs are a class of retrotransposon with long terminal repeats, which are identical upon insertion at the beginning and end of the TE’s sequence. Over time, mutations accumulate in these terminal repeats, roughly following a molecular clock. This allows us to more or less count the differences between the two LTRs of a LTR-RT, and calculate the time (in generations ago) it was inserted. If we do this for all LTR-RTs in a genome, we get a distribution of insertion times, and shifts in this distribution can tell us about the history of TE activity and/or selective pressures against TEs in our favourite species or between species.”</p>
+<p>计算LTR插入时间可以参考：<a target="_blank" rel="noopener" href="https://github.com/SIWLab/Lab_Info/wiki/Ageing-LTR-insertions">https://github.com/SIWLab/Lab_Info/wiki/Ageing-LTR-insertions</a></p>
+<p>按照上面的流程，运行LTRretriever之后得到一系列文件，其中genome.fasta.pass.list.gff3是最终的LTR列表，包含三种类型：Copia、Gypsy和unknown。一般文献会分别统计Copia、Gypsy和non-autonomous这三个类型的LTR。那么non-autonomous是否就是unknown呢？我将这个gff3文件导入IGV浏览器，发现unknown LTR的特点就是具有双端LTR结构，但是中间区域很短，意味着其很可能不具备gag和pol序列，无法独立执行这个转座子单元的反转录的过程。</p>
+<p><img src="https://i.imgur.com/AAVN4k5.jpeg" alt="" /></p>
+<p>下截图所示，是gff3的文件内容，每个LTR-RT一般有6行，第3和第5行就是两端的LTR区域，将这两行提取出来，存入一个文件。我写了一个Perl脚本，逐个LTR-RT分别存入新的文件，每个文件两行，比如LTR_1.gff3、LTR_2.gff3、LTR_3.gff3 …… 然后基于这些gff3文件，用bedtools分别提取fasta序列，再用muscle软件做序列比对（注意muscle软件只能按照两条序列自然的方向作比较，他不会考虑两条序列是否反向之后匹配更好，当然，LTR-RT的两端的LTR序列本来就是方向一致的，所以不用担心。），muscle输出对齐的fasta格式文件，然后运用程序计算双端LTR之间的距离K，再依据 T=K/(2r) 公式就能推测到插入时间。将“插入时间”数据统一存入一个文本，导入R，用ggplot2的geom_histogram功能就可以得到下面的图。</p>
+<p>上面公式中r的意思是“synonymous nucleotide substitution rate”，“r is the average substitution rate, taken as the Ks value estimated above”，<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1456784/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1456784/</a>，7e-9 substitutions/site/year, with standard deviation of 2.6e−9, was used as the rate of synonymous substitutions ®. 根据这篇文章，豆科的平均替换率是7e-9 substitutions/site/year，我在我研究的物种中也用这个数值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#########################################################################</span><br><span class="line"># File Name: ltr.sh</span><br><span class="line"># Author: fenglei</span><br><span class="line"># Mail: fengleiluck@gmail.com</span><br><span class="line"># Created Time: Wed 21 Jul 2021 01:57:33 PM CST</span><br><span class="line">#########################################################################</span><br><span class="line">#!/usr/bin/bash</span><br><span class="line">set -e</span><br><span class="line">set -u</span><br><span class="line">set -o pipefail</span><br><span class="line"></span><br><span class="line">for IN in `find ./loop/ -name &quot;LTR*.gff3&quot;`; do</span><br><span class="line">        echo [`date +&quot;%Y-%m-%d %H:%M:%S&quot;`] &quot;   * processing $IN&quot;</span><br><span class="line">        path=$&#123;IN%/*&#125;    #  ./loop/LTR_85.gff3 -&gt; ./loop</span><br><span class="line">        file=$&#123;IN##*/&#125;   #  ./loop/LTR_85.gff3 -&gt; LTR_85.gff3</span><br><span class="line">        name=$&#123;file%.*&#125;  #  LTR_85.gff3 -&gt; LTR_85</span><br><span class="line">        # cat genome.fasta.finder.combine.scn genome.fasta.harvest.scn_new &gt;genome.fasta.rawLTR.scn </span><br><span class="line">        # awk &#x27;NR == 9 || NR == 11&#x27; genome.fasta.pass.list.gff3 &gt; LTR_1.gff3</span><br><span class="line">        # bedtools getfasta -fi genome.fasta -bed LTR_1.gff3 &gt; $&#123;name&#125;.fasta </span><br><span class="line">        bedtools getfasta -fi genome.fasta -bed $IN &gt; ./loop/$&#123;name&#125;.fasta</span><br><span class="line">        ~/local/app/muscle3.8.31/muscle3.8.31_i86linux64 -in ./loop/$&#123;name&#125;.fasta -out ./loop/$&#123;name&#125;.afa</span><br><span class="line">        # cat LTR_1.pair_diff</span><br><span class="line">        python ../../20210720_LTR_evolution/LTR_pairwise_differences.py --input ./loop/$&#123;name&#125;.afa --output ./loop/$&#123;name&#125;.pair_diff</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/Xkpiivl.jpeg" alt="" /></p>
+<p>附画图R语言代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">setwd(&quot;C://R-data&quot;)</span><br><span class="line">ltr &lt;- read.table(&quot;Arabidopsis_LTR.txt&quot;, head=F)</span><br><span class="line">head(ltr)</span><br><span class="line">colnames(ltr) &lt;- c(&quot;locus&quot;, &quot;K&quot;, &quot;T&quot;)</span><br><span class="line">head(ltr$locus)</span><br><span class="line">ltr$newT &lt;- ltr$T/1000000</span><br><span class="line">head(ltr)</span><br><span class="line">ggplot() +</span><br><span class="line">  geom_histogram(data=ltr, aes(x=newT), fill=&quot;#0570c0&quot;, colour=&quot;black&quot;) +</span><br><span class="line">  theme_bw() +</span><br><span class="line">  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = &quot;black&quot;)) +</span><br><span class="line">  theme(axis.text.x = element_text(size = 15, color = &quot;black&quot;, vjust = 0.5 , hjust = 0.5, angle = 0)) +</span><br><span class="line">  theme(axis.text.y = element_text(color = &quot;black&quot;, size = 15)) +</span><br><span class="line">  ylab(&quot;Copy Number&quot;) +</span><br><span class="line">  xlab(&quot;Insertion time (Myr)&quot;) +</span><br><span class="line">  #ggtitle(&quot;4DTv density of paralogs gene pairs in legumes&quot;) +</span><br><span class="line">  theme(axis.title.y = element_text(size = 18, color = &quot;black&quot;)) +</span><br><span class="line">  theme(axis.title.x = element_text(size = 18, color = &quot;black&quot;))</span><br></pre></td></tr></table></figure>
+<h3 id="ltr-rts-系统发生树"><a class="markdownIt-Anchor" href="#ltr-rts-系统发生树"></a> LTR-RTs 系统发生树</h3>
+<ol>
+<li>genome.fasta.pass.list.gff3 文件，用bedtools提取对应的LTR-RT的完整DNA序列。</li>
+<li>一个LTR-RT中有多个蛋白质domain，如何提取这些domain？用TEsorter可以轻松实现，TEsorter用conda即可安装，我在python3.7环境下安装的。得到不同功能域（GAG、INT、RT、RH……）的氨基酸序列。<br />
+（一开始不知道TEsorter存在，自己用blastx和hmmer尝试，效果都不理想）</li>
+<li>通过cdhit软件进行序列聚类，将高度近似或相同的序列归类，大大减少下一步比对的序列数目。我从2800聚集成400多条序列。</li>
+<li>序列比对。可以用mafft或muscle。我用这windows版本的MEGA软件，MEGA X 内置muscle，，运行数秒即可得到下图。</li>
+</ol>
+<p><img src="https://i.imgur.com/WMphP1J.jpeg" alt="" /></p>
+<ol start="5">
+<li>直接在MEGA软件里面选择系统进化分析，选择ML（Maximum Likelihood），其余参数默认，运行很快就得到下图。</li>
+</ol>
+<p><img src="https://i.imgur.com/ksgYYlM.jpeg" alt="" /></p>
+<ol start="6">
+<li>
+<p>上面的树，导出为Newick格式（.nwk），然后可以用其他软件来美化这个进化树。注意导出的时候可以设定是否导出树枝长度，若不选，那么出来的树就是类似二叉树的形象，树枝都是一样的长度。</p>
+</li>
+<li>
+<p>用Figtree软件打开这个树，可以美化。参考资料 <a target="_blank" rel="noopener" href="https://www.omicsclass.com/article/62">https://www.omicsclass.com/article/62</a>. 比如某个分支需要加颜色背景，就需要点击目录上方的“clade”按钮，接下来点击树枝，就能选中那个分支，再点击目录上方的“Hilight”按钮，就可以设置颜色背景，效果图像如下！</p>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/FNCS9nl.jpeg" alt="" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/29/Bioinfo-Gene-Ontology-Enrichment-Analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1249,102 +1387,6 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/Bioinfo-understanding-sequence-identity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/16/Bioinfo-understanding-sequence-identity/" class="post-title-link" itemprop="url">Bioinfo | 怎么理解序列一致性（Sequence identity）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-16 12:06:40" itemprop="dateCreated datePublished" datetime="2021-03-16T12:06:40+08:00">2021-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-18 09:38:48" itemprop="dateModified" datetime="2021-03-18T09:38:48+08:00">2021-03-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>序列一致性（Sequence identity）是评估两个序列相似度的一个参考值，不同的软件可能会有不通过的计算方法。下面的案例摘抄自 <a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">Heng Li’s blog</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CCAGTGTGGCCGATACCCCAGGTTGGCACGCATCGTTGCCTTGGTAAGC</span><br><span class="line">CCAGTGTGGCCGATGCCCGTGCTACGCATCGTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
-<p>经典的方法是先对两个序列做比对，并且设置打分规则：匹配 match=1，错配 mismatch=-2，缺失 gapOpen=-2，缺失延伸 gapExt=-1。依据这个打分规则，上述两条序列的最佳比对结果如下。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  1 CCAGTGTGGCCGATaCCCcagGTtgGC-ACGCATCGTTGCCTTGGTAAGC 49</span><br><span class="line">         |||||||||||||| |||   ||  || ||||||||||||||||||||||</span><br><span class="line">Qry+:  1 CCAGTGTGGCCGATgCCC---GT--GCtACGCATCGTTGCCTTGGTAAGC 45</span><br></pre></td></tr></table></figure>
-<p>Here we have 43 matching bases, 1 mismatch, 5 deletions and 1 insertion to the first/Ref sequence. The <a target="_blank" rel="noopener" href="https://www.drive5.com/usearch/manual/cigar.html">CIGAR</a> is 18M3D2M2D2M1I22M. CIGAR 的定义： Concise Idiosyncratic Gapped Alignment Report，上面的CIGAR值可翻译为：18 matches，3 deletions，2 matches，2 matches，1 deletions，22 mathces。</p>
-<h3 id="不考虑-gap-的序列一致性"><a class="markdownIt-Anchor" href="#不考虑-gap-的序列一致性"></a> 不考虑 Gap 的“序列一致性”</h3>
-<p>如果不考虑 Gap，则只考虑匹配 Match 和错配 Mismatch。序列一致性等于 “#matches / (#matches + #mismatches)” = 43/(43+1) = 97.7%。这里的序列一致性并没有考虑 Gap，有一定局限性，早期基因组相关报道中提到的“大猩猩基因组与人类基因组的相似程度为98%”应该就是这种情况。摘抄：An obvious problem with this definition is that it doesn’t count gaps. However, it is an often used definition. We may hear that the chimpanzee and human genome differ by a couple of percent. Here we are referring to such gap-excluded identity. The exact sentence in the first chimpanzee genome paper is “Single-nucleotide substitutions occur at a mean rate of 1.23% between copies of the human and chimpanzee genome”.</p>
-<h3 id="考虑-gap-的序列一致性以-blast-为例"><a class="markdownIt-Anchor" href="#考虑-gap-的序列一致性以-blast-为例"></a> 考虑 Gap 的“序列一致性”（以 BLAST 为例）</h3>
-<p>BLAST 中对序列一致性的算法是最常见的算法，序列一致性等于匹配数 43（matchings bases）除以比对区间总长度 50，得到 86%。需要指出，虽然 Ref 序列的长度是 49，但是总比对长度却是 50（就是要多加 1 个插入碱基的长度）。局限在于，虽然考虑的 Gap 的存在，但是没有考虑 Gap 是否连续。一个连续的 Gap，与若干个分散的 Gap，如果总长度一样，计算得到的序列一致性也一样，这种计算方法就有不够科学的地方。原作者举例，如果一个 query 序列长度为 1000bp，比对到参考序列上面发现中间有连续 300bp 是 insertion 导致的 Gap，这个情况下序列一致性为 (1000-300)/1000 = 70%，这个结果会被过滤掉，而在进化（evolution）的过程中，这个连续的 300bp 可能只是一次序列插入事件，而非 300 次独立的单碱基插入事件。BLAST identity is defined as the number of matching bases over the number of alignment columns. In this example, there are 50 columns, so the identity is 43/50=86%. In a SAM file, the number of columns can be calculated by summing over the lengths of M/I/D CIGAR operators. The number of matching bases equals the column length minus the NM tag. Here is a Perl one-liner to calculate BLAST identity:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $l=0; $l+=$1 while/(\d+)[MID]/g; print(($l-$n)/$l,&quot;\n&quot;)&#125;&#x27;</span><br><span class="line"># Where variable $n is the sum of mismatches and gaps and $l is the alignment length. </span><br><span class="line">#In the PAF format, column 10 divived by column 11 gives the BLAST identity.</span><br></pre></td></tr></table></figure>
-<p>核酸序列比对程序 BLASTN 可以输出 SAM 格式结果，如下所示。上面的 Perl 命令行即可以读取包含“NM:i:[\d+]”的行，NM即$1=17；识别M、I、D 字符对应的数字，相同字母对应的数值分别累加，累加之后分别为 match，M=551；insertion，I=5；deletion，D=9。那么序列一致性等于 (M+I+D-NM)/(M+I+D)=(565-17)/565=97%。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@HD     VN:1.2  SO:coordinate   GO:reference</span><br><span class="line">@SQ     SN:Query_1      LN:916</span><br><span class="line">@PG     ID:0    VN:2.9.0+       CL:blastn -db /home/fenglei/database/Glycine_max/Gmax_275_Wm82_a2.v1/index/genome.fa -query GNAT_mutate.fa -out GNAT_mutate.fa-BLASTN-Wm82-275.m17 -outfmt 17 -window_size 10 -word_size 10     PN:blastn</span><br><span class="line">Chr02   0       Query_1 1       255     2929886H24M3D83M3D83M3D83M3D291M3I13M2I57M45646980H     *       0       0       *       *       AS:i:591        EV:f:0  NM:i:17 PI:f:100.00     BS:f:1092.49</span><br></pre></td></tr></table></figure>
-<h3 id="压缩-gap-的序列一致性以-minimap2-为例"><a class="markdownIt-Anchor" href="#压缩-gap-的序列一致性以-minimap2-为例"></a> 压缩 Gap 的“序列一致性”（以 minimap2 为例）</h3>
-<p>上文提到，连续若干个碱基的 Gap 可能是进化过程中单次插入导致的，那么可以通过压缩 Gap 将上述序列比对转化成下面的情形。Gap 的数目没有变化，但是长度全部变为 1，这样总长度也发生了变化。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Ref+:  CCAGTGTGGCCGATaCCCcGTtGCTACGCATC-TTGCCTTGGTAAGC</span><br><span class="line">       |||||||||||||| ||| || |||||||||| ||||||||||||||</span><br><span class="line">Qry+:  CCAGTGTGGCCGATgCCC-GT-GCTACGCATCgTTGCCTTGGTAAGC</span><br></pre></td></tr></table></figure>
-<p>Gap 压缩之后的序列一致性为 43/(50-2-1)=91.5%。对于比对软件 minimap2，即是采用这种算法。下面是Perl 命令计算一致性数值的例子。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -ane &#x27;if(/NM:i:(\d+)/)&#123;$n=$1; $m=$g=$o=0; $m+=$1 while/(\d+)M/g; $g+=$1,++$o while/(\d+)[ID]/g; print(1-($n-$g+$o)/($m+$o),&quot;\n&quot;)&#125;&#x27;</span><br><span class="line">#where $m is the sum of M operations, $g the sum of I and D operations and $o the number of gap opens.</span><br></pre></td></tr></table></figure>
-<p>参考资料</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="http://lh3.github.io/2018/11/25/on-the-definition-of-sequence-identity">On the definition of sequence identity</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9539f44ecf61">怎样定义 sequences 比对的相似度</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55324279">知乎专栏：序列一致性</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1416,7 +1458,7 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">185</span>
+          <span class="site-state-item-count">186</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -9500,4 +9500,29 @@ A semicolon-separated list of tag-value pairs, providing additional information 
         <category>Life</category>
       </categories>
   </entry>
+  <entry>
+    <title>Linux | 无 root 权限安装 tmux</title>
+    <url>/2023/02/22/install-tmux-without-root-permission/</url>
+    <content><![CDATA[<p>tmux（terminal multiplexer）是 Linux 上的终端复用神器。办公室网络连接机房的 Linux 服务器，网络经常开小差掉线，如果使用tmux，就可以在网络重连之后继续之前的操作页面。我没有该服务器的 root 权限，所以只能安装在用户目录下。</p>
+<span id="more"></span>
+<h3 id="安装-tmux"><a class="markdownIt-Anchor" href="#安装-tmux"></a> 安装 tmux</h3>
+<p>下载tmux安装包及其依赖软件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget -c https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz</span><br><span class="line">wget -c https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz</span><br><span class="line">wget -c https://ftp.gnu.org/gnu/ncurses/ncurses-6.3.tar.gz</span><br></pre></td></tr></table></figure>
+<p>先安装依赖，再安装tmux。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#libevent</span><br><span class="line">./configure --prefix=/data3/home/fenglei/local --disable-shared</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">#ncurses</span><br><span class="line">./configure --prefix=--prefix=/data3/home/fenglei/local</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">#tmux</span><br><span class="line">./configure CFLAGS=&quot;-I/my/path/tmux_depend/include -I/my/path/tmux_depend/include/ncurses&quot; LDFLAGS=&quot;-L/my/path/tmux_depend/lib -L/my/path/tmux_depend/include/ncurses -L/my/path/tmux_depend/include&quot; --prefix=/data3/home/fenglei/local</span><br><span class="line"></span><br><span class="line">./configure CFLAGS=&quot;-I/data3/home/fenglei/local/include -I/data3/home/fenglei/local/include/ncurses&quot; LDFLAGS=&quot;-L/data3/home/fenglei/local/lib -L/data3/home/fenglei/local/include/ncurses -L/data3/home/fenglei/local/include&quot; --prefix=/data3/home/fenglei/local</span><br><span class="line"></span><br><span class="line">#CPPFLAGS=&quot;-I/my/path/tmux_depend//include -I/my/path/tmux_depend//include/ncurses&quot; LDFLAGS=&quot;-static -L/my/path/tmux_depend//include -L/my/path/tmux_depend//include/ncurses -L/my/path/tmux_depend//lib&quot;   ## 我没有运行这条命令</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">cp tmux  /data3/home/fenglei/local/bin</span><br></pre></td></tr></table></figure>
+<p>设置环境变量。在 <code>~/.bashrc</code> 中添加此内容：<code>export PATH=/data3/home/fenglei/local/bin:$PATH</code>。</p>
+<h3 id="使用-tmux"><a class="markdownIt-Anchor" href="#使用-tmux"></a> 使用 tmux</h3>
+<p>我常用的命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tmux    # 在客户端启动tmux，一般会以“0、1、2、3”这样的顺序命名会话，也可以自命名</span><br><span class="line">exit    # 在 tmux 界面退出</span><br><span class="line">tmux ls # 在客户端查看当前存在的会话列表</span><br><span class="line">tmux attach -t 0 # 在客户端进入“0”号tmux（假如网络断开，就用这个命令重新进入之前的操作界面。）</span><br></pre></td></tr></table></figure>
+<p>如果需要保存当前的tmux会话，就先按下“Crtl + b”，松开按键再按一下“d”（就是deattach的意思），下次就可以用 <code>tmux attach -t mysession</code> 这样的命令重新进入会话界面。</p>
+<p>更多的操作可查阅下面的参考资料。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a href="https://www.cnblogs.com/jessepeng/p/12452169.html">https://www.cnblogs.com/jessepeng/p/12452169.html</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
 </search>

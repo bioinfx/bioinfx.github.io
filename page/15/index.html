@@ -189,6 +189,286 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/28/Bioinfo-RNA-seq-QC-by-kraken/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/28/Bioinfo-RNA-seq-QC-by-kraken/" class="post-title-link" itemprop="url">RNA Seq转录组测序质控工具：Kraken</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-28 19:53:06" itemprop="dateCreated datePublished" datetime="2016-02-28T19:53:06+08:00">2016-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="kraken-a-set-of-tools-for-quality-control-and-analysis-of-high-throughput-sequence-data"><a class="markdownIt-Anchor" href="#kraken-a-set-of-tools-for-quality-control-and-analysis-of-high-throughput-sequence-data"></a> Kraken: A set of tools for quality control and analysis of high-throughput sequence data</h2>
+<p>Matthew P.A. Davis, Stijn van Dongen, Cei Abreu-Goodger, Nenad Bartonicek and Anton J. Enright <em>Methods (2013) - Volume 63, Issue 1, 1 September 2013, Pages 41–49</em></p>
+<h3 id="11-october-2013"><a class="markdownIt-Anchor" href="#11-october-2013"></a> <strong>11 October 2013</strong></h3>
+<h3 id="version-13-274-of-kraken-has-been-released-in-the-form-of-seqimp-13-274tgz-and-reaper-13-274tgz-see-below-this-fixes-the-following-bugs"><a class="markdownIt-Anchor" href="#version-13-274-of-kraken-has-been-released-in-the-form-of-seqimp-13-274tgz-and-reaper-13-274tgz-see-below-this-fixes-the-following-bugs"></a> <strong>Version 13-274 of Kraken has been released, in the form of seqimp-13-274.tgz and reaper-13-274.tgz (see below). This fixes the following bugs:</strong></h3>
+<ul>
+<li>Versions 2.14 and 3.0 of R contain a bug in the RUtils package. This is affecting how the Kraken tools pass options to R. The R developers are aware and are fixing this bug. The previous version of Kraken (13-095) will not work with these versions of R.</li>
+<li>Tally would hang indefinitely on very small input files, due to a missed check on unrealistically small hash sizes.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/" class="post-title-link" itemprop="url">无root权限安装Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-26 16:21:28" itemprop="dateCreated datePublished" datetime="2016-02-26T16:21:28+08:00">2016-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>RedHat系统自带python2.6，一些用户程序的要求python2.7以上，但是2.6版本的python不能随便删除，因为系统程序会用到。 可以在用户目录下安装python2.7 方法： 1.安装python</p>
+<blockquote>
+<p>Python ： <a target="_blank" rel="noopener" href="http://www.python.org/getit/">http://www.python.org/getit/</a></p>
+<p>cd $HOME/local/app/</p>
+<p>tar -zxvf Python-2.7.11.tgz</p>
+<p>mv  Python-2.7.11 python</p>
+<p>cd python</p>
+<p>./configure –-prefix=<strong>$HOME/local</strong>（你准备安装的路径，可自己更改）</p>
+<p>make &amp;&amp; make install</p>
+</blockquote>
+<p>2. 将指定路径下的lib和bin分别加入环境变量中：</p>
+<blockquote>
+<p>echo “PYTHONPATH=$HOME/local/lib/python2.7/site-packages” &gt;&gt; .bashrc</p>
+<p>echo “export PATH=<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mi>O</mi><mi>M</mi><mi>E</mi><mi mathvariant="normal">/</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">/</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi mathvariant="normal">/</mi><mi>p</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>n</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">HOME/local/app/python:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord">/</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal">c</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord">/</span><span class="mord mathnormal">a</span><span class="mord mathnormal">p</span><span class="mord mathnormal">p</span><span class="mord">/</span><span class="mord mathnormal">p</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord mathnormal">t</span><span class="mord mathnormal">h</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>PATH” &gt;&gt; .bashrc</p>
+<p>source ~/.bashrc</p>
+</blockquote>
+<p>这样就实现了在没有root权限的情况下安装python的模块。 3. 如何在无root权限下安装python模块呢？ 按照上面的方法安装python之后，再安装setuptools，（即easy_install），从而可以使用easy_install来自动安装python包。</p>
+<blockquote>
+<p>tar -zxvf setuptools-0.6c11.tar.gz</p>
+<p>cd setuptools-0.6c11</p>
+<p>/your_python_dir/bin/python2.7 <a target="_blank" rel="noopener" href="http://setup.py">setup.py</a> build</p>
+<p>/your_python_dir/bin/python2.7 <a target="_blank" rel="noopener" href="http://setup.py">setup.py</a> install</p>
+</blockquote>
+<p>4. 安装其他python模块/套件 先使用easy_install安装pip工具：</p>
+<blockquote>
+<p>easy_install pip</p>
+</blockquote>
+<p>在安裝python套件的时候用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 查看目前已有的模块：</p>
+<blockquote>
+<p>pip list</p>
+</blockquote>
+<p>pip查看需要更新的package</p>
+<blockquote>
+<p>pip list --outdated</p>
+</blockquote>
+<h3 id="下面是更详细的pip介绍"><a class="markdownIt-Anchor" href="#下面是更详细的pip介绍"></a> 下面是更详细的pip介绍：</h3>
+<h3 id="pip安装"><a class="markdownIt-Anchor" href="#pip安装"></a> pip安装</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/02/26/%E6%97%A0root%E6%9D%83%E9%99%90%E5%AE%89%E8%A3%85python/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/02/25/Python-pbh5tools-pacbio-rawdata-convert/" class="post-title-link" itemprop="url">python套件 pbh5tools: PacBio rawdata 格式轉換</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-02-25 21:58:46" itemprop="dateCreated datePublished" datetime="2016-02-25T21:58:46+08:00">2016-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2016-09-06更新：pbh5tools是PacBio公司早期推出的数据分析工具，其后已经被SMRTanalysis工具所替换。SMRTanalysis的安装与使用都更简单，Linux安装之后可以直接在网页里面进行数据分析操作。 ====================================== 转载自：<a target="_blank" rel="noopener" href="http://jeffreyy.pixnet.net/">http://jeffreyy.pixnet.net/</a> PacBio 是第三代定序技術 (Third generation sequencing)的技術公司，目前的最新機型為RSII，最長長度可到30kb。 出來的rawdata其檔案格式為hdf5，其中有兩種，一個是bas.h5和bax.h5，其PacBio的文件有寫到以下: “Due to the increased throughput and read lengths achieved by the PacBio® RS II upgrade, this information is now contained in one bas.h5 file and three bax.h5 files.” <a target="_blank" rel="noopener" href="http://files.pacb.com/software/instrument/2.0.0/bas.h5%20Reference%20Guide.pdf">http://files.pacb.com/software/instrument/2.0.0/bas.h5 Reference Guide.pdf</a> hdf5 格式並無法直接觀看，如果要看序列，必須要經過格式轉換，PacBio有出一個軟體為pbh5tools來進行hdf5的格式轉換。   pbh5tools是以python寫的套件，所以安裝前需要安裝其他python套件，在安裝python套件用pip比較好，pip會兼顧各個依存的套件版本，少用easy-install。 <a target="_blank" rel="noopener" href="http://blog.longwin.com.tw/2014/08/python-setup-pip-package-2014/">安裝 PIP 來管理 Python Packages</a> 除了python套件外，其他的套件還有python-devel 和 hdf5與其相關套件。   其安裝其他requirement套件指令為:</p>
+<blockquote>
+<p><code>sudo yum install python-pip python-devel.x86_64 hdf5-devel.x86_64 hdf5.x86_64 hdf5-mpich-devel.x86_64 hdf5-mpich.x86_64 hdf5-openmpi.x86_64 hdf5-openmpi-devel.x86_64</code> # 上述yum指令，对于没有root权限的Linux用户，该如何解决？？？（FL 2016-02-06备注） <code>sudo pip install --upgrade pip sudo pip install --upgrade nose sudo pip install --upgrade Cython sudo pip install --upgrade numpy sudo pip install --upgrade six sudo pip install --upgrade setuptools sudo pip install --upgrade pkgconfig sudo pip install --upgrade pysam sudo pip install --upgrade h5py sudo pip install --upgrade pbcore</code></p>
+</blockquote>
+<p>其中，pbcore需要python 2.7，故如果系統為python 2.6又無法利用yum升級上去，就必須手動安裝python 2.7，並注意需雙版本依存。 參考資料: <a target="_blank" rel="noopener" href="http://ruiaylin.github.io/2014/12/12/python%20update/">http://ruiaylin.github.io/2014/12/12/python update/</a> <a target="_blank" rel="noopener" href="https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only">https://github.com/h2oai/h2o-2/wiki/Installing-python-2.7-on-centos-6.3.-Follow-this-sequence-exactly-for-centos-machine-only</a> <a target="_blank" rel="noopener" href="http://toomuchdata.com/2014/02/16/how-to-install-python-on-centos/">How to install Python 2.7 and Python 3.3 on CentOS 6</a> <a target="_blank" rel="noopener" href="http://tecadmin.net/install-python-2-7-on-centos-rhel/">How to Install Python 2.7.10 on CentOS/RHEL 7/6 and Fedora</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Bioinfo-pacbio-sequencing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,278 +1217,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/11/linux-safety-by-restricted-ip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/11/linux-safety-by-restricted-ip/" class="post-title-link" itemprop="url">Linux系统安全策略（IP限定）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-11 20:38:53" itemprop="dateCreated datePublished" datetime="2015-12-11T20:38:53+08:00">2015-12-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1-禁止系统响应任何从外部内部来的ping请求"><a class="markdownIt-Anchor" href="#1-禁止系统响应任何从外部内部来的ping请求"></a> 1. 禁止系统响应任何从外部/内部来的ping请求</h4>
-<p>攻击者一般首先通过ping命令检测此主机或者IP是否处于活动状态，如果能够ping通 某个主机或者IP，那么攻击者就认为此系统处于活动状态，继而进行攻击或破坏。如果没有人能ping通机器并收到响应，那么就可以大大增强服务器的安全性，linux下可以执行如下设置，禁止ping请求：</p>
-<p>[root@localhost ~]#echo “1”&gt; /proc/sys/net/ipv4/icmp_echo_ignore_all</p>
-<p>默认情况下“icmp_echo_ignore_all”的值为“0”，表示响应ping操作。 可以加上面的一行命令到/etc/rc.d/rc.local文件中，以使每次系统重启后自动运行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/12/11/linux-safety-by-restricted-ip/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/07/%E7%A1%AC%E5%AE%9E%E7%A7%8D%E5%AD%90%E7%9A%84%E5%A4%84%E7%90%86%E4%B8%8E%E5%82%AC%E8%8A%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/07/%E7%A1%AC%E5%AE%9E%E7%A7%8D%E5%AD%90%E7%9A%84%E5%A4%84%E7%90%86%E4%B8%8E%E5%82%AC%E8%8A%BD/" class="post-title-link" itemprop="url">硬实种子的处理与催芽</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-07 20:38:44" itemprop="dateCreated datePublished" datetime="2015-12-07T20:38:44+08:00">2015-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>1.1热水浸种 分别用始温70度、80度、90度、1OO度浸泡硬实种子。24h观测浸种效果，发现1O0度水浸泡对硬实有较好的软化作用，但对正常种子的伤害较大;90度水既能软化种皮又对种子伤害较小，相对效果较好，但仍有一小部分硬实不能吸胀;70度水对硬实种皮软化效果差，但能使非硬实种子免受伤害。由于刺槐种子硬实和非硬实混杂，建议生产上采用逐次增温的方法处理其种子，这样效果最好。即先用始温7O度热水浸种24h,将吸胀种子筛选出催芽，未吸胀种子用始温90度水浸种24h，选出吸胀种子催芽，最后对未吸胀种子用1OO度水温处理，亦能获得较好的发芽结果。 在浸种时，种子与水的容积比以1:3为宜。将热水倒入盛种子的容器中，不断搅拌使其自然冷却。浸种过程中，要每隔12h换1次冷水。 1.2酸蚀种子 用98%浓硫酸分别处理硬实种子3Omin、2Omin、1Omin，浸种后摆盘进行发芽试验。结果表明，处理2Omin的效果最好，发芽率可达70%以上，活力指数也比较高。处理30分钟的发芽率次之，处理10min的发芽率最低。故用浓硫酸处理硬实种子时间以20min为佳。 2种子催芽 目前常用&quot;生豆芽&quot;法和层积催芽法，以层积催芽法效果好。把经过浸种的种子捞出，混以3倍湿沙(沙子的湿度为其饱和含水量的60%)。为了保持种子的湿度，上面要加覆盖物，再将种沙混合物放在温暖处催芽，并插入温度计，以观测催芽温度。刺槐种子一般在25度左右发芽快而整齐。如果超过35度，发芽受到抑制，因此，催芽的温度以不超过25度为宜。 转自：<a target="_blank" rel="noopener" href="http://www.ly.lf.gov.cn/ArticleShow.asp?ArticleID=2191">http://www.ly.lf.gov.cn/ArticleShow.asp?ArticleID=2191</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/25/linux-add-new-harddisks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/11/25/linux-add-new-harddisks/" class="post-title-link" itemprop="url">给linux工作站添加新硬盘</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-11-25 13:50:22" itemprop="dateCreated datePublished" datetime="2015-11-25T13:50:22+08:00">2015-11-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>作者：haohaoo 来自：CnLinux.net工作笔记 转载请保留以上信息，谢谢 在服务器上把硬盘接好，启动linux，以root登陆。 比如我新加一块SCSI硬盘，需要将其分成三个区：</p>
-<blockquote>
-<p>#fdisk /dev/sdb</p>
-<p>进入fdisk模式：</p>
-<p>Command (m for help):p  //查看新硬盘的分区（FL备注：如果是新硬盘，将显示分区为空。）</p>
-<p>Command (m for help):n  //创建新分区（FL备注：输入n命令，将自动出现e和p的选项。）</p>
-<p>可以用m命令来看fdisk命令的内部命令；n命令创建一个新分区；d命令删除一个存在的分区；p命令显示分区列表；t命令修改分区的类型ID号；l命令显示分区ID号的列表；a命令指定启动分区；w命令是将对分区表的修改存盘让它发生作用。</p>
-<p>Command action</p>
-<p>e   extended   //输入e为创建扩展分区</p>
-<p>p   primary partition (1-4)   //输入p为创建主分区，这里我们选择p</p>
-<p>Partion number(1-4)：1  //第一个扩展分区，按你需求可以最多分4个主分区</p>
-<p>First Cylinder(1-1014,default 1):  1  //第一个主分区起始的磁盘块数</p>
-<p>Last cylindet or +siza or +sizeM or +sizeK: +1024MB  //可以是以MB为单位的数字或者以磁盘块数，这里我们输入+1024MB表示分区大小为1G。（FL备注：系统默认提示整个硬盘的大小作为一个分区，比如我新增挂载2TB的硬盘，则显示“default 243201”，我直接输入回车就选择这个默认数值即可。）</p>
-</blockquote>
-<p>这样我们就创建完一个分区，如果要创建更多分区可以照上面的步骤继续创建。 创建完后用w保存分区。</p>
-<p>Command (m for help): w</p>
-<p>The partition table has been altered!</p>
-<p>Calling ioctl() to re-read partition table.</p>
-<p>Syncing disks.</p>
-<p>这样就分区完，我们还要进行格式化</p>
-<p>#mkfs -t ext3 -c /dev/sdb1  //如果有多个分区，则分区修改为sdb2这样<br />
-<em>（格式化2TB的硬盘，耗时约3小时。20151125 FL备注）</em></p>
-<p>格式化完后我们需要进行挂载分区，</p>
-<p>#mkdir /mnt/www //创建/www目录，我们将把新的分区挂到www下</p>
-<p>#mount /dev/sdb1 /mnt/www  //将/dev/sdb1挂载到/www</p>
-<p># df  //用df命令进行查看</p>
-<p>Filesystem           1K-blocks      Used Available Use% Mounted on</p>
-<p>/dev/sda2              3771316   1388956   2190788  39% /</p>
-<p>/dev/sda1               101089      9463     86407  10% /boot</p>
-<p>none                     62988         0     62988   0% /dev/shm</p>
-<p>/dev/sdb1               485906      8239    452580   2% /www  //看到了，这就是我们刚</p>
-<p>才新挂载的分区</p>
-<p>到这里我们工作已接近尾声了，不过我们如果这样就结束的话，我们每次重新启动服务器后都要 进行手工挂载，这样很麻烦，我们需要修改/etc/fstab文件来进行自动挂载。</p>
-<p>#vi /etc/fstab</p>
-<p>在文件的末尾填加如下内容：</p>
-<p>/dev/sdb1               /www                    ext3    defaults        1 2</p>
-<p>如有多个分区可修改sdb1和/www，修改完后保存，重起服务器。 到此我们添加新硬盘的工作结束了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1280,7 +1288,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

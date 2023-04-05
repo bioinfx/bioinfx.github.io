@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Ubuntu 挂载新硬盘，分区工具 parted 的详解及常用分区使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux | Ubuntu 挂载新硬盘，使用 parted 工具将其格式化为 XFS 格式">
+<meta property="og:url" content="http://example.com/2023/04/03/Adding_new_harddisk_to_Ubuntu/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="Ubuntu 挂载新硬盘，分区工具 parted 的详解及常用分区使用方法。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-03T04:22:18.000Z">
+<meta property="article:modified_time" content="2023-04-05T08:16:37.431Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/04/03/Adding_new_harddisk_to_Ubuntu/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux | Ubuntu 挂载新硬盘，使用 parted 工具将其格式化为 XFS 格式 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/03/Adding_new_harddisk_to_Ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux | Ubuntu 挂载新硬盘，使用 parted 工具将其格式化为 XFS 格式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-03 12:22:18" itemprop="dateCreated datePublished" datetime="2023-04-03T12:22:18+08:00">2023-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-05 16:16:37" itemprop="dateModified" datetime="2023-04-05T16:16:37+08:00">2023-04-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Ubuntu 挂载新硬盘，分区工具 parted 的详解及常用分区使用方法。</p>
+<span id="more"></span>
+<p>硬盘买回来一开始装在 Windows 系统里，当时已经在 windows 里面分成一个区。</p>
+<p>现在将硬盘更改位置装在 Ubuntu 机器里面之后，开机之后其可以自动挂载到 Ubuntu 的 media 目录下。用 fdisk 命令可看到该硬盘有两个分区，分别 sdb1 和 sdb2。</p>
+<p>我比较担心 Windows 系统格式化的硬盘可能会遇到格式问题？就想重新格式化成 Linux 使用的格式。</p>
+<p>原来分区工具有 fdisk 和 parted，分区格式则有 ext2、ext3、fat16、fat32、NTFS、ReiserFS、JFS、XFS、UFS、HFS 以及 Linux 交换分区。</p>
+<p>我的 Ubuntu 系统是 Ubuntu 20.04，计划用 parted 工具，将一个 12TB 的硬盘格式化成 xfs 格式，并做成一个分区，然后挂载在 Ubuntu 作为数据存储盘。</p>
+<h3 id="查看新硬盘"><a class="markdownIt-Anchor" href="#查看新硬盘"></a> 查看新硬盘</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root@fenglei-OptiPlex-990:~# fdisk -l</span><br><span class="line">。。。（省略若干内容）</span><br><span class="line">Disk /dev/sdb: 10.91 TiB, 12000138625024 bytes, 23437770752 sectors</span><br><span class="line">Disk model: ST12000VN0008-2Y</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line">I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 17860562-C2F9-4832-A505-00C29497C741</span><br><span class="line"></span><br><span class="line">Device     Start         End     Sectors  Size Type</span><br><span class="line">/dev/sdb1     34       32767       32734   16M Microsoft reserved</span><br><span class="line">/dev/sdb2  32768 23437766655 23437733888 10.9T Microsoft basic data</span><br><span class="line">。。。（省略若干内容）</span><br></pre></td></tr></table></figure>
+<h3 id="删除原来的分区"><a class="markdownIt-Anchor" href="#删除原来的分区"></a> 删除原来的分区</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ parted /dev/sdb rm 1</span><br><span class="line"># 删除分区号为 1 的分区</span><br><span class="line">$ parted /dev/sdb rm 2</span><br><span class="line"># 删除分区号为 2 的分区</span><br></pre></td></tr></table></figure>
+<h3 id="重新格式化"><a class="markdownIt-Anchor" href="#重新格式化"></a> 重新格式化</h3>
+<p>运行 mkfs.xfs /dev/sdb1，我电脑说没安装这个工具，所以还运行<code>apt install xfsprogs</code>安装它。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@fenglei-OptiPlex-990:~# mkfs.xfs /dev/sdb1</span><br><span class="line">meta-data=/dev/sdb1              isize=512    agcount=11, agsize=268435455 blks</span><br><span class="line">         =                       sectsz=4096  attr=2, projid32bit=1</span><br><span class="line">         =                       crc=1        finobt=1, sparse=1, rmapbt=0</span><br><span class="line">         =                       reflink=1    bigtime=0 inobtcount=0</span><br><span class="line">data     =                       bsize=4096   blocks=2929720832, imaxpct=5</span><br><span class="line">         =                       sunit=0      swidth=0 blks</span><br><span class="line">naming   =version 2              bsize=4096   ascii-ci=0, ftype=1</span><br><span class="line">log      =internal log           bsize=4096   blocks=521728, version=2</span><br><span class="line">         =                       sectsz=4096  sunit=1 blks, lazy-count=1</span><br><span class="line">realtime =none                   extsz=4096   blocks=0, rtextents=0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="查看格式化之后的硬盘"><a class="markdownIt-Anchor" href="#查看格式化之后的硬盘"></a> 查看格式化之后的硬盘</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@fenglei-OptiPlex-990:~# fdisk -l</span><br><span class="line">。。。（省略若干内容）</span><br><span class="line">Disk /dev/sdb: 10.91 TiB, 12000138625024 bytes, 23437770752 sectors</span><br><span class="line">Disk model: ST12000VN0008-2Y</span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 4096 bytes</span><br><span class="line">I/O size (minimum/optimal): 4096 bytes / 4096 bytes</span><br><span class="line">Disklabel type: gpt</span><br><span class="line">Disk identifier: 17860562-C2F9-4832-A505-00C29497C741</span><br><span class="line"></span><br><span class="line">Device     Start         End     Sectors  Size Type</span><br><span class="line">/dev/sdb1   2048 23437768703 23437766656 10.9T Linux filesystem</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="挂载硬盘"><a class="markdownIt-Anchor" href="#挂载硬盘"></a> 挂载硬盘</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@fenglei-OptiPlex-990:~# mount /dev/sdb1 /mnt/my_12TB_disk/</span><br><span class="line">root@fenglei-OptiPlex-990:~# df -h</span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">tmpfs           381M  3.3M  377M   1% /run</span><br><span class="line">/dev/sda3       457G   14G  421G   4% /</span><br><span class="line">tmpfs           1.9G     0  1.9G   0% /dev/shm</span><br><span class="line">tmpfs           5.0M  4.0K  5.0M   1% /run/lock</span><br><span class="line">/dev/sda2       512M  6.1M  506M   2% /boot/efi</span><br><span class="line">tmpfs           381M  2.4M  378M   1% /run/user/1000</span><br><span class="line">/dev/sdb1        11T   78G   11T   1% /mnt/my_12TB_disk</span><br></pre></td></tr></table></figure>
+<h3 id="设置开机自动挂载"><a class="markdownIt-Anchor" href="#设置开机自动挂载"></a> 设置开机自动挂载</h3>
+<p>获取要自动挂载的分区的UUID和分区类型TYPE</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sudo blkid</span><br><span class="line"></span><br><span class="line">root@fenglei-OptiPlex-990:/home/fenglei# sudo blkid</span><br><span class="line">/dev/sda3: UUID=&quot;9eb61ee0-0980-40f9-9e2c-463753c65203&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;11db8e86-aa98-4a24-ac92-4d394cf5f657&quot;</span><br><span class="line">/dev/loop1: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop8: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/sdb1: UUID=&quot;72ac6c8b-e0ae-4b23-ac7d-2cdc3f9f8050&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;xfs&quot; PARTLABEL=&quot;primary&quot; PARTUUID=&quot;54376b6d-cd0d-4c08-b36e-7471e33fc7e3&quot;</span><br><span class="line">/dev/loop6: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop4: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop2: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop0: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop9: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop7: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/sda2: UUID=&quot;A169-2504&quot; BLOCK_SIZE=&quot;512&quot; TYPE=&quot;vfat&quot; PARTLABEL=&quot;EFI System Partition&quot; PARTUUID=&quot;d51688b4-f1ea-414c-8905-0557a9b6297b&quot;</span><br><span class="line">/dev/loop5: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop3: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/loop10: TYPE=&quot;squashfs&quot;</span><br><span class="line">/dev/sda1: PARTUUID=&quot;bce3bf39-cf9a-466c-b040-f7395b1c03d1&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>显示信息如下，这里只摘出来一条，这条是我要挂载的硬盘。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/sdb1: UUID=&quot;72ac6c8b-e0ae-4b23-ac7d-2cdc3f9f8050&quot; BLOCK_SIZE=&quot;4096&quot; TYPE=&quot;xfs&quot; PARTLABEL=&quot;primary&quot; PARTUUID=&quot;54376b6d-cd0d-4c08-b36e-7471e33fc7e3&quot;</span><br></pre></td></tr></table></figure>
+<p>修改fstab文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>在最下面添加要挂载的盘，建议用uuid</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># /etc/fstab: static file system information.</span><br><span class="line">#</span><br><span class="line"># Use &#x27;blkid&#x27; to print the universally unique identifier for a</span><br><span class="line"># device; this may be used with UUID= as a more robust way to name devices</span><br><span class="line"># that works even if disks are added and removed. See fstab(5).</span><br><span class="line">#</span><br><span class="line"># &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;</span><br><span class="line"># / was on /dev/sda3 during curtin installation</span><br><span class="line">/dev/disk/by-uuid/55adsfad460-6cd2-4e26-a79f-5ba8351fafcf / ext4 defaults 0 0</span><br><span class="line"># /boot was on /dev/sda2 during curtin installation</span><br><span class="line">/dev/disk/by-uuid/d8asdf092-e938-47fc-bb5e-7010667bb3b3 /boot ext4 defaults 0 0</span><br><span class="line"># /boot/efi was on /dev/sda1 during curtin installation</span><br><span class="line">/dev/disk/by-uuid/5C76-6134 /boot/efi vfat defaults 0 0</span><br><span class="line">/swap.img       none    swap    sw      0       0</span><br><span class="line"></span><br><span class="line">UUID=&quot;72ac6c8b-e0ae-4b23-ac7d-2cdc3f9f8050&quot;     /mnt/my_12TB_disk       xfs     defaults        0       2</span><br><span class="line"># UUID=&quot;f69d03b0-9ba3-4553-98b8-756a3ec19a74&quot; /media/data1 ext4 defaults 0 2</span><br></pre></td></tr></table></figure>
+<p>fstab 中每个字段代表的含义，请参考本文末尾的参考资料 3。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p>主要参考下面第一篇文章进行的操作！</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lvzhenjiang/p/14391479.html">吕振江：分区工具 parted 的详解及常用分区使用方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55159881">Linux xfs 和 ext4 的区别</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5adb37efd478">Ubuntu 20.04 开机自动挂载硬盘</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/28/Setting_Vim/" rel="prev" title="Linux | Vim 的设置">
+      <i class="fa fa-chevron-left"></i> Linux | Vim 的设置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/05/PBS-job-submission/" rel="next" title="Linux | PBS作业管理系统使用技巧">
+      Linux | PBS作业管理系统使用技巧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%B0%E7%A1%AC%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text"> 查看新硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%8E%9F%E6%9D%A5%E7%9A%84%E5%88%86%E5%8C%BA"><span class="nav-number">2.</span> <span class="nav-text"> 删除原来的分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text"> 重新格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B9%8B%E5%90%8E%E7%9A%84%E7%A1%AC%E7%9B%98"><span class="nav-number">4.</span> <span class="nav-text"> 查看格式化之后的硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98"><span class="nav-number">5.</span> <span class="nav-text"> 挂载硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="nav-number">6.</span> <span class="nav-text"> 设置开机自动挂载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -189,6 +189,314 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/28/Bioinfo-Using-Circos-for-genome-visualization/" class="post-title-link" itemprop="url">Bioinfo | Using Circos for genome visualization</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-28 11:40:21" itemprop="dateCreated datePublished" datetime="2021-05-28T11:40:21+08:00">2021-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-03 21:11:14" itemprop="dateModified" datetime="2021-06-03T21:11:14+08:00">2021-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>circos 是以环形展示基因组序列和注释信息的工具，我首先按照 circos 官网的指引进行手动安装，即手动逐个安装 Perl 模块，最后再安装 circos 文件，但是卡在 GD 库，没法成功运行 circos。但是换了一台服务器，进入 anaconda3 下面的 python3.7 环境，直接用 conda 不到一分钟就成功安装 circos。</p>
+<p>First, understand the <a target="_blank" rel="noopener" href="http://circos.ca/software/requirements">requirements</a>. If you are a Windows user, read about pertinent differences between UNIX and Windows.</p>
+<p><a target="_blank" rel="noopener" href="http://circos.ca/software/download">Download</a> and <a target="_blank" rel="noopener" href="http://circos.ca/software/install">install</a> the software, then follow the <a target="_blank" rel="noopener" href="http://circos.ca/documentation/tutorials">tutorials</a>.</p>
+<h3 id="installing-perl-modules"><a class="markdownIt-Anchor" href="#installing-perl-modules"></a> Installing Perl modules</h3>
+<p>安装 Circos 的第一步，安装 Perl 以及相关的若干 Perl 模块。我 Linux 系统自带的 Perl，进入命令行界面时报错（<code>perl -MCPAN -e shell</code> Can’t locate <a target="_blank" rel="noopener" href="http://CPAN.pm">CPAN.pm</a> in @INC），所以我先尝试自己安装的 Perl，即 anaconda3/python37 里面的 Perl v5.26.2，但是在安装 Params::Validate 包时候无法通过。我再次尝试系统默认的 Perl v5.16.3，先安装 CPAN，再逐个安装包，成功安装 Params::Validate。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">perl --version</span><br><span class="line"># This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br><span class="line">perl --version</span><br><span class="line">This is perl 5, version 16, subversion 3 (v5.16.3) built for x86_64-linux-thread-multi</span><br><span class="line">perl -MCPAN -e shell</span><br><span class="line"></span><br><span class="line">Config::General (v2.50 or later)</span><br><span class="line">Font::TTF</span><br><span class="line">GD</span><br><span class="line">List::MoreUtils</span><br><span class="line">Math::Bezier</span><br><span class="line">Math::Round</span><br><span class="line">Math::VecStat</span><br><span class="line">Params::Validate (自动安装失败，尝试手动安装)</span><br><span class="line">Readonly</span><br><span class="line">Regexp::Common</span><br><span class="line">Set::IntSpan (v1.16 or later)</span><br><span class="line">Text::Format</span><br></pre></td></tr></table></figure>
+<p>安装 Params::Validate 的过程中，同时安装了下列 Perl 模块。均是模块安装包下载之后解压，进入模块目录后依次运行 <code>perl Makefile.PL</code>，<code>make Makefile</code>，<code>make install Makefile</code> 即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.30.tar.gz</span><br><span class="line"># wget http://search.cpan.org/CPAN/authors/id/D/DR/DROLSKY/Params-Validate-0.95.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/E/ET/ETHER/Module-Metadata-1.000037.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/L/LE/LEONT/version-0.9929.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/IPC-Cmd-1.04.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Params-Check-0.38.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/J/JE/JESSE/Locale-Maketext-Simple-0.21.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-0.74.tar.gz</span><br><span class="line">wget https://cpan.metacpan.org/authors/id/B/BI/BINGOS/Module-Load-0.36.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="installing-libpng-freetype-libgd-and-gd"><a class="markdownIt-Anchor" href="#installing-libpng-freetype-libgd-and-gd"></a> INSTALLING libpng, freetype, libgd AND gd</h3>
+<p>About half of the support questions in the Google Group are about installing Perl’s GD module, which is the interface to the libgd system graphics library.</p>
+<p>The installation process is not robust because of dependencies and the possibility of their being different versions of these dependencies on your system. Below I show the process of installing GD on a new Mac OS Mavericks system (10.9.4).</p>
+<p>Below I link to my local copies of the versions of each library that I installed. These are mature libraries and newer versions are likely to be minor bug releases. The exception is GD—I was unable to successfully compile v2.56 (boot_GD symbol warning which I could not fix). However v2.53 worked.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libpng-1.6.14.tar.gz</span><br><span class="line">&gt; cd libpng-1.6.14</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz jpegsrc.v9.tar.gz</span><br><span class="line">&gt; cd jpeg-9</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; tar xvfz freetype-2.4.0.tar.gz</span><br><span class="line">&gt; cd freetype-2.4.0</span><br><span class="line">&gt; ./configure —prefix=/usr/local</span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
+<p>You should now have libraries in /usr/local/lib as we as some header files in /usr/local/include.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   650336 21 Nov 11:15 libfreetype.6.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  3676456 21 Nov 11:15 libfreetype.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       19 21 Nov 11:15 libfreetype.dylib -&gt; libfreetype.6.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      957 21 Nov 11:15 libfreetype.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   275736 21 Nov 11:14 libjpeg.9.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1492952 21 Nov 11:14 libjpeg.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       15 21 Nov 11:14 libjpeg.dylib -&gt; libjpeg.9.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      920 21 Nov 11:14 libjpeg.la</span><br><span class="line">lrwxr-xr-x  1 root  wheel       10 21 Nov 11:13 libpng.a -&gt; libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       14 21 Nov 11:13 libpng.dylib -&gt; libpng16.dylib</span><br><span class="line">lrwxr-xr-x  1 root  wheel       11 21 Nov 11:13 libpng.la -&gt; libpng16.la</span><br><span class="line">-rwxr-xr-x  1 root  wheel   240580 21 Nov 11:13 libpng16.16.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1077240 21 Nov 11:13 libpng16.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       17 21 Nov 11:13 libpng16.dylib -&gt; libpng16.16.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel      924 21 Nov 11:13 libpng16.la</span><br><span class="line">drwxr-xr-x  6 root  wheel      204 21 Nov 11:15 pkgconfig/</span><br></pre></td></tr></table></figure>
+<p>Now install libgd, linking to the libraries installed above</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz libgd-2.1.0.tar.gz</span><br><span class="line">&gt; cd libgd-2.1.0</span><br><span class="line">&gt; ./configure --with-png=/usr/local --with-freetype=/usr/local --with-jpeg=/usr/local --prefix=/usr/local</span><br><span class="line">./configure --with-png=/home/fenglei/local --with-freetype=/home/fenglei/local --with-jpeg=/home/fenglei/local --prefix=/home/fenglei/local</span><br><span class="line">…</span><br><span class="line">** Configuration summary for libgd 2.1.0:</span><br><span class="line"></span><br><span class="line">   Support for Zlib:                 yes</span><br><span class="line">   Support for PNG library:          yes</span><br><span class="line">   Support for JPEG library:         yes</span><br><span class="line">   Support for VPX library:          no</span><br><span class="line">   Support for TIFF library:         no</span><br><span class="line">   Support for Freetype 2.x library: yes</span><br><span class="line">   Support for Fontconfig library:   no</span><br><span class="line">   Support for Xpm library:          no</span><br><span class="line">   Support for pthreads:             yes</span><br><span class="line">…</span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br></pre></td></tr></table></figure>
+<p>You now have libgd in /usr/local/lib</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rwxr-xr-x  1 root  wheel   389372 19 Nov 14:47 libgd.3.dylib</span><br><span class="line">-rw-r--r--  1 root  wheel  1217200 19 Nov 14:47 libgd.a</span><br><span class="line">lrwxr-xr-x  1 root  wheel       13 19 Nov 14:47 libgd.dylib -&gt; libgd.3.dylib</span><br><span class="line">-rwxr-xr-x  1 root  wheel     1139 19 Nov 14:47 libgd.la</span><br></pre></td></tr></table></figure>
+<p>as well as some binaries in /usr/local/bin. In particular, you have /usr/local/bin/glib-config, which provides the configuration for your libgd installation</p>
+<p>The --with-* parameters during the configure stage of gdlib installation sets the sources of the dependencies that will be build into gdlib. If you used a different -prefix in compiling these dependencies (see above), adjust these parameters accordingly. For example, if you compiled libpng with -prefix=/my/path then use --with-png=/my/path/.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/bin/gdlib-config --all</span><br><span class="line"></span><br><span class="line">GD library  2.1.0</span><br><span class="line">includedir: /usr/local/include</span><br><span class="line">cflags:     -I/usr/local/include</span><br><span class="line">ldflags:     -L/usr/local/lib</span><br><span class="line">libs:       -ljpeg -lz  -L/usr/local/lib -lpng16 -L/usr/local/lib -lfreetype -lz -liconv</span><br><span class="line">libdir:     /usr/local/lib</span><br><span class="line">features:   GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
+<p>由于我安装的 gd 时候是配置到了用户目录下，所以得到下面的信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GD library  2.1.0</span><br><span class="line">includedir: /home/fenglei/local/include</span><br><span class="line">cflags:     -I/home/fenglei/local/include</span><br><span class="line">ldflags:     -L/home/fenglei/local/lib</span><br><span class="line">libs:       -ljpeg -lz -lm  -L/home/fenglei/local/lib -lpng16 -L/home/fenglei/local/lib -lfreetype -lz -lfontconfig -lfreetype   -lfontconfig -lXpm -lX11   /home/fenglei/local/lib/libiconv.so -Wl,-rpath -Wl,/home/fenglei/local/lib</span><br><span class="line">libdir:     /home/fenglei/local/lib</span><br><span class="line">features:   GD_XPM GD_JPEG GD_FONTCONFIG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br></pre></td></tr></table></figure>
+<p>You must have GD_FREETYPE and GD_PNG for Circos to run. The other features, such as support for JPEG and TIFF are optional. In this example, I’ve included the JPEG library in the installation.</p>
+<p>Now, install the Perl interface to libgd — the GD module.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt; tar xvfz GD-2.53.tar.gz</span><br><span class="line">&gt; perl Makefile.PL</span><br><span class="line"></span><br><span class="line">Configuring for libgd version 2.1.0.</span><br><span class="line">Checking for stray libgd header files...none found.</span><br><span class="line"></span><br><span class="line">Included Features:          GD_JPEG GD_FREETYPE GD_PNG GD_GIF GD_GIFANIM GD_OPENPOLYGON</span><br><span class="line">GD library used from:       /usr/local</span><br><span class="line">Checking if your kit is complete...</span><br><span class="line">Looks good</span><br><span class="line">Writing Makefile for GD</span><br><span class="line">Writing MYMETA.yml and MYMETA.json</span><br><span class="line"></span><br><span class="line">During the installation GD will look for libgd-config (see above) for libgd configuration. </span><br><span class="line"></span><br><span class="line">&gt; make</span><br><span class="line">&gt; make install</span><br><span class="line"></span><br><span class="line">&gt; perl -MGD -e &#x27;print $GD::VERSION,”\n”’</span><br><span class="line">&gt; 2.53</span><br></pre></td></tr></table></figure>
+<p>Test that the modules are installed using</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos --modules</span><br><span class="line">…</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.53 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.39 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">wget http://circos.ca/distribution/circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">./bin/circos --modules</span><br><span class="line"></span><br><span class="line">ok       1.26 Carp</span><br><span class="line">missing            Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.40 Cwd</span><br><span class="line">ok      2.145 Data::Dumper</span><br><span class="line">ok       2.52 Digest::MD5</span><br><span class="line">ok       2.84 File::Basename</span><br><span class="line">ok       3.40 File::Spec::Functions</span><br><span class="line">ok     0.2301 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">missing            GD</span><br><span class="line">missing            GD::Polyline</span><br><span class="line">ok        2.4 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.430 List::MoreUtils</span><br><span class="line">ok       1.27 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok      1.997 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok       1.02 Memoize</span><br><span class="line">ok       1.30 POSIX</span><br><span class="line">ok       1.30 Params::Validate</span><br><span class="line">ok       1.63 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">missing            SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">missing            Statistics::Basic</span><br><span class="line">ok       2.45 Storable</span><br><span class="line">ok       1.16 Sys::Hostname</span><br><span class="line">ok       2.02 Text::Balanced</span><br><span class="line">ok       0.62 Text::Format</span><br><span class="line">ok     1.9725 Time::HiRes</span><br></pre></td></tr></table></figure>
+<p>Install missing packages</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cpan -i SVG</span><br><span class="line">cpan -i Clone</span><br><span class="line">cpan -i Statistics::Basic</span><br></pre></td></tr></table></figure>
+<h3 id="以上做完依然报错"><a class="markdownIt-Anchor" href="#以上做完依然报错"></a> 以上做完依然报错</h3>
+<p>运行 <code>circos --mudules</code> 显示 GD 模块缺失。（已经分别安装 libgd 和 Perl 的 GD 模块，为什么circos还是显示没有 GD 模块？）</p>
+<h3 id="使用-conda-安装-circos"><a class="markdownIt-Anchor" href="#使用-conda-安装-circos"></a> 使用 conda 安装 circos</h3>
+<p>换一台服务器，<code>source activate python37</code> 切换成 python3.7 环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; which perl</span><br><span class="line">~/local/app/anaconda3/envs/python37/bin/perl</span><br><span class="line">&gt; perl --version</span><br><span class="line">This is perl 5, version 26, subversion 2 (v5.26.2) built for x86_64-linux-thread-multi</span><br></pre></td></tr></table></figure>
+<p>再运行 <code>conda install -c bioconda circos</code> 顺利安装！下面是模块测试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost ~]$ circos --modules</span><br><span class="line">ok       1.38 Carp</span><br><span class="line">ok       0.42 Clone</span><br><span class="line">ok       2.63 Config::General</span><br><span class="line">ok       3.75 Cwd</span><br><span class="line">ok      2.167 Data::Dumper</span><br><span class="line">ok       2.55 Digest::MD5</span><br><span class="line">ok       2.85 File::Basename</span><br><span class="line">ok       3.67 File::Spec::Functions</span><br><span class="line">ok     0.2304 File::Temp</span><br><span class="line">ok       1.51 FindBin</span><br><span class="line">ok       0.39 Font::TTF::Font</span><br><span class="line">ok       2.71 GD</span><br><span class="line">ok        0.2 GD::Polyline</span><br><span class="line">ok       2.49 Getopt::Long</span><br><span class="line">ok       1.16 IO::File</span><br><span class="line">ok      0.428 List::MoreUtils</span><br><span class="line">ok     1.4602 List::Util</span><br><span class="line">ok       0.01 Math::Bezier</span><br><span class="line">ok   1.999806 Math::BigFloat</span><br><span class="line">ok       0.07 Math::Round</span><br><span class="line">ok       0.08 Math::VecStat</span><br><span class="line">ok    1.03_01 Memoize</span><br><span class="line">ok       1.76 POSIX</span><br><span class="line">ok       1.29 Params::Validate</span><br><span class="line">ok       1.69 Pod::Usage</span><br><span class="line">ok       2.05 Readonly</span><br><span class="line">ok 2017060201 Regexp::Common</span><br><span class="line">ok       2.84 SVG</span><br><span class="line">ok       1.19 Set::IntSpan</span><br><span class="line">ok     1.6611 Statistics::Basic</span><br><span class="line">ok       2.62 Storable</span><br><span class="line">ok       1.20 Sys::Hostname</span><br><span class="line">ok       2.03 Text::Balanced</span><br><span class="line">ok       0.59 Text::Format</span><br><span class="line">ok     1.9741 Time::HiRes</span><br></pre></td></tr></table></figure>
+<p>再以 circos 自带的案例做画图测试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wget http://circos.ca/distribution/circos-0.69-9.tgz</span><br><span class="line">tar -zxvf circos-0.69-9.tgz</span><br><span class="line">cd circos-0.69-9</span><br><span class="line">cd example</span><br><span class="line"># 在 example 目录下有名为 run 的脚本：../bin/circos -conf etc/circos.conf -debug_group summary,timer &gt; run.out</span><br><span class="line"># 由于我调用的是 anaconda3 里面的 circos，所以用下面的命令，几秒钟即可运行完毕，顺利得到 circos.svg &amp; circos.png 图。</span><br><span class="line">circos -conf etc/circos.conf -debug_group summary,timer &gt; run.out</span><br></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/ZkOgjPN.jpg" alt="example/circos.png" /></p>
+<p>注：<br />
+另一台服务器上，通过 conda 可以安装 circos，但是运行的时候报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; circos</span><br><span class="line">perl: symbol lookup error: /home/fenglei/perl5/lib/perl5/x86_64-linux-thread-multi/auto/Clone/Clone.so: undefined symbol: Perl_xs_apiversion_bootcheck</span><br></pre></td></tr></table></figure>
+<p>看来是 Perl 环境变量的问题。</p>
+<p>Circos 的文件结构如下图所示，conf 文件即图片属性设置，txt 文件就是统计数据，circos 将二者的结合就是图片。</p>
+<p><img src="http://qiubio.com/wp-content/uploads/2011/11/circos-architecture.png" alt="" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/23/Bioinfo-Repeat-sequence-analysis-by-RepeatExplorer2-with-TAREAN-Tandem-Repeat-Analyzer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/23/Bioinfo-Repeat-sequence-analysis-by-RepeatExplorer2-with-TAREAN-Tandem-Repeat-Analyzer/" class="post-title-link" itemprop="url">Bioinfo | Repeat sequence analysis by RepeatExplorer2 with TAREAN (Tandem Repeat Analyzer)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-23 12:01:58 / Modified: 12:24:09" itemprop="dateCreated datePublished" datetime="2021-04-23T12:01:58+08:00">2021-04-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>学习重复序列的过程中，读到2019年发表在《Mobile DNA》杂志的文献 “Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification”。</p>
+<p>文中提到 We have established an improved classification system applicable to LTR-retrotransposons from a wide range of plant species. This system reflects phylogenetic relationships as well as distinct sequence and structural features of the elements. A comprehensive database of retrotransposon protein domains (REXdb) that reflects this classification provides a reference for efficient and unified annotation of LTR-retrotransposons in plant genomes. Access to REXdb related tools is implemented in the RepeatExplorer web server (<a target="_blank" rel="noopener" href="https://repeatexplorer-elixir.cerit-sc.cz/">https://repeatexplorer-elixir.cerit-sc.cz/</a>) or using a standalone version of REXdb that can be downloaded seaparately from RepeatExplorer web page (<a target="_blank" rel="noopener" href="http://repeatexplorer.org/">http://repeatexplorer.org/</a>).</p>
+<p>A comprehensive database of retrotransposon protein domains (REXdb) that reflects this classification provides a reference for efficient and unified annotation of LTR-retrotransposons in plant genomes.</p>
+<h3 id="installation"><a class="markdownIt-Anchor" href="#installation"></a> Installation</h3>
+<p>To use RepeatExplorer without installation, we recommend our freely available Galaxy server at <a target="_blank" rel="noopener" href="https://repeatexplorer-elixir.cerit-sc.cz">https://repeatexplorer-elixir.cerit-sc.cz</a>. This server is provided in frame of the ELIXIR-CZ project. The Galaxy server includes also additional tools useful for data preprocessing, quality control and genome annotation.</p>
+<p>For installing command-line version, follow the instruction below:</p>
+<p>Download source code using git command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://bitbucket.org/petrnovak/repex_tarean.git</span><br><span class="line">cd repex_tarean</span><br></pre></td></tr></table></figure>
+<p>We recommend to install dependencies using conda (conda can be installed using miniconda). The required environment can be prepared using command:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env create -f environment.yml</span><br></pre></td></tr></table></figure>
+<p>Then activate the prepared environment using:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate repeatexplorer</span><br></pre></td></tr></table></figure>
+<p>In the repex_tarean direcory compile the source and prepare databases using:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<p><s>Support for 32-bit executables is required. If you are using Ubuntu distribution you can add 32-bit support by running:</s></p>
+<p><s>sudo dpkg --add-architecture i386</s><br />
+<s>sudo apt-get update</s><br />
+<s>sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386</s></p>
+<p>To verify the installation, run RepeatExplorer clustering on the provided example data:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./seqclust -p -v tmp/clustering_output test_data/LAS_paired_10k.fas</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/16/Plant-Chromatin-immunoprecipitation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/16/Plant-Chromatin-immunoprecipitation/" class="post-title-link" itemprop="url">Plant | Chromatin immunoprecipitation</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-16 17:53:35 / Modified: 20:57:47" itemprop="dateCreated datePublished" datetime="2021-04-16T17:53:35+08:00">2021-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Plant/" itemprop="url" rel="index"><span itemprop="name">Plant</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>##Crosslinking</p>
+<ol>
+<li>Prepare crosslinking buffer (Extraction buffer 1). For each gram of leaves, 36 ml buffer is needed.</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Reagent  Amount (500 mL)</span><br><span class="line">0.4 M sucrose 68.46 g</span><br><span class="line">10 mM Tris-HCl, pH 8.0 5 mL of 1 M stock</span><br><span class="line">5 mM beta-ME  (Add prior to use) 176 uL of 14.2 M stock</span><br><span class="line">0.1 mM PMSF (Add prior to use) 500 uL of 0.1 M stock</span><br><span class="line">1% Formaldehyde (Add prior to use) 13.5 mL of 37% stock</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Prepare 2M glycine solution (for stopping the crosslinking reaction). For each gram of leaves, 2.5 ml solution is needed. Store at 4°C.</li>
+<li>Collect beaker with appropriate capacity. Make sure the buffer volume will not exceed 60-70% of the beaker capacity (to avoid spillage).</li>
+<li>Harvest soybean leaves (C08).</li>
+<li>Cut leaves into 0.5-1 cm pieces and submerge them in Milli-Q water in beaker.</li>
+<li>Rinse leaves with Milli-Q water twice.</li>
+<li>Add 5 mM beta-ME into the cold extraction buffer 1. Pour buffer into the beaker with leaves.</li>
+<li>Place the beaker into the transparent “bowl” for vacuum infiltration.</li>
+<li>Disconnect centrivap with the cold trap.</li>
+<li>Connect the bowl with the cold trap.</li>
+<li>Add appropriate volume of formaldehyde solution to the buffer. 1 ml formaldehyde solution in 36 ml extraction buffer 1. working concentration ~ 1% formaldehyde</li>
+<li>Stir the mixture with stirrer.</li>
+<li>Place a piece of gauze under the bottom of a flask/beaker.</li>
+<li>Place the flask/beaker with gauze onto the water surface in the beaker.</li>
+<li>Cover the lid of the “bowl”.</li>
+<li>Close the valve at the cold trap. (Turn the valve to a position perpendicular to the pipe).</li>
+<li>Turn on the vacuum pump. After a while, the lid will be closed tightly and bubbles can be observed in the solution. Vacuum infiltrate for 5 minutes.</li>
+<li>Turn off the pump. Open the valve and the lid.</li>
+<li>Stir the solution again and make sure all leaves are submerged. Repeat step 16-18.</li>
+<li>Add appropriate volume of 2M glycine solution to the buffer. For each gram of leaves, 2.5 ml solution is added.</li>
+<li>Vacuum infiltrate for 5 minutes again.</li>
+<li>Cover the opening with the gauze already used in vacuum infiltration and filter out all the buffer under running tap water in a sink.</li>
+<li>Rinse the cross-linked leaves with Milli-Q water. (Cold Milli-Q water is preferred in some protocols.)</li>
+<li>With the aid of a stirrer/rod, transfer cross-linked leaves onto layers of tissue paper.</li>
+<li>Remove excess water by gently pressing cross-linked leaves with tissue paper.</li>
+<li>Pack leaves with aluminum foil.</li>
+<li>Freeze leaves with liquid nitrogen. Store at -80°C.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/08/Bioinfo-RepeatModeler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -875,401 +1183,6 @@ CD-HIT - A sequence clustering package. We developed and tested RepeatModeler us
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/03/R-Using-ggrepel-to-repel-overlapping-text-labels-in-ggplot2/" class="post-title-link" itemprop="url">R | Using ggrepel to repel overlapping text labels in ggplot2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-03 16:33:13" itemprop="dateCreated datePublished" datetime="2021-03-03T16:33:13+08:00">2021-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-04 16:57:18" itemprop="dateModified" datetime="2021-03-04T16:57:18+08:00">2021-03-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在使用ggplot画图的过程中，如果加上文字标签，比较常见的现象是文字标签之间会出现重叠，影响展示效果。如下图所示。</p>
-<p><img src="https://miro.medium.com/max/875/1*CRx8s9NXxVLQG5xXP1Z_gQ.png" alt="" /></p>
-<p>通过ggrepel则可以对文字标签进行优化。<br />
-如下方案例中使用的 geom_text_repel 和 geom_text_repel 两个函数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">library(ggplot2)</span><br><span class="line">#使用数据集mtcars演示</span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;red&quot;)+ </span><br><span class="line">  geom_text(aes(wt, mpg, label=rownames(mtcars)))+ </span><br><span class="line">  theme_classic(base_size = 16)</span><br><span class="line"></span><br><span class="line">install.packages(&#x27;ggrepel&#x27;)</span><br><span class="line">library(ggrepel)</span><br><span class="line"></span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;red&quot;)+ </span><br><span class="line">  geom_text_repel(aes(wt, mpg, label=rownames(mtcars)))+</span><br><span class="line">  theme_classic(base_size = 16)</span><br><span class="line">head(mtcars)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ggplot(mtcars)+ geom_point(aes(wt, mpg), color=&quot;grey&quot;, size=5)+</span><br><span class="line">geom_label_repel(aes(wt, mpg, fill=factor(cyl), </span><br><span class="line">   label=rownames(mtcars)), fontface=&quot;bold&quot;, color=&quot;white&quot;, </span><br><span class="line">   box.padding=unit(0.35, &quot;lines&quot;), point.padding=unit(0.5, &quot;lines&quot;), </span><br><span class="line">   segment.colour = &quot;grey50&quot;)+ theme_classic(base_size = 16)</span><br></pre></td></tr></table></figure>
-<p><img src="https://exts.ggplot2.tidyverse.org/ggrepel_files/figure-html/unnamed-chunk-1-1.png" alt="" /></p>
-<p><img src="https://exts.ggplot2.tidyverse.org/ggrepel_files/figure-html/unnamed-chunk-1-2.png" alt="" /></p>
-<p>资料来源：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/84e7e0e029cd">https://www.jianshu.com/p/84e7e0e029cd</a></li>
-<li><a target="_blank" rel="noopener" href="https://exts.ggplot2.tidyverse.org/ggrepel.html">https://exts.ggplot2.tidyverse.org/ggrepel.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.exploratory.io/ggrepel-when-things-get-too-crowded-ffefd845665f">https://blog.exploratory.io/ggrepel-when-things-get-too-crowded-ffefd845665f</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/08/Bioinfo-Installation-of-BUSCO-v4/" class="post-title-link" itemprop="url">Bioinfo | Installation of BUSCO v4</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-08 10:25:45" itemprop="dateCreated datePublished" datetime="2021-01-08T10:25:45+08:00">2021-01-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-03 23:10:18" itemprop="dateModified" datetime="2021-03-03T23:10:18+08:00">2021-03-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="environment"><a class="markdownIt-Anchor" href="#environment"></a> Environment</h3>
-<p>BUSCO is now Python 3.3+ only. I activate python 3.7 in Anaconda 3.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br></pre></td></tr></table></figure>
-<h3 id="third-party-components"><a class="markdownIt-Anchor" href="#third-party-components"></a> Third-party components</h3>
-<p>A full installation of BUSCO requires Python 3.3+ (2.7 is not supported from v4 onwards), BioPython, tBLASTn 2.2+, Augustus 3.2, Prodigal, Metaeuk, HMMER3.1+, SEPP, and R + ggplot2 for the plotting companion script. Some of these tools are necessary only for analysing certain type of organisms and input data, or for specific run modes.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># https://biopython.org/</span><br><span class="line">conda install -c biopython</span><br><span class="line"></span><br><span class="line"># https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST</span><br><span class="line"># WARNING:        You are using BLAST version 2.11.0+. This is known to yield inconsistent results when multithreading. BLAST will run on a single core as a result. </span><br><span class="line"># For performance improvement, please upgrade to BLAST 2.10.1+</span><br><span class="line">cd ~/local/app</span><br><span class="line">wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz</span><br><span class="line">mv ncbi-blast-2.11.0+ blast-2.11.0</span><br><span class="line">export PATH=/home/fenglei/local/app/blast-2.11.0/bin:$PATH</span><br><span class="line"></span><br><span class="line"># http://bioinf.uni-greifswald.de/augustus/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># augustus    bioconda/linux-64::augustus-3.2.2-0</span><br><span class="line"># conda install -c bioconda augustus   # ERROR when running it</span><br><span class="line">git clone https://github.com/Gaius-Augustus/Augustus</span><br><span class="line">sudo yum install boost-devel          # libboost-all-dev</span><br><span class="line">sudo yum install -y zlib zlib-devel   # zlib1g-dev</span><br><span class="line">sudo yum install gsl-devel            # libgsl-dev</span><br><span class="line">sudo yum install suitesparse-devel    # libsuitesparse-dev</span><br><span class="line">sudo yum install lpsolve              # liblpsolve55-dev</span><br><span class="line">sudo yum install sqlite-devel         # sqlite-devel - Development tools for the sqlite3 embeddable SQL database engine</span><br><span class="line"># sudo yum whatprovides libmysqlclient*</span><br><span class="line"># sudo yum install mariadb-libs-5.5.56-2.el7.i686</span><br><span class="line"></span><br><span class="line"># https://github.com/soedinglab/metaeuk</span><br><span class="line"># conda install -c bioconda Metaeuk # ERROR -- Package openssl conflicts</span><br><span class="line"># git clone git@github.com:soedinglab/metaeuk.git</span><br><span class="line"># downloading a statically compiled version:</span><br><span class="line">wget https://mmseqs.com/metaeuk/metaeuk-linux-sse41.tar.gz</span><br><span class="line">tar -zxvf metaeuk-linux-sse41.tar.gz</span><br><span class="line">export PATH=/home/fenglei/local/app/metaeuk/bin:$PATH</span><br><span class="line"></span><br><span class="line"># https://github.com/hyattpd/Prodigal</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># prodigal    bioconda/linux-64::prodigal-2.6.3-h516909a_2</span><br><span class="line">conda install -c bioconda Prodigal</span><br><span class="line"></span><br><span class="line"># http://hmmer.org/</span><br><span class="line"># The following NEW packages will be INSTALLED:</span><br><span class="line"># hmmer    bioconda/linux-64::hmmer-3.3.1-he1b5a44_0</span><br><span class="line"># conda install -c bioconda hmmer  # X</span><br><span class="line">wget http://eddylab.org/software/hmmer/hmmer.tar.gz</span><br><span class="line">tar -zxvf hmmer.tar.gz</span><br><span class="line">cd hmmer-3.3.2</span><br><span class="line">./configure --prefix=/home/fenglei/local</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"># https://github.com/smirarab/sepp/</span><br><span class="line"># Successfully installed sepp-0.9.0</span><br><span class="line"># git clone git@github.com:smirarab/sepp.git</span><br><span class="line"># cd sepp</span><br><span class="line"># python setup.py  install</span><br><span class="line"># Error was reported when running setup.py</span><br><span class="line">conda install -c bioconda sepp</span><br><span class="line"># sepp  bioconda/linux-64::sepp-4.3.10-py37hef7ab6a_2</span><br><span class="line"></span><br><span class="line">#https://www.r-project.org/</span><br><span class="line"># R version 3.5.1 (2018-07-02) -- &quot;Feather Spray&quot;</span><br><span class="line">conda install R</span><br></pre></td></tr></table></figure>
-<p><strong>samtools, bcftools, htslib</strong><br />
-Download below files from <a target="_blank" rel="noopener" href="http://www.htslib.org/download/">http://www.htslib.org/download/</a>: <a target="_blank" rel="noopener" href="https://github.com/samtools/samtools/releases/download/1.11/samtools-1.11.tar.bz2">samtools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/bcftools/releases/download/1.11/bcftools-1.11.tar.bz2">bcftools-1.11.tar.bz2</a>; <a target="_blank" rel="noopener" href="https://github.com/samtools/htslib/releases/download/1.11/htslib-1.11.tar.bz2">htslib-1.10.2.tar.bz2</a></p>
-<p><strong>cmake 3.19.2</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2.tar.gz</span><br><span class="line">tar -zxvf cmake-3.19.2.tar.gz</span><br><span class="line">cd cmake-3.19.2</span><br><span class="line">sudo yum install gcc g++</span><br><span class="line">./bootstrap --prefix=/home/fenglei/local</span><br><span class="line">gmake &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p><strong>bamtools</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/pezmaster31/bamtools.git</span><br><span class="line">mkdir build ； cd build</span><br><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/your/path/to/bamtools ..</span><br><span class="line">#cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make  install</span><br></pre></td></tr></table></figure>
-<p><strong>augustus 3.3.1</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://bioinf.uni-greifswald.de/augustus/binaries/old/augustus-3.3.1.tar.gz</span><br><span class="line">tar -zxvf augustus-3.3.1.tar.gz</span><br><span class="line">cd augustus-3.3.1</span><br><span class="line"># edit some make files as below</span><br></pre></td></tr></table></figure>
-<p>Edit make files of <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">bam2hints, and filterBam.</a> Download binary <a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig">bam2wig</a> to replace source file of bam2wig. Then we can run <code>make</code> for Augustus. Augustus requires environment variables to be declared as follows:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/bin:$PATH&quot;</span><br><span class="line">export PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/scripts:$PATH&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/path/to/AUGUSTUS/augustus-3.2.3/config/&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="edit-config-file-of-busco"><a class="markdownIt-Anchor" href="#edit-config-file-of-busco"></a> Edit config file of BUSCO</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitlab.com/ezlab/busco.git</span><br><span class="line">cd busco/</span><br><span class="line">#Note: v4.1.4 is the latest stable release. To access v5.beta clone this repository and checkout the v5 branch with git checkout v5.beta</span><br><span class="line">sudo python3 setup.py</span><br><span class="line"># or</span><br><span class="line">python3 setup.py install --user</span><br><span class="line"># or: If you are running BUSCO in a Python virtual environment, the following should suffice:</span><br><span class="line">python3 setup.py install</span><br></pre></td></tr></table></figure>
-<p>Edit <code>config.ini</code> as below.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># some words were not shown here due to space limitation</span><br><span class="line"></span><br><span class="line">[tblastn]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = tblastn</span><br><span class="line"></span><br><span class="line">[makeblastdb]</span><br><span class="line">path = /home/fenglei/local/app/blast-2.10.1/bin</span><br><span class="line">command = makeblastdb</span><br><span class="line"></span><br><span class="line">[augustus]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = augustus</span><br><span class="line"></span><br><span class="line">[etraining]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/bin</span><br><span class="line">command = etraining</span><br><span class="line"></span><br><span class="line">[gff2gbSmallDNA.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = gff2gbSmallDNA.pl</span><br><span class="line"></span><br><span class="line">[new_species.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = new_species.pl</span><br><span class="line"></span><br><span class="line">[optimize_augustus.pl]</span><br><span class="line">path = /home/fenglei/local/app/augustus-3.3.1/scripts</span><br><span class="line">command = optimize_augustus.pl</span><br><span class="line"></span><br><span class="line">[hmmsearch]</span><br><span class="line">path = /home/fenglei/local/bin</span><br><span class="line">command = hmmsearch</span><br><span class="line"></span><br><span class="line">[sepp]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = run_sepp.py</span><br><span class="line"></span><br><span class="line">[prodigal]</span><br><span class="line">path = /home/fenglei/local/app/anaconda3/envs/python37/bin</span><br><span class="line">command = prodigal</span><br></pre></td></tr></table></figure>
-<p>Test run of BUSCO.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">(python37) [fenglei@localhost config]$ which busco</span><br><span class="line">~/.local/bin/busco</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --version</span><br><span class="line">BUSCO 4.1.4</span><br><span class="line">(python37) [fenglei@localhost config]$ busco --help</span><br><span class="line">usage: busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br><span class="line"></span><br><span class="line">Welcome to BUSCO 4.1.4: the Benchmarking Universal Single-Copy Ortholog assessment tool.</span><br><span class="line">For more detailed usage information, please review the README file provided with this distribution and the BUSCO user guide.</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -i FASTA FILE, --in FASTA FILE</span><br><span class="line">                        Input sequence file in FASTA format. Can be an assembled genome or transcriptome (DNA), or protein sequences from an annotated gene set.</span><br><span class="line">  -c N, --cpu N         Specify the number (N=integer) of threads/cores to use.</span><br><span class="line">  -o OUTPUT, --out OUTPUT</span><br><span class="line">                        Give your analysis run a recognisable short name. Output folders and files will be labelled with this name. WARNING: do not provide a path</span><br><span class="line">  --out_path OUTPUT_PATH</span><br><span class="line">                        Optional location for results folder, excluding results folder name. Default is current working directory.</span><br><span class="line">  -e N, --evalue N      E-value cutoff for BLAST searches. Allowed formats, 0.001 or 1e-03 (Default: 1e-03)</span><br><span class="line">  -m MODE, --mode MODE  Specify which BUSCO analysis mode to run.</span><br><span class="line">                        There are three valid modes:</span><br><span class="line">                        - geno or genome, for genome assemblies (DNA)</span><br><span class="line">                        - tran or transcriptome, for transcriptome assemblies (DNA)</span><br><span class="line">                        - prot or proteins, for annotated gene sets (protein)</span><br><span class="line">  -l LINEAGE, --lineage_dataset LINEAGE</span><br><span class="line">                        Specify the name of the BUSCO lineage to be used.</span><br><span class="line">  -f, --force           Force rewriting of existing files. Must be used when output files with the provided name already exist.</span><br><span class="line">  -r, --restart         Continue a run that had already partially completed.</span><br><span class="line">  --limit REGION_LIMIT  How many candidate regions (contig or transcript) to consider per BUSCO (default: 3)</span><br><span class="line">  --long                Optimization mode Augustus self-training (Default: Off) adds considerably to the run time, but can improve results for some non-model organisms</span><br><span class="line">  -q, --quiet           Disable the info logs, displays only errors</span><br><span class="line">  --augustus_parameters AUGUSTUS_PARAMETERS</span><br><span class="line">                        Pass additional arguments to Augustus. All arguments should be contained within a single pair of quotation marks, separated by commas. E.g. &#x27;--param1=1,--param2=2&#x27;</span><br><span class="line">  --augustus_species AUGUSTUS_SPECIES</span><br><span class="line">                        Specify a species for Augustus training.</span><br><span class="line">  --auto-lineage        Run auto-lineage to find optimum lineage path</span><br><span class="line">  --auto-lineage-prok   Run auto-lineage just on non-eukaryote trees to find optimum lineage path</span><br><span class="line">  --auto-lineage-euk    Run auto-placement just on eukaryote tree to find optimum lineage path</span><br><span class="line">  --update-data         Download and replace with last versions all lineages datasets and files necessary to their automated selection</span><br><span class="line">  --offline             To indicate that BUSCO cannot attempt to download files</span><br><span class="line">  --config CONFIG_FILE  Provide a config file</span><br><span class="line">  -v, --version         Show this version and exit</span><br><span class="line">  -h, --help            Show this help message and exit</span><br><span class="line">  --list-datasets       Print the list of available BUSCO datasets</span><br></pre></td></tr></table></figure>
-<h3 id="running-busco"><a class="markdownIt-Anchor" href="#running-busco"></a> Running BUSCO</h3>
-<p>The munnual is <a target="_blank" rel="noopener" href="https://busco.ezlab.org/busco_userguide.html#manual-installation"><em><u>busco_userguide.html</u></em></a></p>
-<p>You have to set the environment variable <code>BUSCO_CONFIG_FILE</code> with the path to the file, for BUSCO to be able to locate it.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line"></span><br><span class="line">busco -i [SEQUENCE_FILE] -l [LINEAGE] -o [OUTPUT_NAME] -m [MODE] [OTHER OPTIONS]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">cd /home/fenglei/local/app/busco-4/test_data/eukaryota</span><br><span class="line"></span><br><span class="line">busco -i genome.fna -c 8 -m geno -f --out test_eukaryota</span><br><span class="line"></span><br><span class="line">####   BUSCO result   ####</span><br><span class="line">INFO:</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:18.8%[S:18.8%,D:0.0%],F:0.4%,M:80.8%,n:255     |</span><br><span class="line">        |48     Complete BUSCOs (C)                       |</span><br><span class="line">        |48     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |1      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |206    Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset saccharomycetes_odb10       |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:2.0%[S:2.0%,D:0.0%],F:0.1%,M:97.9%,n:2137      |</span><br><span class="line">        |42     Complete BUSCOs (C)                       |</span><br><span class="line">        |42     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |0      Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2092   Missing BUSCOs (M)                        |</span><br><span class="line">        |2137   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done with WARNING(s). Total running time: 570 seconds</span><br><span class="line"></span><br><span class="line">#### files generated ####</span><br><span class="line">(python37) [fenglei@localhost eukaryota]$ tree -L 1</span><br><span class="line">.</span><br><span class="line">├── busco_1816363720.log</span><br><span class="line">├── busco_3672791891.log</span><br><span class="line">├── busco_downloads</span><br><span class="line">├── expected_log.txt</span><br><span class="line">├── genome.fna</span><br><span class="line">├── info.txt</span><br><span class="line">└── test_eukaryota</span><br><span class="line"></span><br><span class="line">2 directories, 5 files</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="case-study-soybean"><a class="markdownIt-Anchor" href="#case-study-soybean"></a> Case study: soybean</h3>
-<p>The genome sequence of Glycine max v4.0 <code>Gmax_508_v4.0.softmasked.fa</code> was downloaded from Phytozome database.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">source activate python37</span><br><span class="line">export BUSCO_CONFIG_FILE=&quot;/home/fenglei/local/app/busco-4/config/config.ini&quot;</span><br><span class="line">export AUGUSTUS_CONFIG_PATH=&quot;/home/fenglei/local/app/augustus-3.3.1/config/&quot;</span><br><span class="line">busco -i Gmax_508_v4.0.softmasked.fa -m genome -o BUSCO_soybean -c 16 --auto-lineage-euk</span><br><span class="line"></span><br><span class="line"># Running time: 10 hours. Below is the result:</span><br><span class="line"></span><br><span class="line">INFO:   </span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from generic domain eukaryota_odb10      |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:98.1%[S:22.0%,D:76.1%],F:1.2%,M:0.7%,n:255     |</span><br><span class="line">        |250    Complete BUSCOs (C)                       |</span><br><span class="line">        |56     Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |194    Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |3      Fragmented BUSCOs (F)                     |</span><br><span class="line">        |2      Missing BUSCOs (M)                        |</span><br><span class="line">        |255    Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line"></span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |Results from dataset fabales_odb10               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">        |C:97.7%[S:48.7%,D:49.0%],F:0.4%,M:1.9%,n:5366    |</span><br><span class="line">        |5245   Complete BUSCOs (C)                       |</span><br><span class="line">        |2615   Complete and single-copy BUSCOs (S)       |</span><br><span class="line">        |2630   Complete and duplicated BUSCOs (D)        |</span><br><span class="line">        |19     Fragmented BUSCOs (F)                     |</span><br><span class="line">        |102    Missing BUSCOs (M)                        |</span><br><span class="line">        |5366   Total BUSCO groups searched               |</span><br><span class="line">        --------------------------------------------------</span><br><span class="line">INFO:   BUSCO analysis done. Total running time: 34378 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/05/Linux-Installation-of-Tomcat-9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/05/Linux-Installation-of-Tomcat-9/" class="post-title-link" itemprop="url">Linux | Installation of Tomcat 9, Java 8, and MySQL 5.7.20</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-05 20:42:21" itemprop="dateCreated datePublished" datetime="2021-01-05T20:42:21+08:00">2021-01-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-07 09:48:35" itemprop="dateModified" datetime="2021-01-07T09:48:35+08:00">2021-01-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Tomcat 服务器是一个免费的开放源代码的 Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试 JSP 程序的首选。Tomcat 是一个 JSP/Servlet 容器。其作为 Servlet 容器，有三种工作模式：独立的 Servlet 容器、进程内的 Servlet 容器和进程外的 Servlet 容器。</p>
-<p>tomcat 与 nginx、apache的区别是什么？这三者都是 web server，那他们各自有什么特点呢？他们之间的区别是什么呢？Apache Tomcat 是 Apache 基金会下的一个项目，与 Apache HTTP Server 相比，Tomcat 能够动态的生成资源并返回到客户端。Apache HTTP Server 和 Nginx 都能够将某一个文本文件的内容通过 HTTP 协议返回到客户端，但是这个文本文件的内容是固定的——也就是说无论何时、任何人访问它得到的内容都是完全相同的，这样的资源我们称之为静态资源。动态资源则与之相反，在不同的时间、不同的客户端访问得到的内容是不同的，例如：包含显示当前时间的页面显示当前IP地址的页面。（摘抄自：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32212996/answer/87524617">David</a>）</p>
-<h2 id="一-下载安装-java"><a class="markdownIt-Anchor" href="#一-下载安装-java"></a> 一、下载安装 Java</h2>
-<p>Tomcat是应用（Java）服务器，它只是一个Servlet(JSP也翻译成Servlet)容器，可以认为是Apache的扩展，但是可以独立于Apache运行。要安装 Tomcat 9，我们将需要 JAVA 8 或更高版本。 所以首先我们需要在我们的系统上安装和设置 JAVA。 您可以使用以下命令安装 JAVA。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># tomcat 9 版本需要java8以上才能支持</span><br><span class="line">cd /tmp &amp;&amp; wget --no-check-certificate --no-cookies --header &quot;Cookie: oraclelicense=accept-securebackup-cookie&quot; http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm </span><br><span class="line">rpm -ivh jdk-8u131-linux-x64.rpm</span><br><span class="line"></span><br><span class="line"># 修改环境变量：</span><br><span class="line">vi + /etc/profile </span><br><span class="line"></span><br><span class="line"># 加入下列信息</span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_131 </span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib.tools.jar </span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export JAVA_HOME CLASSPATH PATH </span><br><span class="line"></span><br><span class="line"># 保存退出之后加载环境变量</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-<p>Optional:</p>
-<p>CentOS/RHEL</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install java-1.8.0</span><br></pre></td></tr></table></figure>
-<p>Ubuntu/Debian</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install openjdk-8*</span><br></pre></td></tr></table></figure>
-<h2 id="二-linux-上安装-apache-tomcat"><a class="markdownIt-Anchor" href="#二-linux-上安装-apache-tomcat"></a> 二、Linux 上安装 Apache Tomcat</h2>
-<p>对于 Apache Tomcat 安装，我们将使用以下命令从<a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-90.cgi">官方网站</a>下载已存档的软件包，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://apache.website-solution.net/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.tar.gz</span><br><span class="line"># 一旦文件完成下载，解压缩/opt目录中的包（我们也可以使用一些其他的目录/数据等）。 在终端中运行以下命令来提取文件，</span><br><span class="line">sudo tar -xvzf pache-tomcat-8.5.23.tar.gz -C /opt</span><br><span class="line">sudo mv /opt/apache-tomcat-8.5.23/ /opt/tomcat</span><br><span class="line"># Optional: 更改tomcat目录的权限</span><br><span class="line">sudo chown -hR fenglei /opt/tomcat</span><br><span class="line">cd /opt/tomcat/bin</span><br><span class="line">sh startup.sh</span><br></pre></td></tr></table></figure>
-<p>如果上面的 startup 成功运行，会收到以下提示。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Using CATALINA_BASE:   /opt/tomcat</span><br><span class="line">Using CATALINA_HOME:   /opt/tomcat</span><br><span class="line">Using CATALINA_TMPDIR: /opt/tomcat/temp</span><br><span class="line">Using JRE_HOME:        /usr</span><br><span class="line">Using CLASSPATH:       /opt/tomcat/bin/bootstrap.jar:/opt/tomcat/bin/tomcat-juli.jar</span><br><span class="line">Using CATALINA_OPTS:   </span><br><span class="line">Tomcat started.</span><br></pre></td></tr></table></figure>
-<p>使用如下命令开放 Linux 的 8080 端口,再访问 <a target="_blank" rel="noopener" href="http://192.168.1.100:8080">http://192.168.1.100:8080</a> 即可打开一个 tomcat 网页。192.168.1.100 是 apache tomcat 服务器的 IP 地址，根据实际情况更改该地址。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -ptcp --dport 8080 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<p><img src="https://ask.qcloudimg.com/http-save/yehe-1000017/eeqqalywve.jpeg?imageView2/2/w/1620" alt="tomcat初始化页面示意图" /></p>
-<p>此时在这个tomcat初始页面里，点击“Manager App”按钮会显示无法进入，需要设定conf/tomcat-users.xml文件。</p>
-<p>Tomcat 的目录结构</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin  # 脚本启动目录</span><br><span class="line">conf #配置文件目录</span><br><span class="line">lib  #tomcat运行的依赖包</span><br><span class="line">logs #日志文件目录</span><br><span class="line">temp #临时文件目录</span><br><span class="line">webapps  # 用来存放应用程序</span><br><span class="line">    --docs  # 文档</span><br><span class="line">    --examples # 示例</span><br><span class="line">    --host-manager # 虚拟主机web管理界面</span><br><span class="line">    --manager # 管理界面</span><br><span class="line">    --ROOT # 默认访问的应用程序</span><br><span class="line">work # 部署的Web应用程序的临时工作目录，当我们需要清除缓存的时候可以将该目录删除，然后重启动 tomcat。</span><br></pre></td></tr></table></figure>
-<p>这里有个详细的介绍。包括后面怎么连接的网页：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/operationhome/p/10021645.html">tomcat 安装以及常用配置</a></p>
-<h3 id="tomcat-9-manager-配置"><a class="markdownIt-Anchor" href="#tomcat-9-manager-配置"></a> Tomcat 9 Manager 配置</h3>
-<ol>
-<li>首先配置两种角色：</li>
-</ol>
-<p>找到 tomcat 解压目录下的 conf/tomcat-users.xml 文件，用记事本打开，如下图添加角色，自定义处我都填了 “tomcat”。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;role rolename=&quot;manager-gui&quot;/&gt; </span><br><span class="line">&lt;role rolename=&quot;admin-gui&quot;/&gt; </span><br><span class="line">&lt;user username=&quot;自定义&quot; password=&quot;自定义&quot; roles=&quot;manager-gui,admin-gui&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20190315150949838.png" alt="注意图中蓝色部分不用去掉，否则会出现 401 错误" /></p>
-<ol start="2">
-<li>更改 tomcat 目录下的 webapps\manager\META-INF/context.xml 文件</li>
-</ol>
-<p>如下图，对<Valve  /> 和<Manager  />进行注释</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">  &lt;Valve className=&quot;org.apache.catalina.valves.RemoteAddrValve&quot;</span><br><span class="line">     allow=&quot;127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1&quot; /&gt;</span><br><span class="line">  &lt;Manager sessionAttributeValueClassNameFilter=&quot;java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap&quot;/&gt;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20190315151458443.png" alt="" /></p>
-<p>然后重启 tomcat，从网页端点击 “Manager App”，就可以进入 “Tomcat Web 应用程序管理者”。</p>
-<p><img src="https://img2020.cnblogs.com/blog/1552500/202010/1552500-20201015101304750-1675230814.png" alt="" /></p>
-<h3 id="端口设置与编码配置文件设置"><a class="markdownIt-Anchor" href="#端口设置与编码配置文件设置"></a> 端口设置与编码配置文件设置</h3>
-<p><strong>更改端口</strong></p>
-<p>编辑配置文件 server.xml，大约在第 69 行，可以将 port=“8080” 更改成我们想绑定的端口。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">       connectionTimeout=&quot;20000&quot;</span><br><span class="line">       redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>配置编码</strong></p>
-<p>为了避免程序上的一些请求和返回的中文乱码问题，我们需要配置。编辑配置文件 server.xml。</p>
-<p>大约在69行后,添加 useBodyEncodingForURI=“true” URIEncoding=“UTF-8”</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               useBodyEncodingForURI=&quot;true&quot; URIEncoding=&quot;UTF-8&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="tomcat-启动与关闭"><a class="markdownIt-Anchor" href="#tomcat-启动与关闭"></a> Tomcat 启动与关闭</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 启动 tomcat</span><br><span class="line">/opt/tomcat/bin/startup.sh </span><br><span class="line">#或者</span><br><span class="line">/opt/tomcat/bin/catalina.sh start</span><br><span class="line"># </span><br><span class="line"># 关闭tomcat</span><br><span class="line">/opt/tomcat/bin/shutdown.sh</span><br><span class="line">#或者</span><br><span class="line">/opt/tomcat/bin/catalina.sh stop</span><br><span class="line">#还可以直接kill 进程号，当我们的tomcat是有用户进行访问的时候，我们杀死不了这个进程，只能通过强制杀死 kill -9</span><br><span class="line"># 查看当前的版本</span><br><span class="line">/opt/tomcat/bin/version.sh</span><br></pre></td></tr></table></figure>
-<h3 id="tomcat-部署项目"><a class="markdownIt-Anchor" href="#tomcat-部署项目"></a> Tomcat 部署项目</h3>
-<p>方法1：直接将 war 包放在 ./webapps 下，tomcat 会自动将war解压。</p>
-<p><img src="https://djxblog.oss-cn-shenzhen.aliyuncs.com/picture/tomcat%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/tomcat%20%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95%E4%B8%80.png" alt="" /></p>
-<p>方法2：更改配置文件 server.xml(官方不建议使用该方法)</p>
-<p>我们可以在 ./conf/ 目录下找到 server.xml 文件，我们需要在里面添加上我们的项目的访问路径和存放路径配置。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context  path=&quot;/djx&quot; docBase=&quot;/tmp/djx/&quot; reloadable=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">path 指的是 访问路径  </span><br><span class="line">docBase 指的是项目存放路径</span><br><span class="line">reloadable 设置为true表示Catalina将监视 /WEB-INF/classes/和/WEB-INF/lib的文件，一旦发生更改将自动重新加载Web应用程序。它可以在在开发的时候使用，但需要消耗更多资源，官方文档写到不建议在生产环境上使用，所以它的默认值是false.</span><br><span class="line">8.0版本文档</span><br><span class="line">Set to true if you want Catalina to monitor classes in /WEB-INF/classes/ and /WEB-INF/lib for changes, and automatically reload the web application if a change is detected. This feature is very useful during application development, but it requires significant runtime overhead and is not recommended for use on deployed production applications. That&#x27;s why the default setting for this attribute is false. You can use the Manager web application, however, to trigger reloads of deployed applications on demand.</span><br></pre></td></tr></table></figure>
-<p>配置示例：<br />
-<img src="https://djxblog.oss-cn-shenzhen.aliyuncs.com/picture/tomcat%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/tomcat%20%E9%83%A8%E7%BD%B2%E6%96%B9%E6%B3%95%E4%BA%8C.png" alt="" /></p>
-<p>方法3：使用xml配置文件(建议方法)</p>
-<p>在 ./conf/Catalina/localhost/ 下添加xml配置文件。示例：我要让 /tmp/www/ 里的网站部署在tomcat上 。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim  djx.xml    # 文件的名称也就是我们后面访问时要在ip端口加的后缀</span><br></pre></td></tr></table></figure>
-<p>编辑 djx.xml 内容如下，docBase 后面填入项目的路径 /var/www/html/jbrowse/，这是我之前安装JBrowser的路径，路径下有 index.html 文件和一堆其他文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context  docBase=&quot;/var/www/html/jbrowse/&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p>然后我们重启tomcat，然后在浏览器 192.168.1.198/djx/访问的文件名 即可访问到我们的项目文件了。<br />
-（原来JBrowser放在Tomcat上面也是一样的可以用于浏览。）</p>
-<p><img src="https://genehub.files.wordpress.com/2020/10/e5beaee4bfa1e688aae59bbe_20201003184221.jpg?w=1024" alt="" /></p>
-<h3 id="设置开机启动-tomcat"><a class="markdownIt-Anchor" href="#设置开机启动-tomcat"></a> 设置开机启动 Tomcat</h3>
-<p>服务器关机重启的时候，服务不能随计算机的启动而自己启动，那么我们可以将 tomcat 服务设置为开机启动。</p>
-<p>打开 Linux 设置开机启动的文件，将下面的配置文件写入此文件的最后，注意，是文件的最后，以后若还要增加其他开机启动，只能加在这前面，总之一句话，要保持下面这句话一直在文件的最后。</p>
-<p>打开开机启动文件 <code>/etc/rc.d/rc.local</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.d/rc.local</span><br></pre></td></tr></table></figure>
-<p>添加如下代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># java配置 环境变量。根据自己的实际情况修改路径和软件版本号</span><br><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_161</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"># tomcat 配置环境变量，根据自己的实际情况修改路径</span><br><span class="line">export CATALINA_HOME=/usr/local/tomcat7</span><br><span class="line"># tomcat自启动</span><br><span class="line">/opt/tomcat/bin/startup.sh</span><br></pre></td></tr></table></figure>
-<p>Tomcat依赖于Java的jdk，所以jdk也同步导入。完成上面的步骤之后可以将CentOS关机重启检查一下。</p>
-<h2 id="三-安装-mysql"><a class="markdownIt-Anchor" href="#三-安装-mysql"></a> 三、安装 MySQL</h2>
-<p>Linux 系统（CentOS7）安装 mysql (5.7.25)</p>
-<p><strong>卸载centos7自带的 MariaDB</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep mariadb  // 查询出来已安装的mariadb</span><br><span class="line"># 删除查询出来的mariadb</span><br><span class="line">rpm -e --nodeps mariadb-5.5.64-1.el7.x86_64</span><br><span class="line">rpm -e --nodeps mariadb-libs-5.5.64-1.el7.x86_64</span><br><span class="line">rpm -e --nodeps mariadb-server-5.5.64-1.el7.x86_64</span><br><span class="line"># 安装依赖</span><br><span class="line">yum -y install numactl.x86_64</span><br></pre></td></tr></table></figure>
-<p><strong>MySQL依赖libaio，所以安装libaio</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
-<p><strong>检查MySQL是否安装</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep mysql</span><br></pre></td></tr></table></figure>
-<p>如果已安装，先卸载</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y remove mysql-libs.x86_64</span><br></pre></td></tr></table></figure>
-<p>检查其他方式安装的 mysql</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql</span><br></pre></td></tr></table></figure>
-<p>有的话，通过 <code>rpm -e</code> 命令，或者 <code>rpm -e --nodeps</code> 命令来卸载掉。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mysql 检查出的名称　　#普通删除模式</span><br><span class="line">rpm -e --nodeps 检查出的名称　　#强力删除模式，如果使用上面命令删除时，提示有依赖的其它文件，则用该命令可以对其进行强力删除</span><br></pre></td></tr></table></figure>
-<p>在删除完以后我们可以通过 <code>rpm -qa | grep mysql</code> 命令来查看 mysql 是否已经卸载成功！！</p>
-<p><strong>安装 MySQL</strong></p>
-<p>进入MySQL下载官网，下载页面：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a>，选择 MySQL Community Server 下的 Linux generic 版本。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 下载 mysql </span><br><span class="line">wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line"># 在/usr/local/中解压压缩包，并改名为mysql</span><br><span class="line">cd /usr/local/</span><br><span class="line">tar -xzvf /data/software/mysql-5.7.13-linux-glibc2.5-x86_64.tar.gz (我的下载目录为 data/software)</span><br><span class="line">mv mysql-5.7.13-linux-glibc2.5-x86_64 mysql</span><br><span class="line"></span><br><span class="line"># 创建数据文件存放目录, 进入mysql目录，新建data目录</span><br><span class="line">cd /usr/local/mysql</span><br><span class="line">mkdir data</span><br><span class="line"></span><br><span class="line"># 创建用户组mysql，创建用户mysql并将其添加到用户组mysql中，并赋予读写权限</span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line">chown -R mysql mysql/</span><br><span class="line">chgrp -R mysql mysql/</span><br><span class="line"></span><br><span class="line"># 修改当前目录权限</span><br><span class="line">chown -R mysql:mysql /usr/local/mysql</span><br></pre></td></tr></table></figure>
-<p><strong>初始化数据库</strong></p>
-<p>注：可以先按照下文配置 my.cnf，再初始化数据库。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/bin       //进入bin目录</span><br><span class="line">./mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data</span><br></pre></td></tr></table></figure>
-<p>注意屏幕上的输出，包含了密码信息。摘抄如下。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# ./mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data</span><br><span class="line">2021-01-06T03:34:49.698565Z 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).</span><br><span class="line">2021-01-06T03:34:51.569548Z 0 [Warning] InnoDB: New log files created, LSN=45790</span><br><span class="line">2021-01-06T03:34:52.006540Z 0 [Warning] InnoDB: Creating foreign key constraint system tables.</span><br><span class="line">2021-01-06T03:34:52.194069Z 0 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: 22e1b266-4fd0-11eb-81c9-989096c937ac.</span><br><span class="line">2021-01-06T03:34:52.218950Z 0 [Warning] Gtid table is not ready to be used. Table &#x27;mysql.gtid_executed&#x27; cannot be opened.</span><br><span class="line">2021-01-06T03:34:52.219393Z 1 [Note] A temporary password is generated for root@localhost: /-hyrfM3Huy&lt;</span><br></pre></td></tr></table></figure>
-<p><strong>配置my.cnf</strong><br />
-find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.cnf，写入以下内容。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">#不区分大小写 </span><br><span class="line">lower_case_table_names = 1</span><br><span class="line">#不开启sql严格模式</span><br><span class="line">sql_mode = &quot;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION&quot;</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/usr/local/mysql/data/mysqld.pid</span><br></pre></td></tr></table></figure>
-<p><strong>添加开机自启</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/support-files</span><br><span class="line">cp mysql.server /etc/init.d/mysqld</span><br><span class="line">chkconfig --add mysqld</span><br></pre></td></tr></table></figure>
-<p>chkconfig是管理系统服务(service)的命令行工具。所谓系统服务(service)，就是随系统启动而启动，随系统关闭而关闭的程序。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br></pre></td></tr></table></figure>
-<p>检查是否添加成功。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# chkconfig --list mysqld</span><br><span class="line"></span><br><span class="line">Note: This output shows SysV services only and does not include native</span><br><span class="line">      systemd services. SysV configuration data might be overridden by native</span><br><span class="line">      systemd configuration.</span><br><span class="line"></span><br><span class="line">      If you want to list systemd services use &#x27;systemctl list-unit-files&#x27;.</span><br><span class="line">      To see services enabled on particular target use</span><br><span class="line">      &#x27;systemctl list-dependencies [target]&#x27;.</span><br><span class="line"></span><br><span class="line">mysqld          0:off   1:off   2:on    3:on    4:on    5:on    6:off</span><br></pre></td></tr></table></figure>
-<p><strong>关闭与启动 MySQL</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/mysql/support-files/mysql.server stop</span><br><span class="line"># 屏幕显示：Shutting down MySQL.. SUCCESS!</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/support-files/mysql.server start</span><br><span class="line"># 屏幕显示：Starting MySQL. SUCCESS!</span><br><span class="line"></span><br><span class="line"># 查看 MySQL 状态</span><br><span class="line">/usr/local/mysql/support-files/mysql.server status</span><br><span class="line"># 屏幕显示：SUCCESS! MySQL running (15291)</span><br></pre></td></tr></table></figure>
-<p>也可以使用 service mysqld 命令启动/停止服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 5.0版本：</span><br><span class="line">service mysqld status</span><br><span class="line">service mysqld start</span><br><span class="line">service mysqld stop</span><br><span class="line">service mysqld restart</span><br></pre></td></tr></table></figure>
-<p><strong>修改root本地登录密码</strong></p>
-<p>上文配置my.cnf操作是在MySQL初始化之后，所以初始化MySQL的时候密码输出在屏幕上。如果配置my.cnf在MySQL初始化之前，密码会保存至 /var/log/mysqld.log 中。</p>
-<p>mysql安装完成之后，在 /var/log/mysqld.log 文件中给root生成了一个默认密码。通过下面的方式找到root默认密码，然后登录mysql进行修改：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &#x27;temporary password&#x27; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
-<p>到这里终于可以登陆进入mysql了，摘抄如下。（备注：一开始没有卸载 Centos 7 自带的 mariadb，运行<code>mysql -uroot -p</code>命令根本不是启动新安装的MySQL，难怪输入密码一直报错。）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost support-files]# /usr/local/mysql/bin/mysql -uroot -p     </span><br><span class="line">Enter password: </span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 3</span><br><span class="line">Server version: 5.7.20</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; </span><br></pre></td></tr></table></figure>
-<p>登录之后修改密码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/bin/</span><br><span class="line">./mysql -uroot -p</span><br><span class="line"></span><br><span class="line">按照屏幕提示输入默认密码，即可登录。登录后可用下面的命令修改成新密码，以 MyNewPass4! 为例</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;新密码&#x27;;</span><br><span class="line"># e.g. ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;MyNewPass4!&#x27;;</span><br><span class="line">flush privileges; </span><br><span class="line"># 刷新权限，之后退出可用新密码重新登录</span><br></pre></td></tr></table></figure>
-<p>也可以用下面这种方法修改密码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set password for &#x27;root&#x27;@&#x27;localhost&#x27;=password(&#x27;MyNewPass4!&#x27;);</span><br></pre></td></tr></table></figure>
-<p><strong>创建用户并授权</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 添加用户允许其在任意地址登录</span><br><span class="line">CREATE USER &#x27;dog&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;; </span><br><span class="line"></span><br><span class="line">#授予所有库的所有权限 </span><br><span class="line">GRANT ALL PRIVILEGES ON  *.* TO &#x27;dog&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line"></span><br><span class="line"># 刷新权限</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-<h2 id="四-发布项目"><a class="markdownIt-Anchor" href="#四-发布项目"></a> 四、发布项目</h2>
-<p>将项目文件放到 /usr/local/tomcat7/webapps 文件夹下即可通过 110.120.18.18:8080 访问。</p>
-<p>默认端口是8080，可以在 /usr/local/tomcat7/conf/server.xml 中进行修改。</p>
-<p>找到如下代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p>将8080改为80，即可直接通过 110.120.18.18 访问，代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;80&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p><strong>参考资料</strong><br />
-1 <a target="_blank" rel="noopener" href="https://blog.csdn.net/dvdstd/article/details/88575025">Tomcat 9 Manager 配置</a><br />
-2 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/operationhome/p/10021645.html">tomcat 安装以及常用配置</a><br />
-3 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/97003">Apache Tomcat 安装</a><br />
-4 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1538210">Linux 安装 JDK+Tomcat+MySQL 及发布项目教程</a><br />
-5 <a target="_blank" rel="noopener" href="https://blog.csdn.net/lanyang123456/article/details/54695567">系统服务管理工具 chkconfig 使用说明</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1341,7 +1254,7 @@ find / -name my.cnf 找到后复制到 /etc/my.cnf，或者直接新建 /etc/my.
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

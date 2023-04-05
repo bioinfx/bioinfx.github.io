@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="老旧台式机，通过安装 Ubuntu 系统，挂载新的硬盘，作为 NAS 使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux | 旧电脑安装 Ubuntu 系统，通过 Samba 作为 NAS 使用">
+<meta property="og:url" content="http://example.com/2023/03/25/Setting_Ubuntu_as_NAS_by_Samba/index.html">
+<meta property="og:site_name" content="FENG&#39;s Notes">
+<meta property="og:description" content="老旧台式机，通过安装 Ubuntu 系统，挂载新的硬盘，作为 NAS 使用。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/5iMed4P.jpeg">
+<meta property="article:published_time" content="2023-03-24T18:22:18.000Z">
+<meta property="article:modified_time" content="2023-04-05T08:10:20.369Z">
+<meta property="article:author" content="FENG Lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/5iMed4P.jpeg">
+
+<link rel="canonical" href="http://example.com/2023/03/25/Setting_Ubuntu_as_NAS_by_Samba/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux | 旧电脑安装 Ubuntu 系统，通过 Samba 作为 NAS 使用 | FENG's Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FENG's Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Genomics/Bioinformatics/Plants</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/25/Setting_Ubuntu_as_NAS_by_Samba/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux | 旧电脑安装 Ubuntu 系统，通过 Samba 作为 NAS 使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-25 02:22:18" itemprop="dateCreated datePublished" datetime="2023-03-25T02:22:18+08:00">2023-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-04-05 16:10:20" itemprop="dateModified" datetime="2023-04-05T16:10:20+08:00">2023-04-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>老旧台式机，通过安装 Ubuntu 系统，挂载新的硬盘，作为 NAS 使用。</p>
+<span id="more"></span>
+<h3 id="安装-ubuntu"><a class="markdownIt-Anchor" href="#安装-ubuntu"></a> 安装 Ubuntu</h3>
+<p>Dell OptiPlex 990 台式机，内存 4 GB，硬盘 500 GB。有两个硬盘位，以前有一块 500 GB 的机械硬盘，现还有一个空余。新购一块 12 TB 的 NAS 专用盘（希捷酷狼）安装进去。</p>
+<p>先下载 Ubuntu 安装包：<code>ubuntu-22.04.2-desktop-amd64.iso</code>，使用 BalenaEtcher 程序将 Ubuntu 安装包写入 U 盘，随后 U 盘插入机箱，开机之后按 F2 进入 bios，设置 U 盘优先启动，就进入安装程序了。</p>
+<p>安装的过程可以在网上找到大量相似的记录，比如 <a target="_blank" rel="noopener" href="https://www.sysgeek.cn/install-ubuntu-20-04-lts-desktop/">Ubuntu 20.04 LTS 桌面版详细安装指南</a>。</p>
+<h3 id="添加新硬盘"><a class="markdownIt-Anchor" href="#添加新硬盘"></a> 添加新硬盘</h3>
+<p>刚好手头有一个 12 TB 的硬盘（曾在Windows系统进行分区），发现戴尔的机箱还需要用到专门的硬盘支架，某宝10块钱买了一个支架，刚好把这个硬盘放进去。</p>
+<p><img src="https://i.imgur.com/5iMed4P.jpeg" alt="下方蓝色支架和硬盘就是新增的部分" /></p>
+<p>顺便清理了主板和CPU散热器上面的灰尘，结果装 CPU 风扇的时候没将它的电源线装回去，后面导致无法开机，必须连接好 CPU 的风扇电源线才可以开机。</p>
+<p>开机之后发现新的硬盘已经自动挂载，挂在位点<code>/media/my_user_name/新加卷</code>，在 Ubuntu 桌面版可以看到该硬盘里面存储的资料。</p>
+<p>我自己尝试挂在到其他地方，反而遇到一些错误，可能是因为该硬盘已经在 Windows 上面被分区过。</p>
+<h3 id="挂载硬盘"><a class="markdownIt-Anchor" href="#挂载硬盘"></a> 挂载硬盘</h3>
+<p>格式化硬盘</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkfs -t ext4 -c /dev/sdb1</span><br><span class="line">sudo mkfs -t ext4 -c /dev/sdb2</span><br></pre></td></tr></table></figure>
+<p>后来又重新对这个12TB的新硬盘进行了格式化，格式化成为xfs格式，这整个硬盘作为一个分区。</p>
+<h3 id="在-ubuntu-安装-samba-服务"><a class="markdownIt-Anchor" href="#在-ubuntu-安装-samba-服务"></a> 在 Ubuntu 安装 Samba 服务</h3>
+<p>主要参考下面这两篇博文进行安装。</p>
+<p>一、<a target="_blank" rel="noopener" href="https://www.linuxmi.com/ubuntu-20-04-samba-windows.html">Ubuntu 20.04 安装配置 Samba 服务器，实现与 Windows 共享文件</a><br />
+二、<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74fdb7ba260a">Ubuntu 上 Samba 的安装使用和卸载</a></p>
+<p><strong>安装 Samba</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y samba samba-common smbclient</span><br></pre></td></tr></table></figure>
+<p>创建共享目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /home/fenglei/Share</span><br><span class="line">#给创建的这个目录设置权限</span><br><span class="line">sudo chmod 777 /home/fenglei/Share</span><br></pre></td></tr></table></figure>
+<p><strong>配置 Samba</strong></p>
+<p>下一步修改配置文件。在更改 Samba 配置文件之前，请先运行 <code>sudo cp /etc/samba/smb.conf&#123;,.backup&#125;</code> 命令创建备份以供将来参考。</p>
+<p>Samba 软件包随附的默认配置文件是独立 Samba 服务器配置。使用你喜欢的文本编辑器打开文件 <code>/etc/samba/smb.conf</code>。</p>
+<p>我们使用 vim 编辑文件 /etc/samba/smb.conf（记得 sudo，不然保存不了！）。在配置文件 smb.conf 的最后添加下面的内容，然后保存并退出 vim。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Share]</span><br><span class="line">path=/home/fenglei/Share</span><br><span class="line">writable=yes</span><br><span class="line">public=yes</span><br><span class="line">guest ok=no</span><br><span class="line">valid user=fenglei</span><br><span class="line">browsable = yes</span><br></pre></td></tr></table></figure>
+<p>其中 <code>[Share]</code> 表示在网络上映射的名称, <code>path=/home/fenglei/Share</code> 表示你要映射的路径，<code>guest ok=no</code> 表示连接需要输入密码，<code>valid user=fenglei</code> 表示连接这个位置需要登录验证 fenglei 这个账户。<br />
+也有博客推荐下面这样的配置，反正我用的是上面这样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[share]</span><br><span class="line">comment = share folder</span><br><span class="line">browseable = yes</span><br><span class="line">path = /home/linuxmi/linuxmi.com/share</span><br><span class="line">create mask = 0700</span><br><span class="line">directory mask = 0700</span><br><span class="line">valid users = linuxmi</span><br><span class="line">force user = linuxmi</span><br><span class="line">force group = linuxmi</span><br><span class="line">public = yes</span><br><span class="line">available = yes</span><br><span class="line">writable = yes</span><br></pre></td></tr></table></figure>
+<p>完成编辑 smb.conf 后，保存文件并退出 vim。</p>
+<p><strong>启动 Samba</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#启动服务</span><br><span class="line">sudo systemctl restart smbd.service</span><br><span class="line">sudo systemctl restart nmbd.service</span><br><span class="line"></span><br><span class="line">#设置 samba 的用户名密码，需要是电脑已经存在的用户名【注意！！！】</span><br><span class="line">sudo smbpasswd -a fenglei</span><br></pre></td></tr></table></figure>
+<p><strong>检查Samba服务状态</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># 检查 smbd 状态，active 表示正在运行</span><br><span class="line">sudo systemctl status smbd.service</span><br><span class="line"></span><br><span class="line"># 返回结果</span><br><span class="line">fenglei@fenglei-OptiPlex-990:~/Share$ sudo systemctl status smbd.service</span><br><span class="line">● smbd.service - Samba SMB Daemon</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/smbd.service; enabled; vendor preset: enabled)</span><br><span class="line">     Active: active (running) since Thu 2023-03-23 22:25:35 CST; 53s ago</span><br><span class="line">       Docs: man:smbd(8)</span><br><span class="line">             man:samba(7)</span><br><span class="line">             man:smb.conf(5)</span><br><span class="line">    Process: 251530 ExecStartPre=/usr/share/samba/update-apparmor-samba-profile (code=exited, status=0/SUCCESS)</span><br><span class="line">   Main PID: 251539 (smbd)</span><br><span class="line">     Status: &quot;smbd: ready to serve connections...&quot;</span><br><span class="line">      Tasks: 4 (limit: 4468)</span><br><span class="line">     Memory: 8.8M</span><br><span class="line">        CPU: 114ms</span><br><span class="line">     CGroup: /system.slice/smbd.service</span><br><span class="line">             ├─251539 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">             ├─251541 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">             ├─251542 /usr/sbin/smbd --foreground --no-process-group</span><br><span class="line">             └─251543 /usr/lib/x86_64-linux-gnu/samba/samba-bgqd --ready-signal-fd=45 --parent-watch-fd=11 --debuglevel=0 -F</span><br><span class="line"></span><br><span class="line">3月 23 22:25:35 fenglei-OptiPlex-990 systemd[1]: Starting Samba SMB Daemon...</span><br><span class="line">3月 23 22:25:35 fenglei-OptiPlex-990 systemd[1]: Started Samba SMB Daemon.</span><br><span class="line"></span><br><span class="line"># 检查 nmbd 状态，active 表示正在运行</span><br><span class="line">sudo systemctl status nmbd.service</span><br><span class="line"></span><br><span class="line">#返回结果</span><br><span class="line">fenglei@fenglei-OptiPlex-990:~/Share$ sudo systemctl status nmbd.service</span><br><span class="line">● nmbd.service - Samba NMB Daemon</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/nmbd.service; enabled; vendor preset: enabled)</span><br><span class="line">     Active: active (running) since Thu 2023-03-23 22:25:53 CST; 59s ago</span><br><span class="line">       Docs: man:nmbd(8)</span><br><span class="line">             man:samba(7)</span><br><span class="line">             man:smb.conf(5)</span><br><span class="line">   Main PID: 251569 (nmbd)</span><br><span class="line">     Status: &quot;nmbd: ready to serve connections...&quot;</span><br><span class="line">      Tasks: 1 (limit: 4468)</span><br><span class="line">     Memory: 2.4M</span><br><span class="line">        CPU: 34ms</span><br><span class="line">     CGroup: /system.slice/nmbd.service</span><br><span class="line">             └─251569 /usr/sbin/nmbd --foreground --no-process-group</span><br><span class="line"></span><br><span class="line">3月 23 22:25:53 fenglei-OptiPlex-990 systemd[1]: Starting Samba NMB Daemon...</span><br><span class="line">3月 23 22:25:53 fenglei-OptiPlex-990 systemd[1]: Started Samba NMB Daemon.</span><br></pre></td></tr></table></figure>
+<p>此时，Samba 就在正常运行中。</p>
+<h3 id="连接测试"><a class="markdownIt-Anchor" href="#连接测试"></a> 连接测试</h3>
+<p>来到 Windows 电脑，Win + r ，并输入<code>//192.168.18.113/Share</code>，即 Ubuntu 的IP 地址，加上smb.conf里面配置的共享文件夹信息，输入账户密码就可以了！</p>
+<p>还可以添加成“磁盘”，直接成为电脑本机 D、E 盘这种用法。到了这一步以后，可以在Windows上进行网络驱动的映射了，注意是网络驱动映射，不是添加网络位置，格式为<code>\\192.168.1.102\qlx</code>，qlx是你添加在smb.cnf末尾的<code>[qlx]</code>去掉括号之后的，如果你在smb.conf没有设置guest ok=yes，那就需要勾选使用其它凭据进行登录。（作者：Analyas 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74fdb7ba260a%EF%BC%89">https://www.jianshu.com/p/74fdb7ba260a）</a></p>
+<p>也有可能遇到“拒绝访问”的问题，这是Windows电脑的问题，我换一台 windows 测试就没有这个问题。</p>
+<p><strong>其它检查服务的命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#检查正在监听的tcp和udp端口</span><br><span class="line">ss -tlnpu</span><br><span class="line"></span><br><span class="line">#检查samba正在映射的文件位置，</span><br><span class="line">#smbclient -L 192.168.1.102 -U qlx</span><br><span class="line"></span><br><span class="line">#登录到指定samba服务器，可以查看服务器的文件</span><br><span class="line">#smbclient //192.168.1.102/qlx -U qlx</span><br></pre></td></tr></table></figure>
+<h3 id="完全卸载samba"><a class="markdownIt-Anchor" href="#完全卸载samba"></a> 完全卸载samba</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 1.卸载，注意使用的是 autoremove</span><br><span class="line">sudo apt-get autoremove samba samba-common</span><br><span class="line"># 2.该操作会删除配置文件，包括 /etc/samba/smb.conf</span><br><span class="line">sudo apt-get remove --purge samba</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p>作者：Analyas 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74fdb7ba260a">https://www.jianshu.com/p/74fdb7ba260a</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/22/install-tmux-without-root-permission/" rel="prev" title="Linux | 无 root 权限安装 tmux">
+      <i class="fa fa-chevron-left"></i> Linux | 无 root 权限安装 tmux
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/28/Setting_Vim/" rel="next" title="Linux | Vim 的设置">
+      Linux | Vim 的设置 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-ubuntu"><span class="nav-number">1.</span> <span class="nav-text"> 安装 Ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%A1%AC%E7%9B%98"><span class="nav-number">2.</span> <span class="nav-text"> 添加新硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98"><span class="nav-number">3.</span> <span class="nav-text"> 挂载硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-ubuntu-%E5%AE%89%E8%A3%85-samba-%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text"> 在 Ubuntu 安装 Samba 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text"> 连接测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%8D%B8%E8%BD%BDsamba"><span class="nav-number">6.</span> <span class="nav-text"> 完全卸载samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FENG Lei"
+      src="/images/fl-photo-202109.jpg">
+  <p class="site-author-name" itemprop="name">FENG Lei</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:lfeng0703@hotmail.com" title="E-Mail → mailto:lfeng0703@hotmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FENG Lei</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

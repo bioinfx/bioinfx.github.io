@@ -189,6 +189,321 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/05/Linux-zsh-installation-and-oh-my-zsh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/05/Linux-zsh-installation-and-oh-my-zsh/" class="post-title-link" itemprop="url">Linux：zsh的安装与使用（oh-my-zsh）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 11:28:17" itemprop="dateCreated datePublished" datetime="2020-03-05T11:28:17+08:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Mac OS更新系统之后，进入iTerm2收到提示说可以使用zsh，查资料比较了一下它和bash的区别，然后就安装了。 简要过程：在客户端（Mac OS）安装zsh并启动，通过oh-my-zsh配置zsh；随后在服务器（Linux CentOS 7）安装zsh，从bash切换到zsh，同样通过oh-my-zsh配置zsh，由于<sub>/.bashrc和</sub>/.bash_profile里面保存了环境变量和alias等信息，切换成zsh之后也需要在~/.zshrc文件里面做相应设置；还有服务器的Tmux软件也要做设置。 具体操作都是参考网络资料，下面直接转载一篇比较详细的文章。 ==========</p>
+<h3 id="安装zsh"><a class="markdownIt-Anchor" href="#安装zsh"></a> 安装zsh</h3>
+<p>然后开始安装配置 ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install zsh</span><br></pre></td></tr></table></figure>
+<p>然后把bash的配置文件(<sub>/.bash_prorile或者</sub>/.profile等) 我的是<sub>/.bashrc拷贝到zsh的配置文件</sub>/.zshrc里，因为zsh兼容bash) 每次进入是都使用命令<code>zsh</code>进入, 而输入<code>exit</code>退出 或者直接设置成默认shell（但是这里我并不需要执行，因为我的默认shell其实想设置成tmux，后文再说，然后使用tmux来调用zsh）命令行输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#取代bash，设为默认shell</span><br><span class="line">sudo usermod -s /bin/zsh username</span><br><span class="line">#或者</span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">chsh -s `which zsh`</span><br><span class="line"></span><br><span class="line">#如果要切换回去bash：</span><br><span class="line">chsh -s /bin/bash</span><br></pre></td></tr></table></figure>
+<h3 id="安装oh-my-zsh"><a class="markdownIt-Anchor" href="#安装oh-my-zsh"></a> 安装oh-my-zsh</h3>
+<p>直接用zsh会很难受，因为zsh功能很强大但是太复杂，所以需要oh-my-zsh来将它简单化</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</span><br><span class="line"></span><br><span class="line">备份已有的zshrc, 替换zshrc</span><br><span class="line">cp ~/.zshrc ~/.zshrc.orig</span><br><span class="line">cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line"></span><br><span class="line">直接使用脚本安装</span><br><span class="line">cd .oh-my-zsh/tools</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+<p>直接最终的~/.zshrc内容备份一哈： <a target="_blank" rel="noopener" href="https://github.com/YuYuCong/Ubuntu">https://github.com/YuYuCong/Ubuntu</a></p>
+<h3 id="配置主题"><a class="markdownIt-Anchor" href="#配置主题"></a> 配置主题</h3>
+<p>oh-my-zsh 集成了大量的主题, 位于<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/"><code>oh-my-zsh/theme</code></a> 配置主题, 可以通过修改<code>~/.zshrc</code>中的环境变量<code>ZSH_THEME</code>来完成，我最后挑中了bira</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;bira&quot;</span><br></pre></td></tr></table></figure>
+<p>如果觉得主题太多，可以选择使用随机模式, 不过这就比较刺激了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZSH_THEME=&quot;random&quot; # (...please let it be pie... please be some pie..)</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes">主题介绍</a></p>
+<h3 id="配置插件"><a class="markdownIt-Anchor" href="#配置插件"></a> 配置插件</h3>
+<p>修改<code>~/.zshrc</code>中<code>plugins</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git bundler osx rake ruby)</span><br></pre></td></tr></table></figure>
+<p>详细的插件信息, 可以参见<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins">zsh插件Plugins介绍</a></p>
+<h3 id="更新oh-my-zsh"><a class="markdownIt-Anchor" href="#更新oh-my-zsh"></a> 更新oh-my-zsh</h3>
+<p>默认情况下, 您将被提示检查每几周的升级. 如果你想我ZSH自动升级本身没有提示你, 修改~/.zshrc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disable_update_prompt = true1</span><br></pre></td></tr></table></figure>
+<p>禁用自动升级, 修改~/.zshrc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disable_auto_update = true1</span><br></pre></td></tr></table></figure>
+<p>当然你也可以选择手动更新 如果你想在任何时间点升级（也许有人刚刚发布了一个新的插件，你不想等待一个星期？)你只需要运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upgrade_oh_my_zsh1</span><br></pre></td></tr></table></figure>
+<h3 id="卸载oh-my-zsh"><a class="markdownIt-Anchor" href="#卸载oh-my-zsh"></a> 卸载oh-my-zsh</h3>
+<p>如果你想卸载<code>oh-my-zsh</code>, 只需要执行<code>uninstall_oh_my_zsh zsh</code>， 从命令行运行. 这将删除本身和恢复你以前的bash或者zsh配置.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uninstall_oh_my_zsh zsh1</span><br></pre></td></tr></table></figure>
+<h3 id="配置tmux默认调用oh-my-zsh"><a class="markdownIt-Anchor" href="#配置tmux默认调用oh-my-zsh"></a> 配置tmux默认调用oh-my-zsh</h3>
+<p>但是感觉装完之后，有一种很不实用的感觉，就只是主题比较多？我想tmux的分屏和zsh的漂亮界面融合起来。 1.在 <strong>~/.tmux.conf</strong>文件中加了 “set -g default-shell /bin/zsh” 设置tmux的默认shell为zsh。 2.然后重新刷新tmux的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<h3 id="终端默认启动tmux"><a class="markdownIt-Anchor" href="#终端默认启动tmux"></a> 终端默认启动tmux</h3>
+<p>到目前为止，我都是启动命令行之后会直接bash，需要输入tmux，才能开启tmux，然而我已经想直接抛弃bash了，所以默认启动tmux吧。 看看我现在都有些什么shell:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<p>结果 /bin/sh /bin/dash /bin/bash /bin/rbash /usr/bin/tmux /bin/zsh /usr/bin/zsh 然后:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /usr/bin/tmux</span><br></pre></td></tr></table></figure>
+<p>重启电脑生效。 结束。</p>
+<hr />
+<h2 id="tmux"><a class="markdownIt-Anchor" href="#tmux"></a> tmux</h2>
+<h3 id="安装配置"><a class="markdownIt-Anchor" href="#安装配置"></a> 安装配置</h3>
+<p>因为很久之前就安装了tmux，当时没有写笔记，今天趁机会备注一下我的博文<a target="_blank" rel="noopener" href="http://blog.csdn.net/williamyuyuyu/article/details/79283374">http://blog.csdn.net/williamyuyuyu/article/details/79283374</a> 主要是tmux的配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<p>记得配置完了之后刷新tmux的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+<p>我借用了别人的配置,当然也备份到github了:<a target="_blank" rel="noopener" href="https://github.com/YuYuCong/Ubuntu">https://github.com/YuYuCong/Ubuntu</a></p>
+<h3 id="脚本"><a class="markdownIt-Anchor" href="#脚本"></a> 脚本</h3>
+<p>tmux里面的脚本： 写一个脚本在<sub>/.tmux/dev，脚本名字就叫dev，放在</sub>/.tmux/目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">mkdir .tmux</span><br><span class="line">cd .tmux</span><br><span class="line">vim dev</span><br></pre></td></tr></table></figure>
+<p>写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">selectp -t 0 #选择第一个标签</span><br><span class="line">splitw -h -p 50 #分割成两半</span><br><span class="line"></span><br><span class="line">selectp -t 1 # 选择第二个标签</span><br><span class="line">splitw -v -p 50 &#x27;typora&#x27; #分割成两半</span><br><span class="line">selectp -t 0 # 返回第一个标签</span><br></pre></td></tr></table></figure>
+<p>然后tmux的配置文件里面补上 <code>bind b source-file ~/.tmux/dev</code> 使用前缀+b按键调用此脚本。</p>
+<h5 id="q1但是有个问题我的脚本为啥一直不运行脚本没配好啊"><a class="markdownIt-Anchor" href="#q1但是有个问题我的脚本为啥一直不运行脚本没配好啊"></a> 【Q1】但是有个问题：：：我的脚本为啥一直不运行！！！，脚本没配好啊。</h5>
+<p>—————————————第二天————————————-</p>
+<h3 id="继续tmux脚本"><a class="markdownIt-Anchor" href="#继续tmux脚本"></a> 继续tmux脚本</h3>
+<h5 id="a1于是今天早上起床没洗漱继续研究发现重启一遍之后脚本配置都可以用了"><a class="markdownIt-Anchor" href="#a1于是今天早上起床没洗漱继续研究发现重启一遍之后脚本配置都可以用了"></a> 【A1】于是今天早上起床没洗漱继续研究，发现重启一遍之后脚本配置都可以用了。</h5>
+<p>但是又有了新问题：注意一点，因为第三个标签调用的是typora，不是终端程序，运行typora之后，第三个标签会进入一种神奇的状态，不能输入任何命令，当你关闭typora时，它又会立即关闭。 突发奇想在Ctrl+Alt+F1之后的无窗口界面试了试Ctrl+b b的方式，发现typora完全无法运行，只打开了两个标签。——这就是之前所述的X服务未打开的缘故。</p>
+<h5 id="q2所以我打算试试向建立3个标签并向终端输入命令开启typora的方式"><a class="markdownIt-Anchor" href="#q2所以我打算试试向建立3个标签并向终端输入命令开启typora的方式"></a> 【Q2】所以，我打算试试向建立3个标签并向终端输入命令开启typora的方式。</h5>
+<h5 id="a2解决了"><a class="markdownIt-Anchor" href="#a2解决了"></a> 【A2】解决了！</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">selectp -t 0 # 选择第一个标签</span><br><span class="line">splitw -h -p 50 # 竖着分割成两半</span><br><span class="line">selectp -t 1 # 选择第二个标签</span><br><span class="line">splitw -v -p 20 #水平分割成两个,新分割出来的占20%</span><br><span class="line">selectp -t 2 # 选择第三个标签</span><br><span class="line">send-keys -t 2 &#x27;typora ./daily_record/2018.md&#x27; #向标签2输入typora</span><br><span class="line">#send-keys -t 2 &#x27;typora ./daily_record/2018.md&#x27; C-m #向标签2输入命令，并回车确定  </span><br><span class="line">#selectp -t 0 # 返回第一个标签</span><br></pre></td></tr></table></figure>
+<p>然后会自动分割成3个标签，并且向第三个标签输入typora，并且指向我的记录文档，刚好如果我想记录，直接Enter，如果不想开typora，那就重新输入命令即可。嘻嘻 &gt;_&lt; 当然注意，启动typora后的那个标签会进入运行状态，除非typora已经关闭，才能再输入命令。 ###　[注意]tmux比较权威的说明书： 《tmux: Productive Mouse-Free Development》<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">https://www.kancloud.cn/kancloud/tmux/62464</a>， CSDN上很多博客都是在灌水，关乎脚本的只字不提，只说了快捷键部分。但是感觉脚本脚本脚本真的真的真的才是tmux最重要的是部分哇！ 当然这个脚本中所述的方法是用bashl下运行tmux脚本，所以每一条命令前面都有一句tmux，既然我已经设置了tmux为默认shell，已经是tmux环境了，所以我的脚本是不用每一句命令之前加tmux的。以上已经完成了一个快捷键调用我要的脚本 的配置。 【Q3】然后我又想，终端输入命令调用脚本的方式，正如前几行那个<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">文档</a>说讲的方式，输入一个可执行脚本的名字develop，然后执行脚本，运行这个开发环境出来，平时不需要的时候就不调用，而不是tmux快捷按键的方式调用脚本。尤其 ，在我使用ros的时候，那么多的窗口，需要一个集成的界面出来！这个问题待续。</p>
+<h2 id="总结一哈"><a class="markdownIt-Anchor" href="#总结一哈"></a> 总结一哈</h2>
+<p>用了tmux的分割标签，快捷键，脚本运行； 配置文件在 .tmux.conf 其中一个插件 ~/.tmux/dev； 用了zsh的主题； 配置文件在~/.zshrc</p>
+<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://williamyu.top/blog/2018/02/13/shell/">http://williamyu.top/blog/2018/02/13/shell/</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013857738">https://segmentfault.com/a/1190000013857738</a></li>
+<li>《tmux: Productive Mouse-Free Development》<a target="_blank" rel="noopener" href="https://www.kancloud.cn/kancloud/tmux/62464">https://www.kancloud.cn/kancloud/tmux/62464</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/gatieme/article/details/52741221">http://blog.csdn.net/gatieme/article/details/52741221</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/02/Bioinfo-chipseeker-installation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/02/Bioinfo-chipseeker-installation/" class="post-title-link" itemprop="url">ChipSeeker的安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-02 20:02:42" itemprop="dateCreated datePublished" datetime="2020-03-02T20:02:42+08:00">2020-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>我使用Linux CentOS 7系统，在ChipSeeker的安装过程中遇到了许多问题，这里做个记录。 <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d887.59.11.png" alt="截屏2020-03-02下午7.59.11" /> 在R （version 3.6）输入如下命令开始自动安装。安装命令：</p>
+<p>if (!requireNamespace(“BiocManager”, quietly = TRUE))<br />
+install.packages(“BiocManager”)</p>
+<p>BiocManager::install(“ChIPseeker”)</p>
+<p>部分报错信息：</p>
+<p>make：gfortran：命令未找到 │*** moving datasets to lazyload DB<br />
+ERROR: compilation failed for package ‘igraph’<br />
+installation of package ‘igraph’ had non-zero exit status<br />
+installation of package ‘tidygraph’ had non-zero exit status<br />
+installation of package ‘graphlayouts’ had non-zero exit status<br />
+installation of package ‘ggraph’ had non-zero exit status <br />
+installation of package ‘enrichplot’ had non-zero exit status<br />
+installation of package ‘ChIPseeker’ had non-zero exit status</p>
+<p>解决办法，先给centOS 7系统安装gfortran：</p>
+<p>yum install gcc-gfortran</p>
+<p>继续安装R包，遇到 libgfortran.so.4 文件缺失的问题。解决办法：用find命令在linux系统里面找，在anaconda 3.7的安装目录下找到一个，所以就用这个文件，做一个软链接到系统库（我是/home/xxx/local/lib），然后igraph这些包就安装好了。 后续还遇到了R packages无法下载的问题：</p>
+<p>package ‘xxxx-package’ is not available (for R version 3.6.0)</p>
+<p>直接在R的cran里面搜索包，手动下载之后，在R界面用下面的命令即可安装：</p>
+<p>install.packages(“/xxx/yy/xx/xxpackage.1.xx.0.tar.gz”)</p>
+<p>这些包也有可能在编译的过程遇到问题，我尝试过下载旧版本的包，有时候可以解决问题；也有更换不同版本的gcc才能编译成功的情况。 对于功能高级、复杂的R包的安装，有时候真的麻烦，花掉我不止一天时间。一个R包依赖其他多个不同R包，不一定每个R包都能顺利安装；具体到各个R包，他们有不同的版本，不是每个版本都能安装，可能要换不同的gcc来做编译；还有就是linux下面安装软件很多时候都是环境变量的问题，要根据具体情况做修改和调整。 终于安装成功： <img src="https://genehub.files.wordpress.com/2020/03/e688aae5b18f2020-03-02e4b88be58d888.00.55.png" alt="截屏2020-03-02下午8.00.55" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/20/%E8%B4%A8%E7%B2%92dna%E6%B5%8B%E5%BA%8F%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/20/%E8%B4%A8%E7%B2%92dna%E6%B5%8B%E5%BA%8F%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">质粒DNA测序结果分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-20 11:50:30" itemprop="dateCreated datePublished" datetime="2020-01-20T11:50:30+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目的基因的克隆，简要过程如下，构建的阳性克隆需要经过 Sanger 测序验证。对于 Sanger 测序，一般一个反应（一个引物往后延伸）测的比较准确的长度大概是 800 bp，如果大于这个长度，就需要设计多条引物，用多个反应分区段测定。 <img src="https://genehub.files.wordpress.com/2020/01/cloning_dna-_science_learning_hub.jpg" alt="cloning_dna-_Science_Learning_Hub" />   测序结果解压后一般有两个类型的文件：ab1后缀的谱图文件和seq后缀的序列文件。 ab1格式的谱图可以用BioEdit软件打开，界面如下。一般在 20 bp ~ 900 bp 的测序区间是比较准确的。 <img src="https://genehub.files.wordpress.com/2020/01/ab1.png" alt="ab1" /> 以.seq为后缀的序列文件可以直接用 EditPlus、SnapGene 之类的序列编辑软件打开，也可以用电脑自带的记事本和写字板打开，拷贝出来用于序列分析。 可用 DNAstar 软件中的 MegAlign 软件将测序文件和模板序列进行比对，如果没有问题就可以放心就行后面的操作了。依次点击 MegAlign -&gt; File -&gt; Enter Sequences -&gt; 选择seq后缀的文件 -&gt; 打开，即可将测序文件导入软件，再以同样的方式导入fasta格式的参考序列，并选择 Align -&gt; By Clustal W Method，即可看到序列比对结果。注意反向引物的测序序列需要自己先反转（网页工具：<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms/rev%5C_comp.html%EF%BC%89%EF%BC%8C%E5%8F%8D%E8%BD%AC%E5%90%8E%E7%9A%84%E5%BA%8F%E5%88%97%E5%8F%A6%E5%AD%98%E4%B8%80%E4%B8%AA%E6%96%B0%E6%96%87%E4%BB%B6%E6%89%8D%E5%8F%AF%E4%BB%A5%E5%AF%BC%E5%85%A5%EF%BC%8C%E5%90%A6%E5%88%99%E5%8F%8D%E5%90%91%E5%BC%95%E7%89%A9%E6%B5%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%8F%82%E8%80%83%E5%BA%8F%E5%88%97%E6%96%B9%E5%90%91%E4%B8%8D%E4%B8%80%E8%87%B4%EF%BC%8C%E8%BD%AF%E4%BB%B6%E4%B8%8D%E8%83%BD%E6%AF%94%E5%AF%B9%E3%80%82%E9%99%A4%E4%BA%86">http://www.bioinformatics.org/sms/rev\_comp.html），反转后的序列另存一个新文件才可以导入，否则反向引物测序的结果与参考序列方向不一致，软件不能比对。除了</a> MegAlign，还有其他序列比对软件可以做，例如windows系统的ClustalX；或者网页版的 ClustalW（<a target="_blank" rel="noopener" href="https://www.genome.jp/tools-bin/clustalw%EF%BC%89%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%81%9A%E5%8F%8C%E5%BA%8F%E5%88%97%E6%AF%94%E5%AF%B9%E3%80%82">https://www.genome.jp/tools-bin/clustalw）也可以做双序列比对。</a> <img src="https://genehub.files.wordpress.com/2020/01/e5beaee4bfa1e688aae59bbe_20200120113453.png" alt="微信截图_20200120113453" />   如果要对比对结果进行图形化展示，可以用 Color Align Conservation （<a target="_blank" rel="noopener" href="http://www.bioinformatics.org/sms2/color%5C_align%5C_cons.html%EF%BC%89%E5%87%BA%E5%9B%BE%E3%80%82%E4%B8%8B%E9%9D%A2%E6%98%AF%E7%BD%91%E9%A1%B5%E6%8F%90%E4%BE%9B%E7%9A%84%E8%9B%8B%E7%99%BD%E8%B4%A8%E5%BA%8F%E5%88%97%E4%BD%9C%E4%B8%BA%E6%A1%88%E4%BE%8B%EF%BC%8C%E5%AF%B9%E4%BA%8EDNA%E5%BA%8F%E5%88%97%E4%B9%9F%E6%98%AF%E7%B1%BB%E4%BC%BC%E7%9A%84%E3%80%82">http://www.bioinformatics.org/sms2/color\_align\_cons.html）出图。下面是网页提供的蛋白质序列作为案例，对于DNA序列也是类似的。</a> <img src="https://genehub.files.wordpress.com/2020/01/e5beaee4bfa1e688aae59bbe_20200120114724.png" alt="微信截图_20200120114724" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/13/Linux-ssh-from-remote/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1097,334 +1412,6 @@ make: *** [build_lastz] Error 2</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/27/Python-python3-python2-in-a-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/11/27/Python-python3-python2-in-a-system/" class="post-title-link" itemprop="url">Python：python3与python2共存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-11-27 21:53:40" itemprop="dateCreated datePublished" datetime="2018-11-27T21:53:40+08:00">2018-11-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 16:56:42" itemprop="dateModified" datetime="2020-12-08T16:56:42+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>20201208更新：本文已过期。</strong></p>
-<p>Linux系统自带了Python2.6，自己又安装了Python2.7和Anaconda3（Python3.6） 今天运行python3.6报错：</p>
-<p>[fenglei@localhost lib64]$ /home/fenglei/local/app/anaconda3/bin/python3<br />
-Failed to import the site module<br />
-Traceback (most recent call last):<br />
-File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br />
-__boot()<br />
-File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br />
-import imp # Avoid import loop in Python &gt;= 3.3<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br />
-import tokenize<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br />
-import re<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br />
-class RegexFlag(enum.IntFlag):<br />
-AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
-<p>通过vim进入~/.bashrc文件进行编辑：</p>
-<p>export PYTHONPATH=/home/fenglei/local/app/anaconda3/lib/python3.6/site-packages</p>
-<p>即可运行 python3.6了。 如果需要运行python2.7，则做下修改：</p>
-<p>export PYTHONPATH=/usr/local/lib/python2.7/site-packages</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/09/Bioinfo-diamond-vs-blast/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/07/09/Bioinfo-diamond-vs-blast/" class="post-title-link" itemprop="url">Diamond: 比BLAST更快速的比对工具</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-07-09 13:36:29" itemprop="dateCreated datePublished" datetime="2018-07-09T13:36:29+08:00">2018-07-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Diamond简介</strong> 序列比对软件，能输出与BLAST类似的结果，但是速度快了数百倍。 <strong>安装</strong> 二进制可以直接解压使用：</p>
-<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz">http://github.com/bbuchfink/diamond/releases/download/v0.9.22/diamond-linux64.tar.gz</a><br />
-tar xzf diamond-linux64.tar.gz</p>
-<p>源码则用cmake安装：</p>
-<p>wget <a target="_blank" rel="noopener" href="http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz">http://github.com/bbuchfink/diamond/archive/v0.9.22.tar.gz</a><br />
-tar xzf v0.9.22.tar.gz<br />
-cd diamond-0.9.22<br />
-mkdir bin<br />
-cd bin<br />
-cmake …<br />
-make install</p>
-<p><strong>使用</strong> 1 建立index</p>
-<p>diamond makedb --in swissprot.fasta -d swissprot</p>
-<p>2 比对</p>
-<p>diamond blastp --db ./index/swissprot --query putative_proteins.fa --threads 10 --out proteins-BLASTP-swissprot.m8 -e 0.00001 --max-target-seqs 1</p>
-<p>建立index的过程就6秒钟（Processed 557491 sequences, 199978344 letters. Total time = 6.64576s）。比对过程也极快，几分钟跑完了。 <strong>与其他软件的比较</strong> “生信技能树”论坛有人讲Diamond与BLAST进行比较，26740个蛋白序列与NR的蛋白库（animal）作比对，运行DIAMOND仅需要3小时，运行BLASTP则需要2周。存在的问题是同一个蛋白序列在两个比对软件下得到的最高分比对结果通常不一样（可能跟参数设置有关？）。第二个问题是输出的tabular格式结果不能被blast2go识别（可能需要调整输出格式的参数）。 <strong>参考资料</strong> [1] <a target="_blank" rel="noopener" href="https://github.com/bbuchfink/diamond/releases/">https://github.com/bbuchfink/diamond/releases/</a> [2] <a target="_blank" rel="noopener" href="http://www.biotrainee.com/thread-1465-1-1.html">http://www.biotrainee.com/thread-1465-1-1.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/16/Bioinfo-augustus-3-3-installation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/16/Bioinfo-augustus-3-3-installation/" class="post-title-link" itemprop="url">Augustus-3.3的安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-16 21:09:09" itemprop="dateCreated datePublished" datetime="2018-05-16T21:09:09+08:00">2018-05-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Augustus 是流行的基因预测软件。在安装的过程中，遇到了 make 报错的问题，查询资料之后成功安装。错误信息提示 Augustus 在 bam2hints 编译的时候不通过，导致 make 失败。原来是bam2hints、filterBam 和 bam2wig 这三个目录下的 Makefile 中对其依赖程序的调用需要手动更改。下面部分文字摘抄自 <a target="_blank" rel="noopener" href="http://iamphioxus.org">iamphioxus.org</a> 。 Augustus is a very popular tool for gene annotation, however its installation process can be a bit tricky. For example, if we just download and install <em>Augustus</em> like below, it will not work.</p>
-<p>wget <a target="_blank" rel="noopener" href="http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz">http://bioinf.uni-greifswald.de/augustus/binaries/augustus-3.3.1.tar.gz</a><br />
-tar xvzf augustus-3.3.1.tar.gz<br />
-cd augustus-3.3.1<br />
-make</p>
-<p>You will probably get these errors:</p>
-<p>cd auxprogs &amp;&amp; make<br />
-make[1]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
-cd bam2hints; make;<br />
-make[2]: Entering directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
-g++ -Wall -O2 -c <a target="_blank" rel="noopener" href="http://bam2hints.cc">bam2hints.cc</a> -o bam2hints.o -I/usr/include/bamtools<br />
-bam2hints.cc:16:27: fatal error: api/BamReader.h: No such file or directory<br />
-#include &lt;api/BamReader.h&gt;<br />
-^<br />
-compilation terminated.<br />
-Makefile:29: recipe for target ‘bam2hints.o’ failed<br />
-make[2]: *** [bam2hints.o] Error 1<br />
-make[2]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs/bam2hints’<br />
-Makefile:7: recipe for target ‘all’ failed<br />
-make[1]: *** [all] Error 2<br />
-make[1]: Leaving directory ‘/home/jxyue/Tools/augustus-3.2.3/auxprogs’<br />
-Makefile:7: recipe for target ‘all’ failed<br />
-make: *** [all] Error 2<br />
-This is because the auxiliary tools, bam2hints and filterBam, depend on the pre-installation of bamtools with proper library path configured.</p>
-<p>Therefore, let’s install bamtools first. It will be much easier if we just do system-wide installation like: 首先安装 bamtools，我在使用 redhat 系统，安装 bamtools-2.4.1 要用到 cmake 3.0以上版本。我尝试安装了 cmake 3.0 的源码，但是编译失败，于是下载了二进制文件，cmake 可以运行，随后顺利编译 bamtools 2.4.1。</p>
-<p>tar -zxvf bamtools-2.4.1.tar.gz<br />
-cd bamtools-2.4.1<br />
-mkdir build<br />
-cd build<br />
-cmake -DCMAKE_INSTALL_PREFIX=/home/fenglei/local …<br />
-make<br />
-make install</p>
-<h1 id="此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"><a class="markdownIt-Anchor" href="#此时运行-bamtools-发现报错提示无法用-libbamtoolsso241于是在下载目录把该文件拷贝到了安装目录下的-lib-和-lib64-中再运行bamtools就成了"></a> 此时运行 bamtools 发现报错，提示无法用 libbamtools.so.2.4.1，于是在下载目录把该文件拷贝到了安装目录下的 lib 和 lib64 中，再运行bamtools就成了。</h1>
-<h1 id="find-~local-name-libbamtoolsso241"><a class="markdownIt-Anchor" href="#find-~local-name-libbamtoolsso241"></a> find ~/local -name libbamtools.so.2.4.1</h1>
-<p>cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1 /home/fenglei/local/lib/<br />
-cp /home/fenglei/local/app/bamtools-2.4.1/lib/libbamtools.so.2.4.1  /home/fenglei/local/lib64</p>
-<p>Now bamtools should have been correctly installed. Next, we need to modify the Makefiles of bam2hints and filterBam to adapt them with our manually installed bamtools.</p>
-<p>First, go to the “./auxprogs/bam2hints” directory and make the following changes for the Makefile:</p>
-<p>Add:<br />
-BAMTOOLS = /home/fenglei/local</p>
-<p>Replace:<br />
-INCLUDES = /usr/include/bamtools<br />
-By:<br />
-INCLUDES = $(BAMTOOLS)/include</p>
-<p>Replace:<br />
-LIBS = -lbamtools -lz<br />
-By:<br />
-LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
-<h1 id="注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"><a class="markdownIt-Anchor" href="#注意-libs-中-lib64-也可能是-lib要通过搜索-libbamtoolsa-查看其实际位置"></a> 注意 LIBS 中 lib64 也可能是 lib，要通过搜索 libbamtools.a 查看其实际位置。</h1>
-<p>Then, go to the “augustus-3.2.3/auxprogs/filterBam/src” directory and make the following changes for the Makefile:</p>
-<p>Replace:</p>
-<p>BAMTOOLS = /usr/include/bamtools<br />
-By:<br />
-BAMTOOLS = /home/fenglei/local</p>
-<p>Replace:<br />
-INCLUDES = -I<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>B</mi><mi>A</mi><mi>M</mi><mi>T</mi><mi>O</mi><mi>O</mi><mi>L</mi><mi>S</mi><mo stretchy="false">)</mo><mo>−</mo><mi>I</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>s</mi><mo>−</mo><mi>I</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">/</mi><mi>b</mi><mi>a</mi><mi>m</mi><mi>t</mi><mi>o</mi><mi>o</mi><mi>l</mi><mi>s</mi><mi>B</mi><mi>y</mi><mo>:</mo><mi>I</mi><mi>N</mi><mi>C</mi><mi>L</mi><mi>U</mi><mi>D</mi><mi>E</mi><mi>S</mi><mo>=</mo><mo>−</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">(BAMTOOLS) -Iheaders -I./bamtools
-By:
-INCLUDES = -I</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal">h</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal">d</span><span class="mord mathnormal">e</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord">.</span><span class="mord">/</span><span class="mord mathnormal">b</span><span class="mord mathnormal">a</span><span class="mord mathnormal">m</span><span class="mord mathnormal">t</span><span class="mord mathnormal">o</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">s</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mord mathnormal">L</span><span class="mord mathnormal" style="margin-right:0.10903em;">U</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span></span></span></span>(BAMTOOLS)/include -Iheaders -I./bamtools</p>
-<p>Replace:<br />
-LIBS = -lbamtools -lz<br />
-By:<br />
-LIBS = $(BAMTOOLS)/lib64/libbamtools.a -lz</p>
-<p>进入 augustus-3.3.1/auxprogs/bam2wig，编辑 Makefile。</p>
-<p># SAMTOOLS=$(TOOLDIR)/samtools/<br />
-SAMTOOLS=/home/fenglei/local/app/samtools</p>
-<p>#HTSLIB=$(TOOLDIR)/htslib/<br />
-HTSLIB=/home/fenglei/local/app/htslib</p>
-<h1 id="bcftoolstooldirbcftools"><a class="markdownIt-Anchor" href="#bcftoolstooldirbcftools"></a> BCFTOOLS=$(TOOLDIR)/bcftools/</h1>
-<p>BCFTOOLS=/home/fenglei/local/app/bcftools</p>
-<h1 id="tabixtooldirtabix"><a class="markdownIt-Anchor" href="#tabixtooldirtabix"></a> TABIX=$(TOOLDIR)/tabix/</h1>
-<p>TABIX=/home/fenglei/local/app/htslib</p>
-<h2 id="上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"><a class="markdownIt-Anchor" href="#上述注释掉的内容是-makefile-中的原始设置分别改一下就行了-tabix-是-htslib-下的一程序"></a> 上述注释掉的内容是 Makefile 中的原始设置，分别改一下就行了。tabix 是 htslib 下的一程序。</h2>
-<p>[20201027 update] 在新的机器上重新安装Augustus，虽然按照上述步骤修改MakeFile，但是bam2wig还是无法make成功。于是将这个文件夹改掉，单独下载bam2wig程序（<a target="_blank" rel="noopener" href="https://github.com/MikeAxtell/bam2wig%EF%BC%89%EF%BC%8C%E5%B7%B2%E7%BB%8F%E6%98%AF%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E7%BC%96%E8%AF%91%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%EF%BC%81%E7%84%B6%E5%90%8E%E8%BF%9B%E5%85%A5auxprogs%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%BF%AE%E6%94%B9MakeFile%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B0%B1%E5%B0%86bam2wig%E5%AD%97%E7%AC%A6%E9%82%A3%E4%B8%A4%E8%A1%8C%E6%B3%A8%E9%87%8A%E6%8E%89%E3%80%82%E7%84%B6%E5%90%8E%E5%9B%9E%E5%88%B0Augustus%E7%9B%AE%E5%BD%95%E4%B8%8BMake%E5%B0%B1OK%E4%BA%86%E3%80%82">https://github.com/MikeAxtell/bam2wig），已经是二进制文件，不需要编译，可以直接使用！然后进入auxprogs目录，修改MakeFile文件，就将bam2wig字符那两行注释掉。然后回到Augustus目录下Make就OK了。</a> Now, we are finally ready to compile Augustus. Get back to the “augustus-3.3.1” directory and type “make”, 成功! References <a target="_blank" rel="noopener" href="https://github.com/pezmaster31/bamtools/wiki/Building-and-installing">https://github.com/pezmaster31/bamtools/wiki/Building-and-installing</a> <a target="_blank" rel="noopener" href="https://www.biostars.org/p/189048/">https://www.biostars.org/p/189048/</a> <a target="_blank" rel="noopener" href="http://tiramisutes.github.io/2017/01/06/GLIBC.html">http://tiramisutes.github.io/2017/01/06/GLIBC.html</a> <a target="_blank" rel="noopener" href="https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/">https://iamphioxus.org/2017/05/08/installing-augustus-with-manual-bamtools-installation/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1496,7 +1483,7 @@ HTSLIB=/home/fenglei/local/app/htslib</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

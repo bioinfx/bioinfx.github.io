@@ -9651,7 +9651,7 @@ A semicolon-separated list of tag-value pairs, providing additional information 
   </entry>
   <entry>
     <title>Linux | Ubuntu 挂载新硬盘，使用 parted 工具将其格式化为 XFS 格式</title>
-    <url>/2023/04/03/Adding_new_harddisk_to_Ubuntu/</url>
+    <url>/2023/03/24/Adding_new_harddisk_to_Ubuntu/</url>
     <content><![CDATA[<p>Ubuntu 挂载新硬盘，分区工具 parted 的详解及常用分区使用方法。</p>
 <span id="more"></span>
 <p>硬盘买回来一开始装在 Windows 系统里，当时已经在 windows 里面分成一个区。</p>

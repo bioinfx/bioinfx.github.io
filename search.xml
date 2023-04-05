@@ -9525,4 +9525,116 @@ A semicolon-separated list of tag-value pairs, providing additional information 
         <category>Linux</category>
       </categories>
   </entry>
+  <entry>
+    <title>Linux | PBS作业管理系统使用技巧</title>
+    <url>/202304/05/01/PBS-job-submission/</url>
+    <content><![CDATA[<p>学校的服务器分为“登录节点”和“计算节点”，要求使用PBS投递任务，现做个记录。</p>
+<span id="more"></span>
+<h3 id="作业提交和管理命令"><a class="markdownIt-Anchor" href="#作业提交和管理命令"></a> 作业提交和管理命令</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+<th>使用说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qsub</td>
+<td>提交pbs作业</td>
+<td>qsub [script]</td>
+<td>$ qsub job.pbs</td>
+</tr>
+<tr>
+<td>qdel</td>
+<td>删除pbs作业</td>
+<td>qdel [job_id]</td>
+<td>$ qdel 12345</td>
+</tr>
+<tr>
+<td>qhold</td>
+<td>挂起pbs作业</td>
+<td>qhold [job_id]</td>
+<td>$ qhold 12345</td>
+</tr>
+<tr>
+<td>qrls</td>
+<td>释放挂起的pbs作业</td>
+<td>qrls [job_id]</td>
+<td>$ qrls 12345</td>
+</tr>
+</tbody>
+</table>
+<h3 id="作业状态查询命令"><a class="markdownIt-Anchor" href="#作业状态查询命令"></a> 作业状态查询命令</h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qstat -q</td>
+<td>列出所有队列</td>
+</tr>
+<tr>
+<td>qstat -an</td>
+<td>列出所有作业</td>
+</tr>
+<tr>
+<td>qstat -u user_id</td>
+<td>列出user_id的所有作业</td>
+</tr>
+<tr>
+<td>qstat -r</td>
+<td>列出所有正在运行的作业</td>
+</tr>
+<tr>
+<td>qstat -f job_id</td>
+<td>列出作业job_id的信息</td>
+</tr>
+<tr>
+<td>qstat -fQ queue</td>
+<td>列出队列queue的信息</td>
+</tr>
+<tr>
+<td>qstat -B</td>
+<td>列出所有作业状态的汇总</td>
+</tr>
+<tr>
+<td>pbsnodes</td>
+<td>列出所有节点的详细信息</td>
+</tr>
+<tr>
+<td>pestat</td>
+<td>列出所有节点的状态</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pbs作业参数"><a class="markdownIt-Anchor" href="#pbs作业参数"></a> PBS作业参数</h3>
+<p>下面是摘抄他人的PBS投递脚本</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">#PBS -l nodes=1:ppn=16</span><br><span class="line">#PBS -l walltime=1000:00:00</span><br><span class="line">#PBS -q high</span><br><span class="line">#PBS -N Job_Name</span><br><span class="line">#PBS -oe</span><br><span class="line">your_commands_goes_here</span><br></pre></td></tr></table></figure>
+<p>我在实践投递任务的过程中，是准备两个类型的文件：xxx.pbs 和 <a href="http://yyy.sh">yyy.sh</a>。通过一个 pbs 文件来运行一个或多个 sh 脚本。</p>
+<p>比如 my.pbs 文件包含下面的内容。注意要用 cd 命令进入工作目录，且 sh 脚本最好通过重定向功能保存屏幕输出信息和错误信息到指定记录文件，便于查看潜在错误信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#PBS -N lfeng_RNA_seq</span><br><span class="line">#PBS -o /data3/home/fenglei/pbs.out</span><br><span class="line">#PBS -e /data3/home/fenglei/pbs.err</span><br><span class="line">#PBS -q top_q</span><br><span class="line">#PBS -l nodes=1:ppn=8</span><br><span class="line"></span><br><span class="line">cd /data3/home/fenglei/data/xxx_path</span><br><span class="line">sh hisat2.sh &gt; hisat2.sh_log 2&gt;&amp;1</span><br><span class="line">sh stringtie.sh &gt; stringtie.sh 2&gt;&amp;1 </span><br></pre></td></tr></table></figure>
+<p>上面的 pbs 文件中，-N 后面是任务名称，自定义一个字符串即可；-o 和 -e 后面分别是重定向标准输出和错误信息，一般我很少看；-q 后面指定特定的计算节点（根据服务器管理方提供的名称来填写）；-l 后面就是指定节点数目和处理器数目。比如我上面 pbs 文件的意思就是在 top_q 这个计算服务器申请 8 个处理器，用来运行 hisat2 和 <a href="http://stringtie.sh">stringtie.sh</a> 这两个脚本文件。</p>
+<p><a href="http://hisat2.sh">hisat2.sh</a> 包含以下内容。注意调用程序用绝对路径，我测试发现我所使用的服务器必须这样操作才能正常运行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">set -e</span><br><span class="line">set -u</span><br><span class="line">set -o pipefail</span><br><span class="line">/path/to/hisat2 -i xxx.fa -o yyy.sam  # 仅作示范</span><br></pre></td></tr></table></figure>
+<p>stringtie 包含以下内容。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">set -e</span><br><span class="line">set -u</span><br><span class="line">set -o pipefail</span><br><span class="line">/path/to/stringtie -i yyy.bam -o zzz.fpkm # 仅作示范</span><br></pre></td></tr></table></figure>
+<p>那么我运行 <code>qsub my.pbs</code> 之后，首先可以通过 <code>qstat -an</code> 看看任务列表里面有没有我这个新的任务，其次在当前工作目录会生成 hisat2.sh_log 这样的记录文件，如果没有报错，最后能看到脚本生成的结果文件。</p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<ol>
+<li><a href="https://kevinzjy.github.io/2018/08/13/180813-Server-PBS/">kevinzjy：PBS作业管理系统使用技巧</a></li>
+<li><a href="http://www.ihb.cas.cn/cszx/cszx_zlxz/201808/P020180827310973379054.pdf">《中国科学院超级计算武汉分中心 PBS 用户指南》文件格式：pdf</a></li>
+<li><a href="http://hpc.cczu.edu.cn/_upload/article/files/78/96/07d83fbf4fb682744db33b4c6a72/655073ed-ad02-4e57-ae0e-f46394e8d09c.pdf">《国家高性能计算中心（西安）------PBS 提交作业使用指南》文件格式：pdf</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
 </search>

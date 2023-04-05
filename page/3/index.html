@@ -189,6 +189,126 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/05/DOS-usual-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/05/DOS-usual-commands/" class="post-title-link" itemprop="url">Bioinfo | DOS 界面下的基本操作命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-05 15:32:13" itemprop="dateCreated datePublished" datetime="2022-05-05T15:32:13+08:00">2022-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-14 20:48:34" itemprop="dateModified" datetime="2022-07-14T20:48:34+08:00">2022-07-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>偶尔需要用到 DOS 界面下调用软件来做数据处理，现对场用的命令行做一个记录。</p>
+<ol>
+<li>从默认 C 盘切换磁盘到 D 盘，直接输入 <code>d:</code>。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [版本 10.0.19044.1645]</span><br><span class="line">(c) Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\fengl&gt;d:</span><br><span class="line"></span><br><span class="line">D:\&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>
+<p>显示当前目录下的文件列表：<code>dir</code>。</p>
+</li>
+<li>
+<p>进入目录，输入 <code>cd folder_name/sub_folder</code>。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd    #显示当前目录</span><br><span class="line">cd\   #返回根目录</span><br><span class="line">cd..  #返回上一级目录</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>
+<p>运行 exe 程序，直接输入 <code>D:\path\to\xxx.exe</code> 或 <code>xxx.exe</code>。如果路径中有空格怎么办？用双引号处理：<code>&quot;D:\Program Files\path\to\xxx.exe&quot;</code>。</p>
+</li>
+<li>
+<p>清理当前界面：<code>cls</code>。</p>
+</li>
+<li>
+<p>在当前路径下创建新目录：<code>md folder_name</code>。</p>
+</li>
+<li>
+<p>删除目录：<code>rd /s /q folder_name</code>。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rd folder_name  #rd 的另外一个写法是 rmdir。使用的方法也很简单：rd 文件夹名 即可，例如：rd test。</span><br><span class="line">rd /s folder_name #如果要删除的文件夹下面还有子文件，你得给rd加个 /s 参数，它才会执行，所以，正确的写法是：rd /s test。</span><br><span class="line">rd /s /q folder_name #当删除带子文件的文件夹的时候，CMD总是殷勤地问你：是否确认(Y/N)? 参数 /q ，取自 quiet，安静模式，带 /S 删除目录树时不要求确认</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>
+<p>在当前目录下删除特定的文件：<code>del file.txt</code>。删除指定的一个或多个文件，不能用于删除子目录。参数 /P 的功能是使 DOS 在删除每个文件之前，要求用户先认可，这样使得用户可以有选择地删除一些文件。</p>
+</li>
+<li>
+<p>批处理，批处理文件（.bat）</p>
+</li>
+</ol>
+<p>以 for 循环为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">for %%I in (ABC) do echo %%I</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<p>批处理文件的for循环就是这样简单，下面来看看for语句的注意事项，并运行更复杂的for循环实例。<br />
+for语句的形式变量I，可以换成26个字母中的任意一个，这些字母会区分大小写，也就是说，%%I和%%i会被认为不是同一个变量；形式变量I还可以换成其他的字符，但是，为了不与批处理中的%0～%9这10个形式变量发生冲突，请不要随意把%%I替换为%%0～%%9中的任意一个；<br />
+in和do之间的command1表示的字符串或变量可以是一个，也可以是多个，每一个字符串或变量，我们称之为一个元素，每个元素之间，用空格键、跳格键、逗号、分号或等号分隔；<br />
+for语句依次提取command1中的每一个元素，把它的值赋予形式变量I，带到do后的command2中参与命令的执行；并且每次只提取一个元素，然后执行一次do后的命令语句，而无论这个元素是否被带到command2中参与了command2的运行；当执行完一次do后的语句之后，再提取command1中的下一个元素，再执行一次command2，如此循环，直到command1中的所有元素都已经被提取完毕，该for语句才宣告执行结束。</p>
+<p>有了以上的基础，我们再来看下面这个例子，这个例子修改了demo1中的部分内容(记为demo2)，结果将大不一样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">for  %%I in (A,B,C) do echo %%I</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p>追梦菜鸟：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013514928/article/details/79629937">https://blog.csdn.net/u013514928/article/details/79629937</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/Bioinfo-DRIMM-synteny-lab-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1477,111 +1597,6 @@ ms2ft:</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/16/Bioinfo-TCseq-Time-Course-sequencing-data-analysis/" class="post-title-link" itemprop="url">Bioinfo | TCseq Time Course sequencing data analysis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-09-16 11:01:58 / Modified: 13:53:39" itemprop="dateCreated datePublished" datetime="2021-09-16T11:01:58+08:00">2021-09-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转录组测序如果有多个时间点，可以做表达趋势分析，即基因表达模式聚类分析，可以用 STEM、Mfuzz、TCseq 软件等工具。</p>
-<p>Mfuzz 采用了一种新的聚类算法 fuzzy c-means algorithm，在文献中称这种聚类算法为 soft clustering 算法，相比 K-means 等 hard clustering 算法，一定程度上降低了噪声对聚类结果的干扰，而且这种算法有效的定义了基因和 cluster 之间的关系，即基因是否属于某个 cluster, 对应的值为 memebership。</p>
-<p>对于分析而言，我们只需要提供基因表达量的数据就可以了，需要注意的是，Mfuzz 默认你提供的数据是归一化之后的表达量，这意味着表达量必须可以直接在样本间进行比较，对于 FPKM, TPM 这两种定量方式而言，是可以直接在样本间进行比较的，但是对于 count 的定量结果，我们必须先进行归一化，可以使用 edgeR 或者 DESeq 先得到归一化之后的数据再进行后续分析。Mfuzz 的使用可参考：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1625288">生信修炼手册：使用 Mfuzz 进行时间序列表达模式聚类分析</a></p>
-<p>TCseq 则可以用 count 定量来做输入，他自己会调用 edgeR 来做样品之间的归一化。分析之前准备三个文件：（1）基因表达矩阵文件，可以直接拿原始 read count 数据；（2）样品分组情况的文件；（3）基因坐标文件。</p>
-<p>下面列出文件内容：</p>
-<p>（1）基因表达矩阵文件，可以直接拿原始 read count 数据。我是用 htseq-count 工具来做的每个基因的 read count 统计，这里按下不表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gene-id	L1-1A	L1-2A	L1-3A	L2-1A	L2-2A	L2-3A	L3-1A	L3-2A	L3-3A	L4-1A	L4-2A	L4-3A</span><br><span class="line">Chr01.g00016	72	74	30	16	95	134	100	10	57	95	78	5</span><br><span class="line">Chr01.g00017	1645	2072	2672	791	1105	1726	3060	947	882	1576	2414	466</span><br><span class="line">Chr01.g00018	8	3	59	6	16	16	19	6	0	12	3	1</span><br><span class="line">Chr01.g00019	1	14	26	2	5	7	15	0	0	8	6	0</span><br><span class="line">Chr01.g00020	0	0	0	0	0	0	0	0	0	0	0	0</span><br><span class="line">Chr01.g00021	0	0	0	0	0	0	0	0	0	0	0	0</span><br><span class="line">Chr01.g00022	1744	1912	2568	1549	2708	1966	2198	2308	1995	1789	2255	1697</span><br><span class="line">Chr01.g00023	8	1	3	8	14	3	6	3	6	0	7	1</span><br><span class="line">Chr01.g00024	39	25	69	127	103	8	43	170	167	89	89	67</span><br><span class="line">Chr01.g00025	0	0	0	0	0	0	0	0	0	0	0	0</span><br><span class="line">Chr01.g00026	0	1	0	6	2	1	17	30	8	2	5	94</span><br><span class="line">Chr01.g00027	748	794	808	370	640	805	886	1169	786	677	864	817</span><br><span class="line">... ... (其余省略)</span><br></pre></td></tr></table></figure>
-<p>（2）样品分组文件 (样品，时间点，分组三列)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sampleid	timepoint	group</span><br><span class="line">L1-1A	0h	1</span><br><span class="line">L1-2A	0h	1</span><br><span class="line">L1-3A	0h	1</span><br><span class="line">L2-1A	2h	2</span><br><span class="line">L2-2A	2h	2</span><br><span class="line">L2-3A	2h	2</span><br><span class="line">L3-2A	24h	3</span><br><span class="line">L3-3A	24h	3</span><br><span class="line">L4-1A	48h	4</span><br><span class="line">L4-2A	48h	4</span><br><span class="line">L4-3A	48h	4</span><br></pre></td></tr></table></figure>
-<p>（3）基因坐标文件 (染色体，起始及终止位点，基因id四列)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">chr	start	end	id</span><br><span class="line">scaffold_1	760	5575	scaffold_1.g00001</span><br><span class="line">scaffold_1	81403	85562	scaffold_1.g00002</span><br><span class="line">scaffold_1	122872	124937	scaffold_1.g00003</span><br><span class="line">scaffold_1	138239	140514	scaffold_1.g00004</span><br><span class="line">scaffold_1	156823	159196	scaffold_1.g00005</span><br><span class="line">scaffold_1	160925	162845	scaffold_1.g00006</span><br><span class="line">scaffold_1	195980	199165	scaffold_1.g00007</span><br><span class="line">scaffold_1	199535	200289	scaffold_1.g00008</span><br></pre></td></tr></table></figure>
-<h3 id="读取输入基因表达量与分组数据"><a class="markdownIt-Anchor" href="#读取输入基因表达量与分组数据"></a> 读取输入基因表达量与分组数据</h3>
-<p>准备好上述三个文件，就可以在 Rstudio 界面开始加载 TCseq 包，读取上述三个数据文件，开始分析。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">setwd(&quot;C:/R-data&quot;)</span><br><span class="line"></span><br><span class="line">#To install this package, start R (version &quot;4.1&quot;) and enter:</span><br><span class="line">  </span><br><span class="line"> if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))</span><br><span class="line">    install.packages(&quot;BiocManager&quot;)</span><br><span class="line"></span><br><span class="line">BiocManager::install(&quot;TCseq&quot;)</span><br><span class="line">library(TCseq)</span><br><span class="line"></span><br><span class="line">BiocManager::install(&quot;topGO&quot;)   ## 画GO树状图需要用</span><br><span class="line">library(topGO)</span><br><span class="line"></span><br><span class="line">library(dplyr)</span><br><span class="line"></span><br><span class="line"># To view documentation for the version of this package installed in your system, start R and enter:</span><br><span class="line">browseVignettes(&quot;TCseq&quot;)</span><br><span class="line"></span><br><span class="line">rm(list = ls())  # 清除 Rstudio 里面旧的变量</span><br><span class="line">ls()</span><br><span class="line"># 位置信息文件</span><br><span class="line">genomicIntervals &lt;- read.delim(&#x27;AMO.intervial.txt&#x27;, stringsAsFactors = FALSE)</span><br><span class="line">genomicIntervals$chr &lt;- as.factor(genomicIntervals$chr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 表达量矩阵文件</span><br><span class="line">#count &lt;- read.delim(&#x27;all_read_count.txt&#x27;,header = T,row.names = 1) ### read count table</span><br><span class="line"></span><br><span class="line">count &lt;- read.delim(&#x27;all_read_count.txt&#x27;,header = T,row.names = 1) ### read count table</span><br><span class="line">count &lt;- count[,-7]   ### L3-1A 样品数据有问题，剔除  # Optional</span><br><span class="line"></span><br><span class="line"># as.integer 转换为整数型</span><br><span class="line">countsTable &lt;- count %&gt;%  mutate(across(where(is.numeric), as.integer))   # 依赖 dplyr 包</span><br><span class="line"># or</span><br><span class="line">#count1 &lt;- apply(count, 2, as.integer)</span><br><span class="line">rownames(countsTable) &lt;- rownames(count)</span><br><span class="line">##矩阵形式</span><br><span class="line">countsTable &lt;- as.matrix(countsTable)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 分组文件</span><br><span class="line">experiment &lt;- read.delim(&#x27;leaf_group.txt&#x27;,header = T,stringsAsFactors = FALSE)</span><br><span class="line">experiment$sampleid &lt;- as.factor(experiment$sampleid)</span><br></pre></td></tr></table></figure>
-<h3 id="创建tca对象"><a class="markdownIt-Anchor" href="#创建tca对象"></a> 创建TCA对象</h3>
-<p>TCseq 使用 S4 类 TCA 存储所有输入数据以进行后续分析。根据以上三个文件创造即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tca &lt;- TCA(design = experiment, genomicFeature = genomicIntervals, counts = countsTable)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">tca  # 此次摘抄自 凯凯何_Boy 链接：https://www.jianshu.com/p/26332e4da742</span><br><span class="line">  ##############</span><br><span class="line">  An object of class &quot;TCA&quot;</span><br><span class="line">@design</span><br><span class="line">  sampleid timepoint group</span><br><span class="line">1       s1        0h     1</span><br><span class="line">2       s2        0h     1</span><br><span class="line">3       s3        0h     1</span><br><span class="line">4       s4       24h     2</span><br><span class="line">5       s5       24h     2</span><br><span class="line">6       s6       24h     2</span><br><span class="line">7       s7       48h     3</span><br><span class="line">8       s8       48h     3</span><br><span class="line">9       s9       48h     3</span><br><span class="line"></span><br><span class="line">@counts</span><br><span class="line">                    s1  s2  s3  s4  s5  s6  s7  s8  s9</span><br><span class="line">ENSBTAG00000000005  60  58  70  64  60  74  53  55  50</span><br><span class="line">ENSBTAG00000000008   0   0   0   1   0   1   2   0   0</span><br><span class="line">ENSBTAG00000000009   0   1   3   0   1   0  11   9   9</span><br><span class="line">ENSBTAG00000000010 341 300 341 170 216 214 150 236 199</span><br><span class="line">ENSBTAG00000000011   4   2   3   5   3   1   6   2   3</span><br><span class="line">29749 more rows ...</span><br><span class="line"></span><br><span class="line">@genomicFeature</span><br><span class="line">   chr     start       end                 id</span><br><span class="line">1 chr1 100098899 100161382 ENSBTAG00000035710</span><br><span class="line">2 chr1 100754351 100754458 ENSBTAG00000043293</span><br><span class="line">3 chr1 101522743 101601659 ENSBTAG00000011139</span><br><span class="line">4 chr1 101619573 101646742 ENSBTAG00000053582</span><br><span class="line">5 chr1 101776678 101776956          MSTRG.445</span><br><span class="line">29749 more rows ...</span><br><span class="line"></span><br><span class="line">@clusterRes</span><br><span class="line">An object of class &quot;clust&quot;</span><br><span class="line">另一种创建的方式,是通过SummarizedExperiment对象：</span><br><span class="line"></span><br><span class="line">suppressWarnings(library(SummarizedExperiment))</span><br><span class="line">se &lt;- SummarizedExperiment(assays=list(counts = countsTable), colData = experiment)</span><br><span class="line">tca &lt;- TCAFromSummarizedExperiment(se = se, genomicFeature = genomicIntervals)</span><br></pre></td></tr></table></figure>
-<p>现在已经基于这三个文件得到了TCA对象</p>
-<h3 id="差异分析"><a class="markdownIt-Anchor" href="#差异分析"></a> 差异分析</h3>
-<p>该包内置了我们常用的差异分析 R 包 edgeR，通过使用广义线性模型 (GLM) 方法去鉴定差异基因。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tca &lt;- DBanalysis(tca）</span><br><span class="line">## 我们也可以增添一些参数进行过滤</span><br><span class="line">tca &lt;- DBanalysis(tca, filter.type = &quot;raw&quot;, filter.value = 10, samplePassfilter = 2)</span><br><span class="line">#比如上述步骤保留具有两个或多个已读取样本的基因表达量超过10的基因组区域</span><br><span class="line"></span><br><span class="line">tca &lt;- DBanalysis(tca, filter.type = &quot;raw&quot;, filter.value = 10, samplePassfilter = 2)  # 与上面的选一个即可，这个命令是加了筛选参数的。</span><br><span class="line">#比如上述步骤保留具有两个或多个已读取样本的基因表达量超过10的基因组区域</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="提取差异分析结果"><a class="markdownIt-Anchor" href="#提取差异分析结果"></a> 提取差异分析结果</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#####################</span><br><span class="line">####提取差异分析结果</span><br><span class="line">#####################</span><br><span class="line"># 通过DBresult函数可以直接提取我们差异分析的结果，并通过$去查看各个组的内容。</span><br><span class="line">DBres &lt;- DBresult(tca, group1 = &quot;0h&quot;, group2 = c(&quot;2h&quot;,&quot;24h&quot;,&quot;48h&quot;))</span><br><span class="line">str(DBres, strict.width =  &quot;cut&quot;)</span><br><span class="line">head(DBres$`24hvs0h`)</span><br><span class="line"># 若只想提取满足显著差异的结果(一般abs(log2-fold &gt; 2)且adjust p-value&lt;0.05)，只需要加上top.sig = TRUE函数即可。</span><br><span class="line">## 显著差异</span><br><span class="line">DBres.sig &lt;- DBresult(tca, group1 = &quot;0h&quot;, group2 = c(&quot;2h&quot;,&quot;24h&quot;,&quot;48h&quot;), top.sig = TRUE)</span><br><span class="line">str(DBres.sig, strict.width =  &quot;cut&quot;)</span><br><span class="line">#############</span><br></pre></td></tr></table></figure>
-<p>下面是摘抄他人的案例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">通过DBresult函数可以直接提取我们差异分析的结果，在通过$去查看各个组的内容。</span><br><span class="line"></span><br><span class="line">DBres &lt;- DBresult(tca, group1 = &quot;0h&quot;, group2 = c(&quot;24h&quot;,&quot;48h&quot;))</span><br><span class="line">str(DBres, strict.width =  &quot;cut&quot;)</span><br><span class="line">head(DBres$`24hvs0h`)</span><br><span class="line">############</span><br><span class="line">GRanges object with 6 ranges and 4 metadata columns:</span><br><span class="line">                     seqnames              ranges strand |     logFC      PValue         paj</span><br><span class="line">                        &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;   &lt;numeric&gt;   &lt;numeric&gt;</span><br><span class="line">  ENSBTAG00000000005     chr1 100098899-100161382      * |  0.274010 1.35162e-01 2.81082e-01</span><br><span class="line">  ENSBTAG00000000009     chr1 101522743-101601659      * | -1.501457 2.26674e-01 4.03419e-01</span><br><span class="line">  ENSBTAG00000000010     chr1 101776678-101776956      * | -0.513593 3.36326e-06 3.80124e-05</span><br><span class="line">  ENSBTAG00000000011     chr1   10231295-10543983      * |  0.198446 7.93039e-01 8.90540e-01</span><br><span class="line">  ENSBTAG00000000012     chr1 102768932-102769966      * | -0.300941 5.04886e-03 2.18330e-02</span><br><span class="line">  ENSBTAG00000000013     chr1 105069395-105069910      * |  0.140489 1.63446e-01 3.21469e-01</span><br><span class="line">                                     id</span><br><span class="line">                            &lt;character&gt;</span><br><span class="line">  ENSBTAG00000000005 ENSBTAG00000035710</span><br><span class="line">  ENSBTAG00000000009 ENSBTAG00000011139</span><br><span class="line">  ENSBTAG00000000010          MSTRG.445</span><br><span class="line">  ENSBTAG00000000011 ENSBTAG00000017753</span><br><span class="line">  ENSBTAG00000000012 ENSBTAG00000048551</span><br><span class="line">  ENSBTAG00000000013          MSTRG.449</span><br><span class="line">  -------</span><br><span class="line">  seqinfo: 206 sequences from an unspecified genome; no seqlengths</span><br><span class="line"></span><br><span class="line"># 作者：凯凯何_Boy https://www.jianshu.com/p/26332e4da742</span><br></pre></td></tr></table></figure>
-<h3 id="时间趋势分析"><a class="markdownIt-Anchor" href="#时间趋势分析"></a> 时间趋势分析</h3>
-<p>接下来就到了趋势分析的换件了，为了检测数据的时序模式，TCseq包使用了非监督聚类的方法,首先通过聚类创建一个时程表，行为基因组区域信息，列为时间点，表中的数值可以选择标准化后的表达量值或者是基于初始时间点所有样品点的LogFC值，代码中通过value参数来调整，另外若设置filter = TRUE时候，将自动过滤在任何两个时间段都没有显著差异的基因组区域，结果通过tcTable函数进行查看</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">##通过标准化后的表达量来做聚类</span><br><span class="line"># tca &lt;- timecourseTable(tca, value = &quot;expression&quot;, norm.method = &quot;rpkm&quot;, filter = TRUE)  # Aug 9 用的这个</span><br><span class="line">tca &lt;- timecourseTable(tca, value = &quot;expression&quot;, lib.norm = TRUE, norm.method = &quot;rpkm&quot;, filter = TRUE, pvalue.threshold =  0.1, abs.fold = 1.5)</span><br><span class="line">#tca &lt;- timecourseTable(tca, value = &quot;expression&quot;, norm.method = &quot;rpkm&quot;, filter = FALSE)</span><br><span class="line"></span><br><span class="line">## 通过LogFC值来做聚类</span><br><span class="line">#tca &lt;- timecourseTable(tca, value = &quot;FC&quot;, norm.method = &quot;rpkm&quot;, filter = TRUE)</span><br><span class="line"></span><br><span class="line">## 查看生成结果</span><br><span class="line">t &lt;- tcTable(tca)</span><br><span class="line">head(t)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">## 通过LogFC值</span><br><span class="line">tca &lt;- timecourseTable(tca, value = &quot;FC&quot;, norm.method = &quot;rpkm&quot;, filter = TRUE)</span><br><span class="line"></span><br><span class="line">##通过标准化后的表达量</span><br><span class="line">tca &lt;- timecourseTable(tca, value = &quot;expression&quot;, norm.method = &quot;rpkm&quot;, filter = TRUE)</span><br><span class="line"></span><br><span class="line">## 查看生成结果</span><br><span class="line">t &lt;- tcTable(tca)</span><br><span class="line">head(t)</span><br><span class="line">                             0h          24h          48h</span><br><span class="line">ENSBTAG00000000425 0.0000000000  0.030165698 0.0075187827</span><br><span class="line">ENSBTAG00000000706 2.6013480888 11.521986790 1.7768887654</span><br><span class="line">ENSBTAG00000000936 0.0007283438  0.003506178 0.0003475789</span><br><span class="line">ENSBTAG00000001325 0.0002585125  0.001290036 0.0001705818</span><br><span class="line">ENSBTAG00000001687 0.3065966903  2.485377556 2.6233245852</span><br><span class="line">ENSBTAG00000001745 0.2496824763  2.120932031 4.7101417152</span><br></pre></td></tr></table></figure>
-<h3 id="聚类分析"><a class="markdownIt-Anchor" href="#聚类分析"></a> 聚类分析</h3>
-<p>两种聚类算法可供选择: hard clustering（包含hierachical,pam,kmeans） 及 soft clustering (fuzzy cmeans)，算法的选择大家自己参考文献选择，这里就拿文档中cmeans算法进行分析聚类。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tca &lt;- timeclust(tca, algo = &quot;cm&quot;, k = 6, standardize = TRUE)</span><br><span class="line"></span><br><span class="line">###################################################</span><br><span class="line">p &lt;- timeclustplot(tca, value = &quot;z-score(RPKM)&quot;, cols = 3)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/PVjl6Hy.jpeg" alt="" /></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"># 若是想查看某个聚类有哪些基因参与，使用tca@clusterRes查看聚类结果即可</span><br><span class="line"></span><br><span class="line">a &lt;- as.data.frame(tca@clusterRes@cluster)</span><br><span class="line">names(a) &lt;- &#x27;Cluster&#x27;</span><br><span class="line">## 查看各个聚类中的基因数目</span><br><span class="line">table(a)</span><br><span class="line">dim(a)</span><br><span class="line">table(a)</span><br><span class="line"></span><br><span class="line">#&gt; table(a)</span><br><span class="line">#### 过滤标准： tca &lt;- DBanalysis(tca, filter.type = &quot;raw&quot;, filter.value = 10, samplePassfilter = 2)</span><br><span class="line"># 1    2    3    4    5    6 </span><br><span class="line"># 1751  380 1122  599  905  554   # Aug 11 基于read count。过滤了一部分数据：</span><br><span class="line"></span><br><span class="line">#--- 过往记录：</span><br><span class="line"># 1    2    3    4    5    6 </span><br><span class="line"># 418 1397  993  602 1033 1042    ### Aug 10 </span><br><span class="line"># table(a)</span><br><span class="line"># filter.value = 1, samplePassfilter = 2) # Aug 9 用的这个 筛选条件之后，基因数目少了很多</span><br><span class="line">#1   2   3   4   5   6 </span><br><span class="line">#736 222 569 810 812 452 </span><br><span class="line"># 干旱处理 叶片的基因分组情况。没有设置筛选的情况下，基因数目多很多，但是手动查询发现有的基因并不明显</span><br><span class="line">#1    2    3    4    5    6 </span><br><span class="line">#3431 2156 3690 5167 2368 3566 </span><br><span class="line">##1   2   3   4   5   6 </span><br><span class="line">##511 147 165 292 180 255 </span><br><span class="line">##筛选 。可以分别导出每个cluster的基因列表 </span><br><span class="line"></span><br><span class="line">Cluster1 &lt;- subset(a,Cluster == 1)</span><br><span class="line">Cluster2 &lt;- subset(a,Cluster == 2)</span><br><span class="line">Cluster3 &lt;- subset(a,Cluster == 3)</span><br><span class="line">Cluster4 &lt;- subset(a,Cluster == 4)</span><br><span class="line">Cluster5 &lt;- subset(a,Cluster == 5)</span><br><span class="line">Cluster6 &lt;- subset(a,Cluster == 6)</span><br><span class="line">#Cluster7 &lt;- subset(a,Cluster == 7)</span><br><span class="line"></span><br><span class="line">write.csv(as.data.frame( tca@clusterRes@cluster ), file=&quot;6_clusters.csv&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#上面分6次执行提取cluster命令比较繁琐，另一个方法是批量导出每个聚类所包含的基因，上面这种重复写6次的命令太繁复，尝试用for循环来解决</span><br><span class="line">dir.create(path=&quot;tcseq_cluster&quot;,recursive = TRUE)  # 在工作目录下新建一个文件夹</span><br><span class="line">for(i in 1:6)&#123;</span><br><span class="line">  assign(paste(&quot;Cluster&quot;,i,sep=&quot;&quot;),subset(a,Cluster == i)) # Cluster2 &lt;- subset(a,Cluster == 2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="对个别-cluster-进行功能富集分析"><a class="markdownIt-Anchor" href="#对个别-cluster-进行功能富集分析"></a> 对个别 Cluster 进行功能富集分析</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">library(clusterProfiler)</span><br><span class="line">library(org.XXXX.eg.db)</span><br><span class="line">library(stringr)</span><br><span class="line">library(topGO)</span><br><span class="line">org &lt;- org.XXXX.eg.db</span><br><span class="line"></span><br><span class="line">geneList=rownames(Cluster1)  # Cluster 1</span><br><span class="line">bp1 &lt;-enrichGO(gene = geneList, OrgDb = org, keyType = &quot;GID&quot;, ont = &quot;BP&quot;)</span><br><span class="line">pdf(&quot;TCseq_Cluster1_GO_BP.pdf&quot;)</span><br><span class="line">barplot(bp1, drop=TRUE, showCategory=30)</span><br><span class="line">dev.off()</span><br><span class="line">write.csv(as.data.frame( bp1@result ), file=&quot;TCseq_Cluster1_GO_BP.csv&quot;)</span><br><span class="line"></span><br><span class="line">geneList=rownames(Cluster2)  # Cluster 2</span><br><span class="line">bp2 &lt;-enrichGO(gene = geneList, OrgDb = org, keyType = &quot;GID&quot;, ont = &quot;BP&quot;)</span><br><span class="line">pdf(&quot;TCseq_Cluster2_GO_BP.pdf&quot;)</span><br><span class="line">barplot(bp2, drop=TRUE, showCategory=30)</span><br><span class="line">dev.off()</span><br><span class="line">write.csv(as.data.frame( bp2@result ), file=&quot;TCseq_Cluster2_GO_BP.csv&quot;)</span><br><span class="line">#----- 上面采用默认参数，得到的GO条目太少，于是放松筛选标准，画的图更好看</span><br><span class="line">bp2 &lt;-enrichGO(gene = geneList, OrgDb = org, keyType = &quot;GID&quot;, ont = &quot;BP&quot;, pvalueCutoff = 0.5, qvalueCutoff = 0.9)</span><br><span class="line">pdf(&quot;TCseq_Cluster2_GO_BP_low_standard.pdf&quot;)</span><br><span class="line">barplot(bp2, drop=TRUE, showCategory=30)</span><br><span class="line">dev.off()</span><br><span class="line">#------</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/CUmLAMP.jpeg" alt="" /></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1653,7 +1668,7 @@ ms2ft:</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -189,6 +189,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/06/Python-intro-anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/03/06/Python-intro-anaconda/" class="post-title-link" itemprop="url">Python 发行版：Anaconda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-03-06 13:04:34" itemprop="dateCreated datePublished" datetime="2016-03-06T13:04:34+08:00">2016-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转自：<a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/">http://liam0205.me/2015/11/21/Python-distribution-Anaconda/</a></p>
+<h1 id="python-发行版anaconda"><a class="markdownIt-Anchor" href="#python-发行版anaconda"></a> Python 发行版：Anaconda</h1>
+<p>发表于 2015 年 11 月 21 日 分类于 <a target="_blank" rel="noopener" href="http://liam0205.me/categories/IT/">IT</a>     本文共被围观 205 次     <a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/#comments">1条评论</a></p>
+<p>Python 是一款优秀的编程语言，其语法优雅简单，但更重要的是各类第三方 Python 库丰富。甚至可以说，学 Python 主要不是学它的语法，而是学习各类第三方 Python 库的用法。安装第三方 Python 库也很简单：Python 拥有 pip 这个包管理器（Package Manager），执行 <code>pip install &lt;package_name&gt;</code> 即可安装所需。 然而，在实际使用中，可能经常会遇到以下一些情况，导致我们无法轻易用 pip 安装第三方库：</p>
+<ul>
+<li>系统 Python 安装在系统目录，需要 Root 权限才可写入，因此执行 <code>pip</code> 需要使用 <code>sudo</code> 命令。若当前用户不在 sudoer 组内，则无法使用 pip 安装第三方库。</li>
+<li>系统 Python 安装在系统目录，需要 Root 权限才可写入。若当前用户不在 sudoer 组内，且未安装 pip，则用户无法安装 pip，继而无法用 pip 安装第三方库。</li>
+<li>系统 Python 安装在用户 Home 目录，但因系统没有 <code>libffi</code>/<code>zlib</code>/<code>openssl</code> 或编译安装 Python 时没有正确配置好这些库的依赖，则也无法安装 Python 的 Setuptools 和 pip。</li>
+</ul>
+<p>总而言之，pip 虽然方便，但是因为系统权限、依赖库等问题，有时难以使用。问系统管理员要权限，当然是一个解决方案，但是每次安装新的 Python 库都要麻烦别人，未免麻烦。 最近，我就遇到了这样的问题。 使用的账号没有在 sudoer 组内，因而不能用 <code>sudo</code> 命令获得临时的 root 权限。于是，我只能尝试自行编译安装，但又被各种第三方依赖库搞得焦头烂额。一番搜索之后，在网络上也并没有找到合适的解决方法，只好在<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/questions/239691/how-to-install-python-on-centos-without-root-privileges">Unix.sx 上提问</a>。 其中，<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/users/47709/back2basics">Back2Basics</a> 提出，可以尝试 Anaconda 这个 Python 发行版。该发行版内置了许多常用的 Python 第三方库，安装之后直接就可使用。此外，Anaconda 还安装了 Setuptools 和 pip 两个 Python 包管理器。最关键的是，Anaconda 不需要自己编译，可以直接安装在用户目录。此外 Anaconda 支持 Windows/Linux/Mac OS X 全平台，更是让人心头爱得不行。 具体：</p>
+<ul>
+<li>默认安装的第三方库列表：<a target="_blank" rel="noopener" href="http://docs.continuum.io/anaconda/pkg-docs">http://docs.continuum.io/anaconda/pkg-docs</a></li>
+<li>下载地址：<a target="_blank" rel="noopener" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a>
+<ul>
+<li>Windows: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86_64.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86_64.exe">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86.exe">Python 3.5</a></li>
+<li>OS X: 10.7 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.pkg">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.pkg">Python 3.5</a> 10.5 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.sh">Python 3.5</a></li>
+<li>Linux: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86_64.sh">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86.sh">Python 3.5</a></li>
+</ul>
+</li>
+</ul>
+<p>Anaconda 的安装过程十分简单，这里就不赘述了。<code>: )</code></p>
+<p>======</p>
+<p>使用过程中遇到的问题：启动故障。</p>
+<blockquote>
+<p>[fenglei@localhost bin]$ python3<br />
+Failed to import the site module<br />
+Traceback (most recent call last):<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br />
+__boot()<br />
+File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br />
+import imp # Avoid import loop in Python &gt;= 3.3<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br />
+import tokenize<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br />
+import re<br />
+File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br />
+class RegexFlag(enum.IntFlag):<br />
+AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
+</blockquote>
+<p>解决办法：</p>
+<p>在home目录下，vi .bashrc，注释掉里面的PYTHONPATH，退出之后打开新窗口，就可以运行python3和conda了。</p>
+<hr />
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/03/R-bar-plot%E4%B8%8A-error-barsd-se-or-ci/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2108,188 +2223,6 @@ setup.py文件的使用如下:</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/02/25/Bioinfo-pacbio-sequencing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/02/25/Bioinfo-pacbio-sequencing/" class="post-title-link" itemprop="url">PacBio测序：专有名词的定义</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-02-25 14:32:42" itemprop="dateCreated datePublished" datetime="2016-02-25T14:32:42+08:00">2016-02-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal%5C_PacBio%5C_Glossary.htm">http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Portal\_PacBio\_Glossary.htm</a></p>
-<h2 id="smrt-portal-help"><a class="markdownIt-Anchor" href="#smrt-portal-help"></a> SMRT® Portal Help</h2>
-<h1 id="pacific-biosciences-terminology"><a class="markdownIt-Anchor" href="#pacific-biosciences-terminology"></a> Pacific Biosciences Terminology</h1>
-<h2 id="general-terminology"><a class="markdownIt-Anchor" href="#general-terminology"></a> General Terminology</h2>
-<ul>
-<li>SMRT® Cell: Consumable substrates comprising arrays of zero-mode waveguide nanostructures.</li>
-<li>Adapters: Exogenous nucleic acids that are ligated to a nucleic acid molecule to be sequenced. For example, SMRTbell™ adapters are hairpin loops that are ligated to both ends of the double stranded DNA insert to produce a SMRTbell™ sequencing template. When adapter sequences are removed from a CCS read, the read is split into multiple subreads.</li>
-<li>Movie: Real-time observation of a SMRT® Cell.</li>
-<li>zero-mode waveguide (ZMW): A nanophotonic device for confining light to a small observation volume. This can be, for example, a small hole in a conductive layer whose diameter is too small to permit the propagation of light in the wavelength range used for detection. Physically part of a SMRT® Cell.</li>
-<li>Sequencing ZMW: A ZMW (zero-mode waveguide) that is expected to be able to produce a sequence if it is populated with a polymerase. ZMWs used for automated SMRT Cell alignment are not considered sequencing ZMWs.</li>
-<li>Run: Specifies</li>
-<li>The wells and SMRT Cells to include in the sequencing run.</li>
-<li>The collection and analysis protocols to use for the selected wells and cells.</li>
-</ul>
-<h2 id="read-terminology"><a class="markdownIt-Anchor" href="#read-terminology"></a> Read Terminology</h2>
-<p><img src="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/3Part_Reads_Def.png" alt="" /></p>
-<ul>
-<li>polymerase read (formerly called “read”): A sequence of nucleotides incorporated by the DNA polymerase while reading a template, such as a circular SMRTbell™ template. Polymerase reads are most useful for quality control of the instrument run. Polymerase read metrics primarily reflect movie length and other run parameters rather than insert size distribution. Polymerase reads are trimmed to include only the high quality region; they include sequences from adapters; and can further include sequence from multiple passes around a circular template.</li>
-<li>subread: Each polymerase read is partitioned to form one or more subreads, which contain sequence from a single pass of a polymerase on a single strand of an insert within a SMRTbell™ template and no adapter sequences. The subreads contain the full set of quality values and kinetic measurements. Subreads are useful for applications like <em>de novo</em> assembly, resequencing, base modification analysis, and so on.</li>
-<li>circular consensus (CCS) read: The consensus sequence determined using subreads taken from a single ZMW. This is not aligned against a reference sequence. In contrast to Reads of Insert, CCS reads require at least two full-pass subreads from the insert.</li>
-<li>read of insert: Represents the highest quality single sequence for an insert, regardless of the number of passes. For example, if your template received one-and-a-half subreads, that information will be combined into a Read of Insert. CCS is an example of a special case where at least two full subreads are collected for an insert. Reads of Insert give the most accurate estimate of the length of the insert sequence loaded onto a SMRT® Cell. For long templates, Reads of Insert may be the same as Polymerase Reads.</li>
-</ul>
-<h2 id="read-length-terminology"><a class="markdownIt-Anchor" href="#read-length-terminology"></a> Read Length Terminology</h2>
-<p><img src="http://files.pacb.com/software/smrtanalysis/2.2.0/doc/smrtportal/help/!SSL!/Webhelp/Mapped_Length.png" alt="" /></p>
-<ul>
-<li>mapped polymerase read length: The total number of bases along a read from the first adapter or aligned subread to the last adapter or aligned subread. Approximates the sequence produced by a polymerase in a ZMW.</li>
-<li>mapped subread length: The length of the subread alignment to a target reference sequence. This does not include the adapter sequence.</li>
-<li>polymerase read length: The total number of bases produced from a ZMW after trimming. This may include the adapter sequence.</li>
-</ul>
-<h2 id="primary-analysis-terminology"><a class="markdownIt-Anchor" href="#primary-analysis-terminology"></a> Primary Analysis Terminology</h2>
-<ul>
-<li>
-<p>Primary analysis protocol: Specifies signal processing of the movie, base calling of the traces/pulses, and quality assessment of the base calls. Primary analysis is always performed on the instrument.</p>
-</li>
-<li>
-<p>Adapter Screening: Annotates adapter read locations. Used to break a read into subreads during secondary analysis mapping and Circular Consensus.</p>
-</li>
-<li>
-<p>High Quality Region Screening: Annotates the high quality sequencing regions of a read to be used during Raw Read Trimming.</p>
-</li>
-<li>
-<p>Insert Screening: Annotates insert DNA regions in the Polymerase Read.</p>
-</li>
-<li>
-<p>Quality Value Assignment: A prediction of the error probability of a basecall.</p>
-</li>
-<li>
-<p>Quality Value (QV): The total probability that the basecall is an insertion or substitution or is preceded by a deletion. QV = -10 * log10(p). For example, QV 20 is 99% accurate, QV 30 is 99.9% accurate, and QV 50 is 99.999% accurate.</p>
-</li>
-<li>
-<p>Insertion QV: The probability that the basecall is an insertion with respect to the true sequence.</p>
-</li>
-<li>
-<p>Deletion QV: The probability that a deletion error occurred before the current base.</p>
-</li>
-<li>
-<p>Substitution QV: The probability that the basecall is a substitution.</p>
-</li>
-<li>
-<p>raw read trimming: Extraction of high quality regions from an unfiltered read. Trimming of an unfiltered read produces a polymerase read.</p>
-</li>
-<li>
-<p>Read Quality Assignment: A trained prediction of a read’s mapped accuracy based on its pulse and base file characteristics (peak signal-to-noise ratio, average base QV, interpulse distance, and so on). This is used during secondary analysis filtering.</p>
-</li>
-</ul>
-<h2 id="secondary-analysis-terminology"><a class="markdownIt-Anchor" href="#secondary-analysis-terminology"></a> Secondary Analysis Terminology</h2>
-<ul>
-<li>
-<p>Secondary analysis protocol: Specifies how to</p>
-</li>
-<li>
-<p>Align a group of reads to a reference sequence to produce a consensus sequence.</p>
-</li>
-<li>
-<p>Assemble a set of reads into contigs to produce a <em>de novo</em> sequence.</p>
-</li>
-<li>
-<p>Identify insertions, deletions, and SNPs.</p>
-</li>
-<li>
-<p>Evaluate consensus quality and quality of the instrument run.</p>
-</li>
-<li>
-<p>Consensus: Generation of a consensus sequence from multiple-sequence alignment.</p>
-</li>
-<li>
-<p><em>De Novo</em> Assembly: Assembly of all subreads without a reference sequence.</p>
-</li>
-<li>
-<p>Filtering: Removes reads that do not meet the Read Quality and Read Length parameters set by the user. The current default filtering parameters defined by Pacific Biosciences are:</p>
-</li>
-<li>
-<p>Read Quality ≥ .75 (as of SMRT Analysis v2.1)</p>
-</li>
-<li>
-<p>Read Length ≥ 50 bases</p>
-</li>
-<li>
-<p>Mapping: Local alignment of a read or subread to a reference sequence.</p>
-</li>
-</ul>
-<h2 id="accuracy-terminology"><a class="markdownIt-Anchor" href="#accuracy-terminology"></a> Accuracy Terminology</h2>
-<ul>
-<li>circular consensus accuracy: Accuracy based on multiple sequencing passes around a single circular template molecule.</li>
-<li>consensus accuracy: Accuracy based on aligning multiple sequencing reads or subreads together, optionally with a reference sequence.</li>
-<li>polymerase read quality: A trained prediction of a read’s mapped accuracy based on its pulse and base file characteristics (peak signal-to-noise ratio, average base QV, inter-pulse distance, and so on).</li>
-<li>Subread Accuracy: The post-mapping accuracy of the basecalls.</li>
-<li>Formula: [1 - (errors/subread length)], where errors = number of deletions + insertions + substitutions.</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2361,7 +2294,7 @@ setup.py文件的使用如下:</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -189,6 +189,155 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/" class="post-title-link" itemprop="url">Fasta与Fastq文件操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-06-23 16:02:03" itemprop="dateCreated datePublished" datetime="2015-06-23T16:02:03+08:00">2015-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>1 fastx_toolkits</strong></p>
+<blockquote>
+<p>fastx_artifacts_filter fastx_nucleotide_distribution_graph.sh fastx_reverse_complement<br />
+fastx_barcode_splitter.pl fastx_nucleotide_distribution_line_graph.sh fastx_trimmer<br />
+fastx_clipper fastx_quality_stats fastx_uncollapser<br />
+fastx_collapser fastx_renamer</p>
+<p>fastqc fastq-dump.2.4.2 fastq-load.2.4.2 fastq_quality_converter fastq_to_fasta<br />
+fastq-dump fastq-load fastq_masker fastq_quality_filter<br />
+fastq-dump.2 fastq-load.2 fastq_quality_boxplot_graph.sh fastq_quality_trimmer</p>
+</blockquote>
+<p><strong>2 iTools (BGI_Shenzhen)</strong></p>
+<blockquote>
+<p><em>$ iTools Fatools</em></p>
+<p>FaTools Usage:</p>
+<p>stat quick stat fasta’s info<br />
+findN quick find fasta’s N region<br />
+findSubSeq quick find fasta’s one SubSeq region<br />
+extract get fragments from seq based on coordinates<br />
+regenerate merge a new Ref Based scaffolds<br />
+split split InFa, each Seq one File<br />
+filter filter the short &amp; too many ‘N’ Seq<br />
+cutF cut fasta to fixed Num of subFile in total<br />
+cutS cut fasta to fixed Num of Seq in each subfile<br />
+getSP get Seq by specified ID or pattern<br />
+getSN get Seq by specified order Num range<br />
+reform reform/modify the sequence<br />
+sort rank the seq By SeqID or Length<br />
+getCdsPep get CDS Seq &amp; Pep Seq based the gffFile<br />
+CDS2Pep Translate CDS-Seq to protein-Seq<br />
+SamHeader quick give out the Samheader of Fa<br />
+BaseModify modify the single base in seq<br />
+ChangPosi Change Position back to Scaffolds(regenerate)</p>
+</blockquote>
+<p><strong>3 常用工具</strong></p>
+<blockquote>
+<p>3.1 将fasta文件转换成每行固定的碱基数目：<br />
+iTools   Fatools  reform   （不要加这一参数：  -oneline ）<br />
+fastx_formater</p>
+<p>3.2 将fasta的序列名重新命名<br />
+seqtk rename<br />
+fastx_renamer</p>
+<p>3.3 统计fasta的序列长度，N50，N90信息<br />
+perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl -i genome.fa -o N50.stat.out</p>
+<p>3.4 按照坐标从基因组提取某段序列<br />
+iTools Fatools extract</p>
+<p>3.5 对Fasta序列进行反转<br />
+fastx_reverse_complement</p>
+<p>3.6 将fasta序列集合里某个长度范围的子序列提取出来<br />
+<a target="_blank" rel="noopener" href="http://prinseq-lite.pl">prinseq-lite.pl</a> -fastq yourfile.fastq -out_format 4 -out_good seqs_good -min_len 21 -trim_to_len 25</p>
+<p>3.7 依据序列ID从fastq提取序列<br />
+seqtk subseq 800bp_10M_1.fq FR-oneread.ids.list &gt; FR-oneread.ids.fq</p>
+<p>3.8 依据序列ID从fasta文件提取序列<br />
+seqtk subseq AM-scaffolds.fasta scafname.list &gt; scaf_selected.fa</p>
+<p>3.9 从pair end形式的的两个fastq文件各随机提取序列1000条，二者需要对应。<br />
+seqtk sample -s100 800bp_1.fastq.gz 1000 &gt; 800bp_10M_1.fq<br />
+seqtk sample -s100 800bp_2.fastq.gz 1000 &gt; 800bp_10M_2.fq</p>
+</blockquote>
+<p>4 seqtk (Li Heng)</p>
+<p>Usage: seqtk <command> <arguments><br />
+Version: 1.0-r82-dirty</p>
+<p>Command: seq common transformation of FASTA/Q<br />
+comp get the nucleotide composition of FASTA/Q<br />
+sample subsample sequences<br />
+subseq extract subsequences from FASTA/Q<br />
+fqchk fastq QC (base/quality summary)<br />
+mergepe interleave two PE FASTA/Q files<br />
+trimfq trim FASTQ using the Phred algorithm</p>
+<p>hety regional heterozygosity<br />
+gc identify high- or low-GC regions<br />
+mutfa point mutate FASTA at specified positions<br />
+mergefa merge two FASTA/Q files<br />
+dropse drop unpaired from interleaved PE FASTA/Q<br />
+rename rename sequence names<br />
+randbase choose a random base from hets<br />
+cutN cut sequence at long N<br />
+listhet extract the position of each het</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/15/%E5%A6%82%E4%BD%95%E7%94%A8gatk-call-snp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,94 +1044,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2014/12/18/%E6%88%B4%E5%B0%94poweredge%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E5%92%8C%E5%9E%8B%E5%8F%B7%E5%88%86%E7%B1%BB/" class="post-title-link" itemprop="url">戴尔PowerEdge服务器命名规则和型号分类</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2014-12-18 16:53:28" itemprop="dateCreated datePublished" datetime="2014-12-18T16:53:28+08:00">2014-12-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>从第十代服务器开始，戴尔重新规范了服务器的名字，以现在的第十二代主流PowerEdge R620服务器为例： <strong>第一位是字母，R代表机架式服务器，其它有：</strong></p>
-<ol>
-<li>R：Rack，机架式服务器</li>
-<li>T：Tower，塔式服务器</li>
-<li>M：Modular，模块化的意思，实际上就是刀片服务器</li>
-<li>C：比较特别的一个系列，为数据中心解决方案部门提出的高密度服务器，也称之为微服务器，命名方式也与其它系列不同。</li>
-</ol>
-<p><strong>第二位是数字：代表此服务器在整个产品线中的位置。6说明是主流机型，其它包括：</strong></p>
-<ol>
-<li>1和2系列是基础入门级的单路CPU服务器，是小型企业首台服务器的理想之选；</li>
-<li>3、4、5系列为中高端的单路CPU和入门级的双路CPU服务器，可选的高级系统管理功能，能满足一般业务的需求，适合远程站点和较大公司部门使用，也可作为中小型企业的核心业务应用程序服务器；</li>
-<li>6、7、8系列是主流的双路CPU和入门级的四路CPU服务器，拥有强大的性能，能够满足大部分企业级应用需求，适合需要卓越的虚拟化、系统管理能源效率的服务器机房、企业数据中心和远程站点使用；</li>
-<li>9系列是最高端的四路CPU服务器。拥有强大的计算能力，支持超大内存。适合需要最高性能、可靠性和I/O可扩展性的关键任务应用程序。至于8路 CPU的服务器，戴尔曾经在第4代PowerEdge服务器中推出过对应产品。后续由于处理器超线程以及多核技术在服务器产品上的普及，戴尔逐步将其8路 服务器产品线过渡到4路多核服务器上，因此不再开发新的8路服务器产品。</li>
-</ol>
-<p><strong>第三位是数字：代表此服务器是第几代的服务器。</strong> 目前戴尔最新的服务器是第十二代，因此这个数字是2 <strong>最后一位数字，0代表是Intel的CPU，5代表是AMD的CPU</strong> 除此以外，对于某些特别的服务器，在最后还会标注几个字母来区分。例如R720xd代表此服务器能配置超高密度的磁盘（2U中配置高达26块2.5寸盘），M1000e则代表这是刀片服务器的机箱，等等。 怎么样，下次看到戴尔服务器的名字就知道服务器大概的性能和类型了吧？ 原文地址:  <a target="_blank" rel="noopener" href="http://zh.community.dell.com/techcenter/w/techcenter%5C_wiki/180.poweredge.aspx">http://zh.community.dell.com/techcenter/w/techcenter\_wiki/180.poweredge.aspx</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1054,7 +1115,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

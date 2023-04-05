@@ -189,6 +189,137 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/21/Bioinfo-coexpression-network-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/11/21/Bioinfo-coexpression-network-analysis/" class="post-title-link" itemprop="url">转：大样本RNA-seq数据的共表达网络分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-11-21 00:55:06" itemprop="dateCreated datePublished" datetime="2015-11-21T00:55:06+08:00">2015-11-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 11:53:51" itemprop="dateModified" datetime="2020-12-08T11:53:51+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p></p>
+<p><strong>大样本RNA-seq数据的救星——共表达网络分析</strong></p>
+<p></p>
+<p><strong>什么是共表达网络分析?</strong></p>
+<p>基因共表达网络分析（Gene Co-expression Network Analysis）是根据基因表达信号值的动态变化，计算基因间的共表达关系，来建立基因转录调控模型，得到基因间的表达调控关系及调控方向，从而寻找一个或多个物种在不同发育阶段、不同组织在不同条件或处理时的全部基因表达调控网络模型以及关键基因，从而系统的研究生物体复杂的生命现象。最典型的方法就是WGCNA（Weighted Correlation Network analysis），基于基因表达网络权重构建，描述基因表达的关联模式的R程序包。简单点说就是，根据基因的表达量可以计算相关性，但是加入一些新的权重，比如处理条件等，就可以把基因表达与条件相互结合来分析两者之间的相关性或者关联性啦。</p>
+<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171402vxwez00ajes3x3hd.png.thumb.jpg" alt="" /></p>
+<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403sygryfqqqfy2zci2.png.thumb.jpg" alt="" /></p>
+<p>参考文献：Xue Z, Huang K, Cai C, et al. Genetic programs in human and mouse early embryos revealed by single-cell RNA [thinsp] sequencing[J]. Nature, 2013, 500(7464): 593-597.  <strong>当大样本量遇上WGCNA</strong> 如果我们的表达量数据是两组或者少数几组数据，相关性分析不准确，使用组间差异表达分析，聚类分析就可以了。如果我们想研究同一个组织不同的发育阶段、处理条件下不同时间点的应答或者不同器官/组织类型的发育调控，并且样本数目比较多的情况下（非重复样本数目5个以上，注意：是非重复哦~），想通过两两之间的相互比较，明显是行不通的。而WGCNA刚好适用于大规模的数据分析。  <strong>WGCNA构建方法</strong> WGCNA是从大规模数据中挖掘模块（module）信息的算法，在该方法中模块被定义为一组具有类似表达谱的基因，如果某些基因在一个生理过程或不同组织中总是具有相类似的表达变化，那么我们有理由认为这些基因在功能上是相关的，可以把他们定义为一个模块。比如上图a聚类树的不同分支就代表不同的基因模块。 下一步就需要研究模块与关注性状的相关性（WGCNA会使用不同的颜色对模块进行命名区分），如下图所示：</p>
+<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403cq9uer9xaxum7twz.png.thumb.jpg" alt="" /></p>
+<p>各基因模块与组织的相关性分析</p>
+<p>之后可以通过功能注释鉴定模块的功能，通过模块内部基因的关联网络，找到该模块的关键基因，如下图所示。</p>
+<p><img src="http://www.seq.cn/data/attachment/forum/201511/20/171403zpympkja8mb4jtod.png.thumb.jpg" alt="" /></p>
+<p>参考文献：Hollender C A, Kang C, Darwish O, et al. Floral transcriptomes in woodland strawberry uncover developing receptacle and anther gene networks[J]. Plant physiology, 2014, 165(3): 1062-1075. 转录调控类文章，一般最终都会落实到某个或某些关键基因的讨论，所以共表达网络分析有助于从复杂的数据整理中筛选出关键的基因。那么，就让我们来看看WGCNA的效果吧。  <strong>WGCNA效果</strong> 下表所列的就是部分基于WGCNA所发表的文章</p>
+<p>Years</p>
+<p>Species</p>
+<p>Publication</p>
+<p>IF</p>
+<p>Article</p>
+<p>2015</p>
+<p>Human</p>
+<p>Nature neuroscience</p>
+<p>16.059</p>
+<p>Coexpression networks identify brain region-specific enhancer RNAs in the human brain</p>
+<p>2015</p>
+<p>Maize</p>
+<p>Plant cell</p>
+<p>9.338</p>
+<p>RNA Sequencing of Laser-Capture Microdissected Compartments of the Maize Kernel Identifies Regulatory Modules Associated with Endosperm Cell Differentiation</p>
+<p>2015</p>
+<p>Maize</p>
+<p>PNAS</p>
+<p>9.674</p>
+<p>Transcriptome dynamics of developing maize leaves and genomewide prediction of cis elements and their cognate transcription factors</p>
+<p>2014</p>
+<p>Human</p>
+<p>Nature communications</p>
+<p>11.47</p>
+<p>Gene co-expression network analysis reveals common system-level properties of prognostic genes across cancer types</p>
+<p>2014</p>
+<p>Human</p>
+<p>Cell reports</p>
+<p>8.358</p>
+<p>MicroRNAs establish robustness and adaptability of a critical gene network to regulate progenitor fate decisions during cortical neurogenesis</p>
+<p>2013</p>
+<p>Human and mouse</p>
+<p>Nature</p>
+<p>41.456</p>
+<p>Genetic programs in human and mouse early embryos revealed by single-cell RNA sequencing</p>
+<p>2013</p>
+<p>Human</p>
+<p>Cell</p>
+<p>32.242</p>
+<p>Integrative functional genomic analyses implicate specific molecular pathways and circuits in autism</p>
+<p><a target="_blank" rel="noopener" href="http://www.seq.cn/forum.php?mod=viewthread&amp;tid=5414967">http://www.seq.cn/forum.php?mod=viewthread&amp;tid=5414967</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/19/%E8%BF%9B%E5%8C%96%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -970,155 +1101,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/06/23/fasta%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9Cfasta-file-statstics/" class="post-title-link" itemprop="url">Fasta与Fastq文件操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-06-23 16:02:03" itemprop="dateCreated datePublished" datetime="2015-06-23T16:02:03+08:00">2015-06-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>1 fastx_toolkits</strong></p>
-<blockquote>
-<p>fastx_artifacts_filter fastx_nucleotide_distribution_graph.sh fastx_reverse_complement<br />
-fastx_barcode_splitter.pl fastx_nucleotide_distribution_line_graph.sh fastx_trimmer<br />
-fastx_clipper fastx_quality_stats fastx_uncollapser<br />
-fastx_collapser fastx_renamer</p>
-<p>fastqc fastq-dump.2.4.2 fastq-load.2.4.2 fastq_quality_converter fastq_to_fasta<br />
-fastq-dump fastq-load fastq_masker fastq_quality_filter<br />
-fastq-dump.2 fastq-load.2 fastq_quality_boxplot_graph.sh fastq_quality_trimmer</p>
-</blockquote>
-<p><strong>2 iTools (BGI_Shenzhen)</strong></p>
-<blockquote>
-<p><em>$ iTools Fatools</em></p>
-<p>FaTools Usage:</p>
-<p>stat quick stat fasta’s info<br />
-findN quick find fasta’s N region<br />
-findSubSeq quick find fasta’s one SubSeq region<br />
-extract get fragments from seq based on coordinates<br />
-regenerate merge a new Ref Based scaffolds<br />
-split split InFa, each Seq one File<br />
-filter filter the short &amp; too many ‘N’ Seq<br />
-cutF cut fasta to fixed Num of subFile in total<br />
-cutS cut fasta to fixed Num of Seq in each subfile<br />
-getSP get Seq by specified ID or pattern<br />
-getSN get Seq by specified order Num range<br />
-reform reform/modify the sequence<br />
-sort rank the seq By SeqID or Length<br />
-getCdsPep get CDS Seq &amp; Pep Seq based the gffFile<br />
-CDS2Pep Translate CDS-Seq to protein-Seq<br />
-SamHeader quick give out the Samheader of Fa<br />
-BaseModify modify the single base in seq<br />
-ChangPosi Change Position back to Scaffolds(regenerate)</p>
-</blockquote>
-<p><strong>3 常用工具</strong></p>
-<blockquote>
-<p>3.1 将fasta文件转换成每行固定的碱基数目：<br />
-iTools   Fatools  reform   （不要加这一参数：  -oneline ）<br />
-fastx_formater</p>
-<p>3.2 将fasta的序列名重新命名<br />
-seqtk rename<br />
-fastx_renamer</p>
-<p>3.3 统计fasta的序列长度，N50，N90信息<br />
-perl ~/local/app/NGSQCToolkit/Statistics/N50Stat.pl -i genome.fa -o N50.stat.out</p>
-<p>3.4 按照坐标从基因组提取某段序列<br />
-iTools Fatools extract</p>
-<p>3.5 对Fasta序列进行反转<br />
-fastx_reverse_complement</p>
-<p>3.6 将fasta序列集合里某个长度范围的子序列提取出来<br />
-<a target="_blank" rel="noopener" href="http://prinseq-lite.pl">prinseq-lite.pl</a> -fastq yourfile.fastq -out_format 4 -out_good seqs_good -min_len 21 -trim_to_len 25</p>
-<p>3.7 依据序列ID从fastq提取序列<br />
-seqtk subseq 800bp_10M_1.fq FR-oneread.ids.list &gt; FR-oneread.ids.fq</p>
-<p>3.8 依据序列ID从fasta文件提取序列<br />
-seqtk subseq AM-scaffolds.fasta scafname.list &gt; scaf_selected.fa</p>
-<p>3.9 从pair end形式的的两个fastq文件各随机提取序列1000条，二者需要对应。<br />
-seqtk sample -s100 800bp_1.fastq.gz 1000 &gt; 800bp_10M_1.fq<br />
-seqtk sample -s100 800bp_2.fastq.gz 1000 &gt; 800bp_10M_2.fq</p>
-</blockquote>
-<p>4 seqtk (Li Heng)</p>
-<p>Usage: seqtk <command> <arguments><br />
-Version: 1.0-r82-dirty</p>
-<p>Command: seq common transformation of FASTA/Q<br />
-comp get the nucleotide composition of FASTA/Q<br />
-sample subsample sequences<br />
-subseq extract subsequences from FASTA/Q<br />
-fqchk fastq QC (base/quality summary)<br />
-mergepe interleave two PE FASTA/Q files<br />
-trimfq trim FASTQ using the Phred algorithm</p>
-<p>hety regional heterozygosity<br />
-gc identify high- or low-GC regions<br />
-mutfa point mutate FASTA at specified positions<br />
-mergefa merge two FASTA/Q files<br />
-dropse drop unpaired from interleaved PE FASTA/Q<br />
-rename rename sequence names<br />
-randbase choose a random base from hets<br />
-cutN cut sequence at long N<br />
-listhet extract the position of each het</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1190,7 +1172,7 @@ listhet extract the position of each het</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

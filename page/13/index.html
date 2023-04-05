@@ -189,6 +189,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/27/Bioinfo-preqc-of-sga/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/27/Bioinfo-preqc-of-sga/" class="post-title-link" itemprop="url">Preqc of SGA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-27 09:47:15" itemprop="dateCreated datePublished" datetime="2016-06-27T09:47:15+08:00">2016-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[Copied from <a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ%5C">https://groups.google.com/forum/#!msg/sga-users/95dTwpJCARU/oKoq54EZqKwJ\</a>]</p>
+<p>For the past few months I (jtsimpson) have been working on a new component of SGA to assist users with their assembly. This program, called ‘preqc’, attempts to measure the quality of the input data and how easy or difficult assembling it will be. The output of the pipeline is a PDF containing plots. I’ve uploaded an example report here: <a target="_blank" rel="noopener" href="https://dl.dropboxusercontent.com/u/8813551/preqc_report.pdf">https://dl.dropboxusercontent.com/u/8813551/preqc_report.pdf</a> My hope is that this report will help you explore your data, select an assembly strategy (ie a program and its parameters) and troubleshoot when things go wrong. The report contains plots that attempt to capture the structure of the underlying genome (for example how repetitive it is) and also capture data quality (for example the sequencing error rate). At the end of this email is a brief description of each plot. I hope to get the manuscript up on arXiv this week which contains much more information. Feel free to ask questions if anything is unclear. Here are the instructions to run this on your data: 1) update to latest sga on github 2) preprocess the data: sga preprocess --pe-mode 1 input_1.fastq input_2.fastq &gt; my_genome.fastq 3) index the data sga index -a ropebwt -t 8 --no-reverse my_genome.fastq 4) run preqc sga preqc -t 8 my_genome.fastq &gt; my_genome.preqc 5) make the report /path/to/sga/src/bin/sga-preqc-report.py my_genome.preqc /path/to/sga/src/examples/preqc/*.preqc The preqc step only takes a few hours to run on very large genomes so it should not be a burden to generate this report at the start of a project. The goal of this project is to make assembly an easier and more predictable process. I hope you all find this to be useful, even if you prefer to use a different assembler. Please let me know if you have any comments or suggestions! Cheers, Jared Description of plots in the report: - Genome Size This plot contains an estimate of the genome size based on k-mer count statistics - Frequency of Variant Branches in the k-de Bruijn graph This shows how often a de Bruijn graph branches due to sequence variation (ie a SNP or indel) as a function of k. Most assemblers contain ‘bubble popping’ algorithms to resolve sequence variants in the graph. These algorithms often work well but a high branch rate makes assembly more difficult. The oyster data branches very frequently due to variants making it difficult to assemble. - Frequency of Repeat Branches in the k-de Bruijn graph This measures how often a de Bruijn graph branches due to repeats in the genome. Repeat branches tend to be difficult to resolve. This is a key indicator of how difficult the assembly will be. - Frequency of Error Branches in the k-de Bruijn graph Like the above two plots, except it measures how often branches caused by sequencing errors are encountered. These branches tend to be easier to get handle during assembly. - Mean quality score by position - Fraction of bases at least Q30 These plots measure quality scores along the length of the read. The first plot calculates the mean quality score at each base. The second calculates the fraction of reads with quality &gt;= Q30 at the base position. - k-mer position of first error This measures sequencing error rate by looking for rare k-mers in the reads. It is similar to how ‘sga correct’ finds and corrects errors. The plot shows how often putatively incorrect k-mers are found at each position in the reads. - Per-position error rate This directly measures the sequencing error rate along the read by counting mismatches in groups of overlapping reads. - Duplicate proportion This plot attempts to infer the proportion of read pairs that are PCR duplicates. - Estimated fragment size histogram This plot shows the distribution of paired-end fragment sizes. - 51-mer count distribution For an assembly to be successful, it is important to have high coverage data. This plot attempts to capture sequence coverage by plotting a histogram of 51-mer counts. Most data sets are bimodal with a sharp peak at low count for k-mers with sequencing errors and a wider distribution of true genomic k-mers. If these two distributions (true k-mers and k-mers with errors) are well-separated, it makes assembly easier. The Snake data is ideal in this regard. The yeast data is acceptable but would benefit from higher coverage. - GC Bias plots This series of plots (one per data set) shows k-mer counts as function of GC content in the read. Ideally, there would be no dependence between GC content and k-mer count. The yeast data shows some bias, while the fish data is less biased. - Simulated contig lengths in k-de Bruijn graph The last plot shows a simulated assembly of the data by finding contig paths in the graph. The simulator will extend contigs by ignoring sequencing errors and resolving sequence variants, only stopping when a repeat is found or there is no coverage. This plot can help predict if your data is easy to assemble or hard. For example the yeast data is easy to assemble (very good N50) but the oyster data, which has many sequence variant branches and many repeats, is very hard (low N50).</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/14/Bioinfo-t-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1284,121 +1359,6 @@ The Sequin page at NCBI is [Sequin](http://www.ncbi.nlm.nih.gov/Sequin/). You ca
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2016/03/06/Python-intro-anaconda/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/03/06/Python-intro-anaconda/" class="post-title-link" itemprop="url">Python 发行版：Anaconda</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-03-06 13:04:34" itemprop="dateCreated datePublished" datetime="2016-03-06T13:04:34+08:00">2016-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转自：<a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/">http://liam0205.me/2015/11/21/Python-distribution-Anaconda/</a></p>
-<h1 id="python-发行版anaconda"><a class="markdownIt-Anchor" href="#python-发行版anaconda"></a> Python 发行版：Anaconda</h1>
-<p>发表于 2015 年 11 月 21 日 分类于 <a target="_blank" rel="noopener" href="http://liam0205.me/categories/IT/">IT</a>     本文共被围观 205 次     <a target="_blank" rel="noopener" href="http://liam0205.me/2015/11/21/Python-distribution-Anaconda/#comments">1条评论</a></p>
-<p>Python 是一款优秀的编程语言，其语法优雅简单，但更重要的是各类第三方 Python 库丰富。甚至可以说，学 Python 主要不是学它的语法，而是学习各类第三方 Python 库的用法。安装第三方 Python 库也很简单：Python 拥有 pip 这个包管理器（Package Manager），执行 <code>pip install &lt;package_name&gt;</code> 即可安装所需。 然而，在实际使用中，可能经常会遇到以下一些情况，导致我们无法轻易用 pip 安装第三方库：</p>
-<ul>
-<li>系统 Python 安装在系统目录，需要 Root 权限才可写入，因此执行 <code>pip</code> 需要使用 <code>sudo</code> 命令。若当前用户不在 sudoer 组内，则无法使用 pip 安装第三方库。</li>
-<li>系统 Python 安装在系统目录，需要 Root 权限才可写入。若当前用户不在 sudoer 组内，且未安装 pip，则用户无法安装 pip，继而无法用 pip 安装第三方库。</li>
-<li>系统 Python 安装在用户 Home 目录，但因系统没有 <code>libffi</code>/<code>zlib</code>/<code>openssl</code> 或编译安装 Python 时没有正确配置好这些库的依赖，则也无法安装 Python 的 Setuptools 和 pip。</li>
-</ul>
-<p>总而言之，pip 虽然方便，但是因为系统权限、依赖库等问题，有时难以使用。问系统管理员要权限，当然是一个解决方案，但是每次安装新的 Python 库都要麻烦别人，未免麻烦。 最近，我就遇到了这样的问题。 使用的账号没有在 sudoer 组内，因而不能用 <code>sudo</code> 命令获得临时的 root 权限。于是，我只能尝试自行编译安装，但又被各种第三方依赖库搞得焦头烂额。一番搜索之后，在网络上也并没有找到合适的解决方法，只好在<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/questions/239691/how-to-install-python-on-centos-without-root-privileges">Unix.sx 上提问</a>。 其中，<a target="_blank" rel="noopener" href="http://unix.stackexchange.com/users/47709/back2basics">Back2Basics</a> 提出，可以尝试 Anaconda 这个 Python 发行版。该发行版内置了许多常用的 Python 第三方库，安装之后直接就可使用。此外，Anaconda 还安装了 Setuptools 和 pip 两个 Python 包管理器。最关键的是，Anaconda 不需要自己编译，可以直接安装在用户目录。此外 Anaconda 支持 Windows/Linux/Mac OS X 全平台，更是让人心头爱得不行。 具体：</p>
-<ul>
-<li>默认安装的第三方库列表：<a target="_blank" rel="noopener" href="http://docs.continuum.io/anaconda/pkg-docs">http://docs.continuum.io/anaconda/pkg-docs</a></li>
-<li>下载地址：<a target="_blank" rel="noopener" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a>
-<ul>
-<li>Windows: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86_64.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86_64.exe">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Windows-x86.exe">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Windows-x86.exe">Python 3.5</a></li>
-<li>OS X: 10.7 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.pkg">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.pkg">Python 3.5</a> 10.5 以上 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-MacOSX-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-MacOSX-x86_64.sh">Python 3.5</a></li>
-<li>Linux: 64 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86_64.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86_64.sh">Python 3.5</a> 32 位 - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda2-2.4.0-Linux-x86.sh">Python 2.7</a> - <a target="_blank" rel="noopener" href="https://3230d63b5fc54e62148e-c95ac804525aac4b6dba79b00b39d1d3.ssl.cf1.rackcdn.com/Anaconda3-2.4.0-Linux-x86.sh">Python 3.5</a></li>
-</ul>
-</li>
-</ul>
-<p>Anaconda 的安装过程十分简单，这里就不赘述了。<code>: )</code></p>
-<p>======</p>
-<p>使用过程中遇到的问题：启动故障。</p>
-<blockquote>
-<p>[fenglei@localhost bin]$ python3<br />
-Failed to import the site module<br />
-Traceback (most recent call last):<br />
-File “/usr/local/lib/python2.7/site-packages/site.py”, line 75, in <module><br />
-__boot()<br />
-File “/usr/local/lib/python2.7/site-packages/site.py”, line 27, in __boot<br />
-import imp # Avoid import loop in Python &gt;= 3.3<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/imp.py”, line 27, in <module><br />
-import tokenize<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/tokenize.py”, line 33, in <module><br />
-import re<br />
-File “/home/fenglei/local/app/anaconda3/lib/python3.6/re.py”, line 142, in <module><br />
-class RegexFlag(enum.IntFlag):<br />
-AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
-</blockquote>
-<p>解决办法：</p>
-<p>在home目录下，vi .bashrc，注释掉里面的PYTHONPATH，退出之后打开新窗口，就可以运行python3和conda了。</p>
-<hr />
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1470,7 +1430,7 @@ AttributeError: module ‘enum’ has no attribute ‘IntFlag’</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">186</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

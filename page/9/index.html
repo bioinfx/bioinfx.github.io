@@ -189,6 +189,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/05/R-read-multiple-files-by-loop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/05/R-read-multiple-files-by-loop/" class="post-title-link" itemprop="url">R: 批量读入文本文件并循环处理，分别输出统计图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-05 13:29:32" itemprop="dateCreated datePublished" datetime="2020-03-05T13:29:32+08:00">2020-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对于高通量测序数据，通常都是数个或数十个样品，有时候要调用R packages对测序分析结果（例如bed格式文本文件）就行统计绘图，如何批量处理？   一、批量文件读取，逐个统计 demo：</p>
+<p>##读取同一目录下的所有文件<br />
+path &lt;- “E:/实验数据/UseData/2013”<br />
+fileNames &lt;- dir(path)<br />
+filePath &lt;- sapply(fileNames, function(x){<br />
+paste(path,x,sep=‘/’)})<br />
+data &lt;- lapply(filePath, function(x){<br />
+read.csv(x, header=T)})<br />
+————————————————<br />
+版权声明：本文为CSDN博主「HuFeiHu-Blog」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br />
+原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">https://blog.csdn.net/u011596455/article/details/79601113</a></p>
+<p>批量读取bed文件之后调用covplot()函数逐个对数据进行统计，但是先不输出：</p>
+<p>path=“/home/xxx/peaks_files” ## 指定输入文件所在路径<br />
+fileNames = list.files(path, pattern=“*.bed$”)  ## 读入输入文件目录下后缀为bed的所有文件，到一个文件列表<br />
+filePath &lt;- sapply(fileNames, function(x){ paste(path,x,sep=‘/’)}) ## 针对fileNames列表里面的文件名，分别加上路径<br />
+data &lt;- lapply(filePath, function(x){ covplot(x, weight=“V4”)}) ### covplot 画图，但是这里不会输出，数据暂时存到列表里面</p>
+<h1 id="下面指定一个输出路径"><a class="markdownIt-Anchor" href="#下面指定一个输出路径"></a> 下面指定一个输出路径</h1>
+<p>outPath &lt;- “/home/yyy/peaks_genome_distribution” ## 指定输出目录#out_filePath &lt;- sapply(out_fileName, function(x){ paste(outPath ,x,sep=‘/’)}) ##输出路径名<br />
+#length(data)</p>
+<p>二、循环处理 Demo</p>
+<p>outPath &lt;- “E:/实验数据/UseData/2013” ##输出路径<br />
+out_fileName &lt;- sapply(names(data),function(x){<br />
+paste(x, “.csv”, sep=‘’)}) ##csv格式<br />
+out_filePath &lt;- sapply(out_fileName, function(x){<br />
+paste(outPath ,x,sep=‘/’)}) ##输出路径名<br />
+##输出文件<br />
+for(i in 1:length(data)){<br />
+write.csv(data[[i]], file=out_filePath[i], row.name=F)<br />
+}<br />
+————————————————<br />
+版权声明：本文为CSDN博主「HuFeiHu-Blog」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br />
+原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">https://blog.csdn.net/u011596455/article/details/79601113</a></p>
+<p>将列表中的统计图逐个输出为pdf格式文件到指定路径，成功在指定目录下得到所有输入文件对应的统计图。</p>
+<p>out_fileName &lt;- sapply(names(data),function(x){ paste(x, “.pdf”, sep=‘’)}) ##设定输出pdf后缀的文件名<br />
+out_filePath &lt;- sapply(out_fileName, function(x){ paste(outPath ,x,sep=‘/’)}) ##设定输出文件及其完整路径名<br />
+for(i in 1:length(data)){ pdf(out_filePath[i]) ; print(data[[i]]); dev.off() } # 依次画图并输出pdf，注意这里的print好重要</p>
+<p>参考资料： 【1】<a target="_blank" rel="noopener" href="https://anjingwd.github.io/AnJingwd.github.io/2017/09/04/R%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5csv%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E4%BB%A5%E6%96%87%E4%BB%B6%E5%90%8D%E4%BD%9C%E4%B8%BA%E5%8F%98%E9%87%8F%E5%90%8D/">R语言之批量导入csv文件，并以文件名作为变量名</a> 【2】<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011596455/article/details/79601113">R语言–批量读取和写入目录</a> 【3】<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37893266/article/details/91169454">R：拆分文件名</a> 【4】<a target="_blank" rel="noopener" href="https://life2cloud.com/cn/2018/11/pipelines-styles/">生物信息流程构建的几种方案</a> 【5】<a target="_blank" rel="noopener" href="https://blog.csdn.net/yiifaa/article/details/73252980">R：中括号（a[i]）与双中括号（a[[i]]）的区别</a> 【6】<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83125846">R批量循环处理同一格式文件-csv,txt,excel</a> 【7】<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e541fa218294">R语言循环多个文件画图生成一个or批量生成多个pdf文件</a> 【8】<a target="_blank" rel="noopener" href="https://blog.csdn.net/c1z2w3456789/article/details/79546279">R中的高效批量处理函数（lapply sapply apply tapply mapply）</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/03/05/Linux-zsh-installation-and-oh-my-zsh/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1298,124 +1408,10 @@ Query OK, 0 rows affected (0.00 sec)</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/28/Bioinfo-install-lastz/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/02/28/Bioinfo-install-lastz/" class="post-title-link" itemprop="url">安装LASTZ</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-02-28 17:45:24" itemprop="dateCreated datePublished" datetime="2019-02-28T17:45:24+08:00">2019-02-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>LASTZ是序列比对工具，可以生成AXT格式的比对文件。 安装LASTZ方法如下 下载地址：<a target="_blank" rel="noopener" href="http://www.bx.psu.edu/~rsharris/lastz/">http://www.bx.psu.edu/~rsharris/lastz/</a> If you have received the distribution as a packed archive, unpack it by whatever means are appropriate for your computer. The result should be a directory <code>/lastz‑distrib‑X.XX.XX</code> that contains a <code>src</code> subdirectory (and some others). You may find it convenient to remove the revision number (<code>‑X.XX.XX</code>) from the directory name. Before building or installing any of the programs, you will need to tell the installer where to put the executable, either by setting the shell variable<code>$LASTZ_INSTALL</code>, or by editing the <code>make‑include.mak</code> file to set the definition of <code>installDir</code>. Also, be sure to add the directory you choose to your <code>$PATH</code>. Then to build the LASTZ executable, enter the following commands from bash or a similar command-line shell (Solaris users should substitute <code>gmake</code> for <code>make</code>). This will build two executables (<code>lastz</code> and <code>lastz_D</code>) and copy them into your <code>installDir</code>.</p>
-<pre><code>cd /lastz-distrib-X.XX.XX/src
-make
-make install
-</code></pre>
-<p>The two executables are basically the same program; the only difference is that <code>lastz</code> uses integer scores, while <code>lastz_D</code> uses floating-point scores. The build process should not report any warnings or errors. Because of this, the Makefile is set up so that warnings are considered errors and will stop the build. If you encounter this situation, you can modify the Makefile, removing “-Werror” from the variable definedForAll. This should allow the build to complete, while still reporting the warnings. You’ll need to decide whether the warnings indicate something is really wrong. Usually they don’t, but please report them to the author regardless. A simple self test is included so you can test whether the build succeeded. To run it, enter the following command:</p>
-<pre><code>make test
-</code></pre>
-<p>If the test is successful, you will see no output from this command. Otherwise, you will see the differences between the expected output and the output of your build, plus a line that looks like this:</p>
-<pre><code>make: \*\*\* \[test\] Error 1
-</code></pre>
-<p>我在安装的过程中遇到下面的问题</p>
-<p>cd src &amp;&amp; make lastz lastz_D<br />
-make[1]: Entering directory ‘/home/david/src/lastz/src’<br />
-gcc -c -O3 -Wall -Wextra -Werror -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DVERSION_MAJOR=“\“1”\” -DVERSION_MINOR=“\“04”\” -DVERSION_SUBMINOR=“\“00”\” -DREVISION_DATE=“\“20170312”\” -DSUBVERSION_REV=“\“1881:1893M”\” -Dscore_type=\‘I\’ lastz.c -o lastz.o<br />
-lastz.c: In function ‘parse_options_loop’:<br />
-lastz.c:6525:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~<br />
-lastz.c:6525:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~~~<br />
-lastz.c:6585:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~<br />
-lastz.c:6585:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~~~<br />
-lastz.c:6644:6: error: this ‘if’ clause does not guard… [-Werror=misleading-indentation]<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~<br />
-lastz.c:6644:47: note: …this statement, but the latter is misleadingly indented as if it is guarded by the ‘if’<br />
-if (*scan != ‘.’) goto cant_understand; scan++;<br />
-^~~~<br />
-cc1: all warnings being treated as errors<br />
-Makefile:94: recipe for target ‘lastz.o’ failed<br />
-make[1]: *** [lastz.o] Error 1<br />
-make[1]: Leaving directory ‘/home/david/src/lastz/src’<br />
-Makefile:14: recipe for target ‘build_lastz’ failed<br />
-make: *** [build_lastz] Error 2</p>
-<p>解决办法 You can get around this by deleting “<em>-Werror</em>” from the CFLAGS listed in <em>definedForAll</em> in src/Makefile (overriding CFLAGS from the command line just causing new errors). 参考资料 <a target="_blank" rel="noopener" href="https://github.com/lastz/lastz/issues/5">https://github.com/lastz/lastz/issues/5</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1483,7 +1479,7 @@ make: *** [build_lastz] Error 2</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">191</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -9748,4 +9748,45 @@ A semicolon-separated list of tag-value pairs, providing additional information 
         <category>Linux</category>
       </categories>
   </entry>
+  <entry>
+    <title>Linux | Anadonda 的 python37 环境下升级 R 并安装 ballgown 包</title>
+    <url>/2023/04/24/upgrade-R-and-install-ballgown-in-Anaconda/</url>
+    <content><![CDATA[<p>需要使用 R 的包 ballgown 进行 RNA seq 表达差异基因的鉴定。</p>
+<p>在 Anaconda 的 python37 环境下，启动 R，安装 ballgown 失败。我转而尝试直接在 linux 个人目录下安装新版 R，但是安装也失败了。</p>
+<span id="more"></span>
+<p>在 Linux 环境的个人目录下安装 R 的时候遇到了报错：<code>error: libcurl &gt;= 7.28.0 library and headers are required with support for https</code>。</p>
+<p>报错信息的上方还显示了 curl 的路径是  Anaconda。实际上我在个人目录下也安装了 curl。</p>
+<p>查看curl版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(base) [fenglei@login ~]$ which curl  # 查看当前的 curl 安装目录，在 Anaconda 下，并不。</span><br><span class="line">~/local/app/anaconda3/bin/curl</span><br><span class="line">(base) [fenglei@login ~]$ conda deactivate</span><br><span class="line">[fenglei@login ~]$ which curl # 查看当前的 curl 安装目录，是系统默认的版本。</span><br><span class="line">/usr/bin/curl</span><br></pre></td></tr></table></figure>
+<p>原来装完 Anaconda 后每次打开 terminal 都是自动激活 Anaconda 里的 base environment 的，很多设置都是跟着这个 base environment 来的。</p>
+<p>使用 <code>conda deactivate</code> 就可以关闭 Anaconda 里的 base environment 。这时候再去执行 <code>which curl</code> 就会发现，它指向系统中的 curl 版本。</p>
+<p>如果不想每次都执行 <code>conda deactivate</code> 的话，就执行下面这句：<code>conda config --set auto_activate_base false</code> 取消base environment的自动激活就好。</p>
+<p><font color=red>上面操作一通就是发现 Linux 个人目录下安装 R 是非常麻烦的，决定放弃，并继续转到 Anaconda 的 Python37 环境，我想到能不能将该环境下 conda 里面的 R 更新版本呢？</font></p>
+<h3 id="升级-conda"><a class="markdownIt-Anchor" href="#升级-conda"></a> 升级 conda</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda update -n base -c defaults conda # 升级 conda</span><br><span class="line">conda --version</span><br><span class="line"># conda 23.3.1</span><br></pre></td></tr></table></figure>
+<h3 id="升级-r"><a class="markdownIt-Anchor" href="#升级-r"></a> 升级 R</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">R --version</span><br><span class="line"># R 3.6.1 (2019-07-05)</span><br><span class="line"></span><br><span class="line">conda update -c conda-forge r-base</span><br><span class="line"></span><br><span class="line">R --version</span><br><span class="line"># R version 4.2.0 (2022-04-22) -- &quot;Vigorous Calisthenics&quot;</span><br><span class="line"></span><br><span class="line">(python37) [fenglei@login ~]$ R --version</span><br><span class="line">R version 4.2.0 (2022-04-22) -- &quot;Vigorous Calisthenics&quot;</span><br><span class="line">Copyright (C) 2022 The R Foundation for Statistical Computing</span><br><span class="line">Platform: x86_64-conda-linux-gnu (64-bit)</span><br><span class="line"></span><br><span class="line">R is free software and comes with ABSOLUTELY NO WARRANTY.</span><br><span class="line">You are welcome to redistribute it under the terms of the</span><br><span class="line">GNU General Public License versions 2 or 3.</span><br><span class="line">For more information about these matters see</span><br><span class="line">https://www.gnu.org/licenses/.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="升级-bioconductor"><a class="markdownIt-Anchor" href="#升级-bioconductor"></a> 升级 bioconductor</h3>
+<p>Update Installed Bioconductor Packages</p>
+<p>Bioconductor packages, especially those in the development branch, are updated fairly regularly. To identify packages requiring update within your version of Bioconductor, start a new session of R and enter</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">BiocManager::install() # 系统提示说 R 4.2 对应的 bioconductor 是 3.36，必须使用如下命令更新 bioconductor</span><br><span class="line">#Error: Bioconductor version &#x27;3.10&#x27; requires R version &#x27;3.6&#x27;; use</span><br><span class="line">#  `BiocManager::install(version = &#x27;3.16&#x27;)` with R version 4.2; see</span><br><span class="line">#  https://bioconductor.org/install</span><br><span class="line"></span><br><span class="line">BiocManager::install(version = &#x27;3.16&#x27;)</span><br></pre></td></tr></table></figure>
+<h3 id="安装ballgown"><a class="markdownIt-Anchor" href="#安装ballgown"></a> 安装ballgown</h3>
+<p>上面一番操作终于安装了新版的 R 4.2.0，并升级了 bioconductor，现在开始安装 ballgown。</p>
+<p>安装 ballgown 的过程也比较繁琐，主要是遇到大量报错“<code>Error: package ‘XXXXXX’ was installed before R 4.0.0: please re-install it</code>”，需要逐个手动安装这些依赖的包，如图片所示，是我自己记录依赖包的安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; if (!require(&quot;BiocManager&quot;, quietly = TRUE))</span><br><span class="line">    install.packages(&quot;BiocManager&quot;)</span><br><span class="line"></span><br><span class="line">BiocManager::install(&quot;ballgown&quot;)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/EFl7MQO.jpeg" alt="" /></p>
+<h4 id="error-package-rcpp-was-installed-before-r-400-please-re-install-it"><a class="markdownIt-Anchor" href="#error-package-rcpp-was-installed-before-r-400-please-re-install-it"></a> Error: package ‘Rcpp’ was installed before R 4.0.0: please re-install it</h4>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">install.packages(&quot;Rcpp&quot;, version = &quot;1.0.10&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="error-package-r6-was-installed-before-r-400-please-re-install-it"><a class="markdownIt-Anchor" href="#error-package-r6-was-installed-before-r-400-please-re-install-it"></a> Error: package ‘R6’ was installed before R 4.0.0: please re-install it</h4>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">install.packages(&#x27;R6&#x27;, version=&quot;2.5.1&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="httr"><a class="markdownIt-Anchor" href="#httr"></a> httr</h4>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">install.packages(&#x27;httr&#x27;, version=&quot;1.4.5&quot;)</span><br></pre></td></tr></table></figure>
+<p>由于有几十个这个手动安装依赖包的过程，这里不做逐个记录，都写在上面那个图片里了。</p>
+<p>最后成功安装 ballgown ！并且顺利用于 DEG 分析。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">* installing *source* package ‘ballgown’ ...</span><br><span class="line">** using staged installation</span><br><span class="line">** R</span><br><span class="line">** data</span><br><span class="line">** inst</span><br><span class="line">** byte-compile and prepare package for lazy loading</span><br><span class="line">Creating a new generic function for ‘structure’ in package ‘ballgown’</span><br><span class="line">** help</span><br><span class="line">*** installing help indices</span><br><span class="line">** building package indices</span><br><span class="line">** installing vignettes</span><br><span class="line">** testing if installed package can be loaded from temporary location</span><br><span class="line">** testing if installed package can be loaded from final location</span><br><span class="line">** testing if installed package keeps a record of temporary installation path</span><br><span class="line">* DONE (ballgown)</span><br><span class="line"></span><br><span class="line">The downloaded source packages are in</span><br><span class="line">	‘/tmp/RtmpJLtvUS/downloaded_packages’</span><br><span class="line">Updating HTML index of packages in &#x27;.Library&#x27;</span><br><span class="line">Making &#x27;packages.html&#x27; ... done</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+  </entry>
 </search>

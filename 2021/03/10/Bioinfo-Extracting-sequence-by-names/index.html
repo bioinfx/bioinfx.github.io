@@ -28,7 +28,7 @@
 <meta property="og:description" content="依据序列名称从fasta文件提取序列是一个很常见的操作。seqkit 这个工具可以很方便地实现。 比如 input.fa 包含若干条序列，名称分别为 1、2、3……100 。而 name list 文件包含 40——49 这十个ID，那么通过下面的代码就可以提取编号 40——49 对应的序列。 1seqkit grep -r -f name_list.txt input.fa -o out.fa">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-03-10T14:37:33.000Z">
-<meta property="article:modified_time" content="2022-07-14T10:28:12.428Z">
+<meta property="article:modified_time" content="2023-07-17T03:31:50.253Z">
 <meta property="article:author" content="FENG Lei">
 <meta name="twitter:card" content="summary">
 
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-14 18:28:12" itemprop="dateModified" datetime="2022-07-14T18:28:12+08:00">2022-07-14</time>
+                <time title="Modified: 2023-07-17 11:31:50" itemprop="dateModified" datetime="2023-07-17T11:31:50+08:00">2023-07-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,6 +252,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r -f name_list.txt input.fa -o out.fa</span><br></pre></td></tr></table></figure>
 <p>上面只是一种简单的情况，而大部分原始 fasta 文件中，序列名除了 ID，还可能会包含其他信息（比如基因注释）。当输入的 name list 文件只有 ID，默认的“名称完全匹配”就提取不了，就需要加上 <code>-r</code> 参数来申明使用正则匹配（regular expression）进行提取。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r -f name_list.txt input.fa -o out.fa</span><br></pre></td></tr></table></figure>
+<p>注意上面的命令提取得到的序列，顺序是按照原 fasta 文件的顺序，而非输入的 ID 顺序。可以使用如下命令进行排序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit faidx 500_genes.1.fa --infile-list 500_genes_list</span><br></pre></td></tr></table></figure>
 <p>另一种情况就是，对于拟南芥，每个基因有多个 isoforms，如果我们只需要依据基因 ID 输出一个 isoform，那么可以通过 <code>--delete-matched</code> 参数来控制，即当某个 ID 出现了一次匹配，则立即停止继续检索该 ID，进入下一个 ID 检索。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">seqkit grep -r --delete-matched -f Arabidopsis_name_list.txt Araport11_pep_20160703.pep.fa -o Arabidopsis_pep_list_nonrebundant.fa</span><br></pre></td></tr></table></figure>
     </div>

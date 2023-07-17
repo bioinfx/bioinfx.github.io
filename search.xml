@@ -9791,4 +9791,53 @@ A semicolon-separated list of tag-value pairs, providing additional information 
         <category>Linux</category>
       </categories>
   </entry>
+  <entry>
+    <title>Bioinfo | hmmsearch 与 hmmscan 的使用</title>
+    <url>/2023/07/17/hmmscan_and_hmmsearch/</url>
+    <content><![CDATA[<p>对蛋白质进行功能域的注释方法。</p>
+<span id="more"></span>
+<h3 id="hmmsearch-鉴定蛋白是否具有某个已知的-domain"><a class="markdownIt-Anchor" href="#hmmsearch-鉴定蛋白是否具有某个已知的-domain"></a> hmmsearch 鉴定蛋白是否具有某个已知的 domain</h3>
+<ol>
+<li>domain 序列下载（stockholm 格式的蛋白序列）</li>
+</ol>
+<p>先在 pfam 或 interproscan 下载 stockholm 格式的序列比对。<br />
+比如 SET domain 的编号是 PF00856，进入对应的数据库网页 <a href="https://www.ebi.ac.uk/interpro/entry/pfam/PF00856/entry_alignments/?type=seed">https://www.ebi.ac.uk/interpro/entry/pfam/PF00856/entry_alignments/?type=seed</a>。<br />
+然后点击 alignment 栏目，选择 doanload，即可得到一个文本文件：PF00856.alignment.seed。</p>
+<p>文件内容如下（仅截取一部分作为展示），实际上这就是 stockholm 格式的序列。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># STOCKHOLM 1.0</span><br><span class="line">#=GF ID   SET</span><br><span class="line">#=GF AC   PF00856.31</span><br><span class="line">#=GF DE   SET domain</span><br><span class="line">#=GF AU   Bateman A;0000-0002-6982-4660</span><br><span class="line">#=GF AU   Huang S;0000-0003-2674-2830</span><br><span class="line">Q6XLV1_9PHYC/81-198                  GKGLFATRDFK...KNTWI......C............P...........YFGE..............IIDANCFVQRYPGKATAPYAEMLPL.............................................................................................................................NTTPRKY......VD.</span><br><span class="line">.....................................................................................................................................................................................SACTRSVGSL............AN.................................GKFKGDGSVS.......................</span><br><span class="line">.....................SLRH.....H...............................NCFTRYRPV........................GDGFKGVWLKSTKTIKAGDEIFNWYG</span><br><span class="line">Q23BT7_TETTS/356-525                 GRGVFATKSIR...KNEVIAV..CEFVQAKINKGELLVE...........YI..................DTENLAVNLNSQYFIREQLIMEMQENFYLRKVLSYLYR..............................................................................................GEINKDYQIPNLKEVFVKKYYQE.....GLD.</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如何将 fasta 格式的蛋白序列转换成 stockholm 格式？</li>
+</ol>
+<p>上面提到 stockholm 格式是已经比对好的一种序列格式，那么如何将 fasta 序列转换成 stockholm？</p>
+<ol start="3">
+<li>下载 stockholm 格式的比对序列之后，建立 HMMER 数据库 index</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NAME=PF00856.stckholm</span><br><span class="line">hmmbuild $&#123;NAME&#125;.hmm $&#123;NAME&#125;.stockholm</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>hmmsearch 搜库</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 大豆a2v1一共56044个蛋白，搜索具备上述功能domain的基因</span><br><span class="line">hmmsearch $&#123;NAME&#125;.hmm ~/database/Glycine_max/Gmax_275_Wm82_a2.v1/Gmax_275_Wm82.a2.v1.protein_primaryTranscriptOnly.fa &gt;Gma_protein_HMMER_$&#123;NAME&#125;.aln</span><br></pre></td></tr></table></figure>
+<p>结果示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 10 Query:       AT1-domain  [M=116]</span><br><span class="line"> 11 Scores for complete sequences (score includes all domains):</span><br><span class="line"> 12    --- full sequence ---   --- best 1 domain ---    -#dom-</span><br><span class="line"> 13     E-value  score  bias    E-value  score  bias    exp  N  Sequence            Description</span><br><span class="line"> 14     ------- ------ -----    ------- ------ -----   ---- --  --------            -----------</span><br><span class="line"> 15     9.2e-21   75.9   0.0    1.2e-20   75.5   0.0    1.2  1  Glyma.18G281300.1.p  pacid=30558675 transcript=Glyma.18G28130</span><br><span class="line"> 16     1.2e-19   72.3   0.0    1.5e-19   71.9   0.0    1.1  1  Glyma.02G309600.1.p  pacid=30508602 transcript=Glyma.02G30960</span><br><span class="line"> 17     2.3e-19   71.3   0.0    2.9e-19   71.0   0.0    1.1  1  Glyma.14G003300.1.p  pacid=30532590 transcript=Glyma.14G00330</span><br><span class="line"> ...</span><br><span class="line">     110 Domain annotation for each sequence (and alignments):</span><br><span class="line">111 &gt;&gt; Glyma.18G281300.1.p  pacid=30558675 transcript=Glyma.18G281300.1 locus=Glyma.18G281300 ID=Glyma.18G281300.1.Wm82.a2.v</span><br><span class="line">112    #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc</span><br><span class="line">113  ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----</span><br><span class="line">114    1 !   75.5   0.0     2e-23   1.2e-20       4     116 .]      33     143 ..      30     143 .. 0.92</span><br><span class="line">115 </span><br><span class="line">116   Alignments for each domain:</span><br><span class="line">117   == domain 1  score: 75.5 bits;  conditional E-value: 2e-23</span><br><span class="line">118                           HHHHHHHHTCTHHHHHHHHHHHHHHHSTTEEEEEEEETTEEEEEEEEEEEET.STTEEEEEEEEESGGGTTSSHHHHHHHHHHHHHHHTT CS</span><br><span class="line">119            AT1-domain   4 lyellseefpepwpeeeldlledwlldpaegflvaeedgelvGfaglsilde.aekvaeieglaVdpeyrgkGiGtaLlealleyarerg 92 </span><br><span class="line">120                           +++l  +e +ep++  +++++      ++  +++a++ g++vG++ +++  +  + +++i  l+V + yrg+Gi+t+L+++ ++ + e g</span><br><span class="line">121   Glyma.18G281300.1.p  33 VMNLVDQELSEPYSIFTYRYFVYL---WPQLSFLAFHKGKCVGTVVCKMGEHrNTFRGYIAMLVVIKPYRGRGIATELVTRSIKVMMESG 119</span><br><span class="line">122                           567777788888888888886666...7889**********************9************************************ PP</span><br><span class="line">123 </span><br><span class="line">124                           CSEEEEEEETTEHHHHHHHHHTTE CS</span><br><span class="line">125            AT1-domain  93 cerlyleveedNeaaialYeklGF 116</span><br><span class="line">126                           ce+++le e++N++a+alY +lGF</span><br><span class="line">127   Glyma.18G281300.1.p 120 CEEVTLEAEVTNKGALALYGRLGF 143</span><br><span class="line">128                           ***********************9 PP</span><br></pre></td></tr></table></figure>
+<h3 id="hmmscan-对蛋白数据集进行-pfam-注释"><a class="markdownIt-Anchor" href="#hmmscan-对蛋白数据集进行-pfam-注释"></a> hmmscan 对蛋白数据集进行 pfam 注释</h3>
+<ol>
+<li>下载 Pfam 数据库</li>
+</ol>
+<p><code>Pfam.A.hmm.gz</code> was downloaded from <a href="https://www.ebi.ac.uk/interpro/download/Pfam/">https://www.ebi.ac.uk/interpro/download/Pfam/</a>。</p>
+<p>建立 Pfam 数据库的 index 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hmmpress Pfam-A.hmm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(base) [fenglei@login home]$ ll ~/databases/Pfam/</span><br><span class="line">total 3271640</span><br><span class="line">-rwxr-xr-x 1 fenglei fenglei         20 Feb 24 16:09 opt.sh</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  765714975 Feb 24 15:55 Pfam-A.hmm.h3p</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  359968298 Feb 24 15:55 Pfam-A.hmm.h3f</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei  650909583 Feb 24 15:55 Pfam-A.hmm.h3m</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei    1354713 Feb 24 15:55 Pfam-A.hmm.h3i</span><br><span class="line">-rw-rw-r-- 1 fenglei fenglei         80 Feb 24 15:53 readme</span><br><span class="line">-rw-r--r-- 1 fenglei fenglei 1572192814 Feb 24 15:33 Pfam-A.hmm</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>准备待注释的蛋白序列</li>
+</ol>
+<p>准备一个 fasta 格式的蛋白序列文件。</p>
+<ol start="3">
+<li>运行 hmmscan</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hmmscan --cpu 4 -o interested_TFs.fa_hmmsearch_Pfam.txt --tblout interested_TFs.fa_hmmsearch_Pfam.tbl --noali -E 1e-5 Pfam-A.hmm interested_TFs.fa</span><br><span class="line">hmmscan --cpu 4 -o lyl.fa_hmmsearch_Pfam.txt --tblout lyl.fa_hmmsearch_Pfam.tbl  ~/databases/Pfam/Pfam-A.hmm lyl.fa</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Bioinfo</category>
+      </categories>
+  </entry>
 </search>

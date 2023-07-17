@@ -189,6 +189,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/14/R-How-to-remove-rows-with-NA-values/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/14/R-How-to-remove-rows-with-NA-values/" class="post-title-link" itemprop="url">R：删除包含缺失值NA的行</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-14 18:08:01" itemprop="dateCreated datePublished" datetime="2020-11-14T18:08:01+08:00">2020-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 17:18:12" itemprop="dateModified" datetime="2020-12-08T17:18:12+08:00">2020-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/R/" itemprop="url" rel="index"><span itemprop="name">R</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>R数据框，如何删除包含NA的行？</strong></p>
+<p>在进行统计建模时，通常需要用到的因变量和自变量都不包含缺失值。tidyr 包的 drop_na() 函数可以对数据框 指定一到多个变量，删去指定的变量有缺失值的行。不指定变量时有任何变量缺失的行都会被删去。</p>
+<p>例如，将 NHANES 中所有存在缺失值的行删去后数出保留的行数，原来有 10000 行：</p>
+<p>NHANES <strong>%&gt;%</strong> <strong>drop_na</strong>() <strong>%&gt;% nrow</strong>()</p>
+<p>## [1] 0 可见所有行都有缺失值。</p>
+<p>下面仅剔除 AlcoholDay 缺失的观测并计数：</p>
+<p>NHANES <strong>%&gt;% drop_na</strong>(AlcoholDay) <strong>%&gt;% nrow</strong>()</p>
+<p>## [1] 4914</p>
+<p>基本 stats 包的 complete.cases 函数返回是否无缺失值的逻辑向量，na.omit 函数则返回无缺失值的观测的子集。</p>
+<p><strong>如何删除全部为NA的行？只要有非缺省值，可保留对应行。</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> testmatrix &lt;- matrix(nrow=6, ncol=4)</span><br><span class="line">testmatrix</span><br><span class="line">[,1] [,2] [,3] [,4]</span><br><span class="line">[1,] NA NA NA NA</span><br><span class="line">[2,] NA NA NA NA</span><br><span class="line">[3,] NA NA NA NA</span><br><span class="line">[4,] NA NA NA NA</span><br><span class="line">[5,] NA NA NA NA</span><br><span class="line">[6,] NA NA NA NA</span><br><span class="line">testmatrix[2:5,2:3] &lt;- seq(2)</span><br><span class="line">testmatrix</span><br><span class="line">[,1] [,2] [,3] [,4]</span><br><span class="line">[1,] NA NA NA NA</span><br><span class="line">[2,] NA 1 1 NA</span><br><span class="line">[3,] NA 2 2 NA</span><br><span class="line">[4,] NA 1 1 NA</span><br><span class="line">[5,] NA 2 2 NA</span><br><span class="line">[6,] NA NA NA NA</span><br><span class="line">tm1&lt;-testmatrix[,-which(apply(testmatrix,2,function(x)all(is.na(x))))]</span><br><span class="line">tm1</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] NA NA</span><br><span class="line">[2,] 1 1</span><br><span class="line">[3,] 2 2</span><br><span class="line">[4,] 1 1</span><br><span class="line">[5,] 2 2</span><br><span class="line">[6,] NA NA</span><br><span class="line">tm2&lt;-tm1[-which(apply(testmatrix,1,function(x)all(is.na(x)))),]</span><br><span class="line">tm2</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] 1 1</span><br><span class="line">[2,] 2 2</span><br><span class="line">[3,] 1 1</span><br><span class="line">[4,] 2 2</span><br><span class="line">testmatrix[-which(apply(testmatrix,1,function(x)all(is.na(x)))), -which(apply(testmatrix,2,function(x)all(is.na(x))))]</span><br><span class="line">[,1] [,2]</span><br><span class="line">[1,] 1 1</span><br><span class="line">[2,] 2 2</span><br><span class="line">[3,] 1 1</span><br><span class="line">[4,] 2 2 </span><br></pre></td></tr></table></figure>
+<p>Ref: <a target="_blank" rel="noopener" href="http://azaleasays.com/2008/02/06/r-remove-row-column-all-na-value/">http://azaleasays.com/2008/02/06/r-remove-row-column-all-na-value/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/28/Linux-Run-windows-programs-inlinux-mono/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1292,177 +1377,6 @@ colorscheme desert</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/21/Python-Anaconda-python2-python3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/21/Python-Anaconda-python2-python3/" class="post-title-link" itemprop="url">Python：通过Anaconda管理python2和python3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-04-21 13:01:38" itemprop="dateCreated datePublished" datetime="2020-04-21T13:01:38+08:00">2020-04-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-08 16:41:58" itemprop="dateModified" datetime="2020-12-08T16:41:58+08:00">2020-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="一-安装anaconda3"><a class="markdownIt-Anchor" href="#一-安装anaconda3"></a> 一、安装anaconda3</h3>
-<p>anaconda3 的下载页面：<a target="_blank" rel="noopener" href="https://www.anaconda.com/distribution/#download-section">https://www.anaconda.com/distribution/#download-section</a> 我在 Linux 系统里下载的版本：<a target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86%5C_64.sh">https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86\_64.sh</a> 用sh命令安装即可，安装路径可以自定义，比如<code>/home/username/xxx/yyy</code> 此时输入 <code>conda</code> 命令没有反应。 安装完毕之后，将 bin 目录加入到 <code>.bashrc</code>，并执行 <code>source ~/.bashrc</code>，马上看到命令行前面出现<code>(base)</code>的字符，说明现在已经在 conda 的环境中了。这时候输入<code>conda list</code> 命令就有反应了。</p>
-<h3 id="二-通过conda安装python3和python2"><a class="markdownIt-Anchor" href="#二-通过conda安装python3和python2"></a> 二、通过conda安装python3和python2</h3>
-<p>查看当前使用的Python：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(base) fenglei@localhost:~/local/app/anaconda3/bin$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base \* /home/fenglei/local/app/anaconda3</span><br></pre></td></tr></table></figure>
-<p>创建新的Python版本环境：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ conda create --name python37 python=3.7</span><br><span class="line">$ conda create --name python27 python=2.7</span><br><span class="line">\#</span><br><span class="line">$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base \* /home/fenglei/local/app/anaconda3</span><br><span class="line">python27 /home/fenglei/local/app/anaconda3/envs/python27</span><br><span class="line">python37 /home/fenglei/local/app/anaconda3/envs/python37</span><br></pre></td></tr></table></figure>
-<p>其中 * 号表示当前使用的 Python 环境。</p>
-<p><strong>切换 Python 环境</strong>，用 <code>source activate</code> 命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ python -V</span><br><span class="line">Python 3.7.6</span><br><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ source active python27</span><br><span class="line">-bash: active: No such file or directory</span><br><span class="line">(base) fenglei@localhost:~/local/app/anaconda3$ source activate python27</span><br><span class="line">(python27) fenglei@localhost:~/local/app/anaconda3$ python -V</span><br><span class="line">Python 2.7.17 :: Anaconda, Inc.</span><br><span class="line">(python27) fenglei@localhost:~/local/app/anaconda3$ conda info --envs</span><br><span class="line">\# conda environments:</span><br><span class="line">\#</span><br><span class="line">base                     /home/fenglei/local/app/anaconda3</span><br><span class="line">python27              *  /home/fenglei/local/app/anaconda3/envs/python27</span><br><span class="line">python37                 /home/fenglei/local/app/anaconda3/envs/python37</span><br></pre></td></tr></table></figure>
-<p>注意上面的“*”位置相应变动了，另一个是命令行前面的(base)变成了(python27)。 如果不想使用当前版本，而想恢复到默认版面，那么</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">source</span> deactivate</span></span><br></pre></td></tr></table></figure>
-<p><strong>删除 Python 环境</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda remove --name python26 --all</span></span><br></pre></td></tr></table></figure>
-<p><strong>管理包</strong><br />
-查看当前已经安装的包</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda list</span></span><br><span class="line">\# packages in environment at /apps/anaconda2/envs/python35:</span><br><span class="line">\#</span><br><span class="line">ca-certificates           2017.08.26           h1d4fec5_0</span><br><span class="line">certifi                   2017.7.27.1      py35h19f42a1_0</span><br><span class="line">libedit                   3.1                  heed3624_0</span><br><span class="line">libffi                    3.2.1                h4deb6c0_3</span><br><span class="line">libgcc-ng                 7.2.0                h7cc24e2_2</span><br><span class="line">libstdcxx-ng              7.2.0                h7a57d05_2</span><br><span class="line">ncurses                   6.0                  h06874d7_1</span><br><span class="line">openssl                   1.0.2l               h077ae2c_5</span><br><span class="line">pip                       9.0.1            py35haa8ec2a_3</span><br><span class="line">python                    3.5.4               he2c66cf_20</span><br><span class="line">readline                  7.0                  hac23ff0_3</span><br><span class="line">setuptools                36.5.0           py35ha8c1747_0</span><br><span class="line">sqlite                    3.20.1               h6d8b0f3_1</span><br><span class="line">tk                        8.6.7                h5979e9b_1</span><br><span class="line">wheel                     0.29.0           py35h601ca99_1</span><br><span class="line">xz                        5.2.3                h2bcbf08_1</span><br><span class="line">zlib                      1.2.11               hfbfcf68_1</span><br></pre></td></tr></table></figure>
-<p><strong>安装包</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -n python35 psutil</span><br></pre></td></tr></table></figure>
-<p><strong>删除包</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">conda uninstall -n python35 psutil</span></span><br></pre></td></tr></table></figure>
-<p>下面是一些conda的常见命令： 对conda的基本掌握：<br />
-1：基本操作：<br />
-升级全部库：  conda upgrade --all<br />
-升级一个包  conda update packagename<br />
-安装包：conda install packagename<br />
-也可以安装多个包：   conda installl numpy pandas scipy<br />
-安装固定版本的包：conda install numpy =1.10<br />
-移除一个包：conda remove packagename <br />
-查看所有包：conda list</p>
-<p>2：管理python环境：<br />
-创建虚拟环境：conda create -n env_name<br />
-list of packagenaem eg:  conda create -n env_name pandas <br />
-指定python版本：conda create -n env_name python2 = 2.7 pandas <br />
-激活环境： activate env_name （前面加source才可以吧）<br />
-退出环境 :  deactivate  env_name<br />
-删除虚拟环境：conda env remove -n env_name<br />
-显示所有虚拟环境：conda env list  <br />
-conda 创建的虚拟环境是在anaconda安装目录下的evens下，所以使用pycharm，只要在特定项目配置运行环境就可以了</p>
-<h3 id="利用conda安装生物信息软件"><a class="markdownIt-Anchor" href="#利用conda安装生物信息软件"></a> 利用conda安装生物信息软件</h3>
-<p>安装命令:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install gatk</span><br></pre></td></tr></table></figure>
-<p>搜索需要的安装包: 提供一个网址,用于事先查找想安装的软件存不存在 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https%3A%2F%2Fbioconda.github.io%2Frecipes">conda available packages</a> 当然, 也可以用这个命令进行搜索</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda search gatk</span><br></pre></td></tr></table></figure>
-<p>安装完成后，可以用“which 软件名”来查看该软件安装的位置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> gatk</span><br></pre></td></tr></table></figure>
-<p>如需要安装特定的版本:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install 软件名=版本号</span><br><span class="line">conda install gatk=3.7</span><br></pre></td></tr></table></figure>
-<p>这时conda会先卸载已安装版本，然后重新安装指定版本。 查看已安装软件:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda list</span><br></pre></td></tr></table></figure>
-<p>更新指定软件:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda update gatk</span><br></pre></td></tr></table></figure>
-<p>卸载指定软件:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="keyword">remove</span> gatk</span><br></pre></td></tr></table></figure>
-<p>退出conda环境 退出也很简单，之前我们是<code>. ./activate 或者 (. ~/miniconda3/bin/activate)</code>现在退出只要:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. ./deactivate</span><br></pre></td></tr></table></figure>
-<p>就退出当前的环境了</p>
-<p>也可以用bioconda：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda install -c bioconda bowtie2</span><br><span class="line">conda install -c bioconda hisat2</span><br><span class="line">conda install -c bioconda samtools</span><br></pre></td></tr></table></figure>
-<p><strong>创建软件的软链接</strong></p>
-<p>跟着命令一路敲到这里的小旁友们估计发现了，现在退出conda环境之后之前安装的软件全都GG了，敲命令没法执行了！ 怎么办呢！其实只要把安装好的软件软连接到一个处在环境变量里的位置就可以使用了。三步走：</p>
-<ul>
-<li>第一步，创建一个文件夹 我一般的习惯是在<code>/home</code>目录下创建一个<code>.soft</code>文件夹</li>
-<li>第二步，将这个文件夹添加到环境变量中</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;~/.soft:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>第三步，软链接</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s ~<span class="regexp">/miniconda3/bin</span><span class="regexp">/gatk ~/</span>.soft</span><br></pre></td></tr></table></figure>
-<p>这样就可以运行啦~如果还是不行建议试试初始化一下bashrc：<code>. ./bashrc</code></p>
-<p><strong>创建conda环境</strong></p>
-<p>之前创建的时候显示的是（base）这是conda的基本环境，有些软件依赖的是python2的版本，当你还是使用你的base的时候你的base里的python会被自动降级，有可能会引发别的软件的报错，所以，可以给一些特别的软件一些特别的关照，比如创建一个单独的环境。 在conda环境下，输入<code>conda env list</code>（或者输入<code>conda info --envs</code>也是一样滴）查看当前存在的环境：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/7979561-eeb52438a3dd89dc.png?imageMogr2/auto-orient/stripimageView2/2/w/570/format/webp" alt="" /></p>
-<p>目前的环境</p>
-<p>目前只有一个base</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create -n python2 python=2</span><br><span class="line">\<span class="comment">#-n: 设置新的环境的名字</span></span><br><span class="line">\<span class="comment">#python=2 指定新环境的python的版本</span></span><br></pre></td></tr></table></figure>
-<p>conda会创建一个新的python2的环境，并且会很温馨的提示你只要输入conda activate python2就可以启动这个环境了</p>
-<p><img src="//upload-images.jianshu.io/upload_images/7979561-5d90c4988132d600.png?imageMogr2/auto-orient/stripimageView2/2/w/543/format/webp" alt="" /></p>
-<p>新的环境</p>
-<p><strong>退出环境</strong></p>
-<p>如上面的截图提到的，只要</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
-<p><code>2019-6-28 update: 如何删除和重命名一个已存在的环境</code></p>
-<p><strong>删除环境</strong></p>
-<p>删除也很容易的</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="keyword">remove</span> -n myenv --all</span><br></pre></td></tr></table></figure>
-<p>就可以退出当前环境。 掌握了创建和删除我们就可以实现重命名的操作了</p>
-<p><strong>重命名环境</strong></p>
-<p>实际上conda并没有提供这样的功能，但是可以曲线救国，原理是先克隆一个原来的环境，命名成想要的名字，再把原来的环境删掉即可 参考自：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7265011ba3f2">conda 创建/删除/重命名 环境</a> 接下来演示把一个原来叫做py2的环境重新命名成python2：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda create -n python2 --<span class="built_in">clone</span> py2</span><br><span class="line">conda remove -n py2 --all</span><br></pre></td></tr></table></figure>
-<p><strong>骚操作：allias简化启动</strong></p>
-<p><img src="//upload-images.jianshu.io/upload_images/7979561-e5ec5df4252fcdd0.png?imageMogr2/auto-orient/stripimageView2/2/w/941/format/webp" alt="" /></p>
-<p>image.png</p>
-<p>linux提供了一个给大家偷懒的命令叫alias，只要在你的<code>.bashrc</code>里设置一下就好了，我添加了一条叫做<code>condaup</code>的命令，这样就可以免去每次敲<code>. ~/miniconda/bin/dactivate</code>的麻烦，一步搞定~技术宅改变世界！</p>
-<p><img src="//upload-images.jianshu.io/upload_images/7979561-744e8c59cdf14b19.png?imageMogr2/auto-orient/stripimageView2/2/w/435/format/webp" alt="" /></p>
-<p>image.png</p>
-<p>参考资料： 链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/edaa744ea47d">https://www.jianshu.com/p/edaa744ea47d</a> 链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq%5C_18668137/java/article/details/80807829">https://blog.csdn.net/qq\_18668137/java/article/details/80807829</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1534,7 +1448,7 @@ conda 创建的虚拟环境是在anaconda安装目录下的evens下，所以使�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">191</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

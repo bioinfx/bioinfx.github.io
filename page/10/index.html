@@ -189,6 +189,124 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/03/30/Linux-install-mysql-5-7-25/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/30/Linux-install-mysql-5-7-25/" class="post-title-link" itemprop="url">Linux安装mysql-5.7.25</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-30 20:38:24" itemprop="dateCreated datePublished" datetime="2019-03-30T20:38:24+08:00">2019-03-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>下面的操作完全是照搬其他人的经验（<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012703513%EF%BC%89%EF%BC%8C%E6%AD%A4%E5%A4%84%E8%AE%B0%E5%BD%95%E5%A4%87%E4%BB%BD%E7%94%A8%E3%80%82%E4%B9%9F%E5%8F%AF%E5%8F%82%E8%80%83%EF%BC%9Ahttps://www.jellythink.com/archives/14">https://segmentfault.com/a/1190000012703513），此处记录备份用。也可参考：https://www.jellythink.com/archives/14</a> ---------------------------------- 由于mysql 5.7.17版本以后 support_files文件夹中无 <strong>my_default.cnf</strong> 文件，所以今天给大家详细描述一下 mysql 5.7.20版本(目前官方最新版)的安装步骤。 第一步：下载mysql最新版</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>第二步：在/usr/local/中解压压缩包，并改名为mysql</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line"></span><br><span class="line">tar -xzvf /data/software/mysql-5.7.13-linux-glibc2.5-x86_64.tar.gz (我的下载目录为 data/software)</span><br><span class="line"></span><br><span class="line">mv mysql-5.7.13-linux-glibc2.5-x86_64 mysql</span><br></pre></td></tr></table></figure>
+<p>第三步：创建用户组mysql，创建用户mysql并将其添加到用户组mysql中，并赋予读写权限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">groupadd mysql</span><br><span class="line"></span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"></span><br><span class="line">chown -R mysql mysql/</span><br><span class="line"></span><br><span class="line">chgrp -R mysql mysql/</span><br></pre></td></tr></table></figure>
+<p>第四步：创建配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br><span class="line"></span><br><span class="line">#复制以下内容</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">port = 3306</span><br><span class="line">socket = /tmp/mysql.sock</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">socket=/tmp/mysql.sock</span><br><span class="line">log-error=/var/log/mysqld.log</span><br><span class="line">pid-file=/var/run/mysqld/mysqld.pid</span><br><span class="line">#不区分大小写</span><br><span class="line">lower_case_table_names = 1</span><br><span class="line"></span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><br><span class="line"></span><br><span class="line">max_connections=5000</span><br><span class="line"></span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+<p>按ESC保存并关闭，输入如下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq!</span><br></pre></td></tr></table></figure>
+<p>第五步：初始化数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#先安装一下这个东东，要不然初始化有可能会报错</span><br><span class="line">yum install libaio</span><br><span class="line">#手动编辑一下日志文件，什么也不用写，直接保存退出</span><br><span class="line">cd /var/log/</span><br><span class="line"></span><br><span class="line">vim mysqld.log</span><br><span class="line">：wq</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld.log</span><br><span class="line">chown mysql:mysql mysqld.log</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --lc_messages_dir=/usr/local/mysql/share --lc_messages=en_US</span><br></pre></td></tr></table></figure>
+<p>第六步：查看初始密码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<p>执行后关注最后一点：root@localhost: 这里就是初始密码 第七步：启动服务，进入mysql，修改初始密码，运行远程连接（这里执行完后，密码将变成：你设置的新密码）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#如果提示必须要修改密码才可以进行操作的话则执行下面操作</span><br><span class="line">set password=password(&#x27;新密码&#x27;);</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">UPDATE `mysql`.`user` SET `Host` = &#x27;%&#x27;,  `User` = &#x27;root&#x27;  WHERE (`Host` = &#x27;localhost&#x27;) AND (`User` = &#x27;root&#x27;);</span><br><span class="line"></span><br><span class="line">#然后执行如下操作开启mysql服务，以及设置相关权限</span><br><span class="line">cd /var/run/</span><br><span class="line"></span><br><span class="line">mkdir mysqld</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld</span><br><span class="line"></span><br><span class="line">cd mysqld</span><br><span class="line"></span><br><span class="line">touch mysqld.pid</span><br><span class="line"></span><br><span class="line">chmod 777 mysqld.pid</span><br><span class="line"></span><br><span class="line">chown mysql:mysql mysqld.pid </span><br><span class="line"></span><br><span class="line">/usr/local/mysql/support-files/mysql.server start</span><br><span class="line"></span><br><span class="line">/usr/local/mysql/bin/mysql -uroot -p 你在上面看到的初始密码</span><br><span class="line"></span><br><span class="line"># 以下是进入数据库之后的sql语句</span><br><span class="line"> use mysql;</span><br><span class="line"></span><br><span class="line"> UPDATE `mysql`.`user` SET `Host`=&#x27;%&#x27;, `User`=&#x27;root&#x27;, `Select_priv`=&#x27;Y&#x27;, `Insert_priv`=&#x27;Y&#x27;, `Update_priv`=&#x27;Y&#x27;, `Delete_priv`=&#x27;Y&#x27;, `Create_priv`=&#x27;Y&#x27;, `Drop_priv`=&#x27;Y&#x27;, `Reload_priv`=&#x27;Y&#x27;, `Shutdown_priv`=&#x27;Y&#x27;, `Process_priv`=&#x27;Y&#x27;, `File_priv`=&#x27;Y&#x27;, `Grant_priv`=&#x27;Y&#x27;, `References_priv`=&#x27;Y&#x27;, `Index_priv`=&#x27;Y&#x27;, `Alter_priv`=&#x27;Y&#x27;, `Show_db_priv`=&#x27;Y&#x27;, `Super_priv`=&#x27;Y&#x27;, `Create_tmp_table_priv`=&#x27;Y&#x27;, `Lock_tables_priv`=&#x27;Y&#x27;, `Execute_priv`=&#x27;Y&#x27;, `Repl_slave_priv`=&#x27;Y&#x27;, `Repl_client_priv`=&#x27;Y&#x27;, `Create_view_priv`=&#x27;Y&#x27;, `Show_view_priv`=&#x27;Y&#x27;, `Create_routine_priv`=&#x27;Y&#x27;, `Alter_routine_priv`=&#x27;Y&#x27;, `Create_user_priv`=&#x27;Y&#x27;, `Event_priv`=&#x27;Y&#x27;, `Trigger_priv`=&#x27;Y&#x27;, `Create_tablespace_priv`=&#x27;Y&#x27;, `ssl_type`=&#x27;&#x27;, `ssl_cipher`=&#x27;&#x27;, `x509_issuer`=&#x27;&#x27;, `x509_subject`=&#x27;&#x27;, `max_questions`=&#x27;0&#x27;, `max_updates`=&#x27;0&#x27;, `max_connections`=&#x27;0&#x27;, `max_user_connections`=&#x27;0&#x27;, `plugin`=&#x27;mysql_native_password&#x27;, `authentication_string`=&#x27;*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9&#x27;, `password_expired`=&#x27;N&#x27;, `password_last_changed`=&#x27;2017-11-20 12:41:07&#x27;, `password_lifetime`=NULL, `account_locked`=&#x27;N&#x27; WHERE  (`User`=&#x27;root&#x27;);</span><br><span class="line"></span><br><span class="line"> flush privileges;</span><br></pre></td></tr></table></figure>
+<p>第八步：开机自启</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/mysql/support-files</span><br><span class="line"></span><br><span class="line">cp mysql.server /etc/init.d/mysqld</span><br><span class="line"></span><br><span class="line">chkconfig --add mysqld</span><br></pre></td></tr></table></figure>
+<p>第九步：使用service mysqld命令启动/停止服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su - mysql</span><br><span class="line"></span><br><span class="line">service mysqld start/stop/restart</span><br></pre></td></tr></table></figure>
+<p>登陆，修改密码 root密码是123456</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 登陆mysql</span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line"># 修改root用户密码</span><br><span class="line">set password for root@localhost=password(&quot;123456&quot;);</span><br></pre></td></tr></table></figure>
+<p>远程用户建立</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on *.* to &#x27;新用户名&#x27;@&#x27;%&#x27; identified by &#x27;新密码&#x27;;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<p><img src="https://genehub.files.wordpress.com/2019/03/e5beaee4bfa1e688aae59bbe_20190330204936.png" alt="微信截图_20190330204936" /> 添加系统路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line"></span><br><span class="line">export PATH=/usr/local/mysql/bin:$PATH</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<p>以上步骤都执行完毕后，大吉大利，今晚吃鸡！！！！！！ 如果可以使用navicat 使用你刚才设置的用户名和密码访问，那么你的mysql就已经安装成功啦！ ===== 20190814 更新 增加pasa用户，设置只读权限。用于基因预测pasa软件流程。参考 <a target="_blank" rel="noopener" href="http://www.chenlianfu.com/?p=1133">http://www.chenlianfu.com/?p=1133</a></p>
+<p>$ mysql -uroot -p<br />
+Enter password: ******** [# 输入root用户的密码]<br />
+Welcome to the MySQL monitor. Commands end with ; or \g.<br />
+Your MySQL connection id is 6<br />
+Server version: 5.7.25 MySQL Community Server (GPL)</p>
+<p>Copyright © 2000, 2019, Oracle and/or its affiliates. All rights reserved.</p>
+<p>Oracle is a registered trademark of Oracle Corporation and/or its<br />
+affiliates. Other names may be trademarks of their respective<br />
+owners.</p>
+<p>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.</p>
+<h2 id="新建pasa用户只设置可读权限"><a class="markdownIt-Anchor" href="#新建pasa用户只设置可读权限"></a> 新建pasa用户，只设置可读权限</h2>
+<p>mysql&gt; CREATE USER ‘pasa’@‘localhost’ IDENTIFIED BY ‘123456’;<br />
+Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt; GRANT SELECT ON *.* TO ‘pasa’@‘%’ IDENTIFIED BY ‘123456’;<br />
+Query OK, 0 rows affected, 1 warning (0.00 sec)</p>
+<p>mysql&gt; FLUSH PRIVILEGES;<br />
+Query OK, 0 rows affected (0.00 sec)</p>
+<p>mysql&gt;</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/28/Bioinfo-install-lastz/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1087,80 +1205,6 @@ write.table(as.data.frame( ego@result), file=“test_CC.txt”)</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/09/20/Bioinfo-sort-contigs-based-on-chromosomes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/09/20/Bioinfo-sort-contigs-based-on-chromosomes/" class="post-title-link" itemprop="url">根据参考基因组对contigs进行排列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-09-20 23:42:18" itemprop="dateCreated datePublished" datetime="2017-09-20T23:42:18+08:00">2017-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Multiple programs have been developed for reference-assisted chromosome assembly: Bambus [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR10">10</a>], BACCardI [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR11">11</a>], Projector2 [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR12">12</a>], OSLay [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR13">13</a>], ABACAS [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR14">14</a>], MeDuSa [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR15">15</a>], AlignGraph [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR16">16</a>], Ragout [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR17">17</a>], SyMap [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR18">18</a>] and RACA [<a target="_blank" rel="noopener" href="https://gigascience.biomedcentral.com/articles/10.1186/s13742-016-0141-6#CR19">19</a>]. Most of the listed tools were designed for bacterial or small genomes. For example, ABACAS is a convenient bacterial genome contiguation tool that may also be used for small eukaryotic genomes such as <em>Saccharomyces cerevisiae</em> (12.1 mega base pairs). However, ABACAS is not efficiently scaled to use with the large genomes typical of vertebrate species. ABACAS对小型基因组很实用。但是注意：contig连接处是由99个N连接起来的，实际上contig的末端室友重叠关系的。 针对大型基因组，可以使用Chromosomer: a reference-based genome arrangement tool for producing draft chromosome sequences</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1232,7 +1276,7 @@ write.table(as.data.frame( ego@result), file=“test_CC.txt”)</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">191</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

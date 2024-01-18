@@ -189,6 +189,102 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/01/27/Linux-install-tmux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/01/27/Linux-install-tmux/" class="post-title-link" itemprop="url">Linux安装tmux</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-01-27 17:10:41" itemprop="dateCreated datePublished" datetime="2016-01-27T17:10:41+08:00">2016-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>按照tmux官网（<a target="_blank" rel="noopener" href="https://github.com/tmux/tmux%EF%BC%89%E7%9A%84%E6%8C%87%E7%A4%BA%EF%BC%8C%E9%81%87%E5%88%B0%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%8C%E9%80%90%E4%B8%AA%E8%A7%A3%E5%86%B3%EF%BC%9A">https://github.com/tmux/tmux）的指示，遇到几个问题，逐个解决：</a></p>
+<h2 id="问题一-没有root权限tmux进行configure的时候找不到libevent"><a class="markdownIt-Anchor" href="#问题一-没有root权限tmux进行configure的时候找不到libevent"></a> 问题一、没有root权限，tmux进行configure的时候找不到libevent</h2>
+<h3 id="why-cant-gcc-find-libevent-when-building-tmux-from-source"><a class="markdownIt-Anchor" href="#why-cant-gcc-find-libevent-when-building-tmux-from-source"></a> <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/17907/why-cant-gcc-find-libevent-when-building-tmux-from-source">Why can’t gcc find libevent when building tmux from source?</a></h3>
+<p>解决办法：（<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/17907/why-cant-gcc-find-libevent-when-building-tmux-from-source/17918#17918?newreg=999d85dd0c684842ac7538811cbe3015%EF%BC%89">https://unix.stackexchange.com/questions/17907/why-cant-gcc-find-libevent-when-building-tmux-from-source/17918#17918?newreg=999d85dd0c684842ac7538811cbe3015）</a> Try:</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DIR=&quot;$HOME/.bin-libevent&quot;</span><br><span class="line">./configure CFLAGS=&quot;-I$DIR/include&quot; LDFLAGS=&quot;-L$DIR/lib&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>(I’m sure there must be a better way to configure library paths with autoconf. Usually there is a <code>--with-libevent=dir</code> option. But here, it seems there is no such option.) 第二次换了一台机器也遇到了libevent报错，于是先安装libevent到了自己的软件目录（没有root权限）,可在/share/raid12/c-fenglei/local/lib下面看到libevent-2.1.so.6等等文件，可在/share/raid12/c-fenglei/local/include下面看到event.h等文件。 于是接下来在tmux source code文件夹输入：</p>
+<p>./configure --prefix=/share/raid12/c-fenglei/local/ CFLAGS=-I/share//raid12/c-fenglei/local/include LDFLAGS=-L/share/raid12/c-fenglei/local/lib</p>
+<p>然后就make &amp;&amp; make install，顺利运行tmux。</p>
+<h2 id="问题二-启动tmux的时候报错"><a class="markdownIt-Anchor" href="#问题二-启动tmux的时候报错"></a> 问题二、启动tmux的时候报错：</h2>
+<h3 id="libevent-20so5-cannot-open-shared-object-file-no-such-file-or-directory"><a class="markdownIt-Anchor" href="#libevent-20so5-cannot-open-shared-object-file-no-such-file-or-directory"></a> libevent-2.0.so.5: cannot open shared object file: No such file or directory</h3>
+<p>解决办法： On a 32 bit system:</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib/libevent-2.0.so.5</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>On a 64 bit system:</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib64/libevent-2.0.so.5</span><br></pre></td></tr></table></figure></blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2016/01/25/Linux-unable-to-reboot-an-error-occurred-during-the-file-system-check/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1009,96 +1105,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/10/18/topgo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/10/18/topgo/" class="post-title-link" itemprop="url">topGO</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-10-18 00:40:14" itemprop="dateCreated datePublished" datetime="2015-10-18T00:40:14+08:00">2015-10-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:20" itemprop="dateModified" datetime="2020-12-07T17:58:20+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Notes/" itemprop="url" rel="index"><span itemprop="name">Notes</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>manual:</strong></p>
-<ol>
-<li><a target="_blank" rel="noopener" href="http://www.bioconductor.org/packages/release/bioc/vignettes/topGO/inst/doc/topGO.pdf">http://www.bioconductor.org/packages/release/bioc/vignettes/topGO/inst/doc/topGO.pdf</a></li>
-</ol>
-<p><strong>PPT:</strong></p>
-<ol>
-<li><a target="_blank" rel="noopener" href="http://cals.arizona.edu/~anling/MCB516/lecture22.pdf">http://cals.arizona.edu/~anling/MCB516/lecture22.pdf</a></li>
-</ol>
-<p><strong>code:</strong></p>
-<ol>
-<li><a target="_blank" rel="noopener" href="http://baliga.systemsbiology.net/events/sysbio/sites/baliga.systemsbiology.net.events.sysbio/files/uploads/topGO%5C_FunctionalEnrichment.r">http://baliga.systemsbiology.net/events/sysbio/sites/baliga.systemsbiology.net.events.sysbio/files/uploads/topGO\_FunctionalEnrichment.r</a></li>
-<li><a target="_blank" rel="noopener" href="https://stat.ethz.ch/pipermail/bioconductor/2008-April/021773.html">https://stat.ethz.ch/pipermail/bioconductor/2008-April/021773.html</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1170,7 +1176,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">193</span>
+          <span class="site-state-item-count">194</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1215,7 +1221,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

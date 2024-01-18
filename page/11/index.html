@@ -189,6 +189,87 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/09/Bioinfo-install-vcftools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
+      <meta itemprop="name" content="FENG Lei">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FENG's Notes">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/01/09/Bioinfo-install-vcftools/" class="post-title-link" itemprop="url">安装vcftools</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-01-09 16:26:11" itemprop="dateCreated datePublished" datetime="2018-01-09T16:26:11+08:00">2018-01-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>configure的过程报错：Zlib找不到。 实际上已经安装zlib。 解决办法</p>
+<p>export ZLIB_LIBS=‘-L/home/fenglei/local/lib -lz’<br />
+export ZLIB_CFLAGS=-I/home/fenglei/local/include<br />
+echo $ZLIB_LIBS $ZLIB_CFLAGS<br />
+./configure --prefix=/home/fenglei/local/<br />
+make<br />
+make install</p>
+<p>成功安装。 参考资料：<a target="_blank" rel="noopener" href="https://github.com/vcftools/vcftools/issues/29">https://github.com/vcftools/vcftools/issues/29</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2018/01/02/Bioinfo-gene-ontology-analysis-for-degs-of-arabidopsis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -984,85 +1065,6 @@ vi config.h</p>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/07/18/Bioinfo-n50-n90-length/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/fl-photo-202109.jpg">
-      <meta itemprop="name" content="FENG Lei">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FENG's Notes">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/18/Bioinfo-n50-n90-length/" class="post-title-link" itemprop="url">基因组|N50与N90的统计</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-07-18 18:16:07" itemprop="dateCreated datePublished" datetime="2017-07-18T18:16:07+08:00">2017-07-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-12-07 17:58:21" itemprop="dateModified" datetime="2020-12-07T17:58:21+08:00">2020-12-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bioinformatics/" itemprop="url" rel="index"><span itemprop="name">Bioinformatics</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h3>
-<p>基因组组装的过程中，N50与N90是常用的评价指标。</p>
-<h3 id="方法"><a class="markdownIt-Anchor" href="#方法"></a> 方法</h3>
-<p>可以使用NGS QC Toolkit实现统计。 下载地址： <a target="_blank" rel="noopener" href="http://59.163.192.90:8080/ngsqctoolkit/">http://59.163.192.90:8080/ngsqctoolkit/</a> <code>perl N50Stat.pl -i in.fa -o out.stat</code> <a target="_blank" rel="noopener" href="http://N50Stat.pl">N50Stat.pl</a></p>
-<p>Tool to generate statistics for read/sequence data given in FASTA format (total number of reads/sequences, total bases and minimum, maximum, average, median, N25, N50, N75, N90 and N95 read/sequence length)</p>
-<p>Citation Patel RK, Jain M (2012). NGS QC Toolkit: A toolkit for quality control of next generation sequencing data. PLoS ONE, 7(2): e30619.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1134,7 +1136,7 @@ vi config.h</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">193</span>
+          <span class="site-state-item-count">194</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1179,7 +1181,7 @@ vi config.h</p>
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

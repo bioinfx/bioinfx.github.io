@@ -9891,4 +9891,24 @@ A semicolon-separated list of tag-value pairs, providing additional information 
         <category>Linux</category>
       </categories>
   </entry>
+  <entry>
+    <title>Bioinfo | 使用iTOL美化进化树</title>
+    <url>/2024/01/18/iTOL-phylogenetic-tree/</url>
+    <content><![CDATA[<p>使用 MEGA 等软件生成进化树之后，可以用 Figtree 等软件对进化树进行修饰美化。然而，Figtree 软件近几年没有更新，其对于高分辨率屏幕的适配是存在问题的，在实际操作过程中使用不便。而在线的网页工具 iTOL 的操作界面则人性化许多，在此做一个简要的记录。</p>
+<span id="more"></span>
+<ol>
+<li>将 newick 格式的进化树文件上传到 iTol 网站，进入编辑界面。在实例中，我使用两个亚家族构建了一个进化树，该进化树是一个 unrooted tree，从最底层延伸出三个分支，如何调整图案使其显示成两个分支？</li>
+<li>设定某个分支为 root。鼠标左键点击相应的树枝，屏幕出现的菜单中选择“Tree Structure”，再选择“Re-root the tree here”，此时树的拓扑结构将按照我们设定的方式显示。</li>
+<li>Tree scale 的调整。在右侧工具栏“Control panel”里面，点击“Advanced”，再点击“Tree scale”。</li>
+<li>默认的进化树的各个树枝上没有显示 bootstrap 值，可以在“Branch meta data”里面点击“Text”，就会显示 bootstrap 值（数值大小为 0-1），可以在 Scale by factor 选项处将默认的 1x 调整为 100x，从而使 bootstrap 数值范围变成 0-100。另外，默认的数值距离树枝特别近，不够美观，可以通过 Vertical shift 选项调整数字与树枝的间隙，我设置为 4。</li>
+<li>默认的各个树枝末端的标签名称是竖向对齐显示，可以调整为紧贴各个树枝末端，在“Label option”栏目，将 Position 选择“At tips”。</li>
+<li>整个进化树的高和宽的比例设置，在右侧工具栏“Advanced”按钮下，Scaling Factor 参数默认 1x horiz， 1x vert。如果默认的树显得过于扁平，可以调整为 1x horiz， 1.5x vert 增加高度，此时树变得更美观。</li>
+<li>其他。每个树枝的颜色都可以设置，所有Tips标签的颜色都可以设置，选中的树枝可以设定特定颜色的背景。</li>
+</ol>
+<p><a href="https://www.imagehub.cc/image/1Q85UB"><img src="https://s1.imagehub.cc/images/2024/01/18/faaed57d0fabb2c3309ead469d44b5df.jpeg" alt="faaed57d0fabb2c3309ead469d44b5df.jpeg" /></a></p>
+]]></content>
+      <categories>
+        <category>Bioinformatics</category>
+      </categories>
+  </entry>
 </search>
